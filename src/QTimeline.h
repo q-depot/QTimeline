@@ -211,6 +211,13 @@ public:
         time = (int)( time / QTIMELINE_SNAP ) * QTIMELINE_SNAP;
         return time;
     }
+
+    float snapPos( float pos )
+    {
+        float snap = getPosFromTime( QTIMELINE_SNAP );
+        pos = (int)( pos / snap ) * snap;
+        return pos;
+    }
     
     void collapse()
     {

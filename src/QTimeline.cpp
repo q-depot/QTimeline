@@ -376,13 +376,15 @@ void QTimeline::renderTimeBar()
     // render indicators
     if ( mMouseOnTrack )
     {
+        float posX = snapPos( mMousePrevPos.x );
+        
         glBegin( GL_QUADS );
         
         gl::color( ColorA( 0.0f, 1.0f, 1.0f, 0.4f ) );
-        gl::vertex( Vec2f( mMousePrevPos.x,        mTimeBarRect.y1 ) );
-        gl::vertex( Vec2f( mMousePrevPos.x + 1,    mTimeBarRect.y1 ) );
-        gl::vertex( Vec2f( mMousePrevPos.x + 1,    mTimeBarRect.y2 ) );
-        gl::vertex( Vec2f( mMousePrevPos.x,        mTimeBarRect.y2 ) );
+        gl::vertex( Vec2f( posX,        mTimeBarRect.y1 ) );
+        gl::vertex( Vec2f( posX + 1,    mTimeBarRect.y1 ) );
+        gl::vertex( Vec2f( posX + 1,    mTimeBarRect.y2 ) );
+        gl::vertex( Vec2f( posX,        mTimeBarRect.y2 ) );
         
         if ( mMouseOnTrack->isMouseOnModule() )
         {
