@@ -361,10 +361,10 @@ void QTimeline::renderTimeBar()
     glBegin( GL_QUADS );
     for( int k=0; k < nSecs; k++ )
     {
-        gl::vertex( Vec2f( (int)(k * oneSecInPx), mTimeBarRect.y1 ) );
+        gl::vertex( Vec2f( (int)(k * oneSecInPx),   mTimeBarRect.y1 ) );
         gl::vertex( Vec2f( (int)(k * oneSecInPx)+1, mTimeBarRect.y1 ) );
         gl::vertex( Vec2f( (int)(k * oneSecInPx)+1, mTimeBarRect.y2 ) );
-        gl::vertex( Vec2f( (int)(k * oneSecInPx), mTimeBarRect.y2 ) );
+        gl::vertex( Vec2f( (int)(k * oneSecInPx),   mTimeBarRect.y2 ) );
     }
     glEnd();
     
@@ -391,15 +391,21 @@ void QTimeline::renderTimeBar()
             QTimelineModuleItemRef ref = mMouseOnTrack->getMouseOnModule();
             
             gl::color( ColorA( 1.0f, 0.0f, 1.0f, 0.4f ) );
-            gl::vertex( Vec2f( ref->mRect.x1,        mTimeBarRect.y1 ) );
-            gl::vertex( Vec2f( ref->mRect.x1 + 1,    mTimeBarRect.y1 ) );
-            gl::vertex( Vec2f( ref->mRect.x1 + 1,    mTimeBarRect.y2 ) );
-            gl::vertex( Vec2f( ref->mRect.x1,        mTimeBarRect.y2 ) );
+            gl::vertex( Vec2f( ref->mRect.x1,       mTimeBarRect.y1 ) );
+            gl::vertex( Vec2f( ref->mRect.x1 + 1,   mTimeBarRect.y1 ) );
+            gl::vertex( Vec2f( ref->mRect.x1 + 1,   mTimeBarRect.y2 ) );
+            gl::vertex( Vec2f( ref->mRect.x1,       mTimeBarRect.y2 ) );
             
-            gl::vertex( Vec2f( ref->mRect.x2,        mTimeBarRect.y1 ) );
-            gl::vertex( Vec2f( ref->mRect.x2 + 1,    mTimeBarRect.y1 ) );
-            gl::vertex( Vec2f( ref->mRect.x2 + 1,    mTimeBarRect.y2 ) );
-            gl::vertex( Vec2f( ref->mRect.x2,        mTimeBarRect.y2 ) );
+            gl::vertex( Vec2f( ref->mRect.x2,       mTimeBarRect.y1 ) );
+            gl::vertex( Vec2f( ref->mRect.x2 + 1,   mTimeBarRect.y1 ) );
+            gl::vertex( Vec2f( ref->mRect.x2 + 1,   mTimeBarRect.y2 ) );
+            gl::vertex( Vec2f( ref->mRect.x2,       mTimeBarRect.y2 ) );
+            
+            float h = 6;
+            gl::vertex( Vec2f( ref->mRect.x1,       mTimeBarRect.y1 + h ) );
+            gl::vertex( Vec2f( ref->mRect.x2,       mTimeBarRect.y1 + h ) );
+            gl::vertex( Vec2f( ref->mRect.x2,       mTimeBarRect.y1 + h + 1 ) );
+            gl::vertex( Vec2f( ref->mRect.x1,       mTimeBarRect.y1 + h + 1 ) );
         }
         
         glEnd();

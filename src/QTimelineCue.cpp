@@ -41,8 +41,6 @@ QTimelineCue::QTimelineCue( QTimeline *qTimeline, QTimelineCueManager *cueManage
 
 void QTimelineCue::render()
 {
-//    if ( mIsMouseOn ) gl::color( mBgOverColor ); else gl::color( mBgColor );
-//    gl::drawSolidRect( mRect );
     glBegin( GL_QUADS );
     gl::color( mBgColor );          gl::vertex( mRect.getUpperLeft() );
     gl::color( mBgColor );          gl::vertex( mRect.getUpperRight() );
@@ -55,8 +53,16 @@ void QTimelineCue::render()
         float timeNorm = ( mQTimeline->getTime() - getStartTime() ) / ( getEndTime() - getStartTime() );
         if ( timeNorm >= 0.0f && timeNorm <= 1.0f )
         {
+            float posX = mRect.x1 + mRect.getWidth() * timeNorm;
             gl::color( mFgColor );
-            gl::drawSolidRect( Rectf( mRect.getUpperLeft(), Vec2f( mRect.x1 + mRect.getWidth() * timeNorm, mRect.y2 ) ) );
+            glBegin( GL_QUADS );
+            gl::vertex( Vec2i( mRect.x1, mRect.y1 )                 );
+            gl::vertex( Vec2i( posX, mRect.y1 )                     );
+            gl::vertex( Vec2i( posX, mRect.y1 )     + Vec2i( 0, 5 ) );
+            gl::vertex( Vec2i( mRect.x1, mRect.y1 ) + Vec2i( 0, 5 ) );
+
+            glEnd();
+//            gl::drawSolidRect( Rectf( mRect.getUpperLeft(), Vec2f( mRect.x1 + mRect.getWidth() * timeNorm, mRect.y2 ) ) );
         }
     }
     
