@@ -43,8 +43,9 @@ QTimelineTrack::~QTimelineTrack()
     
     for( size_t k=0; k < mModules.size(); k++ )
     {
-        mQTimeline->mTimeline->remove( mModules[k] );
-        mQTimeline->callDeleteModuleCb( mModules[k]->getName(), mModules[k]->getType() );
+        mQTimeline->mTimeline->remove( mModules[k] );                                       // remove() flag the item as erase marked, timeline::stepTo() is in charge to actually delete the item
+        mQTimeline->updateCurrentTime();                                                    // updateCurrentTime() force the call to stepTo()
+        mQTimeline->callDeleteModuleCb( mModules[k]->getName(), mModules[k]->getType() );   // callback to delete the QTimelineModule
     }
     mModules.clear();
 }
@@ -153,6 +154,7 @@ bool QTimelineTrack::mouseUp( ci::app::MouseEvent event )
     
     mSelectedModule.reset();
     
+//    mMouseOnModule.reset();
     mouseMove(event);
     
     return false;
@@ -164,9 +166,10 @@ bool QTimelineTrack::mouseMove( ci::app::MouseEvent event )
     mIsMouseOnTrack     = false;
     
     if ( mMouseOnModule )
+    {
         mMouseOnModule->mouseMove( event );
-    
-    mMouseOnModule.reset();
+        mMouseOnModule.reset();
+    }
     
     if ( contains( event.getPos() ) )
     {
@@ -182,7 +185,7 @@ bool QTimelineTrack::mouseMove( ci::app::MouseEvent event )
 
     mMousePrevPos = event.getPos();
     
-    return false;
+    return mIsMouseOnTrack;
 }
 
 
@@ -226,10 +229,10 @@ void QTimelineTrack::deleteModule( QTimelineModuleItemRef moduleItemRef )
     for( size_t k=0; k < mModules.size(); k++ )
         if ( mModules[k] == moduleItemRef )
         {
-//            mQTimeline->mTimeline->remove( moduleItemRef );
-//            mModules.erase( mModules.begin()+k );
-            
-            mQTimeline->callDeleteModuleCb( moduleItemRef->getName(), moduleItemRef->getType() );
+            mQTimeline->mTimeline->remove( mModules[k] );                                       // remove() flag the item as erase marked, timeline::stepTo() is in charge to actually delete the item
+            mQTimeline->updateCurrentTime();                                                    // updateCurrentTime() force the call to stepTo()
+            mQTimeline->callDeleteModuleCb( mModules[k]->getName(), mModules[k]->getType() );   // callback to delete the QTimelineModule
+            mModules.erase( mModules.begin()+k );                                               // remove the QTimelineModuleItemRef
             return;
         }
 }

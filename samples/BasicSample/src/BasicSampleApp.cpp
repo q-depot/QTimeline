@@ -13,6 +13,8 @@ using namespace ci;
 using namespace ci::app;
 using namespace std;
 
+typedef std::shared_ptr<class QTimelineModule>    QTimelineModuleRef;
+
 class BasicSampleApp : public AppBasic {
 public:
 	void prepareSettings( Settings *settings );
@@ -24,8 +26,8 @@ public:
     void createModuleCallback( QTimeline::ModuleCallbackArgs args );
     void deleteModuleCallback( QTimeline::ModuleCallbackArgs args );
     
-    QTimeline                   mTimeline;
-    vector<QTimelineModule*>    mModules;
+    QTimeline                       mTimeline;
+    vector<QTimelineModuleRef>      mModules;
 };
 
 
@@ -43,16 +45,16 @@ void BasicSampleApp::setup()
     // register modules
     mTimeline.registerModule( "BasicModule", this, &BasicSampleApp::createModuleCallback, &BasicSampleApp::deleteModuleCallback );
 
-    QTimelineModule *mod;
-    mod = new BasicModule( "Sample module one" );
-    mTimeline.addModule( mod, 2.0f, 12.0f );
+    QTimelineModuleRef mod;
+    mod = QTimelineModuleRef( new BasicModule( "Sample module one" ) );
+    mTimeline.addModule( mod.get(), 2.0f, 12.0f );
     mod->init();
     mModules.push_back( mod );
 
-    mod = new BasicModule( "Sample module two" );
-    mTimeline.addModule( mod, 2.0f, 12.0f );
-    mod->init();
-    mModules.push_back( mod );
+//    mod = new BasicModule( "Sample module two" );
+//    mTimeline.addModule( mod, 2.0f, 12.0f );
+//    mod->init();
+//    mModules.push_back( mod );
     
     mTimeline.addCue( "Cue 1", 0.0f, 3.0f );
     mTimeline.addCue( "Another cue", 4.0f, 5.0f );
@@ -102,12 +104,14 @@ void BasicSampleApp::keyDown( KeyEvent event )
     else if ( c == 'c' )
         mTimeline.collapse();
     
-    
-    else if ( c == 'R' )
+    else if ( c == 'r' )
     {
-        for( size_t k=0; k < mModules.size(); k++ )
-            delete mModules[k];
-        mModules.clear();
+//        for( size_t k=0; k < mModules.size(); k++ )
+//        delete mModules[0];
+        
+        mTimeline.clear();
+        
+//        mModules.clear();
     }
 }
 
@@ -127,6 +131,8 @@ void BasicSampleApp::draw()
         if ( mModules[k]->isPlaying() )
             mModules[k]->render();
     
+    gl::drawString( "modules: " + toString( mModules.size() ), Vec2i( 300, 15 ) );
+    
     mTimeline.render();
 
     gl::color( Color::white() );
@@ -135,17 +141,17 @@ void BasicSampleApp::draw()
 
 void BasicSampleApp::createModuleCallback( QTimeline::ModuleCallbackArgs args )
 {
-    QTimelineModule *mod = NULL;
+    QTimelineModuleRef mod;
     
     if( args.type == "BasicModule" )
-        mod = new BasicModule( args.name );
+        mod = QTimelineModuleRef( new BasicModule( args.name ) );
     
     // ...
     
     if ( !mod )
         return;
     
-    mTimeline.addModule( mod, args.startTime, args.duration, args.trackRef );
+    mTimeline.addModule( mod.get(), args.startTime, args.duration, args.trackRef );
     mod->init();
     
     mModules.push_back( mod );
@@ -157,7 +163,6 @@ void BasicSampleApp::deleteModuleCallback( QTimeline::ModuleCallbackArgs args )
     for( size_t k=0; k < mModules.size(); k++ )
         if ( mModules[k]->getName() == args.name && mModules[k]->getType() == args.type )
         {
-            delete mModules[k];
             mModules.erase( mModules.begin() + k );
             return;
         }

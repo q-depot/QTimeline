@@ -227,13 +227,18 @@ bool QTimeline::mouseUp( ci::app::MouseEvent event )
 
 bool QTimeline::mouseMove( ci::app::MouseEvent event )
 {
+    mMouseOnTrack.reset();
+    
     if ( mSelectedMenu && mSelectedMenu->isVisible() && mSelectedMenu->mouseMove(event) )
         return true;
     
     for( size_t k=0; k < mTracks.size(); k++ )
-        mTracks[k]->mouseMove( event );
-
+        if ( mTracks[k]->mouseMove( event ) )
+            mMouseOnTrack = mTracks[k];
+    
     mCueManager->mouseMove( event );
+    
+    mMousePrevPos = event.getPos();
     
     return false;
 }
@@ -249,6 +254,8 @@ bool QTimeline::mouseDrag( MouseEvent event )
     // time bar handler
     if ( mIsMouseDragTimeBar )
         mTimeline->stepTo( snapTime( getTimeFromPos( event.getPos().x ) ) );
+    
+    mMousePrevPos = event.getPos();
     
     return false;
 }
@@ -365,6 +372,36 @@ void QTimeline::renderTimeBar()
     gl::color( mTimeBarTextCol );
     for( int k=0; k < nSecs; k+=4 )
     mFontSmall->drawString( toString( mTimeWindow.x + k ),  Vec2f( k * oneSecInPx + 3, mTimeBarRect.y2 - 3 ) );
+    
+    // render indicators
+    if ( mMouseOnTrack )
+    {
+        glBegin( GL_QUADS );
+        
+        gl::color( ColorA( 0.0f, 1.0f, 1.0f, 0.4f ) );
+        gl::vertex( Vec2f( mMousePrevPos.x,        mTimeBarRect.y1 ) );
+        gl::vertex( Vec2f( mMousePrevPos.x + 1,    mTimeBarRect.y1 ) );
+        gl::vertex( Vec2f( mMousePrevPos.x + 1,    mTimeBarRect.y2 ) );
+        gl::vertex( Vec2f( mMousePrevPos.x,        mTimeBarRect.y2 ) );
+        
+        if ( mMouseOnTrack->isMouseOnModule() )
+        {
+            QTimelineModuleItemRef ref = mMouseOnTrack->getMouseOnModule();
+            
+            gl::color( ColorA( 1.0f, 0.0f, 1.0f, 0.4f ) );
+            gl::vertex( Vec2f( ref->mRect.x1,        mTimeBarRect.y1 ) );
+            gl::vertex( Vec2f( ref->mRect.x1 + 1,    mTimeBarRect.y1 ) );
+            gl::vertex( Vec2f( ref->mRect.x1 + 1,    mTimeBarRect.y2 ) );
+            gl::vertex( Vec2f( ref->mRect.x1,        mTimeBarRect.y2 ) );
+            
+            gl::vertex( Vec2f( ref->mRect.x2,        mTimeBarRect.y1 ) );
+            gl::vertex( Vec2f( ref->mRect.x2 + 1,    mTimeBarRect.y1 ) );
+            gl::vertex( Vec2f( ref->mRect.x2 + 1,    mTimeBarRect.y2 ) );
+            gl::vertex( Vec2f( ref->mRect.x2,        mTimeBarRect.y2 ) );
+        }
+        
+        glEnd();
+    }
     
     gl::color( Color::white() );
 }
@@ -590,5 +627,15 @@ void QTimeline::renderDebugInfo()
     str = "CUE: ";
     if ( currentCue ) str += currentCue->getName(); else str += "NONE";
     mFontMedium->drawString( str,                                       debugOffset ); debugOffset += Vec2f( 0, 15 );
+    
+    mFontMedium->drawString( "Timeline modules:\t"   + toString( mTimeline->getNumItems() ),       debugOffset ); debugOffset += Vec2f( 0, 15 );
+    mFontMedium->drawString( "Timeline tracks:\t"   + toString( mTracks.size() ),       debugOffset ); debugOffset += Vec2f( 0, 15 );
+    
+    int j = 0;
+    for( size_t k=0; k < mTracks.size();k ++ )
+        j += mTracks[k]->mModules.size();
+    
+    mFontMedium->drawString( "Track modules:\t"   + toString( j ),       debugOffset ); debugOffset += Vec2f( 0, 15 );
+    
 }
 

@@ -12,7 +12,9 @@
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "380"
-         endingLineNumber = "380">
+         endingLineNumber = "380"
+         landmarkName = "QTimeline::renderTimeBar()"
+         landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"

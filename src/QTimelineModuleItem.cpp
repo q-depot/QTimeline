@@ -51,6 +51,8 @@ QTimelineModuleItem::QTimelineModuleItem( QTimelineModule *targetModule, float s
 
 QTimelineModuleItem::~QTimelineModuleItem()
 {
+    return;
+    
     if ( mMenu )
         mParentTrack->mQTimeline->closeMenu( mMenu );
     
@@ -123,7 +125,6 @@ void QTimelineModuleItem::render( bool mouseOver )
     
     // render name
     gl::color( mTextColor );
-//    mFont->drawString( getName(), mRect.getCenter() + mNameStrSize * Vec2f( -0.5f, 0.3f ) );
     mFont->drawString( getLabel(), mRect.getCenter() + mLabelStrSize * Vec2f( -0.5f, 0.3f ) );
 }
 

@@ -35,7 +35,7 @@ class QTimeline
     
     friend class QTimelineCue;
     friend class QTimelineTrack;
-    
+    friend class QTimelineModuleItem;
     
 public:
 
@@ -71,6 +71,7 @@ public:
     
     ~QTimeline()
     {
+
         mTracks.clear();
         
         delete mCueManager;
@@ -312,9 +313,12 @@ private:
     ci::CallbackId          mCbMouseDown, mCbMouseDrag, mCbMouseUp, mCbMouseMove, mCbMouseWheel;
     ci::CallbackId          mCbResize;
     
+    ci::Vec2f               mMousePrevPos;
+    
     ci::TimelineRef         mTimeline;
     
     std::vector<QTimelineTrackRef>    mTracks;
+    QTimelineTrackRef       mMouseOnTrack;
     
     QTimelineCueManager     *mCueManager;
 

@@ -23,9 +23,10 @@ public:
     
     QTimelineModule( std::string name, std::string type ) : mName(name), mType(type) {}
     
-    ~QTimelineModule()
+    virtual ~QTimelineModule()
     {
-        mModuleItemRef.reset();
+        ci::app::console() << "delete module base class" << std::endl;
+      //  mModuleItemRef.reset();
     }
     
     virtual void update() {}
@@ -40,13 +41,17 @@ public:
     
     QTimelineModuleItemRef getItemRef() { return mModuleItemRef; }
     
-    int getParamsN() { return mModuleItemRef->mParams.size(); }
+    int getParamsN() { return ( mModuleItemRef ) ? mModuleItemRef->mParams.size() : 0; }
     
-    std::vector<QTimelineParamRef> getParams() { return mModuleItemRef->mParams; }
+    std::vector<QTimelineParamRef> getParams()
+    {
+        std::vector<QTimelineParamRef> emptyVec;
+        return ( mModuleItemRef ) ? mModuleItemRef->mParams : emptyVec;
+    }
     
-    float getParamValue( std::string name ) { return mModuleItemRef->getParamValue( name ); }
+    float getParamValue( std::string name ) { return ( mModuleItemRef ) ? mModuleItemRef->getParamValue( name ) : 0.0f; }
 
-    bool isPlaying() { return mModuleItemRef->isPlaying(); }
+    bool isPlaying() { return ( mModuleItemRef ) ? mModuleItemRef->isPlaying() : false; }
     
     std::string getType() { return mType; }
     

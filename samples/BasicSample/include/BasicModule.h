@@ -27,6 +27,11 @@ public:
         mPos    = ci::app::getWindowSize() / 2;
     }
     
+    ~BasicModule()
+    {
+        ci::app::console() << "delete basic module " << getName() << " " << ci::app::getElapsedSeconds() << std::endl;
+    }
+    
     void init()
     {
         registerParam( "radius", 50.0f, 0.0f, 60.0f );
@@ -38,9 +43,6 @@ public:
         registerParam( "green", &mColor.g );
         registerParam( "blue", &mColor.b );
     }
-    
-    
-    ~BasicModule() {}
     
     // this gets called automatically by the timeline
     void update()

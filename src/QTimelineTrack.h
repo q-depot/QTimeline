@@ -70,6 +70,11 @@ public:
     
     QTimelineTrackRef getRef() { return shared_from_this(); }
     
+    bool isMouseOnModule() { return ( mMouseOnModule ) ? true : false; }
+    
+    QTimelineModuleItemRef getMouseOnModule() { return mMouseOnModule; }
+    
+    
 private:
     
     ci::Rectf makeRect( ci::Rectf trackRect, ci::Vec2f window, double startTime, double endTime )
