@@ -560,6 +560,8 @@ void QTimeline::load( const std::string &filename )
         console() << "Error > QTimeline::load(): " << filename << " not found!" << endl;
         return;
     }
+    
+    updateCurrentTime();
 }
 
 
@@ -589,3 +591,4 @@ void QTimeline::renderDebugInfo()
     if ( currentCue ) str += currentCue->getName(); else str += "NONE";
     mFontMedium->drawString( str,                                       debugOffset ); debugOffset += Vec2f( 0, 15 );
 }
+

@@ -98,12 +98,25 @@ void BasicSampleApp::keyDown( KeyEvent event )
     
     else if ( c == 'd' )
         mTimeline.toggleDebugInfo();
+    
+    else if ( c == 'c' )
+        mTimeline.collapse();
+    
+    
+    else if ( c == 'R' )
+    {
+        for( size_t k=0; k < mModules.size(); k++ )
+            delete mModules[k];
+        mModules.clear();
+    }
 }
+
 
 void BasicSampleApp::update()
 {
     mTimeline.update();
 }
+
 
 void BasicSampleApp::draw()
 {
@@ -140,12 +153,9 @@ void BasicSampleApp::createModuleCallback( QTimeline::ModuleCallbackArgs args )
 
 
 void BasicSampleApp::deleteModuleCallback( QTimeline::ModuleCallbackArgs args )
-{
-    console() << "TODO deleteModuleCallback" << endl;
-    return;
-    
-    for( size_t k=0; k < mModules.size(); k ++ )
-        if ( mModules[k]->getName() == args.name )
+{    
+    for( size_t k=0; k < mModules.size(); k++ )
+        if ( mModules[k]->getName() == args.name && mModules[k]->getType() == args.type )
         {
             delete mModules[k];
             mModules.erase( mModules.begin() + k );

@@ -186,19 +186,16 @@ public:
     }
     
     
-    void callDeleteModuleCb( std::string moduleType, std::string moduleName, ci::Vec2i mousePos )
+    void callDeleteModuleCb( std::string moduleName, std::string moduleType )
     {
-        /*
-         TODO
         std::map<std::string, ModuleCallbacks>::iterator it;
         for ( it=mModuleCallbacks.begin(); it != mModuleCallbacks.end(); it++ )
             if( it->first == moduleType )
             {
-                ModuleCallbackArgs args = { moduleName };
+                ModuleCallbackArgs args = { moduleName, moduleType };
                 it->second.deleteCb.call(args);
                 return;
             }
-         */
     }
     
     
@@ -214,6 +211,11 @@ public:
         return time;
     }
     
+    void collapse()
+    {
+        for( size_t k=0; k < mTracks.size(); k++ )
+            mTracks[k]->close();
+    }
     
 private:
     

@@ -36,18 +36,17 @@ QTimelineTrack::QTimelineTrack(  QTimeline *timeline, string name ) : mQTimeline
 }
 
 
-//QTimelineTrack::QTimelineTrack(  QTimeline *timeline, XmlTree node )
-//{
-//    loadXmlNode( node );
-//    
-//    QTimelineTrack( timeline, getName() );
-//}
-
-
 QTimelineTrack::~QTimelineTrack()
 {
     if ( mMenu )
         mQTimeline->closeMenu( mMenu );
+    
+    for( size_t k=0; k < mModules.size(); k++ )
+    {
+        mQTimeline->mTimeline->remove( mModules[k] );
+        mQTimeline->callDeleteModuleCb( mModules[k]->getName(), mModules[k]->getType() );
+    }
+    mModules.clear();
 }
 
 
@@ -204,6 +203,10 @@ Vec2f QTimelineTrack::getTimeWindow()
 
 void QTimelineTrack::addModule( QTimelineModule *module, float startAt, float duration )
 {
+    // TODO add module should always ensure that no other modules exist with the same name
+    // perhaps QTimelineModule and QTimelineModuleItem should share a unique ID to be both referred with.
+    // would help to sort out part of the callbacks mess.
+    
     TimelineRef timelineRef = mQTimeline->getTimelineRef();
     
     QTimelineModuleItemRef moduleItemRef = QTimelineModuleItem::create( module, startAt, duration, QTimelineTrackRef(this), timelineRef.get() );
@@ -218,21 +221,15 @@ void QTimelineTrack::addModule( QTimelineModule *module, float startAt, float du
 }
 
 
-//void QTimelineTrack::addModuleItem( QTimelineModuleItemRef moduleItemRef )
-//{
-//    mModules.push_back( moduleItemRef );
-//    
-//    sort( mModules.begin(), mModules.end(), sortModulesHelper );
-//}
-
-
-void QTimelineTrack::deleteModuleItem( QTimelineModuleItemRef moduleItemRef )
+void QTimelineTrack::deleteModule( QTimelineModuleItemRef moduleItemRef )
 {
     for( size_t k=0; k < mModules.size(); k++ )
         if ( mModules[k] == moduleItemRef )
         {
-            mQTimeline->mTimeline->remove( moduleItemRef );
-            mModules.erase( mModules.begin()+k );
+//            mQTimeline->mTimeline->remove( moduleItemRef );
+//            mModules.erase( mModules.begin()+k );
+            
+            mQTimeline->callDeleteModuleCb( moduleItemRef->getName(), moduleItemRef->getType() );
             return;
         }
 }

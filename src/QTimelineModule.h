@@ -23,7 +23,10 @@ public:
     
     QTimelineModule( std::string name, std::string type ) : mName(name), mType(type) {}
     
-    ~QTimelineModule() {}
+    ~QTimelineModule()
+    {
+        mModuleItemRef.reset();
+    }
     
     virtual void update() {}
     
@@ -33,10 +36,7 @@ public:
     
     std::string getName() { return mName; }
     
-    void setItemRef( QTimelineModuleItemRef ref )
-    {
-        mModuleItemRef = ref;
-    }
+    void setItemRef( QTimelineModuleItemRef ref ) { mModuleItemRef = ref; }
     
     QTimelineModuleItemRef getItemRef() { return mModuleItemRef; }
     

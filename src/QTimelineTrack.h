@@ -50,15 +50,17 @@ public:
     
     bool mouseDrag( ci::app::MouseEvent event );
     
+    void open() {  mIsTrackOpen = true; }
+    
+    void close() {  mIsTrackOpen = false; }
+    
     void toggle() { mIsTrackOpen = !mIsTrackOpen; }
     
     bool isOpen() { return mIsTrackOpen; }
     
     ci::Vec2f getTimeWindow();
     
-//    void addModuleItem( QTimelineModuleItemRef moduleItemRef );
-    
-    void deleteModuleItem( QTimelineModuleItemRef moduleItemRef );
+    void deleteModule( QTimelineModuleItemRef moduleItemRef );
     
     ci::XmlTree getXmlNode();
     

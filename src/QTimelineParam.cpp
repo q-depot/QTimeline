@@ -53,11 +53,10 @@ QTimelineParam::QTimelineParam( QTimelineModuleItem *module, const std::string &
 
 QTimelineParam::~QTimelineParam()
 {
-    for( size_t k=0; k < mKeyframes.size(); k++ )
-        mKeyframes[k].reset();
-    
     if ( mMenu )
         mParentModule->mParentTrack->mQTimeline->closeMenu( mMenu );
+    
+    mKeyframes.clear();
 }
 
 
