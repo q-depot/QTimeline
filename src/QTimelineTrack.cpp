@@ -209,6 +209,9 @@ void QTimelineTrack::addModule( QTimelineModule *module, float startAt, float du
     // TODO add module should always ensure that no other modules exist with the same name
     // perhaps QTimelineModule and QTimelineModuleItem should share a unique ID to be both referred with.
     // would help to sort out part of the callbacks mess.
+
+    startAt     = mQTimeline->snapTime( startAt );
+    duration    = mQTimeline->snapTime( duration );
     
     TimelineRef timelineRef = mQTimeline->getTimelineRef();
     
