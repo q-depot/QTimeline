@@ -288,6 +288,12 @@ void QTimeline::updateTime()
     mPrevElapsedSeconds   = getElapsedSeconds();
 }
 
+void QTimeline::updateCurrentTime()
+{
+    double current_time = mTimeline->getCurrentTime();
+    mTimeline->stepTo(current_time != 0.0 ? 0.0 : 1.0);
+    mTimeline->stepTo(current_time);
+}
 
 void QTimeline::play( bool play, PlayMode mode )
 {
