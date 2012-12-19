@@ -258,6 +258,25 @@ void QTimelineTrack::menuEventHandler( QTimelineMenuItem* item )
         mQTimeline->callCreateModuleCb( item->getName(), mMouseDownPos, QTimelineTrackRef(this) );
         mQTimeline->closeMenu( mMenu );
     }
+    if (( item->getMeta() == "new_track_above") || (item->getMeta() == "new_track_below"))
+    {
+        mQTimeline->closeMenu( mMenu );
+
+        QTimelineTrackRef ref( new QTimelineTrack( mQTimeline, "track untitled" ) );
+        // std::find with shared_ptr wasn't happy here..
+        for (auto i = mQTimeline->mTracks.begin(); i != mQTimeline->mTracks.end(); i++)
+        {
+            if (i->get() == this)
+            {
+                int offset = item->getMeta() == "new_track_above" ? 0 : 1;
+                mQTimeline->mTracks.insert(i+offset, ref);
+                mQTimeline->update();
+                return;
+            }
+        }
+        mQTimeline->mTracks.push_back(ref);
+        mQTimeline->update();
+    }
 }
 
 
@@ -265,6 +284,8 @@ void QTimelineTrack::initMenu()
 {
     mMenu->init( "TRACK MENU" );
     
+    mMenu->addItem("New track above", "new_track_above", this, &QTimelineTrack::menuEventHandler);
+    mMenu->addItem("New track below", "new_track_below", this, &QTimelineTrack::menuEventHandler);
     map<string, QTimeline::ModuleCallbacks>::iterator it;
     for ( it=mQTimeline->mModuleCallbacks.begin() ; it != mQTimeline->mModuleCallbacks.end(); it++ )
         mMenu->addItem( it->first, "create", this, &QTimelineTrack::menuEventHandler );
