@@ -355,6 +355,9 @@ bool QTimelineParam::mouseDrag( MouseEvent event )
         mMouseOnKeyframe->set( time, value );
         
         sort( mKeyframes.begin(), mKeyframes.end(), sortKeyframesHelper );
+        
+        QTimeline* t = mParentModule->mParentTrack->mQTimeline;
+        t->setTime(t->getTime());
     }
     
     return false;
