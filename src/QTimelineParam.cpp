@@ -355,6 +355,9 @@ bool QTimelineParam::mouseDrag( MouseEvent event )
         mMouseOnKeyframe->set( time, value );
         
         sort( mKeyframes.begin(), mKeyframes.end(), sortKeyframesHelper );
+        
+        
+        mParentModule->mParentTrack->mQTimeline->updateCurrentTime();
     }
     
     return false;
