@@ -202,6 +202,8 @@ bool QTimelineModuleItem::mouseDrag( MouseEvent event )
         // drag module
         else
             dragWidget( deltaT, prevModuleEndTime, nextModuleStartTime );
+                
+        mParentTrack->mQTimeline->updateCurrentTime();
     }
     
     mMousePrevPos = event.getPos();

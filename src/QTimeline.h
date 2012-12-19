@@ -133,6 +133,8 @@ public:
     
     void setTime( double time ) { mTimeline->stepTo( time ); }
     
+    void updateCurrentTime();
+    
     void save( const std::string &filename );
     
     void load( const std::string &filename );

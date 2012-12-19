@@ -73,6 +73,7 @@ public:
     {
         for( size_t k=0; k < mItems.size(); k++ )
             delete mItems[k];
+        mItems.clear();
     }
     
     void open( ci::Vec2f pos  )
