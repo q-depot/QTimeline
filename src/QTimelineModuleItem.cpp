@@ -63,24 +63,19 @@ void QTimelineModuleItem::update( float relativeTime )
 }
 
 
-QTimelineModuleItemRef QTimelineModuleItem::registerParam( const string name, float initVal, float minVal, float maxVal )
+void QTimelineModuleItem::registerParam( const string name, float initVal, float minVal, float maxVal )
 {
-    return registerParam( name, new float(initVal), minVal, maxVal );
+    registerParam( name, new float(initVal), minVal, maxVal );
 }
 
 
-QTimelineModuleItemRef QTimelineModuleItem::registerParam( const std::string name, float *var, float minVal, float maxVal )
+void QTimelineModuleItem::registerParam( const std::string name, float *var, float minVal, float maxVal )
 {
     for( size_t k=0; k < mParams.size(); k++ )
         if ( mParams[k]->getName() == name )
-        {
             mParams[k]->mVar = var;
-            return thisRef();
-        }
     
     mParams.push_back( QTimelineParamRef( new QTimelineParam( this, name, var, minVal, maxVal, getStartTime() ) ) );
-    
-    return thisRef();
 }
 
 

@@ -52,6 +52,18 @@ public:
     
 protected:
     
+    void registerParam( const std::string name, float initVal = 0.0f, float minVal = 0.0f, float maxVal = 1.0f )
+    {
+        mModuleItemRef->registerParam( name, initVal, minVal, maxVal );
+    }
+
+    void registerParam( const std::string name, float *var, float minVal = 0.0f, float maxVal = 1.0f )
+    {
+        mModuleItemRef->registerParam( name, var, minVal, maxVal );
+    }
+
+protected:
+    
     std::string             mName;
     std::string             mType;
     

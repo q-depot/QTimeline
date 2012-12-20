@@ -87,9 +87,9 @@ public:
         return true;
     }
     
-    QTimelineModuleItemRef registerParam( const std::string name, float initVal = 0.0f, float minVal = 0.0f, float maxVal = 1.0f );
+    void registerParam( const std::string name, float initVal = 0.0f, float minVal = 0.0f, float maxVal = 1.0f );
 
-    QTimelineModuleItemRef registerParam( const std::string name, float *var, float minVal = 0.0f, float maxVal = 1.0f );
+    void registerParam( const std::string name, float *var, float minVal = 0.0f, float maxVal = 1.0f );
     
     float getParamValue( const std::string &name );
     

@@ -29,14 +29,14 @@ public:
     
     void init()
     {
-        mModuleItemRef->registerParam( "radius", 50.0f, 0.0f, 60.0f );
+        registerParam( "radius", 50.0f, 0.0f, 60.0f );
         
-        mModuleItemRef->registerParam( "pos_x", &mPos.x, 0, ci::app::getWindowWidth() );
-        mModuleItemRef->registerParam( "pos_y", &mPos.y, 0, ci::app::getWindowHeight() );
+        registerParam( "pos_x", &mPos.x, 0, ci::app::getWindowWidth() );
+        registerParam( "pos_y", &mPos.y, 0, ci::app::getWindowHeight() );
         
-        mModuleItemRef->registerParam( "red", &mColor.r );
-        mModuleItemRef->registerParam( "green", &mColor.g );
-        mModuleItemRef->registerParam( "blue", &mColor.b );
+        registerParam( "red", &mColor.r );
+        registerParam( "green", &mColor.g );
+        registerParam( "blue", &mColor.b );
     }
     
     
