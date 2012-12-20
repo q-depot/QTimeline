@@ -231,6 +231,7 @@ void QTimelineTrack::deleteModuleItem( QTimelineModuleItemRef moduleItemRef, boo
             mModules.erase( mModules.begin()+k );
             return;
         }
+    mSelectedModule.reset();
 }
 
 

@@ -185,22 +185,26 @@ bool QTimelineModuleItem::mouseDrag( MouseEvent event )
     
     else
     {
-        float deltaT       = mParentTrack->mQTimeline->getPxInSeconds( event.getPos().x - mMousePrevPos.x );
-        float              prevModuleEndTime, nextModuleStartTime;
-        
-        findModuleBoundaries( &prevModuleEndTime, &nextModuleStartTime );
-        
-        // drag handles
-        if ( handlesMouseDrag( deltaT, prevModuleEndTime, nextModuleStartTime ) )
-            mParent->reset();
-        
-        // drag module
-        else
-            dragWidget( deltaT, prevModuleEndTime, nextModuleStartTime );
-                
-        mParentTrack->mQTimeline->updateCurrentTime();
+        if (mParentTrack->contains(Vec2f(event.getX(), event.getY())))
+        {
+            float deltaT       = mParentTrack->mQTimeline->getPxInSeconds( event.getPos().x - mMousePrevPos.x );
+            float              prevModuleEndTime, nextModuleStartTime;
+            
+            findModuleBoundaries( &prevModuleEndTime, &nextModuleStartTime );
+            
+            // drag handles
+            if ( handlesMouseDrag( deltaT, prevModuleEndTime, nextModuleStartTime ) )
+                mParent->reset();
+            
+            // drag module
+            else
+                dragWidget( deltaT, prevModuleEndTime, nextModuleStartTime );
+                    
+            mParentTrack->mQTimeline->updateCurrentTime();
+        } else {
+            changeTrack(event.getY() < mParentTrack->getRect().y1);
+        }
     }
-    
     mMousePrevPos = event.getPos();
 
     return false;
@@ -285,6 +289,38 @@ void QTimelineModuleItem::loadXmlNode( ci::XmlTree node )
 {
 }
 
+void QTimelineModuleItem::changeTrack(bool moveup)
+{
+    for (auto i = mParentTrack->mQTimeline->getTracks().begin();
+         i != mParentTrack->mQTimeline->getTracks().end(); i++)
+    {
+        if (i->get() == mParentTrack.get())
+        {
+            if (moveup)
+            {
+                if (i == mParentTrack->mQTimeline->getTracks().begin())
+                    return;
+                i--;
+            } else {
+                if (i == mParentTrack->mQTimeline->getTracks().end()-1)
+                    return;
+                i++;
+            }
+            QTimelineModuleItemRef me = thisRef();
+            mParentTrack->deleteModuleItem(thisRef(), false);
+            mParentTrack = *i;
+            mParentTrack->addModuleItem(thisRef());
+            
+            float prevModuleEndTime, nextModuleStartTime;
+            findModuleBoundaries( &prevModuleEndTime, &nextModuleStartTime );
+            float deltaT = 0;
+            dragWidget( deltaT, prevModuleEndTime, nextModuleStartTime );
+            
+            mParentTrack->mQTimeline->update();
+            return;
+        }
+    }
+}
 
 void QTimelineModuleItem::menuEventHandler( QTimelineMenuItem* item )
 {
@@ -297,36 +333,7 @@ void QTimelineModuleItem::menuEventHandler( QTimelineMenuItem* item )
     if ((item->getMeta() == "moveup" ) || (item->getMeta() == "movedown"))
     {
         mParentTrack->mQTimeline->closeMenu( mMenu );
-
-        for (auto i = mParentTrack->mQTimeline->getTracks().begin();
-             i != mParentTrack->mQTimeline->getTracks().end(); i++)
-        {
-            if (i->get() == mParentTrack.get())
-            {
-                if (item->getMeta() == "moveup")
-                {
-                    if (i == mParentTrack->mQTimeline->getTracks().begin())
-                        return;
-                    i--;
-                } else {
-                    if (i == mParentTrack->mQTimeline->getTracks().end()-1)
-                        return;
-                    i++;
-                }
-                QTimelineModuleItemRef me = thisRef();
-                mParentTrack->deleteModuleItem(thisRef(), false);
-                mParentTrack = *i;
-                mParentTrack->addModuleItem(thisRef());
-                
-                float prevModuleEndTime, nextModuleStartTime;
-                findModuleBoundaries( &prevModuleEndTime, &nextModuleStartTime );
-                float deltaT = 0;
-                dragWidget( deltaT, prevModuleEndTime, nextModuleStartTime );
-                
-                mParentTrack->mQTimeline->update();
-                return;
-            }
-        }
+        changeTrack(item->getMeta() == "moveup");
     }
 }
 
