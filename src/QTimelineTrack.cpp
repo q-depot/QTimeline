@@ -221,12 +221,13 @@ void QTimelineTrack::addModuleItem( QTimelineModuleItemRef moduleItemRef )
 }
 
 
-void QTimelineTrack::deleteModuleItem( QTimelineModuleItemRef moduleItemRef )
+void QTimelineTrack::deleteModuleItem( QTimelineModuleItemRef moduleItemRef, bool removeFromTimeline )
 {
     for( size_t k=0; k < mModules.size(); k++ )
         if ( mModules[k] == moduleItemRef )
         {
-            mQTimeline->mTimeline->remove( moduleItemRef );
+            if (removeFromTimeline)
+                mQTimeline->mTimeline->remove( moduleItemRef );
             mModules.erase( mModules.begin()+k );
             return;
         }

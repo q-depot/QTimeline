@@ -294,6 +294,40 @@ void QTimelineModuleItem::menuEventHandler( QTimelineMenuItem* item )
 //      mParentTrack->mQTimeline->callDeleteModuleCb( mTargetModuleRef->getType(), getName(), mMouseDownPos );
         mParentTrack->mQTimeline->closeMenu( mMenu );
     }
+    if ((item->getMeta() == "moveup" ) || (item->getMeta() == "movedown"))
+    {
+        mParentTrack->mQTimeline->closeMenu( mMenu );
+
+        for (auto i = mParentTrack->mQTimeline->getTracks().begin();
+             i != mParentTrack->mQTimeline->getTracks().end(); i++)
+        {
+            if (i->get() == mParentTrack.get())
+            {
+                if (item->getMeta() == "moveup")
+                {
+                    if (i == mParentTrack->mQTimeline->getTracks().begin())
+                        return;
+                    i--;
+                } else {
+                    if (i == mParentTrack->mQTimeline->getTracks().end()-1)
+                        return;
+                    i++;
+                }
+                QTimelineModuleItemRef me = thisRef();
+                mParentTrack->deleteModuleItem(thisRef(), false);
+                mParentTrack = *i;
+                mParentTrack->addModuleItem(thisRef());
+                
+                float prevModuleEndTime, nextModuleStartTime;
+                findModuleBoundaries( &prevModuleEndTime, &nextModuleStartTime );
+                float deltaT = 0;
+                dragWidget( deltaT, prevModuleEndTime, nextModuleStartTime );
+                
+                mParentTrack->mQTimeline->update();
+                return;
+            }
+        }
+    }
 }
 
 
@@ -302,5 +336,7 @@ void QTimelineModuleItem::initMenu()
     mMenu->init( "MODULE MENU" );
     
     mMenu->addItem( "X DELETE", "delete", this, &QTimelineModuleItem::menuEventHandler );
+    mMenu->addItem( "Move up a track", "moveup", this, &QTimelineModuleItem::menuEventHandler);
+    mMenu->addItem( "Move down a track", "movedown", this, &QTimelineModuleItem::menuEventHandler);
 }
 
