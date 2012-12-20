@@ -8,12 +8,36 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../../../src/QTimeline.cpp"
-         timestampString = "377536402.325189"
+         timestampString = "377716720.76163"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "367"
-         endingLineNumber = "367"
-         landmarkName = "QTimeline::addModule( QTimelineModule *module, float startAt, float duration, QTimelineTrackRef trackRef )"
+         startingLineNumber = "377"
+         endingLineNumber = "377">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "../../../src/QTimelineWidget.h"
+         timestampString = "377656711.139271"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "103"
+         endingLineNumber = "103"
+         landmarkName = "updateLabel()"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "../../../src/QTimelineWidget.h"
+         timestampString = "377657187.653725"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "107"
+         endingLineNumber = "107"
+         landmarkName = "updateLabel()"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

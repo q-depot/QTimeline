@@ -102,6 +102,9 @@ void QTimeline::init()
 	layout.addLine( "delete \t\t\t set time to 0\n\n" );
     mHelpTex = gl::Texture( layout.render( true ) );
     
+    updateTime();
+    
+    updateTimeWindow();
 }
 
 
@@ -136,9 +139,16 @@ void QTimeline::render()
     // render tracks
     mTracksRect = mTransportRect;
     mTracksRect.offset( Vec2f( 0, - TIMELINE_WIDGET_PADDING ) );
+    
     for( int k=mTracks.size()-1; k >= 0; k-- )
-        mTracksRect = mTracks[k]->render( mTracksRect, mTimeWindow, getTime() );
- 
+    {
+        if ( mTracks[k] )
+            mTracksRect = mTracks[k]->render( mTracksRect, mTimeWindow, getTime() );
+        else
+            console() << "ERROR " << getElapsedSeconds() << endl;
+        
+        
+    }
     // render Time bar
     renderTimeBar();
     
@@ -380,13 +390,15 @@ void QTimeline::addModule( QTimelineModule *module, float startAt, float duratio
              ( (startAt + duration) >= trackRef->mModules[k]->getStartTime() && ( startAt + duration ) <= trackRef->mModules[k]->getEndTime() ) )
             startAt = trackRef->mModules[k]->getEndTime();
     
-    QTimelineModuleItemRef moduleItemRef = QTimelineModuleItem::create( module, trackRef, mTimeline.get() );
-    module->setItemRef( moduleItemRef );
-    moduleItemRef->setStartTime( startAt );
-    moduleItemRef->setDuration( duration );
-    mTimeline->insert( moduleItemRef );
-    
-    trackRef->addModuleItem( moduleItemRef );
+    trackRef->addModule( module, startAt, duration );
+//    
+//    QTimelineModuleItemRef moduleItemRef = QTimelineModuleItem::create( module, trackRef, mTimeline.get() );
+//    module->setItemRef( moduleItemRef );    
+//    moduleItemRef->setStartTime( startAt );
+//    moduleItemRef->setDuration( duration );
+//    mTimeline->insert( moduleItemRef );
+//    
+//    trackRef->addModuleItem( moduleItemRef );
 }
 
 

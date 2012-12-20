@@ -31,6 +31,11 @@ QTimelineCue::QTimelineCue( QTimeline *qTimeline, QTimelineCueManager *cueManage
 
     mIsMouseOn          = false;
     
+    // init rect width
+    setRect( Rectf( mQTimeline->getPosFromTime( getStartTime() ), 0, mQTimeline->getPosFromTime( getEndTime() ), 0 ) );
+    
+    updateLabel();
+    
     initMenu();
 }
 
@@ -64,7 +69,7 @@ void QTimelineCue::render()
     glEnd();
     
     gl::color( mTextColor );
-    mFont->drawString( mName, mRect.getUpperLeft() + Vec2f( TIMELINE_MODULE_HANDLE_WIDTH * 2, 19.0f ) );
+    mFont->drawString( mLabel, mRect.getUpperLeft() + Vec2f( TIMELINE_MODULE_HANDLE_WIDTH * 2, 19.0f ) );
 
     if ( mIsMouseOn )
         renderHandles();
@@ -148,6 +153,8 @@ void QTimelineCue::dragHandle( float deltaT, float prevEndTime, float nextStartT
         float duration  = math<float>::clamp( mDuration + deltaT, mQTimeline->getPxInSeconds( TIMELINE_MODULE_HANDLE_WIDTH * 2 ), nextStartTime - getStartTime() );
         mDuration       = duration;
     }
+    
+    updateLabel();
 }
 
 
@@ -191,3 +198,18 @@ void QTimelineCue::initMenu()
     mMenu->addItem( "DELETE", "", this, &QTimelineCue::menuEventHandler );
 }
 
+
+void QTimelineCue::updateLabel()
+{
+    mLabel = mName;
+
+    if ( mLabel == "" )
+        return;
+    
+    int charsN = mLabel.size() * ( max( 0.0f, mRect.getWidth() - TIMELINE_MODULE_HANDLE_WIDTH * 4 ) ) / mNameStrSize.x;
+
+    if ( charsN < mLabel.size() )
+        mLabel.resize( charsN );
+
+    mLabelStrSize = mFont->measureString( mLabel );
+}

@@ -46,14 +46,14 @@ public:
         QTimelineTrackRef       trackRef;
     };
     
-    typedef ci::CallbackMgr<void (ModuleCallbackArgs)>  ModuleCb;
+//    typedef ci::CallbackMgr<void (ModuleCallbackArgs)>  ModuleCb;
     
 private:
     
     struct ModuleCallbacks
     {
-        ModuleCb  createCb;
-        ModuleCb  deleteCb;
+        ci::CallbackMgr<void (ModuleCallbackArgs)>  createCb;
+        ci::CallbackMgr<void (ModuleCallbackArgs)>  deleteCb;
     };
     
     std::map<std::string, ModuleCallbacks>  mModuleCallbacks;
@@ -114,19 +114,19 @@ public:
     
     float getTimeFromPos( float x )
     {
-        return mTimeWindow.x + ( mTimeWindow.y - mTimeWindow.x ) * ( x - mTimeBarRect.x1 ) / mTimeBarRect.getWidth();
+        return mTimeWindow.x + ( mTimeWindow.y - mTimeWindow.x ) * ( x - mTransportRect.x1 ) / mTransportRect.getWidth();
     }
     
     float getPosFromTime( double time )
     {
-        return mTimeBarRect.getWidth() * ( time - mTimeWindow.x ) / ( mTimeWindow.y - mTimeWindow.x );
+        return mTransportRect.getWidth() * ( time - mTimeWindow.x ) / ( mTimeWindow.y - mTimeWindow.x );
     }
 
     float getTimeBarWidth() { return mTimeBarRect.x2 - mTimeBarRect.x1; }
     
     float getPxInSeconds( int n = 1 )
     {
-        return n * ( mTimeWindow.y - mTimeWindow.x ) / mTimeBarRect.getWidth();
+        return n * ( mTimeWindow.y - mTimeWindow.x ) / mTransportRect.getWidth();
     }
     
     double getTime() { return mTimeline->getCurrentTime(); }

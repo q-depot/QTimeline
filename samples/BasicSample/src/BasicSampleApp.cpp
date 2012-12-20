@@ -135,6 +135,9 @@ void BasicSampleApp::createModuleCallback( QTimeline::ModuleCallbackArgs args )
 
 void BasicSampleApp::deleteModuleCallback( QTimeline::ModuleCallbackArgs args )
 {
+    console() << "TODO deleteModuleCallback" << endl;
+    return;
+    
     for( size_t k=0; k < mModules.size(); k ++ )
         if ( mModules[k]->getName() == args.name )
         {

@@ -40,6 +40,12 @@ QTimelineParam::QTimelineParam( QTimelineModuleItem *module, const std::string &
     
     mDefaultEasing  = EaseNone();
     
+    // init rect width
+    setRect( Rectf( mParentModule->mParentTrack->mQTimeline->getPosFromTime( mParentModule->getStartTime() ), 0,
+                    mParentModule->mParentTrack->mQTimeline->getPosFromTime( mParentModule->getEndTime() ), 0 ) );
+    
+    updateLabel();
+    
     initMenu();
 }
 
@@ -109,7 +115,7 @@ Rectf QTimelineParam::render( Rectf prevElementRect )
     gl::color( mBgColor );
     gl::drawSolidRect( paramRect );
     gl::color( mTextColor );
-    mFont->drawString( getName(), paramRect.getCenter() + mNameStrSize * Vec2f( -0.5f, 0.3f ) );
+    mFont->drawString( mLabel, paramRect.getCenter() + mLabelStrSize * Vec2f( -0.5f, 0.3f ) );
     gl::color( mTextColor );
     
     if ( mIsOnSelection )

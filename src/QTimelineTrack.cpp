@@ -52,9 +52,8 @@ ci::Rectf QTimelineTrack::render( ci::Rectf rect, ci::Vec2f timeWindow, double c
     std::vector<QTimelineModuleItemRef>     modulesInWindow;
     QTimelineModuleItemRef                  module;
     
-    ci::Rectf                               moduleTrackRect, moduleRect;
+    ci::Rectf                               trackRect, moduleRect;
 
-    
     // gett all modules in time window and calculate the max number of params
     for( size_t k=0; k < mModules.size(); k ++ )
         if ( mModules[k]->isInWindow( timeWindow ) )
@@ -65,12 +64,12 @@ ci::Rectf QTimelineTrack::render( ci::Rectf rect, ci::Vec2f timeWindow, double c
         }
     
     // calculate module track rect based on the max number of params
-    moduleTrackRect = Rectf( rect.getUpperLeft() - Vec2f( 0, TIMELINE_MODULE_HEIGHT ), rect.getUpperRight() );
+    trackRect = Rectf( rect.getUpperLeft() - Vec2f( 0, TIMELINE_MODULE_HEIGHT ), rect.getUpperRight() );
     
     if ( mIsTrackOpen )
-        moduleTrackRect.offset( - maxParamsN * ci::Vec2f( 0, TIMELINE_PARAM_HEIGHT + TIMELINE_WIDGET_PADDING ) );
+        trackRect.offset( - maxParamsN * ci::Vec2f( 0, TIMELINE_PARAM_HEIGHT + TIMELINE_WIDGET_PADDING ) );
     
-    setRect( Rectf( moduleTrackRect.getUpperLeft(), rect.getUpperRight() ) );
+    setRect( Rectf( trackRect.getUpperLeft(), rect.getUpperRight() ) );
     
     if ( mIsMouseOnTrack ) ci::gl::color( mBgOverColor ); else ci::gl::color( mBgColor );
     ci::gl::drawSolidRect( mRect );
@@ -80,7 +79,7 @@ ci::Rectf QTimelineTrack::render( ci::Rectf rect, ci::Vec2f timeWindow, double c
         module          = modulesInWindow[k];
 
         // render module
-        moduleRect = makeRect( moduleTrackRect, timeWindow, module->getStartTime(), module->getEndTime() );
+        moduleRect = makeRect( trackRect, timeWindow, module->getStartTime(), module->getEndTime() );
         module->setRect( moduleRect );
         
         // module render only use the module rect without calculating any offset or returning another rect, it's a bit special :]
@@ -201,7 +200,7 @@ void QTimelineTrack::addModule( QTimelineModule *module, float startAt, float du
 {
     TimelineRef timelineRef = mQTimeline->getTimelineRef();
     
-    QTimelineModuleItemRef moduleItemRef = QTimelineModuleItem::create( module, QTimelineTrackRef(this), timelineRef.get() );
+    QTimelineModuleItemRef moduleItemRef = QTimelineModuleItem::create( module, startAt, duration, QTimelineTrackRef(this), timelineRef.get() );
     module->setItemRef( moduleItemRef );
     moduleItemRef->setStartTime( startAt );
     moduleItemRef->setDuration( duration );
@@ -213,12 +212,12 @@ void QTimelineTrack::addModule( QTimelineModule *module, float startAt, float du
 }
 
 
-void QTimelineTrack::addModuleItem( QTimelineModuleItemRef moduleItemRef )
-{
-    mModules.push_back( moduleItemRef );
-    
-    sort( mModules.begin(), mModules.end(), sortModulesHelper );
-}
+//void QTimelineTrack::addModuleItem( QTimelineModuleItemRef moduleItemRef )
+//{
+//    mModules.push_back( moduleItemRef );
+//    
+//    sort( mModules.begin(), mModules.end(), sortModulesHelper );
+//}
 
 
 void QTimelineTrack::deleteModuleItem( QTimelineModuleItemRef moduleItemRef )
@@ -255,10 +254,11 @@ void QTimelineTrack::menuEventHandler( QTimelineMenuItem* item )
 {
     if ( item->getMeta() == "create" )
     {
-        mQTimeline->callCreateModuleCb( item->getName(), mMouseDownPos, QTimelineTrackRef(this) );
+        mQTimeline->callCreateModuleCb( item->getName(), mMouseDownPos, getRef() );
         mQTimeline->closeMenu( mMenu );
     }
-    if (( item->getMeta() == "new_track_above") || (item->getMeta() == "new_track_below"))
+  
+    else if (( item->getMeta() == "new_track_above") || (item->getMeta() == "new_track_below"))
     {
         mQTimeline->closeMenu( mMenu );
 
@@ -286,6 +286,7 @@ void QTimelineTrack::initMenu()
     
     mMenu->addItem("New track above", "new_track_above", this, &QTimelineTrack::menuEventHandler);
     mMenu->addItem("New track below", "new_track_below", this, &QTimelineTrack::menuEventHandler);
+    
     map<string, QTimeline::ModuleCallbacks>::iterator it;
     for ( it=mQTimeline->mModuleCallbacks.begin() ; it != mQTimeline->mModuleCallbacks.end(); it++ )
         mMenu->addItem( it->first, "create", this, &QTimelineTrack::menuEventHandler );

@@ -21,7 +21,7 @@ class QTimeline;
 class QTimelineModuleItem;
 class QTimelineModule;
 
-class QTimelineTrack : public QTimelineWidget
+class QTimelineTrack : public QTimelineWidget, public std::enable_shared_from_this<QTimelineTrack>
 {
     
     friend class QTimeline;
@@ -54,7 +54,7 @@ public:
     
     ci::Vec2f getTimeWindow();
     
-    void addModuleItem( QTimelineModuleItemRef moduleItemRef );
+//    void addModuleItem( QTimelineModuleItemRef moduleItemRef );
     
     void deleteModuleItem( QTimelineModuleItemRef moduleItemRef );
     
@@ -63,6 +63,8 @@ public:
     void loadXmlNode( ci::XmlTree node );
     
     void menuEventHandler( QTimelineMenuItem* item );
+    
+    QTimelineTrackRef getRef() { return shared_from_this(); }
     
 private:
     

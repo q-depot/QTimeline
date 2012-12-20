@@ -39,9 +39,9 @@ class QTimelineModuleItem : public ci::TimelineItem, public QTimelineWidgetWithH
     
 public:
     
-    static QTimelineModuleItemRef create( QTimelineModule *targetModule, QTimelineTrackRef trackRef, ci::Timeline *timeline )
+    static QTimelineModuleItemRef create( QTimelineModule *targetModule, float startAt, float duration, QTimelineTrackRef trackRef, ci::Timeline *timeline )
     {
-        return QTimelineModuleItemRef( new QTimelineModuleItem( targetModule, trackRef, timeline ) );
+        return QTimelineModuleItemRef( new QTimelineModuleItem( targetModule, startAt, duration, trackRef, timeline ) );
     }
   
     ~QTimelineModuleItem();
@@ -59,6 +59,7 @@ public:
         return ci::TimelineItemRef( new QTimelineModuleItem(*this) );
     }
     
+    // FIX THIS!
     ci::TimelineItemRef cloneReverse() const
     {
         return ci::TimelineItemRef( new QTimelineModuleItem(*this) );
@@ -122,7 +123,7 @@ public:
     
 private:
     
-    QTimelineModuleItem( QTimelineModule *targetModule, QTimelineTrackRef trackRef, ci::Timeline *parent );
+    QTimelineModuleItem( QTimelineModule *targetModule, float startAt, float duration, QTimelineTrackRef trackRef, ci::Timeline *parent );
     
     bool updateAtLoopStart() { return false; }
     

@@ -61,7 +61,11 @@ public:
     {
         mName           = name;
         mNameStrSize    = mFont->measureString( mName );
+
+        updateLabel();
     }
+    
+    std::string getLabel() { return mLabel; }
 	
     ci::Rectf   getRect() { return mRect; }
     
@@ -93,6 +97,21 @@ public:
 	
 protected:
     
+    virtual void updateLabel()
+    {
+        mLabel = mName;
+        
+        if ( mLabel == "" )
+            return;
+        
+        int charsN = mLabel.size() * ( mRect.getWidth() ) / mNameStrSize.x;
+
+        if ( charsN < mLabel.size() )
+            mLabel.resize( charsN );
+        
+        mLabelStrSize = mFont->measureString( mLabel );
+    }
+    
     virtual void menuEventHandler( QTimelineMenuItem* item ) {}
     
     virtual void initMenu() {}
@@ -102,6 +121,9 @@ protected:
     
     std::string     mName;
     ci::Vec2f       mNameStrSize;
+    
+    std::string     mLabel;
+    ci::Vec2f       mLabelStrSize;
     
     ci::Rectf       mRect;
     ci::Rectf       mRectPaddedHeight;

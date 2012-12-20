@@ -70,6 +70,8 @@ private:
     
     void initMenu();
     
+    void updateLabel();
+    
 protected:
     
     QTimeline               *mQTimeline;

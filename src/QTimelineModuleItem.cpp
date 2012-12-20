@@ -21,7 +21,8 @@ using namespace ci::app;
 using namespace std;
 
 
-QTimelineModuleItem::QTimelineModuleItem( QTimelineModule *targetModule, QTimelineTrackRef trackRef, Timeline *parent ) : QTimelineWidgetWithHandles( targetModule->getName() )
+QTimelineModuleItem::QTimelineModuleItem( QTimelineModule *targetModule, float startAt, float duration, QTimelineTrackRef trackRef, Timeline *parent )
+: QTimelineWidgetWithHandles( targetModule->getName() )
 {
     setAutoRemove(false);
     
@@ -29,11 +30,20 @@ QTimelineModuleItem::QTimelineModuleItem( QTimelineModule *targetModule, QTimeli
     mParentTrack        = trackRef;
     mParent             = parent;
     
+    setStartTime( startAt );
+    setDuration( duration );
+    
     mBgColor            = QTimeline::mModulesBgCol;
 	mBgOverColor        = QTimeline::mModulesBgOverCol;
     mTextColor          = QTimeline::mModulesTextCol;
     mHandleColor        = QTimeline::mModulesHandleCol;
     mHandleOverColor    = QTimeline::mModulesHandleOverCol;
+
+    // init rect width
+    setRect( Rectf( mParentTrack->mQTimeline->getPosFromTime( getStartTime() ), 0,
+                    mParentTrack->mQTimeline->getPosFromTime( getEndTime() ), 0 ) );
+    
+    updateLabel();
     
     initMenu();
 }
@@ -115,7 +125,8 @@ void QTimelineModuleItem::render( bool mouseOver )
     
     // render name
     gl::color( mTextColor );
-    mFont->drawString( getName(), mRect.getCenter() + mNameStrSize * Vec2f( -0.5f, 0.3f ) );
+//    mFont->drawString( getName(), mRect.getCenter() + mNameStrSize * Vec2f( -0.5f, 0.3f ) );
+    mFont->drawString( getLabel(), mRect.getCenter() + mLabelStrSize * Vec2f( -0.5f, 0.3f ) );
 }
 
 
@@ -253,6 +264,11 @@ void QTimelineModuleItem::dragHandle( float deltaT, float prevEndTime, float nex
         float duration = math<float>::clamp( getDuration() + deltaT, mParentTrack->mQTimeline->getPxInSeconds( TIMELINE_MODULE_HANDLE_WIDTH * 2 ), nextStartTime - getStartTime() );
         setDuration( duration );
     }
+  
+    updateLabel();
+    
+    for( size_t k=0; k < mParams.size(); k++ )
+        mParams[k]->updateLabel();
 }
 
 
