@@ -56,7 +56,7 @@ public:
     
     void addModuleItem( QTimelineModuleItemRef moduleItemRef );
     
-    void deleteModuleItem( QTimelineModuleItemRef moduleItemRef );
+    void deleteModuleItem( QTimelineModuleItemRef moduleItemRef, bool removeFromTimeline = true );
     
     ci::XmlTree getXmlNode();
     

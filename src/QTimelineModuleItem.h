@@ -136,6 +136,7 @@ private:
     
     void initMenu();
     
+    void changeTrack(bool up);
 private:
     
     QTimelineTrackRef               mParentTrack;
