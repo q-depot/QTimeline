@@ -16,7 +16,6 @@
 		00BAE65A0E7ED9C10018A608 /* BasicSampleApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 00BAE6590E7ED9C10018A608 /* BasicSampleApp.cpp */; };
 		00CCAF15116A9FEE008396D5 /* CinderApp.icns in Resources */ = {isa = PBXBuildFile; fileRef = 00CCAF14116A9FEE008396D5 /* CinderApp.icns */; };
 		1009A204166E3CF3008BAFD8 /* QTimelineCue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1009A203166E3CF3008BAFD8 /* QTimelineCue.cpp */; };
-		1009A206166E5C9D008BAFD8 /* nocte.png in Resources */ = {isa = PBXBuildFile; fileRef = 1009A205166E5C9D008BAFD8 /* nocte.png */; };
 		1009A208166E6D51008BAFD8 /* timeline.xml in Resources */ = {isa = PBXBuildFile; fileRef = 1009A207166E6D51008BAFD8 /* timeline.xml */; };
 		104AFFFD16415316005AB633 /* QTimeline.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 104AFFFC16415316005AB633 /* QTimeline.cpp */; };
 		105EC6C2167F6ECE0057F873 /* QTimelineCueManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105EC6C1167F6ECE0057F873 /* QTimelineCueManager.cpp */; };
@@ -42,7 +41,6 @@
 		00CCAF14116A9FEE008396D5 /* CinderApp.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = CinderApp.icns; path = ../resources/CinderApp.icns; sourceTree = SOURCE_ROOT; };
 		1009A202166E2718008BAFD8 /* QTimelineWidgetWithHandles.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = QTimelineWidgetWithHandles.h; path = src/QTimelineWidgetWithHandles.h; sourceTree = "<group>"; };
 		1009A203166E3CF3008BAFD8 /* QTimelineCue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QTimelineCue.cpp; sourceTree = "<group>"; };
-		1009A205166E5C9D008BAFD8 /* nocte.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = nocte.png; path = ../resources/nocte.png; sourceTree = "<group>"; };
 		1009A207166E6D51008BAFD8 /* timeline.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = timeline.xml; path = ../resources/timeline.xml; sourceTree = "<group>"; };
 		1017B6C61666440E0075E09B /* BasicModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BasicModule.h; path = ../include/BasicModule.h; sourceTree = "<group>"; };
 		1017B6C81666570C0075E09B /* QTimelineModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = QTimelineModule.h; path = src/QTimelineModule.h; sourceTree = "<group>"; };
@@ -306,7 +304,6 @@
 			children = (
 				1009A207166E6D51008BAFD8 /* timeline.xml */,
 				10A9E3E6166B63BB00BF4E4B /* Resources.h */,
-				1009A205166E5C9D008BAFD8 /* nocte.png */,
 				8D1107310486CEB800E47090 /* Info.plist */,
 				00CCAF14116A9FEE008396D5 /* CinderApp.icns */,
 			);
@@ -371,7 +368,6 @@
 			files = (
 				00CCAF15116A9FEE008396D5 /* CinderApp.icns in Resources */,
 				10F43936166D154000EBC1B0 /* assets in Resources */,
-				1009A206166E5C9D008BAFD8 /* nocte.png in Resources */,
 				1009A208166E6D51008BAFD8 /* timeline.xml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

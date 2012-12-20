@@ -26,18 +26,14 @@ public:
     
     QTimeline                   mTimeline;
     vector<QTimelineModule*>    mModules;
-    
-    float   mFps;
-
-    gl::Texture                 mLogoTex;
-    
-    
 };
+
 
 void BasicSampleApp::prepareSettings( Settings *settings )
 {
     settings->setWindowSize( 1200, 800 );
 }
+
 
 void BasicSampleApp::setup()
 {
@@ -62,8 +58,6 @@ void BasicSampleApp::setup()
     mTimeline.addCue( "Another cue", 4.0f, 5.0f );
     
     mTimeline.loadTheme( getAssetPath("theme1.xml").generic_string() );
-    
-    mLogoTex        = gl::Texture( loadImage( loadResource(RES_LOGO) ) );
 }
 
 void BasicSampleApp::keyDown( KeyEvent event )
@@ -117,8 +111,6 @@ void BasicSampleApp::draw()
     mTimeline.render();
 
     gl::color( Color::white() );
-    
-   gl::draw( mLogoTex, Vec2i( getWindowWidth() - mLogoTex.getWidth(), 5 ) );
 }
 
 
