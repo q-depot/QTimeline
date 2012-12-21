@@ -245,7 +245,7 @@ bool QTimeline::mouseDrag( MouseEvent event )
     
     // time bar handler
     if ( mIsMouseDragTimeBar )
-        mTimeline->stepTo( getTimeFromPos( event.getPos().x ) );
+        mTimeline->stepTo( snapTime( getTimeFromPos( event.getPos().x ) ) );
     
     return false;
 }
@@ -391,14 +391,6 @@ void QTimeline::addModule( QTimelineModule *module, float startAt, float duratio
             startAt = trackRef->mModules[k]->getEndTime();
     
     trackRef->addModule( module, startAt, duration );
-//    
-//    QTimelineModuleItemRef moduleItemRef = QTimelineModuleItem::create( module, trackRef, mTimeline.get() );
-//    module->setItemRef( moduleItemRef );    
-//    moduleItemRef->setStartTime( startAt );
-//    moduleItemRef->setDuration( duration );
-//    mTimeline->insert( moduleItemRef );
-//    
-//    trackRef->addModuleItem( moduleItemRef );
 }
 
 

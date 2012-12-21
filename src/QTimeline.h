@@ -25,7 +25,7 @@
 #include "QTimelineMenu.h"
 
 
-#define QTIMELINE_SNAP      1.0f
+#define QTIMELINE_SNAP      0.25f
 
 
 class QTimeline
