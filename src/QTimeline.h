@@ -108,7 +108,7 @@ public:
     
     bool isVisible() { return mIsVisible; }
     
-    std::vector<QTimelineTrackRef> getTracks() { return mTracks; }
+    std::vector<QTimelineTrackRef>& getTracks() { return mTracks; }
     
     void loadTheme( const ci::fs::path &filepath );
     
