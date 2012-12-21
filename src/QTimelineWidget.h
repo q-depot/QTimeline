@@ -138,6 +138,9 @@ protected:
     ci::Vec2f       mMouseDownPos;
     ci::Vec2f       mMousePrevPos;
     
+    float           mMouseDownStartTime;
+    float           mMouseDownEndTime;
+    
     QTimelineMenu                   *mMenu;
     
     std::vector<QTimelineWidgetRef> mChildren;

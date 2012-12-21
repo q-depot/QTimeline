@@ -25,8 +25,7 @@
 #include "QTimelineMenu.h"
 
 
-
-
+#define QTIMELINE_SNAP      1.0f
 
 
 class QTimeline
@@ -46,8 +45,6 @@ public:
         QTimelineTrackRef       trackRef;
     };
     
-//    typedef ci::CallbackMgr<void (ModuleCallbackArgs)>  ModuleCb;
-    
 private:
     
     struct ModuleCallbacks
@@ -56,9 +53,7 @@ private:
         ci::CallbackMgr<void (ModuleCallbackArgs)>  deleteCb;
     };
     
-    std::map<std::string, ModuleCallbacks>  mModuleCallbacks;
-//    std::map <std::string, ModuleCallback> mDeleteModuleCallbacks;
-    
+    std::map<std::string, ModuleCallbacks>  mModuleCallbacks;    
     
 public:
     
@@ -197,6 +192,13 @@ public:
     void toggleHelp() { mRenderHelp = !mRenderHelp; }
     
     void toggleDebugInfo() { mRenderDebug = !mRenderDebug; }
+    
+    float snapTime( float time )
+    {
+        time = (int)( time / QTIMELINE_SNAP ) * QTIMELINE_SNAP;
+        return time;
+    }
+    
     
 private:
     

@@ -162,7 +162,9 @@ bool QTimelineModuleItem::mouseMove( MouseEvent event )
 
 bool QTimelineModuleItem::mouseDown( MouseEvent event )
 {
-    mMousePrevPos   = event.getPos();
+    mMouseDownPos       = event.getPos();
+    mMouseDownStartTime = getStartTime();
+    mMouseDownEndTime   = getEndTime();
     
     if ( mMouseOnParam )
         mMouseOnParam->mouseDown( event );
@@ -196,19 +198,9 @@ bool QTimelineModuleItem::mouseDrag( MouseEvent event )
     
     else
     {
-        float deltaT       = mParentTrack->mQTimeline->getPxInSeconds( event.getPos().x - mMousePrevPos.x );
-        float              prevModuleEndTime, nextModuleStartTime;
+        if ( !dragHandles( event ) )
+            dragWidget( event );
         
-        findModuleBoundaries( &prevModuleEndTime, &nextModuleStartTime );
-        
-        // drag handles
-        if ( handlesMouseDrag( deltaT, prevModuleEndTime, nextModuleStartTime ) )
-            mParent->reset();
-        
-        // drag module
-        else
-            dragWidget( deltaT, prevModuleEndTime, nextModuleStartTime );
-                
         mParentTrack->mQTimeline->updateCurrentTime();
     }
     
@@ -250,32 +242,52 @@ void QTimelineModuleItem::findModuleBoundaries( float *prevEndTime, float *nextS
 }
 
 
-void QTimelineModuleItem::dragHandle( float deltaT, float prevEndTime, float nextStartTime  )
+bool QTimelineModuleItem::dragHandles( MouseEvent event )
 {
+    float diff          = mParentTrack->mQTimeline->getPxInSeconds( event.getPos().x - mMouseDownPos.x );
+    float startTime, endTime, prevEndTime, nextStartTime;
+    
+    findModuleBoundaries( &prevEndTime, &nextStartTime );
+    
     if ( mSelectedHandleType == LEFT_HANDLE )
     {
-        float duration = math<float>::clamp( getDuration() - deltaT, mParentTrack->mQTimeline->getPxInSeconds( TIMELINE_MODULE_HANDLE_WIDTH * 2 ), getEndTime() - prevEndTime );
-        setStartTime( getEndTime() - duration );
-        setDuration( duration );
+        endTime     = getEndTime();
+        startTime   = math<float>::clamp( mMouseDownStartTime + diff, prevEndTime, endTime - mParentTrack->mQTimeline->getPxInSeconds( TIMELINE_MODULE_HANDLE_WIDTH * 2 ) );
+        startTime   = mParentTrack->mQTimeline->snapTime( startTime );
+        setStartTime( startTime );
+        setDuration( endTime - startTime );
     }
 
     else if ( mSelectedHandleType == RIGHT_HANDLE )
     {
-        float duration = math<float>::clamp( getDuration() + deltaT, mParentTrack->mQTimeline->getPxInSeconds( TIMELINE_MODULE_HANDLE_WIDTH * 2 ), nextStartTime - getStartTime() );
-        setDuration( duration );
+        startTime   = getStartTime();
+        endTime     = math<float>::clamp( mMouseDownEndTime + diff, startTime + mParentTrack->mQTimeline->getPxInSeconds( TIMELINE_MODULE_HANDLE_WIDTH * 2 ), nextStartTime );
+        endTime     = mParentTrack->mQTimeline->snapTime( endTime );
+        setDuration( endTime - startTime );
     }
   
     updateLabel();
     
     for( size_t k=0; k < mParams.size(); k++ )
         mParams[k]->updateLabel();
+    
+    if ( mSelectedHandleType != NO_HANDLE )
+        return true;
+    
+    return false;
 }
 
 
-void QTimelineModuleItem::dragWidget( float deltaT, float prevEndTime, float nextStartTime )
+void QTimelineModuleItem::dragWidget( MouseEvent event )
 {
+    float diff       = mParentTrack->mQTimeline->getPxInSeconds( event.getPos().x - mMouseDownPos.x );
+    float prevEndTime, nextStartTime;
+    
+    findModuleBoundaries( &prevEndTime, &nextStartTime );
+    
     float startTime = getStartTime();
-    float time      = math<float>::clamp( startTime + deltaT, prevEndTime, nextStartTime - getDuration() );
+    float time      = math<float>::clamp( mMouseDownStartTime + diff, prevEndTime, nextStartTime - getDuration() );
+    time            = mParentTrack->mQTimeline->snapTime( time );
     
     setStartTime( time );
     

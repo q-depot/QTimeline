@@ -23,7 +23,7 @@ typedef std::shared_ptr<class QTimelineCue>		QTimelineCueRef;
 class QTimelineCue : public QTimelineWidgetWithHandles
 {
     
-    friend class QTimelineManager;
+    friend class QTimelineCueManager;
     
 public:
     
@@ -35,19 +35,15 @@ public:
 
     double getEndTime() { return mStartTime + mDuration; }
     
+    void setStartTime( double time ) { mStartTime = time; }
+    
+    void setEndTime( double time ) { mDuration = time - mStartTime; }
+    
+    void setDuration( double time ) { mDuration = time; }
+    
     std::string getName() { return mName; }
     
     void render();
-    
-    void dragHandle( float deltaT, float prevEndTime, float nextStartTime  );
-    
-    bool mouseMove( ci::app::MouseEvent event );
-    
-    bool mouseDown( ci::app::MouseEvent event );
-    
-    bool mouseUp( ci::app::MouseEvent event );
-    
-    bool mouseDrag( ci::app::MouseEvent event );
     
     ci::XmlTree getXmlNode()
     {
@@ -62,10 +58,20 @@ public:
     
 private:
     
+    bool mouseMove( ci::app::MouseEvent event );
+    
+    bool mouseDown( ci::app::MouseEvent event );
+    
+    bool mouseUp( ci::app::MouseEvent event );
+    
+    bool mouseDrag( ci::app::MouseEvent event );
+
+    bool dragHandles( ci::app::MouseEvent event );
+    
+    void dragWidget( ci::app::MouseEvent event );
+    
     void findModuleBoundaries( float *prevEndTime, float *nextStartTime );
     
-    void dragWidget( float deltaT, float prevEndTime, float nextStartTime  );
-
     void menuEventHandler( QTimelineMenuItem* item );
     
     void initMenu();

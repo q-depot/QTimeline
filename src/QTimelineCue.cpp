@@ -92,15 +92,19 @@ bool QTimelineCue::mouseMove( MouseEvent event )
 
 bool QTimelineCue::mouseDown( MouseEvent event )
 {
+    mMouseDownPos       = event.getPos();
+    mMouseDownStartTime = getStartTime();
+    mMouseDownEndTime   = getEndTime();
+    
     if ( !mIsMouseOn )
         return false;
     
     if ( event.isRightDown() )
-        mQTimeline->openMenu( mMenu, event.getPos() );
-    
-    mMousePrevPos   = event.getPos();
+        mQTimeline->openMenu( mMenu, mMouseDownPos );
     
     handlesMouseDown();
+    
+    mMousePrevPos   = mMouseDownPos;
     
     return true;
 }
@@ -118,14 +122,9 @@ bool QTimelineCue::mouseDrag( MouseEvent event )
 {
     if ( !mIsMouseOn )
         return false;
-    
-    float deltaT       = mQTimeline->getPxInSeconds( event.getPos().x - mMousePrevPos.x );
-    float              prevCueEndTime, nextCueStartTime;
 
-    findModuleBoundaries( &prevCueEndTime, &nextCueStartTime );
-
-    if ( !handlesMouseDrag( deltaT, prevCueEndTime, nextCueStartTime ) )      // drag handles
-      dragWidget( deltaT, prevCueEndTime, nextCueStartTime );                 // drag module
+    if ( !dragHandles( event ) )
+        dragWidget( event );
 
     mMousePrevPos = event.getPos();
 
@@ -133,34 +132,55 @@ bool QTimelineCue::mouseDrag( MouseEvent event )
 }
 
 
-void QTimelineCue::dragWidget( float deltaT, float prevEndTime, float nextStartTime  )
-{
-    mStartTime = math<float>::clamp( mStartTime + deltaT, prevEndTime, nextStartTime - mDuration );
+void QTimelineCue::dragWidget( MouseEvent event )
+{    
+    float diff       = mQTimeline->getPxInSeconds( event.getPos().x - mMouseDownPos.x );
+    float prevEndTime, nextStartTime;
+    
+    findModuleBoundaries( &prevEndTime, &nextStartTime );
+    
+    float time      = math<float>::clamp( mMouseDownStartTime + diff, prevEndTime, nextStartTime - mDuration );
+    time            = mQTimeline->snapTime( time );
+    
+    setStartTime( time );
 }
 
 
-void QTimelineCue::dragHandle( float deltaT, float prevEndTime, float nextStartTime  )
+bool QTimelineCue::dragHandles( MouseEvent event )
 {
+    float diff          = mQTimeline->getPxInSeconds( event.getPos().x - mMouseDownPos.x );
+    float              prevEndTime, nextStartTime, startTime, endTime;
+    
+    findModuleBoundaries( &prevEndTime, &nextStartTime );
+    
     if ( mSelectedHandleType == LEFT_HANDLE )
     {
-        float duration  = math<float>::clamp( mDuration - deltaT, mQTimeline->getPxInSeconds( TIMELINE_MODULE_HANDLE_WIDTH * 2 ), getEndTime() - prevEndTime );
-        mStartTime      = getEndTime() - duration;
-        mDuration       = duration;
-    }
-
-    else if ( mSelectedHandleType == RIGHT_HANDLE )
-    {
-        float duration  = math<float>::clamp( mDuration + deltaT, mQTimeline->getPxInSeconds( TIMELINE_MODULE_HANDLE_WIDTH * 2 ), nextStartTime - getStartTime() );
-        mDuration       = duration;
+        endTime     = getEndTime();
+        startTime   = math<float>::clamp( mMouseDownStartTime + diff, prevEndTime, endTime - mQTimeline->getPxInSeconds( TIMELINE_MODULE_HANDLE_WIDTH * 2 ) );
+        startTime   = mQTimeline->snapTime( startTime );
+        setStartTime( startTime );
+        setDuration( endTime - startTime );
     }
     
+    else if ( mSelectedHandleType == RIGHT_HANDLE )
+    {
+        startTime   = getStartTime();
+        endTime     = math<float>::clamp( mMouseDownEndTime + diff, startTime + mQTimeline->getPxInSeconds( TIMELINE_MODULE_HANDLE_WIDTH * 2 ), nextStartTime );
+        endTime     = mQTimeline->snapTime( endTime );
+        setDuration( endTime - startTime );
+    }
+
     updateLabel();
+    
+    if ( mSelectedHandleType != NO_HANDLE )
+        return true;
+    
+    return false;
 }
 
 
 void QTimelineCue::findModuleBoundaries( float *prevEndTime, float *nextStartTime )
 {
-
     QTimelineCueRef prevCue;
     QTimelineCueRef nextCue;
     

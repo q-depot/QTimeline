@@ -362,7 +362,6 @@ bool QTimelineParam::mouseDrag( MouseEvent event )
         
         sort( mKeyframes.begin(), mKeyframes.end(), sortKeyframesHelper );
         
-        
         mParentModule->mParentTrack->mQTimeline->updateCurrentTime();
     }
     

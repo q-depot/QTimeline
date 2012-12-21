@@ -87,7 +87,7 @@ void QTimeline::init()
     
     mRenderDebug            = false;
     
-    mRenderHelp             = true;
+    mRenderHelp             = false;
     
     TextLayout layout;
 	layout.clear( ColorA( 0.0f, 0.0f, 0.0f, 0.8f ) );

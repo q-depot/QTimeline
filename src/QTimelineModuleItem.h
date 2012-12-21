@@ -129,9 +129,9 @@ private:
     
     void findModuleBoundaries( float *prevEndTime, float *nextStartTime );
     
-    void dragHandle( float deltaT, float prevEndTime, float nextStartTime );
+    bool dragHandles( ci::app::MouseEvent event );
     
-    void dragWidget( float deltaT, float prevEndTime, float nextStartTime );
+    void dragWidget( ci::app::MouseEvent event );
     
     QTimelineModuleItemRef getModuleRef();
     

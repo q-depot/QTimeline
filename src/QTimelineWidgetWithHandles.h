@@ -76,20 +76,20 @@ public:
         return ( mSelectedHandleType != NO_HANDLE ) ? false : true;
     }
     
-    bool handlesMouseDrag( float deltaT, float prevModuleEndTime, float nextModuleStartTime )
-    {
-        if ( mSelectedHandleType != NO_HANDLE )
-        {
-            dragHandle( deltaT, prevModuleEndTime, nextModuleStartTime );
-            return true;
-        }
-        
-        return false;
-    }
+//    bool handlesMouseDrag( float deltaT, float prevModuleEndTime, float nextModuleStartTime )
+//    {
+//        if ( mSelectedHandleType != NO_HANDLE )
+//        {
+//            dragHandle( deltaT, prevModuleEndTime, nextModuleStartTime );
+//            return true;
+//        }
+//        
+//        return false;
+//    }
     
-    virtual void dragHandle( float deltaT, float prevEndTime, float nextStartTime  ) {}
+    virtual bool dragHandles( ci::app::MouseEvent event ) {}
     
-    virtual void dragWidget( float deltaT, float prevEndTime, float nextStartTime  ) {}
+    virtual void dragWidget( ci::app::MouseEvent event ) {}
     
     void setHandleColor( ci::ColorA col ) { mHandleColor = col; }
     
