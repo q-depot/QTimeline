@@ -13,7 +13,7 @@
 
 #pragma once
 
-#include "cinder/Tween.h"
+//#include "cinder/Tween.h"
 #include "cinder/Easing.h"
 #include "QTimelineKeyframe.h"
 
@@ -50,6 +50,8 @@ public:
     float getMin()    { return mMin; }
     float getMax()    { return mMax; }
     
+    void addKeyframe( double time, float value, std::function<float (float)> fn, std::string fnStr );
+    
     void addKeyframe( double time, float value );
     
     void removeKeyframe( QTimelineKeyframeRef ref );
@@ -72,20 +74,9 @@ public:
     
     void updateKeyframesPos( float deltaT );
     
-    ci::XmlTree getXmlNode()
-    {
-        ci::XmlTree node( "param", "" );
-        node.setAttribute( "value", *mVar );
-        node.setAttribute( "min", mMin );
-        node.setAttribute( "max", mMax );
-        
-        for( size_t k=0; k < mKeyframes.size(); k++ )
-            node.push_back( mKeyframes[k]->getXmlNode() );
-        
-        return node;
-    }
+    ci::XmlTree getXmlNode();
     
-    void loadXmlNode( ci::XmlTree node ) {}
+    void loadXmlNode( ci::XmlTree node );
     
     void menuEventHandler( QTimelineMenuItem* item );
     
@@ -124,6 +115,7 @@ protected:
     ci::ColorA                          mKeyframesGraphCol;
     
     std::function<float (float)>        mDefaultEasing;
+    std::string                         mDefaultEasingStr;
 };
 
 #endif

@@ -35,6 +35,8 @@ public:
 
     double getEndTime() { return mStartTime + mDuration; }
     
+    double getDuration() { return mDuration; }
+    
     void setStartTime( double time ) { mStartTime = time; }
     
     void setEndTime( double time ) { mDuration = time - mStartTime; }
@@ -45,16 +47,7 @@ public:
     
     void render();
     
-    ci::XmlTree getXmlNode()
-    {
-        ci::XmlTree node( "cue", "" );
-        node.setAttribute( "name",      mName );
-        node.setAttribute( "startTime", mStartTime );
-        node.setAttribute( "duration",  mDuration );
-        return node;
-    }
-    
-    void loadXmlNode( ci::XmlTree node ) {}
+    ci::XmlTree getXmlNode();
     
 private:
     

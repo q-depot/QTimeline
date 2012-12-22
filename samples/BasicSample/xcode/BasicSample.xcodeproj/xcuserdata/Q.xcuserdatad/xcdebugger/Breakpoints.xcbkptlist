@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../../../src/QTimeline.cpp"
-         timestampString = "377716720.76163"
+         timestampString = "377823555.525874"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "377"
-         endingLineNumber = "377">
+         startingLineNumber = "380"
+         endingLineNumber = "380">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"

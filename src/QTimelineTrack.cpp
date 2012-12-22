@@ -22,7 +22,7 @@ using namespace std;
 bool sortModulesHelper( QTimelineModuleItemRef a, QTimelineModuleItemRef b ) { return ( a->getStartTime() < b->getStartTime() ); }
 
 
-QTimelineTrack::QTimelineTrack(  QTimeline *timeline, string name, XmlTree node  ) : mQTimeline(timeline), QTimelineWidget( name )
+QTimelineTrack::QTimelineTrack(  QTimeline *timeline, string name ) : mQTimeline(timeline), QTimelineWidget( name )
 {
     mBgColor            = QTimeline::mTracksBgCol;
     mBgOverColor        = QTimeline::mTracksBgCol;
@@ -30,12 +30,18 @@ QTimelineTrack::QTimelineTrack(  QTimeline *timeline, string name, XmlTree node 
     mIsMouseOnTrack     = false;
     mIsTrackOpen        = true;
     
-    loadXmlNode( node );
-    
     mMouseDownAt        = 0.0f;
     
     initMenu();
 }
+
+
+//QTimelineTrack::QTimelineTrack(  QTimeline *timeline, XmlTree node )
+//{
+//    loadXmlNode( node );
+//    
+//    QTimelineTrack( timeline, getName() );
+//}
 
 
 QTimelineTrack::~QTimelineTrack()
@@ -246,7 +252,26 @@ XmlTree QTimelineTrack::getXmlNode()
 
 void QTimelineTrack::loadXmlNode( ci::XmlTree node )
 {
+    setName( node.getAttributeValue<string>( "name" ) );
+    
+    string  name, type;
+    float   startTime, duration;
+    
+    for( XmlTree::Iter nodeIt = node.begin("module"); nodeIt != node.end(); ++nodeIt )
+    {
+        name       = nodeIt->getAttributeValue<string>( "name" );
+        type       = nodeIt->getAttributeValue<string>( "type" );
+        startTime  = nodeIt->getAttributeValue<float>( "startTime" );
+        duration   = nodeIt->getAttributeValue<float>( "duration" );
 
+        mQTimeline->callCreateModuleCb( name, type, startTime, duration, getRef() );
+        
+        for( size_t k=0; k < mModules.size(); k++ )
+            if ( mModules[k]->getName() == name && mModules[k]->getType() == type )
+                mModules[k]->loadXmlNode( *nodeIt );
+    }
+
+    sort( mModules.begin(), mModules.end(), sortModulesHelper );
 }
 
 
@@ -254,7 +279,7 @@ void QTimelineTrack::menuEventHandler( QTimelineMenuItem* item )
 {
     if ( item->getMeta() == "create" )
     {
-        mQTimeline->callCreateModuleCb( item->getName(), mMouseDownPos, getRef() );
+        mQTimeline->callCreateModuleCb( "untitled", item->getName(), mQTimeline->getTimeFromPos( mMouseDownPos.x ), 2.0f, getRef() );
         mQTimeline->closeMenu( mMenu );
     }
   

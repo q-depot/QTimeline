@@ -31,7 +31,7 @@ class QTimelineKeyframe {
     
 public:
     
-    QTimelineKeyframe(double time, float value, std::function<float (float)> fn ) : mTime(time), mValue(value), mFn(fn) {}
+    QTimelineKeyframe(double time, float value, std::function<float (float)> fn, std::string fnName ) : mTime(time), mValue(value), mFn(fn), mFnName(fnName) {}
 
     ~QTimelineKeyframe() {}
     
@@ -45,7 +45,11 @@ public:
         mValue  = value;
     }
     
-    void setEasing( std::function<float (float)> fn ) { mFn = fn; }
+    void setEasing( std::function<float (float)> fn, std::string fnName )
+    {
+        mFn     = fn;
+        mFnName = fnName;
+    }
     
     ci::Vec2f getAbsolutePosition( ci::Rectf paramRect, float max, float min, double startTime, double endTime )
     {
@@ -69,9 +73,9 @@ public:
     ci::XmlTree getXmlNode()
     {
         ci::XmlTree node( "kf", "" );
-        node.setAttribute( "value", mTime );
-        node.setAttribute( "time", mValue );
-        node.setAttribute( "fn", "TODO!" );
+        node.setAttribute( "value", mValue );
+        node.setAttribute( "time", mTime );
+        node.setAttribute( "fn", mFnName );
         
         return node;
     }
@@ -85,6 +89,7 @@ private:
     float   mValue;
     
 	std::function<float (float)>	mFn;
+    std::string                     mFnName;
 
 };
 

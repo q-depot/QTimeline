@@ -38,7 +38,8 @@ QTimelineParam::QTimelineParam( QTimelineModuleItem *module, const std::string &
     mMousePos       = Vec2f::zero();
     mMouseDownPos   = Vec2f::zero();
     
-    mDefaultEasing  = EaseNone();
+    mDefaultEasing      = QTimeline::getEaseFnFromString( "EaseNone" );
+    mDefaultEasingStr   = "EaseNone";
     
     // init rect width
     setRect( Rectf( mParentModule->mParentTrack->mQTimeline->getPosFromTime( mParentModule->getStartTime() ), 0,
@@ -233,13 +234,17 @@ void QTimelineParam::renderKeyframes()
     }
 }
 
+void QTimelineParam::addKeyframe( double time, float value, function<float (float)> fn, string fnStr )
+{
+    value = math<float>::clamp( value, mMin, mMax );
+    mKeyframes.push_back( QTimelineKeyframeRef( new QTimelineKeyframe( time, value, fn, fnStr ) ) );
+    
+    sort( mKeyframes.begin(), mKeyframes.end(), sortKeyframesHelper );
+}
 
 void QTimelineParam::addKeyframe( double time, float value )
 {
-    value = math<float>::clamp( value, mMin, mMax );
-    mKeyframes.push_back( QTimelineKeyframeRef( new QTimelineKeyframe( time, value, mDefaultEasing ) ) );
-    
-    sort( mKeyframes.begin(), mKeyframes.end(), sortKeyframesHelper );
+    addKeyframe( time, value, mDefaultEasing, mDefaultEasingStr );
 }
 
 
@@ -407,30 +412,11 @@ void QTimelineParam::menuEventHandler( QTimelineMenuItem* item )
     if ( mKeyframesSelection.empty() )
         return;
     
-    std::function<float (float)> fn;
-    
-    if( item->getName() == "EaseInQuad" )
-        fn = EaseInQuad();
-    
-    else if( item->getName() == "EaseOutQuad" )
-        fn = EaseOutQuad();
-    
-    else if( item->getName() == "EaseInOutQuad" )
-        fn = EaseInOutQuad();
-    
-    else if( item->getName() == "EaseOutInQuad" )
-        fn = EaseOutInQuad();
-    
-    else if( item->getName() == "EaseStep" )
-        fn = EaseStep();
-    
-    else if( item->getName() == "EaseNone" )
-        fn = EaseNone();
+    mDefaultEasing      = QTimeline::getEaseFnFromString( item->getName() );
+    mDefaultEasingStr   = item->getName();
     
     for( size_t k=0; k < mKeyframesSelection.size(); k++ )
-        mKeyframesSelection[k]->setEasing(fn);
-    
-    mDefaultEasing = fn;
+        mKeyframesSelection[k]->setEasing( mDefaultEasing, mDefaultEasingStr );
 }
 
 
@@ -476,4 +462,25 @@ void QTimelineParam::initMenu()
     mMenu->addItem( "EaseStep", "", this, &QTimelineParam::menuEventHandler );
     mMenu->addItem( "EaseNone", "", this, &QTimelineParam::menuEventHandler );
 }
+
+
+XmlTree QTimelineParam::getXmlNode()
+{
+    ci::XmlTree node( "param", "" );
+    node.setAttribute( "name", getName() );
+    node.setAttribute( "value", *mVar );
+    node.setAttribute( "min", mMin );
+    node.setAttribute( "max", mMax );
+    
+    for( size_t k=0; k < mKeyframes.size(); k++ )
+        node.push_back( mKeyframes[k]->getXmlNode() );
+    
+    return node;
+}
+
+void QTimelineParam::loadXmlNode( XmlTree node )
+{
+
+}
+
 

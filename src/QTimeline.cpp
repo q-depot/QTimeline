@@ -153,8 +153,11 @@ void QTimeline::render()
     renderTimeBar();
     
     // render Cue list
-    mCueManager->setRect( Rectf( mTimeBarRect.x1, mTimeBarRect.y1 - TIMELINE_CUELIST_HEIGHT, mTimeBarRect.x2, mTimeBarRect.y1 ) );
-    mCueManager->render();
+    if ( mCueManager )
+    {
+        mCueManager->setRect( Rectf( mTimeBarRect.x1, mTimeBarRect.y1 - TIMELINE_CUELIST_HEIGHT, mTimeBarRect.x2, mTimeBarRect.y1 ) );
+        mCueManager->render();
+    }
     
     if ( mSelectedMenu )
         mSelectedMenu->render();
@@ -518,46 +521,45 @@ void QTimeline::loadTheme( const fs::path &filepath )
 
 void QTimeline::save( const std::string &filename )
 {
-    /*
-    XmlTree doc( "QTimeline", "" );
-    
-    for( size_t k=0; k < mTracks.size(); k++ )
-        doc.push_back( mTracks[k]->getXmlNode() );
+    XmlTree doc( "qTimeline", "" );
 
-//    for( size_t k=0; k < mCueList.size(); k++ )
-//        doc.push_back( mCueList[k]->getXmlNode() );
+    XmlTree tracks( "tracks", "" );    
+    for( size_t k=0; k < mTracks.size(); k++ )
+        tracks.push_back( mTracks[k]->getXmlNode() );
+    
+    doc.push_back( tracks );
+
+    doc.push_back( mCueManager->getXmlNode() );
 
     doc.write( writeFile( filename ) );
-     */
+
 }
 
 
 void QTimeline::load( const std::string &filename )
 {
-    /*
+    clear();
+    
     XmlTree doc;
     
     try
     {
         doc = XmlTree( loadFile(filename) );
+
+        for( XmlTree::Iter nodeIt = doc.begin("QTimeline/tracks/track"); nodeIt != doc.end(); ++nodeIt )
+        {
+            QTimelineTrackRef trackRef = QTimelineTrackRef( new QTimelineTrack( this, "" ) );
+            mTracks.push_back( trackRef );
+            trackRef->loadXmlNode( *nodeIt );
+        }
         
-        for( XmlTree::Iter nodeIt = doc.begin("QTimeline/track"); nodeIt != doc.end(); ++nodeIt )
-        {
-            mTracks.push_back( QTimelineTrackRef( new QTimelineTrack( this, "track untitled", *nodeIt ) ) );
-        }
-
-        for( XmlTree::Iter nodeIt = doc.begin("QTimeline/cue"); nodeIt != doc.end(); ++nodeIt )
-        {
-            
-        }
-
+        mCueManager->loadXmlNode( doc.getChild( "qTimeline/cueList" ) );
     }
     catch ( ... )
     {
         console() << "Error > QTimeline::load(): " << filename << " not found!" << endl;
         return;
     }
-     */
 }
 
 

@@ -167,3 +167,32 @@ bool QTimelineCueManager::isTimeOnCue()
     return false;
 }
 
+
+XmlTree QTimelineCueManager::getXmlNode()
+{
+    XmlTree node( "cueList", "" );
+    
+    for( size_t k=0; k < mCueList.size(); k++ )
+        node.push_back( mCueList[k]->getXmlNode() );
+    
+    return node;
+}
+
+
+void QTimelineCueManager::loadXmlNode( XmlTree node )
+{
+    string name;
+    float startTime, duration;
+    
+    for( XmlTree::Iter nodeIt = node.begin("cue"); nodeIt != node.end(); ++nodeIt )
+    {
+        name        = nodeIt->getAttributeValue<string>( "name" );
+        startTime   = nodeIt->getAttributeValue<float>( "startTime" );
+        duration    = nodeIt->getAttributeValue<float>( "duration" );
+        
+        mCueList.push_back( QTimelineCueRef( new QTimelineCue( mQTimeline, this, name, startTime, duration ) ) );
+    }
+    
+    sort( mCueList.begin(), mCueList.end(), sortCueListHelper );
+}
+

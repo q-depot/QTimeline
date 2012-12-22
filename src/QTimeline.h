@@ -17,6 +17,8 @@
 #include "cinder/app/AppBasic.h"
 #include "cinder/Xml.h"
 #include "cinder/Timeline.h"
+#include "cinder/Easing.h"
+
 #include "QTimelineTrack.h"
 #include "QTimelineModuleItem.h"
 #include "QTimelineParam.h"
@@ -40,6 +42,7 @@ public:
     struct ModuleCallbackArgs
     {
         std::string             name;
+        std::string             type;
         float                   startTime;
         float                   duration;
         QTimelineTrackRef       trackRef;
@@ -68,10 +71,19 @@ public:
     
     ~QTimeline()
     {
-        for( size_t k=0; k < mTracks.size(); k++ )
-            mTracks[k].reset();
-
+        mTracks.clear();
+        
         delete mCueManager;
+        mCueManager = NULL;
+    }
+    
+    void clear()
+    {
+        closeMenu();
+        
+        mTracks.clear();
+        
+        mCueManager->clear();
     }
     
     void init();
@@ -152,22 +164,22 @@ public:
     }
 
     template<typename T>
-    void registerModule( std::string name, T *obj, void (T::*onCreateCallback)(ModuleCallbackArgs), void (T::*onDeleteCallback)(ModuleCallbackArgs) )
+    void registerModule( std::string type, T *obj, void (T::*onCreateCallback)(ModuleCallbackArgs), void (T::*onDeleteCallback)(ModuleCallbackArgs) )
     {
-        mModuleCallbacks[name].createCb.registerCb( std::bind1st( std::mem_fun( onCreateCallback ), obj ) );
-        mModuleCallbacks[name].deleteCb.registerCb( std::bind1st( std::mem_fun( onDeleteCallback ), obj ) );
+        mModuleCallbacks[type].createCb.registerCb( std::bind1st( std::mem_fun( onCreateCallback ), obj ) );
+        mModuleCallbacks[type].deleteCb.registerCb( std::bind1st( std::mem_fun( onDeleteCallback ), obj ) );
         
         for( size_t k=0; k < mTracks.size(); k++ )
             mTracks[k]->initMenu();
     }
     
-    void callCreateModuleCb( std::string moduleType, ci::Vec2i mousePos, QTimelineTrackRef trackRef )
+    void callCreateModuleCb( std::string moduleName, std::string moduleType, float startAt, float duration, QTimelineTrackRef trackRef )
     {
         std::map<std::string, ModuleCallbacks>::iterator it;
         for ( it=mModuleCallbacks.begin(); it != mModuleCallbacks.end(); it++ )
             if( it->first == moduleType )
             {
-                ModuleCallbackArgs args = { it->first, getTimeFromPos( mousePos.x ), 2.0f, trackRef };
+                ModuleCallbackArgs args = { moduleName, moduleType, startAt, duration, trackRef };
                 it->second.createCb.call(args);
                 return;
             }
@@ -176,6 +188,8 @@ public:
     
     void callDeleteModuleCb( std::string moduleType, std::string moduleName, ci::Vec2i mousePos )
     {
+        /*
+         TODO
         std::map<std::string, ModuleCallbacks>::iterator it;
         for ( it=mModuleCallbacks.begin(); it != mModuleCallbacks.end(); it++ )
             if( it->first == moduleType )
@@ -184,6 +198,7 @@ public:
                 it->second.deleteCb.call(args);
                 return;
             }
+         */
     }
     
     
@@ -226,7 +241,34 @@ private:
     
     void renderDebugInfo();
     
+    
 public:
+    
+    static std::function<float (float)> getEaseFnFromString( std::string fnStr )
+    {
+        std::function<float (float)> fn = ci::EaseNone();
+        
+        if( fnStr == "EaseInQuad" )
+            fn = ci::EaseInQuad();
+        
+        else if( fnStr == "EaseOutQuad" )
+            fn = ci::EaseOutQuad();
+        
+        else if( fnStr == "EaseInOutQuad" )
+            fn = ci::EaseInOutQuad();
+        
+        else if( fnStr == "EaseOutInQuad" )
+            fn = ci::EaseOutInQuad();
+        
+        else if( fnStr == "EaseStep" )
+            fn = ci::EaseStep();
+        
+        else if( fnStr == "EaseNone" )
+            fn = ci::EaseNone();
+        
+        return fn;
+    }
+    
     
     static ci::ColorA       mTimeBarBgCol;
     static ci::ColorA       mTimeBarFgCol;

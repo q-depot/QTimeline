@@ -300,7 +300,10 @@ void QTimelineModuleItem::dragWidget( MouseEvent event )
 XmlTree QTimelineModuleItem::getXmlNode()
 {
     XmlTree node( "module", "" );
-    node.setAttribute( "name", mName );
+    node.setAttribute( "name", getName() );
+    node.setAttribute( "type", mTargetModuleRef->getType() );
+    node.setAttribute( "startTime", getStartTime() );
+    node.setAttribute( "duration",  getDuration() );
     
     for( size_t k=0; k < mParams.size(); k++ )
         node.push_back( mParams[k]->getXmlNode() );
@@ -311,6 +314,25 @@ XmlTree QTimelineModuleItem::getXmlNode()
 
 void QTimelineModuleItem::loadXmlNode( ci::XmlTree node )
 {
+    float   value, time;
+    string  fnStr;
+    
+    for( XmlTree::Iter paramIt = node.begin("param"); paramIt != node.end(); ++paramIt )
+    {
+        QTimelineParamRef param = findParamByName( paramIt->getAttributeValue<string>( "name" ) );
+        
+        if ( !param )
+            continue;
+        
+        for( XmlTree::Iter kfIt = paramIt->begin("kf"); kfIt != paramIt->end(); ++kfIt )
+        {
+            value   = kfIt->getAttributeValue<float>( "value" );
+            time    = kfIt->getAttributeValue<float>( "time" );
+            fnStr   = kfIt->getAttributeValue<string>( "fn" );
+            
+            param->addKeyframe( time, value, QTimeline::getEaseFnFromString(fnStr), fnStr );
+        }
+    }
 }
 
 
@@ -330,5 +352,22 @@ void QTimelineModuleItem::initMenu()
     mMenu->init( "MODULE MENU" );
     
     mMenu->addItem( "X DELETE", "delete", this, &QTimelineModuleItem::menuEventHandler );
+}
+
+
+string QTimelineModuleItem::getType()
+{
+    return mTargetModuleRef->getType();
+}
+
+
+QTimelineParamRef QTimelineModuleItem::findParamByName( std::string name )
+{
+    for( size_t k=0; k < mParams.size(); k++ )
+        if ( mParams[k]->getName() == name )
+            return mParams[k];
+    
+    QTimelineParamRef nullPtr;
+    return nullPtr;
 }
 

@@ -118,12 +118,14 @@ public:
     
     void loadXmlNode( ci::XmlTree node );
     
-    void menuEventHandler( QTimelineMenuItem* item );
+    std::string getType();
     
     
 private:
     
     QTimelineModuleItem( QTimelineModule *targetModule, float startAt, float duration, QTimelineTrackRef trackRef, ci::Timeline *parent );
+    
+    void menuEventHandler( QTimelineMenuItem* item );
     
     bool updateAtLoopStart() { return false; }
     
@@ -136,6 +138,8 @@ private:
     QTimelineModuleItemRef getModuleRef();
     
     void initMenu();
+    
+    QTimelineParamRef findParamByName( std::string name );
     
 private:
     

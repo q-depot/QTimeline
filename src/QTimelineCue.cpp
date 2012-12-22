@@ -233,3 +233,13 @@ void QTimelineCue::updateLabel()
 
     mLabelStrSize = mFont->measureString( mLabel );
 }
+
+
+XmlTree QTimelineCue::getXmlNode()
+{
+    ci::XmlTree node( "cue", "" );
+    node.setAttribute( "name",      getName() );
+    node.setAttribute( "startTime", getStartTime() );
+    node.setAttribute( "duration",  getDuration() );
+    return node;
+}

@@ -72,6 +72,12 @@ void BasicSampleApp::keyDown( KeyEvent event )
         
         else if ( c == 'f' )
             setFullScreen( !isFullScreen() );
+        
+        else if ( c == 's' )
+            mTimeline.save( "/Users/Q/Code/Cinder/blocks/QTimeline/samples/BasicSample/assets/timeline.xml" );
+        
+        else if ( c == 'l' )
+            mTimeline.load( "/Users/Q/Code/Cinder/blocks/QTimeline/samples/BasicSample/assets/timeline.xml" );
     }
     
     
@@ -118,8 +124,8 @@ void BasicSampleApp::createModuleCallback( QTimeline::ModuleCallbackArgs args )
 {
     QTimelineModule *mod = NULL;
     
-    if( args.name == "BasicModule" )
-        mod = new BasicModule( "Untitled" );
+    if( args.type == "BasicModule" )
+        mod = new BasicModule( args.name );
     
     // ...
     

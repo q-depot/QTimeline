@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<qTimeline>
+	<tracks>
+		<track name="track 0"/>
+		<track name="track untitled">
+			<module name="Sample module one" type="BasicModule" startTime="2" duration="12">
+				<param name="radius" value="50" min="0" max="60">
+					<kf value="0" time="3.25" fn="EaseNone"/>
+					<kf value="60" time="7.3499999046325684" fn="EaseNone"/>
+				</param>
+				<param name="pos_x" value="600" min="0" max="1200">
+					<kf value="0" time="4.3000001907348633" fn="EaseStep"/>
+					<kf value="1200" time="7.1500000953674316" fn="EaseStep"/>
+				</param>
+				<param name="pos_y" value="400" min="0" max="800">
+					<kf value="462.222198" time="4.1999998092651367" fn="EaseNone"/>
+					<kf value="0" time="6.9000000953674316" fn="EaseNone"/>
+				</param>
+				<param name="red" value="1" min="0" max="1">
+					<kf value="1" time="4.0999999046325684" fn="EaseOutQuad"/>
+					<kf value="0" time="6.9000000953674316" fn="EaseOutQuad"/>
+				</param>
+				<param name="green" value="1" min="0" max="1">
+					<kf value="0" time="4.1500000953674316" fn="EaseInQuad"/>
+					<kf value="0.955555558" time="6.9000000953674316" fn="EaseInQuad"/>
+				</param>
+				<param name="blue" value="1" min="0" max="1"/>
+			</module>
+		</track>
+		<track name="track untitled">
+			<module name="Sample module two" type="BasicModule" startTime="2" duration="12">
+				<param name="radius" value="50" min="0" max="60"/>
+				<param name="pos_x" value="600" min="0" max="1200"/>
+				<param name="pos_y" value="400" min="0" max="800"/>
+				<param name="red" value="1" min="0" max="1"/>
+				<param name="green" value="1" min="0" max="1"/>
+				<param name="blue" value="1" min="0" max="1"/>
+			</module>
+		</track>
+	</tracks>
+	<cueList>
+		<cue name="Cue 1" startTime="0" duration="3"/>
+		<cue name="Another cue" startTime="4" duration="5"/>
+	</cueList>
+</qTimeline>
+

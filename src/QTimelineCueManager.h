@@ -30,7 +30,15 @@ public:
     
     QTimelineCueManager( QTimeline *qTimeline );
     
-    ~QTimelineCueManager() {}
+    ~QTimelineCueManager()
+    {
+        clear();
+    }
+    
+    void clear()
+    {
+        mCueList.clear();
+    }
     
     void render();
     
@@ -55,6 +63,10 @@ public:
     bool isTimeOnCue();
 
     double getCueEndTime() { return mCurrentCue->getEndTime(); }
+    
+    ci::XmlTree getXmlNode();
+    
+    void loadXmlNode( ci::XmlTree node );
     
 private:
     

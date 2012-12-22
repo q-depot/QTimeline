@@ -30,7 +30,9 @@ class QTimelineTrack : public QTimelineWidget, public std::enable_shared_from_th
     
 public:
     
-    QTimelineTrack( QTimeline *timeline, std::string name, ci::XmlTree node = ci::XmlTree() );
+    QTimelineTrack( QTimeline *timeline, std::string name );
+    
+//    QTimelineTrack( QTimeline *timeline, ci::XmlTree node );
     
     ~QTimelineTrack();
     
