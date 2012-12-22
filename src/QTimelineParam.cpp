@@ -236,7 +236,8 @@ void QTimelineParam::renderKeyframes()
 
 void QTimelineParam::addKeyframe( double time, float value, function<float (float)> fn, string fnStr )
 {
-    value = math<float>::clamp( value, mMin, mMax );
+    time    = mParentModule->mParentTrack->mQTimeline->snapTime( time );
+    value   = math<float>::clamp( value, mMin, mMax );
     mKeyframes.push_back( QTimelineKeyframeRef( new QTimelineKeyframe( time, value, fn, fnStr ) ) );
     
     sort( mKeyframes.begin(), mKeyframes.end(), sortKeyframesHelper );
@@ -361,6 +362,7 @@ bool QTimelineParam::mouseDrag( MouseEvent event )
     {
         float   time    = mParentModule->mParentTrack->mQTimeline->getTimeFromPos( mMousePos.x );
         time            = math<float>::clamp( time, mParentModule->getStartTime(), mParentModule->getEndTime() );
+        time            = mParentModule->mParentTrack->mQTimeline->snapTime( time );
         float value     = getPosValue( mMousePos.y );
         
         mMouseOnKeyframe->set( time, value );
