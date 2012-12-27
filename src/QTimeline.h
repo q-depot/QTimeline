@@ -363,7 +363,8 @@ private:
   
     bool                    mIsVisible;
     
-    bool                    mIsMouseDragTimeBar;
+    bool                    mMouseDragTimeBar;
+    bool                    mMouseOnTimeBar;
     
     PlayMode                mPlayMode;
 

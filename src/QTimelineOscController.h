@@ -24,16 +24,19 @@
 
 typedef std::shared_ptr<class QTimelineOscController>    QTimelineOscControllerRef;
 
+// OSC addresses
+#define OSC_PLAY_ADDRESS    "/play/"    // out: play PLAY_MODE STATE - in: play STATE(free_run default mode) | play PLAY_MODE STATE
+
+
 
 class QTimelineOscController
 {
     
 public:
     
-    QTimelineOscController()
+    QTimelineOscController( int port = 9000 )
     {
-        std::string host = "169.192.0.10";
-        int         port = 9005;
+        std::string host = "localhost";
         
         addClient( host, port ); // test client
         

@@ -74,7 +74,8 @@ void QTimeline::init()
     
     mIsVisible              = true;
     
-    mIsMouseDragTimeBar     = false;
+    mMouseDragTimeBar       = false;
+    mMouseOnTimeBar         = false;
     
     mSelectedMenu           = NULL;
     
@@ -204,7 +205,7 @@ bool QTimeline::mouseDown( ci::app::MouseEvent event )
     mCueManager->mouseDown( event );
     
     // time bar handler
-    mIsMouseDragTimeBar = mTimeBarRect.contains( event.getPos() );
+    mMouseDragTimeBar = mTimeBarRect.contains( event.getPos() );
     
     mouseDrag( event );
     
@@ -219,7 +220,7 @@ bool QTimeline::mouseUp( ci::app::MouseEvent event )
     
     mCueManager->mouseUp( event );
     
-    mIsMouseDragTimeBar = false;
+    mMouseDragTimeBar = false;
     
     return false;
 }
@@ -240,6 +241,8 @@ bool QTimeline::mouseMove( ci::app::MouseEvent event )
     
     mMousePrevPos = event.getPos();
     
+    mMouseOnTimeBar = mTimeBarRect.contains( event.getPos() );
+    
     return false;
 }
 
@@ -252,7 +255,7 @@ bool QTimeline::mouseDrag( MouseEvent event )
     mCueManager->mouseDrag( event );
     
     // time bar handler
-    if ( mIsMouseDragTimeBar )
+    if ( mMouseDragTimeBar )
         mTimeline->stepTo( snapTime( getTimeFromPos( event.getPos().x ) ) );
     
     mMousePrevPos = event.getPos();
@@ -308,6 +311,7 @@ void QTimeline::updateTime()
     mPrevElapsedSeconds   = getElapsedSeconds();
 }
 
+
 void QTimeline::updateCurrentTime()
 {
     double current_time = mTimeline->getCurrentTime();
@@ -315,11 +319,14 @@ void QTimeline::updateCurrentTime()
     mTimeline->stepTo(current_time);
 }
 
+
 void QTimeline::play( bool play, PlayMode mode )
 {
     mPrevElapsedSeconds = getElapsedSeconds();
     mIsPlaying          = play;
     mPlayMode           = mode;
+
+    addOscMessage( OSC_PLAY_ADDRESS, "i" + toString(mPlayMode) + " i" + toString(mIsPlaying) );
 }
 
 
@@ -380,17 +387,21 @@ void QTimeline::renderTimeBar()
     mFontSmall->drawString( toString( mTimeWindow.x + k ),  Vec2f( k * oneSecInPx + 3, mTimeBarRect.y2 - 3 ) );
     
     // render indicators
-    if ( mMouseOnTrack )
+    if ( mMouseOnTrack || mMouseOnTimeBar )
     {
         float posX = snapPos( mMousePrevPos.x );
-        
         glBegin( GL_QUADS );
-        
         gl::color( ColorA( 0.0f, 1.0f, 1.0f, 0.4f ) );
         gl::vertex( Vec2f( posX,        mTimeBarRect.y1 ) );
         gl::vertex( Vec2f( posX + 1,    mTimeBarRect.y1 ) );
         gl::vertex( Vec2f( posX + 1,    mTimeBarRect.y2 ) );
         gl::vertex( Vec2f( posX,        mTimeBarRect.y2 ) );
+        glEnd();
+    }
+    
+    if ( mMouseOnTrack )
+    {
+        glBegin( GL_QUADS );
         
         if ( mMouseOnTrack->isMouseOnModule() )
         {

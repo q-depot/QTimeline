@@ -23,6 +23,7 @@ QTimelineCue::QTimelineCue( QTimeline *qTimeline, QTimelineCueManager *cueManage
 {
     mBgColor            = QTimeline::mCueBgCol;
     mBgOverColor        = QTimeline::mCueBgOverCol;
+    mFgColor            = QTimeline::mCueFgCol;
     mTextColor          = QTimeline::mCueTextCol;
     mHandleColor        = QTimeline::mCueHandleCol;
     mHandleOverColor    = QTimeline::mCueHandleOverCol;
@@ -41,6 +42,7 @@ QTimelineCue::QTimelineCue( QTimeline *qTimeline, QTimelineCueManager *cueManage
 
 void QTimelineCue::render()
 {
+    // bg
     glBegin( GL_QUADS );
     gl::color( mBgColor );          gl::vertex( mRect.getUpperLeft() );
     gl::color( mBgColor );          gl::vertex( mRect.getUpperRight() );
@@ -48,9 +50,10 @@ void QTimelineCue::render()
     gl::color( mBgColor * 0.8f );   gl::vertex( mRect.getLowerLeft() );
     glEnd();
     
+    // current time bar
     if ( mQTimeline->mPlayMode == QTimeline::CUE_LIST )
     {
-        float timeNorm = ( mQTimeline->getTime() - getStartTime() ) / ( getEndTime() - getStartTime() );
+        float timeNorm = getTimeNorm();
         if ( timeNorm >= 0.0f && timeNorm <= 1.0f )
         {
             float posX = mRect.x1 + mRect.getWidth() * timeNorm;
@@ -60,12 +63,11 @@ void QTimelineCue::render()
             gl::vertex( Vec2i( posX, mRect.y1 )                     );
             gl::vertex( Vec2i( posX, mRect.y1 )     + Vec2i( 0, 5 ) );
             gl::vertex( Vec2i( mRect.x1, mRect.y1 ) + Vec2i( 0, 5 ) );
-
             glEnd();
-//            gl::drawSolidRect( Rectf( mRect.getUpperLeft(), Vec2f( mRect.x1 + mRect.getWidth() * timeNorm, mRect.y2 ) ) );
         }
     }
-    
+
+    // border
     gl::color( ColorA( 1.0f, 1.0f, 1.0f, 0.08f ) );
     glBegin( GL_LINE_STRIP );
     gl::vertex( mRect.getLowerLeft() );
@@ -74,11 +76,13 @@ void QTimelineCue::render()
     gl::vertex( mRect.getLowerRight() );
     glEnd();
     
-    gl::color( mTextColor );
-    mFont->drawString( mLabel, mRect.getUpperLeft() + Vec2f( TIMELINE_MODULE_HANDLE_WIDTH * 2, 19.0f ) );
-
+    // handles
     if ( mIsMouseOn )
         renderHandles();
+    
+    // label
+    gl::color( mTextColor );
+    mFont->drawString( mLabel, mRect.getUpperLeft() + Vec2f( TIMELINE_MODULE_HANDLE_WIDTH * 2, 19.0f ) );
 }
 
 bool QTimelineCue::mouseMove( MouseEvent event )
@@ -249,3 +253,10 @@ XmlTree QTimelineCue::getXmlNode()
     node.setAttribute( "duration",  getDuration() );
     return node;
 }
+
+
+float QTimelineCue::getTimeNorm()
+{
+    return ( mQTimeline->getTime() - getStartTime() ) / ( getEndTime() - getStartTime() );
+}
+

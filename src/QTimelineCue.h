@@ -49,6 +49,8 @@ public:
     
     ci::XmlTree getXmlNode();
     
+    float getTimeNorm();
+    
 private:
     
     bool mouseMove( ci::app::MouseEvent event );
