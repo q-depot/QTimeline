@@ -19,6 +19,14 @@
 		1009A208166E6D51008BAFD8 /* timeline.xml in Resources */ = {isa = PBXBuildFile; fileRef = 1009A207166E6D51008BAFD8 /* timeline.xml */; };
 		104AFFFD16415316005AB633 /* QTimeline.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 104AFFFC16415316005AB633 /* QTimeline.cpp */; };
 		105EC6C2167F6ECE0057F873 /* QTimelineCueManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105EC6C1167F6ECE0057F873 /* QTimelineCueManager.cpp */; };
+		106409F7168B188C00FA182E /* osc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 106409BF168B188B00FA182E /* osc.a */; };
+		106409F8168B188C00FA182E /* osc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 106409C1168B188B00FA182E /* osc.a */; };
+		106409F9168B188C00FA182E /* osc.lib in Frameworks */ = {isa = PBXBuildFile; fileRef = 106409C3168B188B00FA182E /* osc.lib */; };
+		106409FA168B188C00FA182E /* osc_d.lib in Frameworks */ = {isa = PBXBuildFile; fileRef = 106409C4168B188B00FA182E /* osc_d.lib */; };
+		10640A0B168B188C00FA182E /* OscBundle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 106409EB168B188B00FA182E /* OscBundle.cpp */; };
+		10640A0C168B188C00FA182E /* OscListener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 106409EC168B188B00FA182E /* OscListener.cpp */; };
+		10640A0D168B188C00FA182E /* OscMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 106409ED168B188B00FA182E /* OscMessage.cpp */; };
+		10640A0E168B188C00FA182E /* OscSender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 106409EE168B188B00FA182E /* OscSender.cpp */; };
 		10A28CFF166395DA00D082A8 /* QTimelineParam.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10A28CFE166395DA00D082A8 /* QTimelineParam.cpp */; };
 		10A28D01166397E000D082A8 /* QTimelineTrack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10A28D00166397E000D082A8 /* QTimelineTrack.cpp */; };
 		10A28D031663DED900D082A8 /* QTimelineModuleItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10A28D021663DED900D082A8 /* QTimelineModuleItem.cpp */; };
@@ -50,6 +58,33 @@
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		105EC6BD167F314D0057F873 /* QTimelineCueManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = QTimelineCueManager.h; path = src/QTimelineCueManager.h; sourceTree = "<group>"; };
 		105EC6C1167F6ECE0057F873 /* QTimelineCueManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QTimelineCueManager.cpp; sourceTree = "<group>"; };
+		106409A5168B13B000FA182E /* QTimelineOscController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = QTimelineOscController.h; path = src/QTimelineOscController.h; sourceTree = "<group>"; };
+		106409AA168B188B00FA182E /* IpEndpointName.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IpEndpointName.h; sourceTree = "<group>"; };
+		106409AB168B188B00FA182E /* NetworkingUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkingUtils.h; sourceTree = "<group>"; };
+		106409AC168B188B00FA182E /* PacketListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PacketListener.h; sourceTree = "<group>"; };
+		106409AD168B188B00FA182E /* TimerListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimerListener.h; sourceTree = "<group>"; };
+		106409AE168B188B00FA182E /* UdpSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UdpSocket.h; sourceTree = "<group>"; };
+		106409B0168B188B00FA182E /* MessageMappingOscPacketListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageMappingOscPacketListener.h; sourceTree = "<group>"; };
+		106409B1168B188B00FA182E /* OscException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OscException.h; sourceTree = "<group>"; };
+		106409B2168B188B00FA182E /* OscHostEndianness.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OscHostEndianness.h; sourceTree = "<group>"; };
+		106409B3168B188B00FA182E /* OscOutboundPacketStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OscOutboundPacketStream.h; sourceTree = "<group>"; };
+		106409B4168B188B00FA182E /* OscPacketListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OscPacketListener.h; sourceTree = "<group>"; };
+		106409B5168B188B00FA182E /* OscPrintReceivedElements.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OscPrintReceivedElements.h; sourceTree = "<group>"; };
+		106409B6168B188B00FA182E /* OscReceivedElements.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OscReceivedElements.h; sourceTree = "<group>"; };
+		106409B7168B188B00FA182E /* OscTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OscTypes.h; sourceTree = "<group>"; };
+		106409B8168B188B00FA182E /* OscArg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OscArg.h; sourceTree = "<group>"; };
+		106409B9168B188B00FA182E /* OscBundle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OscBundle.h; sourceTree = "<group>"; };
+		106409BA168B188B00FA182E /* OscListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OscListener.h; sourceTree = "<group>"; };
+		106409BB168B188B00FA182E /* OscMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OscMessage.h; sourceTree = "<group>"; };
+		106409BC168B188B00FA182E /* OscSender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OscSender.h; sourceTree = "<group>"; };
+		106409BF168B188B00FA182E /* osc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = osc.a; sourceTree = "<group>"; };
+		106409C1168B188B00FA182E /* osc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = osc.a; sourceTree = "<group>"; };
+		106409C3168B188B00FA182E /* osc.lib */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = osc.lib; sourceTree = "<group>"; };
+		106409C4168B188B00FA182E /* osc_d.lib */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = osc_d.lib; sourceTree = "<group>"; };
+		106409EB168B188B00FA182E /* OscBundle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OscBundle.cpp; sourceTree = "<group>"; };
+		106409EC168B188B00FA182E /* OscListener.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OscListener.cpp; sourceTree = "<group>"; };
+		106409ED168B188B00FA182E /* OscMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OscMessage.cpp; sourceTree = "<group>"; };
+		106409EE168B188B00FA182E /* OscSender.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OscSender.cpp; sourceTree = "<group>"; };
 		10A28CFE166395DA00D082A8 /* QTimelineParam.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QTimelineParam.cpp; sourceTree = "<group>"; };
 		10A28D00166397E000D082A8 /* QTimelineTrack.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QTimelineTrack.cpp; sourceTree = "<group>"; };
 		10A28D021663DED900D082A8 /* QTimelineModuleItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QTimelineModuleItem.cpp; sourceTree = "<group>"; };
@@ -124,6 +159,10 @@
 				00B784B40FF439BC000DE1D7 /* AudioToolbox.framework in Frameworks */,
 				00B784B50FF439BC000DE1D7 /* AudioUnit.framework in Frameworks */,
 				00B784B60FF439BC000DE1D7 /* CoreAudio.framework in Frameworks */,
+				106409F7168B188C00FA182E /* osc.a in Frameworks */,
+				106409F8168B188C00FA182E /* osc.a in Frameworks */,
+				106409F9168B188C00FA182E /* osc.lib in Frameworks */,
+				106409FA168B188C00FA182E /* osc_d.lib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -165,9 +204,108 @@
 			name = "Other Frameworks";
 			sourceTree = "<group>";
 		};
+		106409A7168B188B00FA182E /* osc */ = {
+			isa = PBXGroup;
+			children = (
+				106409A8168B188B00FA182E /* include */,
+				106409BD168B188B00FA182E /* lib */,
+				106409EA168B188B00FA182E /* src */,
+			);
+			name = osc;
+			path = ../../../../osc;
+			sourceTree = "<group>";
+		};
+		106409A8168B188B00FA182E /* include */ = {
+			isa = PBXGroup;
+			children = (
+				106409A9168B188B00FA182E /* ip */,
+				106409AF168B188B00FA182E /* osc */,
+				106409B8168B188B00FA182E /* OscArg.h */,
+				106409B9168B188B00FA182E /* OscBundle.h */,
+				106409BA168B188B00FA182E /* OscListener.h */,
+				106409BB168B188B00FA182E /* OscMessage.h */,
+				106409BC168B188B00FA182E /* OscSender.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		106409A9168B188B00FA182E /* ip */ = {
+			isa = PBXGroup;
+			children = (
+				106409AA168B188B00FA182E /* IpEndpointName.h */,
+				106409AB168B188B00FA182E /* NetworkingUtils.h */,
+				106409AC168B188B00FA182E /* PacketListener.h */,
+				106409AD168B188B00FA182E /* TimerListener.h */,
+				106409AE168B188B00FA182E /* UdpSocket.h */,
+			);
+			path = ip;
+			sourceTree = "<group>";
+		};
+		106409AF168B188B00FA182E /* osc */ = {
+			isa = PBXGroup;
+			children = (
+				106409B0168B188B00FA182E /* MessageMappingOscPacketListener.h */,
+				106409B1168B188B00FA182E /* OscException.h */,
+				106409B2168B188B00FA182E /* OscHostEndianness.h */,
+				106409B3168B188B00FA182E /* OscOutboundPacketStream.h */,
+				106409B4168B188B00FA182E /* OscPacketListener.h */,
+				106409B5168B188B00FA182E /* OscPrintReceivedElements.h */,
+				106409B6168B188B00FA182E /* OscReceivedElements.h */,
+				106409B7168B188B00FA182E /* OscTypes.h */,
+			);
+			path = osc;
+			sourceTree = "<group>";
+		};
+		106409BD168B188B00FA182E /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				106409BE168B188B00FA182E /* iphone */,
+				106409C0168B188B00FA182E /* macosx */,
+				106409C2168B188B00FA182E /* vc10 */,
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
+		106409BE168B188B00FA182E /* iphone */ = {
+			isa = PBXGroup;
+			children = (
+				106409BF168B188B00FA182E /* osc.a */,
+			);
+			path = iphone;
+			sourceTree = "<group>";
+		};
+		106409C0168B188B00FA182E /* macosx */ = {
+			isa = PBXGroup;
+			children = (
+				106409C1168B188B00FA182E /* osc.a */,
+			);
+			path = macosx;
+			sourceTree = "<group>";
+		};
+		106409C2168B188B00FA182E /* vc10 */ = {
+			isa = PBXGroup;
+			children = (
+				106409C3168B188B00FA182E /* osc.lib */,
+				106409C4168B188B00FA182E /* osc_d.lib */,
+			);
+			path = vc10;
+			sourceTree = "<group>";
+		};
+		106409EA168B188B00FA182E /* src */ = {
+			isa = PBXGroup;
+			children = (
+				106409EB168B188B00FA182E /* OscBundle.cpp */,
+				106409EC168B188B00FA182E /* OscListener.cpp */,
+				106409ED168B188B00FA182E /* OscMessage.cpp */,
+				106409EE168B188B00FA182E /* OscSender.cpp */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
 		10EDF232162AD407004F4AFD /* blocks */ = {
 			isa = PBXGroup;
 			children = (
+				106409A7168B188B00FA182E /* osc */,
 				10EDF280162AD4D0004F4AFD /* ciUI */,
 				10EDF234162AD418004F4AFD /* QTimeline */,
 			);
@@ -260,6 +398,7 @@
 				105EC6BD167F314D0057F873 /* QTimelineCueManager.h */,
 				10B243ED16807E5700C7EAEB /* QTimelineKeyframe.h */,
 				10E3F5C5165ED81C00EF3FAB /* QTimelineModuleItem.h */,
+				106409A5168B13B000FA182E /* QTimelineOscController.h */,
 				10CF0B0B1661026E00CE8505 /* QTimelineParam.h */,
 				10CF0B091660ED3700CE8505 /* QTimelineTrack.h */,
 				1020A4111662449900DCF5E3 /* QTimelineWidget.h */,
@@ -387,6 +526,10 @@
 				10A28D031663DED900D082A8 /* QTimelineModuleItem.cpp in Sources */,
 				1009A204166E3CF3008BAFD8 /* QTimelineCue.cpp in Sources */,
 				105EC6C2167F6ECE0057F873 /* QTimelineCueManager.cpp in Sources */,
+				10640A0B168B188C00FA182E /* OscBundle.cpp in Sources */,
+				10640A0C168B188C00FA182E /* OscListener.cpp in Sources */,
+				10640A0D168B188C00FA182E /* OscMessage.cpp in Sources */,
+				10640A0E168B188C00FA182E /* OscSender.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -406,7 +549,16 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = "\"$(CINDER_PATH)/lib/libcinder_d.a\"";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../../osc/lib/iphone\"",
+					"\"$(SRCROOT)/../../../../osc/lib/macosx\"",
+					"\"$(SRCROOT)/../../../../osc/lib/vc10\"",
+				);
+				OTHER_LDFLAGS = (
+					"\"$(CINDER_PATH)/lib/libcinder_d.a\"",
+					"\"$(CINDER_PATH)/blocks/osc/lib/macosx/osc.a\"",
+				);
 				PRODUCT_NAME = BasicSample;
 				WRAPPER_EXTENSION = app;
 			};
@@ -427,7 +579,16 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = "\"$(CINDER_PATH)/lib/libcinder.a\"";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../../osc/lib/iphone\"",
+					"\"$(SRCROOT)/../../../../osc/lib/macosx\"",
+					"\"$(SRCROOT)/../../../../osc/lib/vc10\"",
+				);
+				OTHER_LDFLAGS = (
+					"\"$(CINDER_PATH)/lib/libcinder.a\"",
+					"\"$(CINDER_PATH)/blocks/osc/lib/macosx/osc.a\"",
+				);
 				PRODUCT_NAME = BasicSample;
 				STRIP_INSTALLED_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
@@ -445,7 +606,7 @@
 				HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/boost\"";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				SDKROOT = macosx10.8;
-				USER_HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/include\" ../include";
+				USER_HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/include\" ../include \"$(CINDER_PATH)/blocks/osc/include\"";
 			};
 			name = Debug;
 		};
@@ -460,7 +621,7 @@
 				HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/boost\"";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				SDKROOT = macosx10.8;
-				USER_HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/include\" ../include";
+				USER_HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/include\" ../include \"$(CINDER_PATH)/blocks/osc/include\"";
 			};
 			name = Release;
 		};

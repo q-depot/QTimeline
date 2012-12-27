@@ -57,11 +57,13 @@ public:
     std::vector<QTimelineCueRef> getCueList() { return mCueList; }
     
     QTimelineCueRef getCurrentCue() { return mCurrentCue; }
-        
-    void playCue();
+    
+    bool playCue( int cueN = -1 );
     
     bool isTimeOnCue();
-
+    
+    double getCueStartTime() { return mCurrentCue->getStartTime(); }
+    
     double getCueEndTime() { return mCurrentCue->getEndTime(); }
     
     ci::XmlTree getXmlNode();

@@ -85,7 +85,7 @@ void QTimeline::init()
     
     play( false, FREE_RUN );
     
-    mRenderDebug            = false;
+    mRenderDebug            = true;
     
     mRenderHelp             = false;
     
@@ -323,14 +323,16 @@ void QTimeline::play( bool play, PlayMode mode )
 }
 
 
-void QTimeline::playCue()
+void QTimeline::playCue( int cueN )
 {
+    // OR cue != current cue ?
     play( !isPlaying(), CUE_LIST );
     
     if ( !isPlaying() )
         return;
     
-    mCueManager->playCue();
+    if ( mCueManager->playCue( cueN ) )
+        mTimeline->stepTo( mCueManager->getCueStartTime() );
 }
 
 
@@ -644,6 +646,5 @@ void QTimeline::renderDebugInfo()
         j += mTracks[k]->mModules.size();
     
     mFontMedium->drawString( "Track modules:\t"   + toString( j ),       debugOffset ); debugOffset += Vec2f( 0, 15 );
-    
 }
 

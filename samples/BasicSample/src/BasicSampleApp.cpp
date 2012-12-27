@@ -41,6 +41,8 @@ void BasicSampleApp::setup()
 {
     mTimeline.init();
     
+    mTimeline.initOsc();
+    
     
     // register modules
     mTimeline.registerModule( "BasicModule", this, &BasicSampleApp::createModuleCallback, &BasicSampleApp::deleteModuleCallback );
@@ -113,6 +115,12 @@ void BasicSampleApp::keyDown( KeyEvent event )
         
 //        mModules.clear();
     }
+    
+    else if ( c == 't' )
+        mTimeline.addOscMessage( "/test", "f0.3" );
+
+    else if ( (int)c >= 48 && (int)c <= 57 )
+        mTimeline.playCue( (int)c - 49 );
 }
 
 

@@ -25,7 +25,7 @@
 #include "QTimelineModule.h"
 #include "QTimelineCueManager.h"
 #include "QTimelineMenu.h"
-
+#include "QTimelineOscController.h"
 
 #define QTIMELINE_SNAP      0.25f
 
@@ -95,7 +95,7 @@ public:
     
     void play( bool play = true, PlayMode mode = FREE_RUN );
     
-    void playCue();
+    void playCue( int cueN = -1 );
     
     void addCue( std::string name, double startTime, double duration )
     {
@@ -223,6 +223,18 @@ public:
     {
         for( size_t k=0; k < mTracks.size(); k++ )
             mTracks[k]->close();
+    }
+    
+    void initOsc() // ( std::string host, int port )
+    {
+        mOscController.reset();
+        mOscController = QTimelineOscControllerRef( new QTimelineOscController() );
+    }
+    
+    void addOscMessage( std::string address, std::string args = "" )
+    {
+        if ( mOscController )
+            mOscController->addMessage( address, args );
     }
     
 private:
@@ -361,6 +373,8 @@ private:
     
     bool                    mRenderHelp;
     ci::gl::Texture         mHelpTex;
+    
+    QTimelineOscControllerRef   mOscController;
 };
 
 

@@ -135,16 +135,30 @@ void QTimelineCueManager::initMenu()
 }
 
 
-void QTimelineCueManager::playCue()
+bool QTimelineCueManager::playCue( int cueN )
 {
     if ( mCueList.empty() )
-        return;
+        return false;
     
+
+    if ( cueN >= 0 )                                        // select a specific cue within the range
+    {
+        if ( cueN >= mCueList.size() )
+            return false;
+        
+        mCurrentCue = mCueList[cueN];
+        return true;                                                // select cue
+    }
+    
+                                                            // or select the next cue
     if ( !mCurrentCue )
+    {
         mCurrentCue = mCueList[0];
+        return true;                                                // select cue
+    }
     
     if ( isTimeOnCue() )
-        return;
+        return false;
     
     for( size_t k=0; k < mCueList.size(); k++ )
     {
@@ -152,9 +166,11 @@ void QTimelineCueManager::playCue()
         {
             mCurrentCue = mCueList[ (k+1) % mCueList.size() ];
             mQTimeline->setTime( mCurrentCue->getStartTime() );
-            return;
+            return true;                                            // select cue
         }
     }
+    
+    return false;
 }
 
 
