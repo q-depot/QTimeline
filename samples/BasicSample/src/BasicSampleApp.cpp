@@ -71,10 +71,7 @@ void BasicSampleApp::keyDown( KeyEvent event )
     
     if ( event.isAltDown() )
     {
-        if ( c == 'h' )
-            mTimeline.toggleRender();
-        
-        else if ( c == 'f' )
+        if ( c == 'f' )
             setFullScreen( !isFullScreen() );
         
         else if ( c == 's' )
@@ -121,6 +118,9 @@ void BasicSampleApp::keyDown( KeyEvent event )
 
     else if ( (int)c >= 48 && (int)c <= 57 )
         mTimeline.playCue( (int)c - 49 );
+    
+    else if ( c == 'h' )
+        mTimeline.toggleRender();
 }
 
 

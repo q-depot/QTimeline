@@ -17,8 +17,8 @@
 #include "cinder/gl/TextureFont.h"
 #include "cinder/Function.h"
 
-#define TIMELINE_MENU_ITEM_HEIGHT   20
-#define TIMELINE_MENU_TEXT_INDENT   3
+#define TIMELINE_MENU_ITEM_HEIGHT   22
+#define TIMELINE_MENU_TEXT_INDENT   4
 
 
 class QTimelineMenuItem
@@ -29,10 +29,12 @@ class QTimelineMenuItem
 public:
     
     template<typename T>
-    QTimelineMenuItem( std::string name, std::string meta, T *obj, void (T::*callback)(QTimelineMenuItem*) ) : mName(name), mMeta(meta)
+    QTimelineMenuItem( std::string name, std::string meta, T *obj, void (T::*callback)(QTimelineMenuItem*) ) : mName(name), mMeta(meta), mIsActive(true)
     {
         mCallback.registerCb( std::bind1st( std::mem_fun( callback ), obj ) );
     }
+    
+    QTimelineMenuItem( std::string name ) : mName(name), mMeta(""), mIsActive(false) { }
     
     ~QTimelineMenuItem() {}
     
@@ -40,11 +42,17 @@ public:
 
     std::string getMeta() { return mMeta; }
     
+    bool isActive() { return mIsActive; }
+    
+    
 private:
     
-    std::string                                 mName;
-    std::string                                 mMeta;
+    std::string     mName;
+    std::string     mMeta;
+    bool            mIsActive;
+    
     ci::CallbackMgr<void (QTimelineMenuItem*)>  mCallback;
+
 };
 
 
@@ -91,7 +99,10 @@ public:
         if ( mRect.contains( event.getPos() ) )
         {
             int idx = mItems.size() * ( event.getPos().y - mRect.y1 ) / mRect.getHeight();
-            mMouseOnItem = mItems[idx];
+
+            if ( mItems[idx]->isActive() )
+                mMouseOnItem = mItems[idx];
+            
             return true;
         }
         
@@ -112,13 +123,18 @@ public:
     template<typename T>
     void addItem( std::string name, std::string meta, T *obj, void (T::*callback)(QTimelineMenuItem*) )
     {
-        QTimelineMenuItem *item = new QTimelineMenuItem( name, meta, obj, callback );
-        mItems.push_back( item );
+        mItems.push_back( new QTimelineMenuItem( name, meta, obj, callback ) );
         
-        int width   = mFont->measureString( name ).x;
-        mWidth      = std::max( width + TIMELINE_MENU_TEXT_INDENT * 2, mWidth );
+        setWidth();
     }
-    
+
+    void addItem( std::string name )
+    {
+        mItems.push_back( new QTimelineMenuItem( name ) );
+
+        setWidth();
+    }
+
     bool isVisible() { return mIsVisible; }
     
     std::string getName() { return mName; }
@@ -129,36 +145,76 @@ public:
     {
         clear();
         mName = name;
+        
+        addItem( mName );
     }
     
 private:        // only QTimeline can render the menu
+    
+    void setWidth()
+    {
+        int width   = mFont->measureString( mName ).x;
+        mWidth      = std::max( 30 + width + TIMELINE_MENU_TEXT_INDENT * 2, mWidth );
+    }
     
     void render()
     {
         if ( !mIsVisible )
             return;
         
-        ci::Vec2f upperLeft = mPos;//( 100, 100 );
-        ci::Vec2f lowerRight( upperLeft.x + mWidth, upperLeft.y + TIMELINE_MENU_ITEM_HEIGHT * mItems.size() );
+        mRect = ci::Rectf( mPos, ci::Vec2f( mPos.x + mWidth, mPos.y + TIMELINE_MENU_ITEM_HEIGHT * mItems.size() ) );
+        ci::Rectf itemRect( mRect.getUpperLeft(), mRect.getUpperLeft() + ci::Vec2f( mWidth, TIMELINE_MENU_ITEM_HEIGHT ) );
         
-        ci::gl::color( ci::ColorA( 0.2f, 0.2f, 0.2f, 1.0f ) );
-        ci::gl::drawSolidRect( ci::Rectf( upperLeft, lowerRight ) );
+        glBegin( GL_QUADS );
         
-        ci::Rectf r( upperLeft, upperLeft + ci::Vec2f( mWidth, TIMELINE_MENU_ITEM_HEIGHT ) );
+        ci::gl::color( ci::ColorA( 0.15f, 0.15f, 0.15f, 1.0f ) );
+        ci::gl::vertex( mRect.getUpperLeft() );
+        ci::gl::vertex( mRect.getUpperRight() );
+        ci::gl::vertex( mRect.getLowerRight() );
+        ci::gl::vertex( mRect.getLowerLeft() );
+    
+        ci::gl::color( ci::ColorA( 1.0f, 1.0f, 1.0f, 0.2f ) );
+        ci::gl::vertex( ci::Vec2f( mRect.x1, mRect.y1 ) );
+        ci::gl::vertex( ci::Vec2f( mRect.x2, mRect.y1 ) );
+        ci::gl::vertex( ci::Vec2f( mRect.x2, mRect.y1 + 1 ) );
+        ci::gl::vertex( ci::Vec2f( mRect.x1, mRect.y1 + 1 ) );
+    
+        glEnd();
+        
         for( size_t k=0; k < mItems.size(); k++ )
         {
-            if( mMouseOnItem == mItems[k] ) ci::gl::color( ci::ColorA( 1.0f, 1.0f, 1.0f, 0.2f ) ); else ci::gl::color( ci::ColorA( 1.0f, 1.0f, 1.0f, 0.1f ) );
-            ci::gl::drawSolidRect( r );
-            ci::gl::color( ci::ColorA( 1.0f, 1.0f, 1.0f, 1.0f ) );
-            mFont->drawString( mItems[k]->mName, upperLeft + ci::Vec2f( TIMELINE_MENU_TEXT_INDENT, 13 + k * TIMELINE_MENU_ITEM_HEIGHT ) );
-            ci::gl::color( ci::Color::white() );
-            ci::gl::drawLine( r.getLowerLeft(), r.getLowerRight() );
+            glBegin( GL_QUADS );
             
-            r.offset( ci::Vec2f( 0, TIMELINE_MENU_ITEM_HEIGHT ) );
+            if( mMouseOnItem == mItems[k] )
+            {
+                ci::gl::color( ci::ColorA( 1.0f, 1.0f, 1.0f, 0.2f ) );
+                ci::gl::vertex( itemRect.getUpperLeft() );
+                ci::gl::vertex( itemRect.getUpperRight() );
+                ci::gl::vertex( itemRect.getLowerRight() );
+                ci::gl::vertex( itemRect.getLowerLeft() );
+            }
+            
+            ci::gl::color( ci::ColorA( 1.0f, 1.0f, 1.0f, 0.2f ) );
+            ci::gl::vertex( ci::Vec2f( itemRect.x1, itemRect.y2 ) );
+            ci::gl::vertex( ci::Vec2f( itemRect.x2, itemRect.y2 ) );
+            ci::gl::vertex( ci::Vec2f( itemRect.x2, itemRect.y2 - 1 ) );
+            ci::gl::vertex( ci::Vec2f( itemRect.x1, itemRect.y2 - 1 ) );
+            
+            glEnd();
+            
+            if ( mItems[k]->isActive() )
+                ci::gl::color( ci::ColorA( 1.0f, 1.0f, 1.0f, 1.0f ) );
+            else
+                ci::gl::color( ci::ColorA( 0.0f, 1.0f, 1.0f, 1.0f ) );
+            
+            mFont->drawString( mItems[k]->mName, itemRect.getUpperLeft() + ci::Vec2f( TIMELINE_MENU_TEXT_INDENT, 14 ) );
+            
+            itemRect.offset( ci::Vec2f( 0, TIMELINE_MENU_ITEM_HEIGHT ) );
         }
         
-        mRect = ci::Rectf( upperLeft, r.getUpperRight() );
+//        mRect = ci::Rectf( upperLeft, r.getUpperRight() );
     }
+    
     
 private:
     
