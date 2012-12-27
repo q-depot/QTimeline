@@ -326,13 +326,17 @@ void QTimeline::play( bool play, PlayMode mode )
 void QTimeline::playCue( int cueN )
 {
     // OR cue != current cue ?
-    play( !isPlaying(), CUE_LIST );
-    
-    if ( !isPlaying() )
+    if ( isPlaying() )
+    {
+        play( false, CUE_LIST );
         return;
+    }
     
     if ( mCueManager->playCue( cueN ) )
+    {
         mTimeline->stepTo( mCueManager->getCueStartTime() );
+        play( true, CUE_LIST );
+    }
 }
 
 
@@ -349,10 +353,10 @@ void QTimeline::renderTimeBar()
     // render time bar indicator
     gl::color( mTimeBarFgCol );
     glBegin( GL_QUADS );
-    gl::vertex( Vec2f( timelinePosX, mTimeBarRect.getY1() ) );
-    gl::vertex( Vec2f( timelinePosX+1, mTimeBarRect.getY1() ) );
-    gl::vertex( Vec2f( timelinePosX+1, mTransportRect.getY1() ) );
-    gl::vertex( Vec2f( timelinePosX, mTransportRect.getY1() ) );
+    gl::vertex( Vec2f( timelinePosX,    mTimeBarRect.getY1() ) );
+    gl::vertex( Vec2f( timelinePosX+1,  mTimeBarRect.getY1() ) );
+    gl::vertex( Vec2f( timelinePosX+1,  mTransportRect.getY1() ) );
+    gl::vertex( Vec2f( timelinePosX,    mTransportRect.getY1() ) );
     glEnd();
     
     // render beat and bar labels
