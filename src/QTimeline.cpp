@@ -25,6 +25,8 @@ using namespace std;
 ColorA      QTimeline::mTimeBarBgCol            = ColorA( 0.10f, 0.10f, 0.10f, 1.00f );
 ColorA      QTimeline::mTimeBarFgCol            = ColorA( 1.00f, 1.00f, 1.00f, 0.20f );
 ColorA      QTimeline::mTimeBarTextCol          = ColorA( 1.00f, 1.00f, 1.00f, 1.00f );
+ColorA      QTimeline::mTimeBarMouseBarCol     = ColorA( 1.00f, 1.00f, 1.00f, 1.00f );
+ColorA      QTimeline::mTimeBarModuleRangeCol  = ColorA( 1.00f, 1.00f, 1.00f, 1.00f );
 
 ColorA      QTimeline::mTransportBgCol          = ColorA( 0.10f, 0.10f, 0.10f, 1.00f );
 ColorA      QTimeline::mTransportTextCol        = ColorA( 1.00f, 1.00f, 1.00f, 1.00f );
@@ -352,18 +354,29 @@ void QTimeline::renderTimeBar()
     // render time bar
     float timelinePosX = mTimeBarRect.getWidth() * mTimeNorm;
     mTimeBarRect  = Rectf( mTracksRect.getUpperLeft() - Vec2f( 0, TIMELINE_BAR_HEIGHT ), mTracksRect.getUpperRight() );
-    gl::color( mTimeBarBgCol );
-    gl::drawSolidRect( mTimeBarRect );
-    gl::color( mTimeBarFgCol );
-    gl::drawSolidRect( Rectf( mTimeBarRect.getUpperLeft(), mTimeBarRect.getLowerLeft() + Vec2f( timelinePosX, 0 ) ) );
-    
-    // render time bar indicator
-    gl::color( mTimeBarFgCol );
+
     glBegin( GL_QUADS );
+    
+    gl::color( QTimeline::mTimeBarBgCol );
+    gl::vertex( mTimeBarRect.getUpperLeft() );
+    gl::vertex( mTimeBarRect.getUpperRight() );
+    gl::vertex( mTimeBarRect.getLowerRight() );
+    gl::vertex( mTimeBarRect.getLowerLeft() );
+    
+    Rectf barOver( Rectf( mTimeBarRect.getUpperLeft(), mTimeBarRect.getLowerLeft() + Vec2f( timelinePosX, 0 ) ) );
+    gl::color( QTimeline::mTimeBarFgCol );
+    gl::vertex( barOver.getUpperLeft() );
+    gl::vertex( barOver.getUpperRight() );
+    gl::vertex( barOver.getLowerRight() );
+    gl::vertex( barOver.getLowerLeft() );
+    
+    // render current time bar indicator
+    gl::color( QTimeline::mTimeBarFgCol );
     gl::vertex( Vec2f( timelinePosX,    mTimeBarRect.getY1() ) );
     gl::vertex( Vec2f( timelinePosX+1,  mTimeBarRect.getY1() ) );
     gl::vertex( Vec2f( timelinePosX+1,  mTransportRect.getY1() ) );
     gl::vertex( Vec2f( timelinePosX,    mTransportRect.getY1() ) );
+    
     glEnd();
     
     // render beat and bar labels
@@ -382,16 +395,16 @@ void QTimeline::renderTimeBar()
     glEnd();
     
     // render labels
-    gl::color( mTimeBarTextCol );
+    gl::color( QTimeline::mTimeBarTextCol );
     for( int k=0; k < nSecs; k+=4 )
     mFontSmall->drawString( toString( mTimeWindow.x + k ),  Vec2f( k * oneSecInPx + 3, mTimeBarRect.y2 - 3 ) );
     
-    // render indicators
+    // render mouse bar
     if ( mMouseOnTrack || mMouseOnTimeBar )
     {
         float posX = snapPos( mMousePrevPos.x );
         glBegin( GL_QUADS );
-        gl::color( ColorA( 0.0f, 1.0f, 1.0f, 0.4f ) );
+        gl::color( QTimeline::mTimeBarMouseBarCol );
         gl::vertex( Vec2f( posX,        mTimeBarRect.y1 ) );
         gl::vertex( Vec2f( posX + 1,    mTimeBarRect.y1 ) );
         gl::vertex( Vec2f( posX + 1,    mTimeBarRect.y2 ) );
@@ -399,31 +412,29 @@ void QTimeline::renderTimeBar()
         glEnd();
     }
     
-    if ( mMouseOnTrack )
+    // render module range
+    if ( mMouseOnTrack && mMouseOnTrack->isMouseOnModule() )
     {
-        glBegin( GL_QUADS );
+        QTimelineModuleItemRef ref = mMouseOnTrack->getMouseOnModule();
         
-        if ( mMouseOnTrack->isMouseOnModule() )
-        {
-            QTimelineModuleItemRef ref = mMouseOnTrack->getMouseOnModule();
-            
-            gl::color( ColorA( 1.0f, 0.0f, 1.0f, 0.4f ) );
-            gl::vertex( Vec2f( ref->mRect.x1,       mTimeBarRect.y1 ) );
-            gl::vertex( Vec2f( ref->mRect.x1 + 1,   mTimeBarRect.y1 ) );
-            gl::vertex( Vec2f( ref->mRect.x1 + 1,   mTimeBarRect.y2 ) );
-            gl::vertex( Vec2f( ref->mRect.x1,       mTimeBarRect.y2 ) );
-            
-            gl::vertex( Vec2f( ref->mRect.x2,       mTimeBarRect.y1 ) );
-            gl::vertex( Vec2f( ref->mRect.x2 + 1,   mTimeBarRect.y1 ) );
-            gl::vertex( Vec2f( ref->mRect.x2 + 1,   mTimeBarRect.y2 ) );
-            gl::vertex( Vec2f( ref->mRect.x2,       mTimeBarRect.y2 ) );
-            
-            float h = 6;
-            gl::vertex( Vec2f( ref->mRect.x1,       mTimeBarRect.y1 + h ) );
-            gl::vertex( Vec2f( ref->mRect.x2,       mTimeBarRect.y1 + h ) );
-            gl::vertex( Vec2f( ref->mRect.x2,       mTimeBarRect.y1 + h + 1 ) );
-            gl::vertex( Vec2f( ref->mRect.x1,       mTimeBarRect.y1 + h + 1 ) );
-        }
+        glBegin( GL_QUADS );
+
+        gl::color( QTimeline::mTimeBarModuleRangeCol );
+        gl::vertex( Vec2f( ref->mRect.x1,       mTimeBarRect.y1 ) );
+        gl::vertex( Vec2f( ref->mRect.x1 + 1,   mTimeBarRect.y1 ) );
+        gl::vertex( Vec2f( ref->mRect.x1 + 1,   mTimeBarRect.y2 ) );
+        gl::vertex( Vec2f( ref->mRect.x1,       mTimeBarRect.y2 ) );
+        
+        gl::vertex( Vec2f( ref->mRect.x2,       mTimeBarRect.y1 ) );
+        gl::vertex( Vec2f( ref->mRect.x2 + 1,   mTimeBarRect.y1 ) );
+        gl::vertex( Vec2f( ref->mRect.x2 + 1,   mTimeBarRect.y2 ) );
+        gl::vertex( Vec2f( ref->mRect.x2,       mTimeBarRect.y2 ) );
+        
+        float h = 6;
+        gl::vertex( Vec2f( ref->mRect.x1,       mTimeBarRect.y1 + h ) );
+        gl::vertex( Vec2f( ref->mRect.x2,       mTimeBarRect.y1 + h ) );
+        gl::vertex( Vec2f( ref->mRect.x2,       mTimeBarRect.y1 + h + 1 ) );
+        gl::vertex( Vec2f( ref->mRect.x1,       mTimeBarRect.y1 + h + 1 ) );
         
         glEnd();
     }
@@ -486,6 +497,8 @@ void QTimeline::loadTheme( const fs::path &filepath )
         QTimeline::mTimeBarBgCol            = getThemeColor( theme, "TimeBarBgCol" );
         QTimeline::mTimeBarFgCol            = getThemeColor( theme, "TimeBarFgCol" );
         QTimeline::mTimeBarTextCol          = getThemeColor( theme, "TimeBarTextCol" );
+        QTimeline::mTimeBarMouseBarCol      = getThemeColor( theme, "TimeBarMouseBarCol" );
+        QTimeline::mTimeBarModuleRangeCol   = getThemeColor( theme, "TimeBarModuleRangeCol" );
         
         // Transport
         QTimeline::mTransportBgCol          = getThemeColor( theme, "TransportBgCol" );
@@ -666,6 +679,7 @@ void QTimeline::renderDebugInfo()
 
 void QTimeline::step( int steps )
 {
-    mTimeline->stepTo( mTimeline->getCurrentTime() + steps * QTIMELINE_SNAP );
+    float newTime = mTimeline->getCurrentTime() + steps * QTIMELINE_SNAP;
+    mTimeline->stepTo( max( 0.0f, newTime ) );
 }
 

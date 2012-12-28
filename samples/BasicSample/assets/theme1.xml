@@ -5,6 +5,8 @@
     <TimeBarBgCol r='0.05' g='0.05' b='0.05' a='1.0' />
     <TimeBarFgCol r='1.0' g='1.0' b='1.0' a='0.2' />
     <TimeBarTextCol r='0.44' g='0.44' b='0.44' a='1.0' />
+    <TimeBarMouseBarCol r='0.0' g='1.0' b='1.0' a='0.4' />
+    <TimeBarModuleRangeCol r='1.0' g='0.0' b='1.0' a='0.4' />
     
     <TransportBgCol r='0.05' g='0.05' b='0.05' a='1.0' />
     <TransportTextCol r='1.0' g='1.0' b='1.0' a='0.8' />

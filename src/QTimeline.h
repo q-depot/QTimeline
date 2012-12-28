@@ -298,6 +298,8 @@ public:
     static ci::ColorA       mTimeBarBgCol;
     static ci::ColorA       mTimeBarFgCol;
     static ci::ColorA       mTimeBarTextCol;
+    static ci::ColorA       mTimeBarMouseBarCol;
+    static ci::ColorA       mTimeBarModuleRangeCol;
     
     static ci::ColorA       mTransportBgCol;
     static ci::ColorA       mTransportTextCol;
