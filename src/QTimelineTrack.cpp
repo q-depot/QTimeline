@@ -41,13 +41,13 @@ QTimelineTrack::~QTimelineTrack()
     if ( mMenu )
         mQTimeline->closeMenu( mMenu );
     
-    for( size_t k=0; k < mModules.size(); k++ )
-    {
-        mQTimeline->mTimeline->remove( mModules[k] );                                       // remove() flag the item as erase marked, timeline::stepTo() is in charge to actually delete the item
-        mQTimeline->updateCurrentTime();                                                    // updateCurrentTime() force the call to stepTo()
-        mQTimeline->callDeleteModuleCb( mModules[k]->getName(), mModules[k]->getType() );   // callback to delete the QTimelineModule
-    }
-    mModules.clear();
+//    for( size_t k=0; k < mModules.size(); k++ )
+//    {
+//        mQTimeline->mTimeline->remove( mModules[k] );                                       // remove() flag the item as erase marked, timeline::stepTo() is in charge to actually delete the item
+//        mQTimeline->updateCurrentTime();                                                    // updateCurrentTime() force the call to stepTo()
+//        mQTimeline->callDeleteModuleCb( mModules[k]->getName(), mModules[k]->getType() );   // callback to delete the QTimelineModule
+//    }
+//    mModules.clear();
 }
 
 
@@ -162,7 +162,7 @@ bool QTimelineTrack::mouseUp( ci::app::MouseEvent event )
 
 
 bool QTimelineTrack::mouseMove( ci::app::MouseEvent event )
-{
+{    
     mIsMouseOnTrack     = false;
     
     if ( mMouseOnModule )
@@ -227,8 +227,16 @@ void QTimelineTrack::addModule( QTimelineModule *module, float startAt, float du
 }
 
 
-void QTimelineTrack::deleteModule( QTimelineModuleItemRef moduleItemRef )
+void QTimelineTrack::markModuleForRemoval( QTimelineModuleItemRef moduleItemRef )
 {
+    for( size_t k=0; k < mModules.size(); k++ )
+        if ( mModules[k] == moduleItemRef )
+        {
+            mQTimeline->markModuleForRemoval( moduleItemRef );
+            return;
+        }
+    
+    /*
     for( size_t k=0; k < mModules.size(); k++ )
         if ( mModules[k] == moduleItemRef )
         {
@@ -238,6 +246,7 @@ void QTimelineTrack::deleteModule( QTimelineModuleItemRef moduleItemRef )
             mModules.erase( mModules.begin()+k );                                               // remove the QTimelineModuleItemRef
             return;
         }
+     */
 }
 
 
@@ -318,5 +327,20 @@ void QTimelineTrack::initMenu()
     map<string, QTimeline::ModuleCallbacks>::iterator it;
     for ( it=mQTimeline->mModuleCallbacks.begin() ; it != mQTimeline->mModuleCallbacks.end(); it++ )
         mMenu->addItem( it->first, "create", this, &QTimelineTrack::menuEventHandler );
+}
+
+
+void QTimelineTrack::eraseModule( QTimelineModuleItemRef itemRef )
+{
+    mSelectedModule.reset();
+    mMouseOnModule.reset();
+    
+    for( size_t k=0; k < mModules.size(); k++ )
+        if ( mModules[k] == itemRef )
+        {
+            mModules[k].reset();
+            mModules.erase( mModules.begin()+k );
+            return;
+        }
 }
 

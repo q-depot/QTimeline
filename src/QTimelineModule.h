@@ -21,11 +21,11 @@ class QTimelineModule
     
 public:
     
-    QTimelineModule( std::string name, std::string type ) : mName(name), mType(type) {}
+    QTimelineModule( std::string name, std::string type ) : mName(name), mType(type), mMarkedForRemoval(false) {}
     
     virtual ~QTimelineModule()
     {
-        ci::app::console() << "delete module base class" << std::endl;
+        ci::app::console() << "delete QTimelineModule base class" << std::endl;
       //  mModuleItemRef.reset();
     }
     
@@ -55,6 +55,8 @@ public:
     
     std::string getType() { return mType; }
     
+//    void markedForRemoval() { mMarkedForRemoval = true; }
+    
 protected:
     
     void registerParam( const std::string name, float initVal = 0.0f, float minVal = 0.0f, float maxVal = 1.0f )
@@ -74,6 +76,7 @@ protected:
     
     QTimelineModuleItemRef  mModuleItemRef;
     
+    bool                    mMarkedForRemoval;
 };
 
 #endif

@@ -51,12 +51,12 @@ QTimelineModuleItem::QTimelineModuleItem( QTimelineModule *targetModule, float s
 
 QTimelineModuleItem::~QTimelineModuleItem()
 {
-    return;
+//    return;
     
-    if ( mMenu )
-        mParentTrack->mQTimeline->closeMenu( mMenu );
-    
-    mParams.clear();    
+//    if ( mMenu )
+//        mParentTrack->mQTimeline->closeMenu( mMenu );
+//    
+//    mParams.clear();    
 }
 
 
@@ -340,7 +340,7 @@ void QTimelineModuleItem::menuEventHandler( QTimelineMenuItem* item )
     if ( item->getMeta() == "delete" )
     {
         mParentTrack->mQTimeline->closeMenu( mMenu );
-        mParentTrack->deleteModule( thisRef() );
+        mParentTrack->markModuleForRemoval( thisRef() );
     }
 }
 

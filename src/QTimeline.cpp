@@ -113,6 +113,8 @@ void QTimeline::init()
 
 void QTimeline::update()
 {
+    eraseMarkedModules();
+    
     updateTime();
     
     updateTimeWindow();

@@ -60,7 +60,7 @@ public:
     
     ci::Vec2f getTimeWindow();
     
-    void deleteModule( QTimelineModuleItemRef moduleItemRef );
+    void markModuleForRemoval( QTimelineModuleItemRef moduleItemRef );
     
     ci::XmlTree getXmlNode();
     
@@ -74,6 +74,7 @@ public:
     
     QTimelineModuleItemRef getMouseOnModule() { return mMouseOnModule; }
     
+    void eraseModule( QTimelineModuleItemRef itemRef );
     
 private:
     

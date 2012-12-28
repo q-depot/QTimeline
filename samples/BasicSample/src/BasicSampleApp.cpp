@@ -157,25 +157,28 @@ void BasicSampleApp::createModuleCallback( QTimeline::ModuleCallbackArgs args )
 {
     QTimelineModuleRef mod;
     
-    if( args.type == "BasicModule" )
-        mod = QTimelineModuleRef( new BasicModule( args.name ) );
+//    if( args.type == "BasicModule" )
+//        mod = QTimelineModuleRef( new BasicModule( args.name ) );
     
     // ...
     
     if ( !mod )
         return;
     
-    mTimeline.addModule( mod.get(), args.startTime, args.duration, args.trackRef );
-    mod->init();
+//    mTimeline.addModule( mod.get(), args.startTime, args.duration, args.trackRef );
+//    mod->init();
     
-    mModules.push_back( mod );
+//    mModules.push_back( mod );
 }
 
 
 void BasicSampleApp::deleteModuleCallback( QTimeline::ModuleCallbackArgs args )
-{    
+{
+    string name = args.itemRef->getName();
+    string type = args.itemRef->getType();
+    
     for( size_t k=0; k < mModules.size(); k++ )
-        if ( mModules[k]->getName() == args.name && mModules[k]->getType() == args.type )
+        if ( mModules[k]->getName() == name && mModules[k]->getType() == type )
         {
             mModules.erase( mModules.begin() + k );
             return;
