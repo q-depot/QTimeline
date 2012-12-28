@@ -326,7 +326,7 @@ void QTimeline::play( bool play, PlayMode mode )
     mIsPlaying          = play;
     mPlayMode           = mode;
 
-    addOscMessage( OSC_PLAY_ADDRESS, "i" + toString(mPlayMode) + " i" + toString(mIsPlaying) );
+    addOscMessage( OSC_ADDRESS_PLAY, "i" + toString(mPlayMode) + " i" + toString(mIsPlaying) );
 }
 
 
@@ -661,5 +661,11 @@ void QTimeline::renderDebugInfo()
         j += mTracks[k]->mModules.size();
     
     mFontMedium->drawString( "Track modules:\t"   + toString( j ),       debugOffset ); debugOffset += Vec2f( 0, 15 );
+}
+
+
+void QTimeline::step( int steps )
+{
+    mTimeline->stepTo( mTimeline->getCurrentTime() + steps * QTIMELINE_SNAP );
 }
 

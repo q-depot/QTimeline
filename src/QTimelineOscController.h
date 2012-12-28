@@ -24,28 +24,55 @@
 
 typedef std::shared_ptr<class QTimelineOscController>    QTimelineOscControllerRef;
 
+#define OSC_THREAD_SLEEP_FOR    16.6f
+
 // OSC addresses
-#define OSC_PLAY_ADDRESS    "/play/"    // out: play PLAY_MODE STATE - in: play STATE(free_run default mode) | play PLAY_MODE STATE
+#define OSC_ADDRESS_PLAY    "/play"         // out: /play PLAY_MODE STATE           in: /play STATE(free_run default mode) | /play PLAY_MODE STATE
+#define OSC_ADDRESS_CUE     "/cue"          // out: /cue START_T DURATION T_NORM    in: /cue INDEX(play cue)
+//#define OSC_ADDRESS_MODULE  "/module"       // out: /play PLAY_MODE STATE           in: /play STATE(free_run default mode)
 
-
+//#define OSC_ADDRESS_
 
 class QTimelineOscController
 {
     
 public:
     
-    QTimelineOscController( int port = 9000 )
+    QTimelineOscController( int inPort = 9000, int outPort = 9001 )
     {
-        std::string host = "localhost";
+        mListener   = NULL;
+        mSender     = NULL;
         
-        addClient( host, port ); // test client
-        
-        mSender.setup( host, port );
-        
-        std::thread sendDataThread( &QTimelineOscController::sendData, this);
+        init( inPort, outPort );
     }
     
-    ~QTimelineOscController() {}
+    ~QTimelineOscController()
+    {
+        closeConnections();
+    }
+    
+    void init( int inPort, int outPort )
+    {
+        closeConnections();
+        
+        mListener   = new ci::osc::Listener();
+        mSender     = new ci::osc::Sender();
+        
+        mInPort     = inPort;
+        mOutPort    = outPort;
+        
+        std::string host = "localhost";
+        
+        // TODO remove this!!!
+        addClient( host, mOutPort ); // test client
+        
+        mSender->setup( host, mOutPort );
+        
+        mListener->setup( mInPort );
+        
+        std::thread sendDataThread(     &QTimelineOscController::sendData,      this);
+        std::thread receiveDataThread(  &QTimelineOscController::receiveData,   this);
+    }
     
     void addClient( std::string host, int port )
     {
@@ -106,24 +133,104 @@ public:
     
 private:
     
+    void closeConnections()
+    {
+        if ( mListener )
+        {
+            mListener->shutdown();
+            delete mListener;
+            mListener = NULL;
+        }
+        
+        if ( mSender )
+        {
+            delete mSender;
+            mSender = NULL;
+        }
+    }
+    
     void sendData()
     {
         while( true )
         {
             if ( mBundle.getMessageCount() > 0 )
-                mSender.sendBundle( mBundle );
+                mSender->sendBundle( mBundle );
             
             mBundle.clear();
             
-            ci::sleep( 15.0f );
+            ci::sleep( OSC_THREAD_SLEEP_FOR );
         }
     }
     
     void receiveData()
     {
-        
+        while( mListener )
+        {
+            while ( mListener->hasWaitingMessages() )
+            {
+                ci::osc::Message message;
+                mListener->getNextMessage( &message );
+                
+                std::string address = message.getAddress();
+                
+                if ( true )
+                    debugMessage( message );
+                
+//                // Raw Fft left channel
+//                else if ( boost::find_first( address, "/fft/1" ) )
+//                    parseRawFft(message, AUDIO_LEFT_CHANNEL);
+            }
+            
+            ci::sleep( OSC_THREAD_SLEEP_FOR );
+            // boost::this_thread::sleep(boost::posix_time::milliseconds(15));
+        }
     }
     
+private:
+    
+    void debugMessage( ci::osc::Message message )
+    {
+        ci::app::console() << "New message received" << std::endl;
+        ci::app::console() << "Address: " << message.getAddress() << std::endl;
+        ci::app::console() << "Num Arg: " << message.getNumArgs() << std::endl;
+        
+        for (int i = 0; i < message.getNumArgs(); i++)
+        {
+            ci::app::console() << "-- Argument " << i << std::endl;
+            ci::app::console() << "---- type: " << message.getArgTypeName(i) << std::endl;
+            
+            if ( message.getArgType(i) == ci::osc::TYPE_INT32 )
+            {
+                try {
+                    ci::app::console() << "------ value: "<< message.getArgAsInt32(i) << std::endl;
+                }
+                catch (...) {
+                    ci::app::console() << "Exception reading argument as int32" << std::endl;
+                }
+                
+            }
+            
+            else if ( message.getArgType(i) == ci::osc::TYPE_FLOAT )
+            {
+                try {
+                    ci::app::console() << "------ value: " << message.getArgAsFloat(i) << std::endl;
+                }
+                catch (...) {
+                    ci::app::console() << "Exception reading argument as float" << std::endl;
+                }
+            }
+            
+            else if ( message.getArgType(i) == ci::osc::TYPE_STRING )
+            {
+                try {
+                    ci::app::console() << "------ value: " << message.getArgAsString(i).c_str() << std::endl;
+                }
+                catch (...) {
+                    ci::app::console() << "Exception reading argument as string" << std::endl;
+                }
+            }
+        }
+    }
     
 private:
     
@@ -133,13 +240,12 @@ private:
         int         port;
     };
     
-    ci::osc::Sender                     mSender;
+    ci::osc::Sender                     *mSender;
+    ci::osc::Listener                   *mListener;
     std::vector<QTimelineOscClient>     mClients;
     ci::osc::Bundle                     mBundle;
+    int                                 mInPort, mOutPort;
     
-    ci::osc::Listener                   mListener;
-    int                                 mListenerPort;
-
 };
 
 #endif

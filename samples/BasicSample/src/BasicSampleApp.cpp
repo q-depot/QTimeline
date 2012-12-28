@@ -121,6 +121,12 @@ void BasicSampleApp::keyDown( KeyEvent event )
     
     else if ( c == 'h' )
         mTimeline.toggleRender();
+    
+    else if ( code == 2 )
+        mTimeline.step(-1);
+
+    else if ( code == 3 )
+        mTimeline.step(1);
 }
 
 

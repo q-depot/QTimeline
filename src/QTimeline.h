@@ -237,6 +237,9 @@ public:
             mOscController->addMessage( address, args );
     }
     
+    void step( int steps = 1 );
+
+    
 private:
     
     ci::ColorA getThemeColor( ci::XmlTree tree, std::string tag );
