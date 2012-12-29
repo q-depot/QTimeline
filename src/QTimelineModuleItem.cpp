@@ -349,12 +349,21 @@ void QTimelineModuleItem::menuEventHandler( QTimelineMenuItemRef item )
         mParentTrack->mQTimeline->closeMenu( mMenu );
         mParentTrack->markModuleForRemoval( thisRef() );
     }
+    else if ( item->getMeta() == "color_palette" )
+    {
+        QTimelineMenuColorPalette *palette = (QTimelineMenuColorPalette*)item.get();
+        mBgColor = palette->getColor();
+    }
 }
 
 
 void QTimelineModuleItem::initMenu()
 {
     mMenu->init( "MODULE MENU" );
+    
+    mMenu->addColorPalette( this, &QTimelineModuleItem::menuEventHandler );
+    
+    mMenu->addSeparator();
     
     mMenu->addButton( "X DELETE", "delete", this, &QTimelineModuleItem::menuEventHandler );
 }
