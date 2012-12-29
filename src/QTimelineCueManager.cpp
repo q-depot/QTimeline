@@ -118,7 +118,7 @@ bool QTimelineCueManager::mouseDrag( ci::app::MouseEvent event )
 }
 
 
-void QTimelineCueManager::menuEventHandler( QTimelineMenuItem* item )
+void QTimelineCueManager::menuEventHandler( QTimelineMenuItemRef item )
 {
     console() << "create new cue" << endl;
     
@@ -131,7 +131,7 @@ void QTimelineCueManager::initMenu()
 {
     mMenu->init( "CUE MANAGER MENU" );
     
-    mMenu->addItem( "New cue", "", this, &QTimelineCueManager::menuEventHandler );
+    mMenu->addButton( "New cue", "", this, &QTimelineCueManager::menuEventHandler );
 }
 
 

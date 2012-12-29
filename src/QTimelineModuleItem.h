@@ -48,6 +48,8 @@ public:
     
     virtual void update( float relativeTime );
     
+    void clear();
+    
     void start( bool reverse ) {}
     
     void complete( bool reverse ) {}
@@ -125,7 +127,7 @@ private:
     
     QTimelineModuleItem( QTimelineModule *targetModule, float startAt, float duration, QTimelineTrackRef trackRef, ci::Timeline *parent );
     
-    void menuEventHandler( QTimelineMenuItem* item );
+    void menuEventHandler( QTimelineMenuItemRef item );
     
     bool updateAtLoopStart() { return false; }
     

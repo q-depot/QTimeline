@@ -66,7 +66,7 @@ public:
     
     void loadXmlNode( ci::XmlTree node );
     
-    void menuEventHandler( QTimelineMenuItem* item );
+    void menuEventHandler( QTimelineMenuItemRef item );
     
     QTimelineTrackRef getRef() { return shared_from_this(); }
     

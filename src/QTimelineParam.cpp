@@ -22,8 +22,8 @@ using namespace std;
 bool sortKeyframesHelper(QTimelineKeyframeRef a, QTimelineKeyframeRef b) { return ( a->getTime() < b->getTime() ); }
 
 
-QTimelineParam::QTimelineParam( QTimelineModuleItem *module, const std::string &name, float *var, float minVal, float maxVal, double startTime )
-: mParentModule(module), mVar(var), mMax(maxVal), mMin(minVal), QTimelineWidget(name)
+QTimelineParam::QTimelineParam( QTimelineModuleItemRef itemRef, const std::string &name, float *var, float minVal, float maxVal, double startTime )
+: mParentModule(itemRef), mVar(var), mMax(maxVal), mMin(minVal), QTimelineWidget(name)
 {
     mBgColor                = QTimeline::mParamsBgCol;
     mBgOverColor            = QTimeline::mParamsBgOverCol;
@@ -53,10 +53,20 @@ QTimelineParam::QTimelineParam( QTimelineModuleItem *module, const std::string &
 
 QTimelineParam::~QTimelineParam()
 {
+    console() << "delete QTimelineParam: " << getName() << endl;
+    
     if ( mMenu )
         mParentModule->mParentTrack->mQTimeline->closeMenu( mMenu );
     
     mKeyframes.clear();
+    
+    mKeyframesSelection.clear();
+    
+    mMouseOnKeyframe.reset();
+    
+    mParentModule.reset();
+    
+//    delete mVar; // should I call it?
 }
 
 
@@ -408,7 +418,7 @@ void QTimelineParam::findKeyframesInSelection()
 }
 
 
-void QTimelineParam::menuEventHandler( QTimelineMenuItem* item )
+void QTimelineParam::menuEventHandler( QTimelineMenuItemRef item )
 {
     if ( mKeyframesSelection.empty() )
         return;
@@ -456,12 +466,12 @@ void QTimelineParam::initMenu()
 {
     mMenu->init( "PARAM MENU" );
     
-    mMenu->addItem( "EaseInQuad", "", this, &QTimelineParam::menuEventHandler );
-    mMenu->addItem( "EaseOutQuad", "", this, &QTimelineParam::menuEventHandler );
-    mMenu->addItem( "EaseInOutQuad", "", this, &QTimelineParam::menuEventHandler );
-    mMenu->addItem( "EaseOutInQuad", "", this, &QTimelineParam::menuEventHandler );
-    mMenu->addItem( "EaseStep", "", this, &QTimelineParam::menuEventHandler );
-    mMenu->addItem( "EaseNone", "", this, &QTimelineParam::menuEventHandler );
+    mMenu->addButton( "EaseInQuad", "", this, &QTimelineParam::menuEventHandler );
+    mMenu->addButton( "EaseOutQuad", "", this, &QTimelineParam::menuEventHandler );
+    mMenu->addButton( "EaseInOutQuad", "", this, &QTimelineParam::menuEventHandler );
+    mMenu->addButton( "EaseOutInQuad", "", this, &QTimelineParam::menuEventHandler );
+    mMenu->addButton( "EaseStep", "", this, &QTimelineParam::menuEventHandler );
+    mMenu->addButton( "EaseNone", "", this, &QTimelineParam::menuEventHandler );
 }
 
 

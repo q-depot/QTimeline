@@ -685,3 +685,32 @@ void QTimeline::step( int steps )
     mTimeline->stepTo( max( 0.0f, newTime ) );
 }
 
+
+void QTimeline::eraseMarkedModules()
+{
+    for( size_t k=0; k < mModulesMarkedForRemoval.size(); k++ )
+    {
+        ci::app::console() << "eraseMarkedModules " << std::endl;
+        
+        QTimelineModuleItemRef  item    = mModulesMarkedForRemoval[k];
+        QTimelineTrackRef       track   = item->mParentTrack;
+        
+        // timeline
+//        mTimeline->remove( item );                                       // remove() flag the item as erase marked, timeline::stepTo() is in charge to actually delete the item
+        
+        // track module
+        track->eraseModule( item );
+        
+        // app modules
+        callDeleteModuleCb( item );
+        
+        console() << "count(1): " << item.use_count() << endl;
+//        mTimeline->remove( item );
+//        updateCurrentTime();
+//        console() << "count(2): " << item.use_count() << endl;
+    }
+    
+    mModulesMarkedForRemoval.clear();
+    
+    updateCurrentTime();
+}

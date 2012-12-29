@@ -51,12 +51,19 @@ QTimelineModuleItem::QTimelineModuleItem( QTimelineModule *targetModule, float s
 
 QTimelineModuleItem::~QTimelineModuleItem()
 {
+    console() << "delete QTimelineModuleItem" << endl;
 //    return;
     
-//    if ( mMenu )
-//        mParentTrack->mQTimeline->closeMenu( mMenu );
-//    
-//    mParams.clear();    
+    clear();
+}
+
+
+void QTimelineModuleItem::clear()
+{
+    if ( mMenu )
+        mParentTrack->mQTimeline->closeMenu( mMenu );
+    
+    mParams.clear();
 }
 
 
@@ -85,7 +92,7 @@ void QTimelineModuleItem::registerParam( const std::string name, float *var, flo
         if ( mParams[k]->getName() == name )
             mParams[k]->mVar = var;
     
-    mParams.push_back( QTimelineParamRef( new QTimelineParam( this, name, var, minVal, maxVal, getStartTime() ) ) );
+    mParams.push_back( QTimelineParamRef( new QTimelineParam( thisRef(), name, var, minVal, maxVal, getStartTime() ) ) );
 }
 
 
@@ -335,7 +342,7 @@ void QTimelineModuleItem::loadXmlNode( ci::XmlTree node )
 }
 
 
-void QTimelineModuleItem::menuEventHandler( QTimelineMenuItem* item )
+void QTimelineModuleItem::menuEventHandler( QTimelineMenuItemRef item )
 {
     if ( item->getMeta() == "delete" )
     {
@@ -349,7 +356,7 @@ void QTimelineModuleItem::initMenu()
 {
     mMenu->init( "MODULE MENU" );
     
-    mMenu->addItem( "X DELETE", "delete", this, &QTimelineModuleItem::menuEventHandler );
+    mMenu->addButton( "X DELETE", "delete", this, &QTimelineModuleItem::menuEventHandler );
 }
 
 

@@ -23,8 +23,8 @@ public:
 	void update();
 	void draw();
     
-    void createModuleCallback( QTimeline::ModuleCallbackArgs args );
-    void deleteModuleCallback( QTimeline::ModuleCallbackArgs args );
+    void createModuleCallback( QTimeline::CreateModuleCallbackArgs args );
+    void deleteModuleCallback( QTimeline::DeleteModuleCallbackArgs args );
     
     QTimeline                       mTimeline;
     vector<QTimelineModuleRef>      mModules;
@@ -153,26 +153,26 @@ void BasicSampleApp::draw()
 }
 
 
-void BasicSampleApp::createModuleCallback( QTimeline::ModuleCallbackArgs args )
+void BasicSampleApp::createModuleCallback( QTimeline::CreateModuleCallbackArgs args )
 {
     QTimelineModuleRef mod;
     
-//    if( args.type == "BasicModule" )
-//        mod = QTimelineModuleRef( new BasicModule( args.name ) );
+    if( args.type == "BasicModule" )
+        mod = QTimelineModuleRef( new BasicModule( args.name ) );
     
     // ...
     
     if ( !mod )
         return;
     
-//    mTimeline.addModule( mod.get(), args.startTime, args.duration, args.trackRef );
-//    mod->init();
+    mTimeline.addModule( mod.get(), args.startTime, args.duration, args.trackRef );
+    mod->init();
     
-//    mModules.push_back( mod );
+    mModules.push_back( mod );
 }
 
 
-void BasicSampleApp::deleteModuleCallback( QTimeline::ModuleCallbackArgs args )
+void BasicSampleApp::deleteModuleCallback( QTimeline::DeleteModuleCallbackArgs args )
 {
     string name = args.itemRef->getName();
     string type = args.itemRef->getType();

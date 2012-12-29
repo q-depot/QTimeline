@@ -32,7 +32,7 @@ class QTimelineParam : public QTimelineWidget
     
 public:
     
-    QTimelineParam( QTimelineModuleItem *module, const std::string &name, float *var, float minVal, float maxVal, double startTime );
+    QTimelineParam( QTimelineModuleItemRef itemRef, const std::string &name, float *var, float minVal, float maxVal, double startTime );
     
     ~QTimelineParam();
     
@@ -78,7 +78,7 @@ public:
     
     void loadXmlNode( ci::XmlTree node );
     
-    void menuEventHandler( QTimelineMenuItem* item );
+    void menuEventHandler( QTimelineMenuItemRef item );
     
     
 private:
@@ -103,7 +103,7 @@ protected:
     QTimelineKeyframeRef                mMouseOnKeyframe;
     std::vector<QTimelineKeyframeRef>   mKeyframes;
     
-    QTimelineModuleItem                 *mParentModule;
+    QTimelineModuleItemRef              mParentModule;
     
     ci::Vec2f                           mMousePos;
     bool                                mIsOnSelection;

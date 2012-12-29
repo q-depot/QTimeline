@@ -39,22 +39,26 @@ class QTimeline
     
 public:
 
-    struct ModuleCallbackArgs
+    struct CreateModuleCallbackArgs
     {
-//        std::string             name;
-//        std::string             type;
-//        float                   startTime;
-        //        float                   duration;
-        //        QTimelineTrackRef       trackRef;
-        QTimelineModuleItemRef       itemRef;
+        std::string             name;
+        std::string             type;
+        float                   startTime;
+        float                   duration;
+        QTimelineTrackRef       trackRef;
+    };
+    
+    struct DeleteModuleCallbackArgs
+    {
+        QTimelineModuleItemRef  itemRef;
     };
     
 private:
     
     struct ModuleCallbacks
     {
-        ci::CallbackMgr<void (ModuleCallbackArgs)>  createCb;
-        ci::CallbackMgr<void (ModuleCallbackArgs)>  deleteCb;
+        ci::CallbackMgr<void (CreateModuleCallbackArgs)>  createCb;
+        ci::CallbackMgr<void (DeleteModuleCallbackArgs)>  deleteCb;
     };
     
     std::map<std::string, ModuleCallbacks>  mModuleCallbacks;
@@ -169,7 +173,7 @@ public:
     }
 
     template<typename T>
-    void registerModule( std::string type, T *obj, void (T::*onCreateCallback)(ModuleCallbackArgs), void (T::*onDeleteCallback)(ModuleCallbackArgs) )
+    void registerModule( std::string type, T *obj, void (T::*onCreateCallback)(CreateModuleCallbackArgs), void (T::*onDeleteCallback)(DeleteModuleCallbackArgs) )
     {
         mModuleCallbacks[type].createCb.registerCb( std::bind1st( std::mem_fun( onCreateCallback ), obj ) );
         mModuleCallbacks[type].deleteCb.registerCb( std::bind1st( std::mem_fun( onDeleteCallback ), obj ) );
@@ -184,8 +188,8 @@ public:
         for ( it=mModuleCallbacks.begin(); it != mModuleCallbacks.end(); it++ )
             if( it->first == moduleType )
             {
-//                ModuleCallbackArgs args = { moduleName, moduleType, startAt, duration, trackRef };
-//                it->second.createCb.call(args);
+                CreateModuleCallbackArgs args = { moduleName, moduleType, startAt, duration, trackRef };
+                it->second.createCb.call(args);
                 return;
             }
     }
@@ -198,7 +202,7 @@ public:
         for ( it=mModuleCallbacks.begin(); it != mModuleCallbacks.end(); it++ )
             if( it->first == type )
             {
-                ModuleCallbackArgs args = { itemRef };
+                DeleteModuleCallbackArgs args = { itemRef };
                 it->second.deleteCb.call(args);
                 return;
             }
@@ -290,30 +294,8 @@ private:
     
     void renderDebugInfo();
     
-    void eraseMarkedModules()
-    {
-        for( size_t k=0; k < mModulesMarkedForRemoval.size(); k++ )
-        {
-            ci::app::console() << "eraseMarkedModules " << std::endl;
-            
-            QTimelineModuleItemRef  item    = mModulesMarkedForRemoval[k];
-            QTimelineTrackRef       track   = item->mParentTrack;
-            
-            // timeline
-            mTimeline->remove( item );                                       // remove() flag the item as erase marked, timeline::stepTo() is in charge to actually delete the item
-            
-            // track module
-            track->eraseModule( item );
-            
-            // app modules
-            callDeleteModuleCb( item );
-        }
-   
-        updateCurrentTime();
-        
-        mModulesMarkedForRemoval.clear();
-    }
-    
+    void eraseMarkedModules();
+
     
 public:
     

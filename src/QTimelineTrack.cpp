@@ -287,7 +287,7 @@ void QTimelineTrack::loadXmlNode( ci::XmlTree node )
 }
 
 
-void QTimelineTrack::menuEventHandler( QTimelineMenuItem* item )
+void QTimelineTrack::menuEventHandler( QTimelineMenuItemRef item )
 {
     if ( item->getMeta() == "create" )
     {
@@ -321,12 +321,14 @@ void QTimelineTrack::initMenu()
 {
     mMenu->init( "TRACK MENU" );
     
-    mMenu->addItem("New track above", "new_track_above", this, &QTimelineTrack::menuEventHandler);
-    mMenu->addItem("New track below", "new_track_below", this, &QTimelineTrack::menuEventHandler);
+    mMenu->addButton("New track above", "new_track_above", this, &QTimelineTrack::menuEventHandler);
+    mMenu->addButton("New track below", "new_track_below", this, &QTimelineTrack::menuEventHandler);
+    
+    mMenu->addSeparator();
     
     map<string, QTimeline::ModuleCallbacks>::iterator it;
     for ( it=mQTimeline->mModuleCallbacks.begin() ; it != mQTimeline->mModuleCallbacks.end(); it++ )
-        mMenu->addItem( it->first, "create", this, &QTimelineTrack::menuEventHandler );
+        mMenu->addButton( it->first, "create", this, &QTimelineTrack::menuEventHandler );
 }
 
 
@@ -338,7 +340,9 @@ void QTimelineTrack::eraseModule( QTimelineModuleItemRef itemRef )
     for( size_t k=0; k < mModules.size(); k++ )
         if ( mModules[k] == itemRef )
         {
-            mModules[k].reset();
+            // force to release params that refer to the module itself, otherwise the deconstructor never gets called
+            // this might be an issue with the actual class design, perhaps I should remove the module ref from the params
+            mModules[k]->clear();
             mModules.erase( mModules.begin()+k );
             return;
         }

@@ -112,7 +112,7 @@ protected:
         mLabelStrSize = mFont->measureString( mLabel );
     }
     
-    virtual void menuEventHandler( QTimelineMenuItem* item ) {}
+    virtual void menuEventHandler( QTimelineMenuItemRef item ) {}
     
     virtual void initMenu() {}
     

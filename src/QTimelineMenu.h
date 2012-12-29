@@ -20,30 +20,64 @@
 #define TIMELINE_MENU_ITEM_HEIGHT   22
 #define TIMELINE_MENU_TEXT_INDENT   4
 
+typedef std::shared_ptr<class QTimelineMenuItem>    QTimelineMenuItemRef;
 
-class QTimelineMenuItem
+
+/*--- generic Item ---*/
+
+class QTimelineMenuItem : public std::enable_shared_from_this<QTimelineMenuItem>
 {
     
     friend class QTimelineMenu;
     
 public:
     
-    template<typename T>
-    QTimelineMenuItem( std::string name, std::string meta, T *obj, void (T::*callback)(QTimelineMenuItem*) ) : mName(name), mMeta(meta), mIsActive(true)
+    QTimelineMenuItem( std::string name = "", std::string meta = "", bool isActive = false ) : mName(name), mMeta(meta), mIsActive(isActive)
     {
-        mCallback.registerCb( std::bind1st( std::mem_fun( callback ), obj ) );
+        init();
     }
     
-    QTimelineMenuItem( std::string name ) : mName(name), mMeta(""), mIsActive(false) { }
+    template<typename T>
+    QTimelineMenuItem( std::string name, std::string meta, T *obj, void (T::*callback)(QTimelineMenuItemRef) ) : mName(name), mMeta(meta), mIsActive(true)
+    {
+        mCallback.registerCb( std::bind1st( std::mem_fun( callback ), obj ) );
+
+        init();
+    }
+
+    virtual void init()
+    {
+        mHeight = 0.0f;
+        
+        mFont   = ci::gl::TextureFont::create( ci::Font( "Helvetica", 12 ) );
+    }
     
-    ~QTimelineMenuItem() {}
+    virtual ~QTimelineMenuItem() {}
+    
+    virtual void call()
+    {
+        if ( !mCallback.empty() )
+            mCallback.call( shared_from_this() );
+    }
+    
+    virtual ci::Rectf render( ci::Rectf r, bool mouseOver ) { return r; }
     
     std::string getName() { return mName; }
-
+    
     std::string getMeta() { return mMeta; }
     
     bool isActive() { return mIsActive; }
     
+    float getHeight() { return mHeight; }
+    
+    bool contains( ci::Vec2f pos ) { return mRect.contains( pos ); }
+    
+    
+protected:
+    
+    float                       mHeight;
+    ci::gl::TextureFontRef      mFont;
+    ci::Rectf                   mRect;
     
 private:
     
@@ -51,9 +85,140 @@ private:
     std::string     mMeta;
     bool            mIsActive;
     
-    ci::CallbackMgr<void (QTimelineMenuItem*)>  mCallback;
-
+    ci::CallbackMgr<void (QTimelineMenuItemRef)>  mCallback;
+    
 };
+
+/*--- Button ---*/
+
+class QTimelineMenuButton : public QTimelineMenuItem
+{
+    
+public:
+    
+    template<typename T>
+    QTimelineMenuButton( std::string name, std::string meta, T *obj, void (T::*callback)(QTimelineMenuItemRef) ) : QTimelineMenuItem( name, meta, obj, callback )
+    {
+        mHeight = TIMELINE_MENU_ITEM_HEIGHT;
+    }
+    
+    ~QTimelineMenuButton() {}
+    
+    ci::Rectf render( ci::Rectf r, bool mouseOver )
+    {
+        mRect = ci::Rectf( r.getLowerLeft(), r.getLowerRight() + ci::Vec2f( 0, mHeight ) );
+        
+        glBegin( GL_QUADS );
+
+        // background
+        if( mouseOver )
+            ci::gl::color( ci::ColorA( 0.2f, 0.2f, 0.2f, 1.0f ) );
+        else
+            ci::gl::color( ci::ColorA( 0.15f, 0.15f, 0.15f, 1.0f ) );
+        
+        ci::gl::vertex( mRect.getUpperLeft() );
+        ci::gl::vertex( mRect.getUpperRight() );
+        ci::gl::vertex( mRect.getLowerRight() );
+        ci::gl::vertex( mRect.getLowerLeft() );
+        
+        // border bottom
+        ci::gl::color( ci::ColorA( 1.0f, 1.0f, 1.0f, 0.2f ) );
+        ci::gl::vertex( ci::Vec2f( mRect.x1, mRect.y2 ) );
+        ci::gl::vertex( ci::Vec2f( mRect.x2, mRect.y2 ) );
+        ci::gl::vertex( ci::Vec2f( mRect.x2, mRect.y2 - 1 ) );
+        ci::gl::vertex( ci::Vec2f( mRect.x1, mRect.y2 - 1 ) );
+        
+        glEnd();
+        
+        // label
+        ci::gl::color( ci::ColorA( 1.0f, 1.0f, 1.0f, 1.0f ) );
+        mFont->drawString( getName(), mRect.getUpperLeft() + ci::Vec2f( TIMELINE_MENU_TEXT_INDENT, 14 ) );
+        
+        return mRect;
+    }
+    
+};
+
+/*--- Label ---*/
+
+class QTimelineMenuLabel : public QTimelineMenuItem
+{
+    
+public:
+    
+    QTimelineMenuLabel( std::string name ) : QTimelineMenuItem( name )
+    {
+        mHeight = TIMELINE_MENU_ITEM_HEIGHT;
+    }
+    
+    ~QTimelineMenuLabel() {}
+    
+    ci::Rectf render( ci::Rectf r, bool mouseOver )
+    {
+        mRect = ci::Rectf( r.getLowerLeft(), r.getLowerRight() + ci::Vec2f( 0, mHeight ) );
+        
+        glBegin( GL_QUADS );
+        
+        // background
+        ci::gl::color( ci::ColorA( 0.18f, 0.18f, 0.18f, 1.0f ) );
+        ci::gl::vertex( mRect.getUpperLeft() );
+        ci::gl::vertex( mRect.getUpperRight() );
+        ci::gl::vertex( mRect.getLowerRight() );
+        ci::gl::vertex( mRect.getLowerLeft() );
+        
+        // border bottom
+        ci::gl::color( ci::ColorA( 1.0f, 1.0f, 1.0f, 0.2f ) );
+        ci::gl::vertex( ci::Vec2f( mRect.x1, mRect.y2 ) );
+        ci::gl::vertex( ci::Vec2f( mRect.x2, mRect.y2 ) );
+        ci::gl::vertex( ci::Vec2f( mRect.x2, mRect.y2 - 1 ) );
+        ci::gl::vertex( ci::Vec2f( mRect.x1, mRect.y2 - 1 ) );
+        
+        glEnd();
+        
+        // label
+        ci::gl::color( ci::ColorA( 0.0f, 1.0f, 1.0f, 1.0f ) );
+        mFont->drawString( getName(), mRect.getUpperLeft() + ci::Vec2f( TIMELINE_MENU_TEXT_INDENT, 14 ) );
+        
+        return mRect;
+    }
+};
+
+/*--- Separator ---*/
+
+class QTimelineMenuSeparator : public QTimelineMenuItem
+{
+    
+public:
+    
+    QTimelineMenuSeparator() : QTimelineMenuItem()
+    {
+        mHeight = 3;
+    }
+    
+    ~QTimelineMenuSeparator() {}
+    
+    ci::Rectf render( ci::Rectf r, bool mouseOver )
+    {
+        mRect = ci::Rectf( r.getLowerLeft(), r.getLowerRight() + ci::Vec2f( 0, mHeight ) );
+        
+        glBegin( GL_QUADS );
+        ci::gl::color( ci::ColorA( 1.0f, 1.0f, 1.0f, 0.8f ) );
+        ci::gl::vertex( mRect.getUpperLeft() );
+        ci::gl::vertex( mRect.getUpperRight() );
+        ci::gl::vertex( mRect.getLowerRight() );
+        ci::gl::vertex( mRect.getLowerLeft() );
+        glEnd();
+        
+        return mRect;
+    }
+};
+
+
+/*---------------------*/
+
+
+
+/*--- QTimelineMenu ---*/
 
 
 class QTimelineMenu
@@ -67,8 +232,6 @@ public:
     QTimelineMenu()
     {
         mWidth          = 0;
-        mMouseOnItem    = NULL;
-        mFont           = ci::gl::TextureFont::create( ci::Font( "Helvetica", 12 ) );
         mIsVisible      = false;
     }
     
@@ -79,8 +242,6 @@ public:
     
     void clear()
     {
-        for( size_t k=0; k < mItems.size(); k++ )
-            delete mItems[k];
         mItems.clear();
     }
     
@@ -94,16 +255,15 @@ public:
     
     bool mouseMove( ci::app::MouseEvent event )
     {
-        mMouseOnItem = NULL;
+        mMouseOnItem.reset();
         
-        if ( mRect.contains( event.getPos() ) )
+        for( size_t k=0; k < mItems.size(); k++ )
         {
-            int idx = mItems.size() * ( event.getPos().y - mRect.y1 ) / mRect.getHeight();
-
-            if ( mItems[idx]->isActive() )
-                mMouseOnItem = mItems[idx];
-            
-            return true;
+            if ( mItems[k]->contains( event.getPos() ) )
+            {
+                mMouseOnItem = mItems[k];
+                return true;
+            }
         }
         
         return false;
@@ -113,26 +273,11 @@ public:
     {
         if ( mMouseOnItem )
         {
-            mMouseOnItem->mCallback.call( mMouseOnItem );
+            mMouseOnItem->call();
             return true;
         }
         
         return false;
-    }
-    
-    template<typename T>
-    void addItem( std::string name, std::string meta, T *obj, void (T::*callback)(QTimelineMenuItem*) )
-    {
-        mItems.push_back( new QTimelineMenuItem( name, meta, obj, callback ) );
-        
-        setWidth();
-    }
-
-    void addItem( std::string name )
-    {
-        mItems.push_back( new QTimelineMenuItem( name ) );
-
-        setWidth();
     }
 
     bool isVisible() { return mIsVisible; }
@@ -144,17 +289,43 @@ public:
     void init( std::string name = "" )
     {
         clear();
+        
         mName = name;
         
-        addItem( mName );
+        addLabel( mName );
+    }
+
+    // add item functions
+    
+    void addLabel( std::string name )
+    {
+        addItem( QTimelineMenuItemRef( new QTimelineMenuLabel(name) ) );
     }
     
-private:        // only QTimeline can render the menu
+    template<typename T>
+    void addButton( std::string name, std::string meta, T *obj, void (T::*callback)(QTimelineMenuItemRef) )
+    {
+        addItem( QTimelineMenuItemRef( new QTimelineMenuButton( name, meta, obj, callback ) ) );
+    }
+    
+    void addSeparator()
+    {
+        addItem( QTimelineMenuItemRef( new QTimelineMenuSeparator() ) );
+    }
+    
+private:
+    
+    void addItem( QTimelineMenuItemRef item )
+    {
+        mItems.push_back( item );
+        setWidth();
+    }
     
     void setWidth()
     {
-        int width   = mFont->measureString( mName ).x;
-        mWidth      = std::max( 30 + width + TIMELINE_MENU_TEXT_INDENT * 2, mWidth );
+        mWidth = 120;
+//        int width   = mFont->measureString( mName ).x;
+//        mWidth      = std::max( 30 + width + TIMELINE_MENU_TEXT_INDENT * 2, mWidth );
     }
     
     void render()
@@ -162,57 +333,23 @@ private:        // only QTimeline can render the menu
         if ( !mIsVisible )
             return;
         
-        mRect = ci::Rectf( mPos, ci::Vec2f( mPos.x + mWidth, mPos.y + TIMELINE_MENU_ITEM_HEIGHT * mItems.size() ) );
-        ci::Rectf itemRect( mRect.getUpperLeft(), mRect.getUpperLeft() + ci::Vec2f( mWidth, TIMELINE_MENU_ITEM_HEIGHT ) );
+        ci::Rectf r( mPos, mPos + ci::Vec2f( mWidth, 0 ) );
         
-        glBegin( GL_QUADS );
-        
-        ci::gl::color( ci::ColorA( 0.15f, 0.15f, 0.15f, 1.0f ) );
-        ci::gl::vertex( mRect.getUpperLeft() );
-        ci::gl::vertex( mRect.getUpperRight() );
-        ci::gl::vertex( mRect.getLowerRight() );
-        ci::gl::vertex( mRect.getLowerLeft() );
-    
-        ci::gl::color( ci::ColorA( 1.0f, 1.0f, 1.0f, 0.2f ) );
-        ci::gl::vertex( ci::Vec2f( mRect.x1, mRect.y1 ) );
-        ci::gl::vertex( ci::Vec2f( mRect.x2, mRect.y1 ) );
-        ci::gl::vertex( ci::Vec2f( mRect.x2, mRect.y1 + 1 ) );
-        ci::gl::vertex( ci::Vec2f( mRect.x1, mRect.y1 + 1 ) );
-    
-        glEnd();
-        
+        bool mouseOver;
         for( size_t k=0; k < mItems.size(); k++ )
         {
-            glBegin( GL_QUADS );
-            
-            if( mMouseOnItem == mItems[k] )
-            {
-                ci::gl::color( ci::ColorA( 1.0f, 1.0f, 1.0f, 0.2f ) );
-                ci::gl::vertex( itemRect.getUpperLeft() );
-                ci::gl::vertex( itemRect.getUpperRight() );
-                ci::gl::vertex( itemRect.getLowerRight() );
-                ci::gl::vertex( itemRect.getLowerLeft() );
-            }
-            
-            ci::gl::color( ci::ColorA( 1.0f, 1.0f, 1.0f, 0.2f ) );
-            ci::gl::vertex( ci::Vec2f( itemRect.x1, itemRect.y2 ) );
-            ci::gl::vertex( ci::Vec2f( itemRect.x2, itemRect.y2 ) );
-            ci::gl::vertex( ci::Vec2f( itemRect.x2, itemRect.y2 - 1 ) );
-            ci::gl::vertex( ci::Vec2f( itemRect.x1, itemRect.y2 - 1 ) );
-            
-            glEnd();
-            
-            if ( mItems[k]->isActive() )
-                ci::gl::color( ci::ColorA( 1.0f, 1.0f, 1.0f, 1.0f ) );
-            else
-                ci::gl::color( ci::ColorA( 0.0f, 1.0f, 1.0f, 1.0f ) );
-            
-            mFont->drawString( mItems[k]->mName, itemRect.getUpperLeft() + ci::Vec2f( TIMELINE_MENU_TEXT_INDENT, 14 ) );
-            
-            itemRect.offset( ci::Vec2f( 0, TIMELINE_MENU_ITEM_HEIGHT ) );
+            mouseOver = ( mItems[k] == mMouseOnItem ) ? true : false;
+            r = mItems[k]->render( r, mouseOver );
         }
         
-//        mRect = ci::Rectf( upperLeft, r.getUpperRight() );
+        // border top
+        glBegin( GL_QUADS );
+        ci::gl::color( ci::ColorA( 1.0f, 1.0f, 1.0f, 0.2f ) );
+        ci::gl::vertex( mPos );
+        ci::gl::vertex( mPos + ci::Vec2f( mWidth,   + 0 ) );
+        ci::gl::vertex( mPos + ci::Vec2f( mWidth,   - 1 ) );
+        ci::gl::vertex( mPos + ci::Vec2f( 0,        - 1 ) );
+        glEnd();
     }
     
     
@@ -222,12 +359,10 @@ private:
     
     ci::Rectf                           mRect;
     
-    ci::gl::TextureFontRef              mFont;
-    
     std::string                         mName;
-    std::vector<QTimelineMenuItem*>     mItems;
+    std::vector<QTimelineMenuItemRef>   mItems;
     int                                 mWidth;
-    QTimelineMenuItem                   *mMouseOnItem;
+    QTimelineMenuItemRef                mMouseOnItem;
     bool                                mIsVisible;
 };
 

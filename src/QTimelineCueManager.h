@@ -72,7 +72,7 @@ public:
     
 private:
     
-    void menuEventHandler( QTimelineMenuItem* item );
+    void menuEventHandler( QTimelineMenuItemRef item );
     
     void initMenu();
     

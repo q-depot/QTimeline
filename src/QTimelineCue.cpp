@@ -214,7 +214,7 @@ void QTimelineCue::findModuleBoundaries( float *prevEndTime, float *nextStartTim
 }
 
 
-void QTimelineCue::menuEventHandler( QTimelineMenuItem* item )
+void QTimelineCue::menuEventHandler( QTimelineMenuItemRef item )
 {
     mQTimeline->closeMenu( mMenu );
     mCueManager->deleteCue( this );
@@ -225,7 +225,7 @@ void QTimelineCue::initMenu()
 {
     mMenu->init( "CUE MENU" );
     
-    mMenu->addItem( "DELETE", "", this, &QTimelineCue::menuEventHandler );
+    mMenu->addButton( "DELETE", "", this, &QTimelineCue::menuEventHandler );
 }
 
 

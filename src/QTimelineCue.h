@@ -67,7 +67,7 @@ private:
     
     void findModuleBoundaries( float *prevEndTime, float *nextStartTime );
     
-    void menuEventHandler( QTimelineMenuItem* item );
+    void menuEventHandler( QTimelineMenuItemRef item );
     
     void initMenu();
     
