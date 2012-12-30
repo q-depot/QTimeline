@@ -421,7 +421,8 @@ void QTimeline::renderTimeBar()
         
         glBegin( GL_QUADS );
 
-        gl::color( QTimeline::mTimeBarModuleRangeCol );
+//        gl::color( QTimeline::mTimeBarModuleRangeCol );
+        gl::color( ref->getBgColor() );
         gl::vertex( Vec2f( ref->mRect.x1,       mTimeBarRect.y1 ) );
         gl::vertex( Vec2f( ref->mRect.x1 + 1,   mTimeBarRect.y1 ) );
         gl::vertex( Vec2f( ref->mRect.x1 + 1,   mTimeBarRect.y2 ) );

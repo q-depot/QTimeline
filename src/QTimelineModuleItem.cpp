@@ -112,15 +112,16 @@ void QTimelineModuleItem::render( bool mouseOver )
 //    if ( mouseOver ) gl::color( mBgOverColor ); else gl::color( mBgColor );
     
     glBegin( GL_QUADS );
-    gl::color( mBgColor );          gl::vertex( mRect.getUpperLeft() );
-    gl::color( mBgColor );          gl::vertex( mRect.getUpperRight() );
-    gl::color( mBgColor * 0.8f );   gl::vertex( mRect.getLowerRight() );
-    gl::color( mBgColor * 0.8f );   gl::vertex( mRect.getLowerLeft() );
+    gl::color( mBgColor );
+    gl::vertex( mRect.getUpperLeft() );
+    gl::vertex( mRect.getUpperRight() );
+    gl::vertex( mRect.getLowerRight() );
+    gl::vertex( mRect.getLowerLeft() );
     glEnd();
     
     // render handles
-    if ( mouseOver )
-        renderHandles();
+//    if ( mouseOver )
+    renderHandles();
     
     gl::color( ColorA( 1.0f, 1.0f, 1.0f, 0.08f ) );
     glBegin( GL_LINE_STRIP );
@@ -352,7 +353,8 @@ void QTimelineModuleItem::menuEventHandler( QTimelineMenuItemRef item )
     else if ( item->getMeta() == "color_palette" )
     {
         QTimelineMenuColorPalette *palette = (QTimelineMenuColorPalette*)item.get();
-        mBgColor = palette->getColor();
+//        mHandleColor = palette->getColor();
+        setBgColor( palette->getColor() );
     }
 }
 

@@ -15,7 +15,7 @@
 
 #include "QTimelineWidget.h"
 
-#define TIMELINE_MODULE_HANDLE_WIDTH    7
+#define TIMELINE_MODULE_HANDLE_WIDTH    3
 
 
 class QTimelineWidgetWithHandles : public QTimelineWidget
