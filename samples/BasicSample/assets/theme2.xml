@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<QTimelineTheme name='basic theme'>
+    
+    <TimeBarBgCol r='0.05' g='0.05' b='0.05' a='1.0' />
+    <TimeBarFgCol r='1.0' g='1.0' b='1.0' a='0.2' />
+    <TimeBarTextCol r='0.44' g='0.44' b='0.44' a='1.0' />
+    <TimeBarMouseBarCol r='0.0' g='1.0' b='1.0' a='0.4' />
+    <TimeBarModuleRangeCol r='1.0' g='0.0' b='1.0' a='0.4' />
+    
+    <TransportBgCol r='0.05' g='0.05' b='0.05' a='1.0' />
+    <TransportTextCol r='1.0' g='1.0' b='1.0' a='0.8' />
+    
+    <TracksBgCol  r='0.1' g='0.1' b='0.12' a='1.0' />
+    <TracksBgOverCol r='0.1' g='0.1' b='0.12' a='1.0' />
+    
+    <ModulesBgCol r='1.0' g='1.0' b='1.0' a='0.15' />
+    <ModulesBgOverCol r='1.0' g='1.0' b='1.0' a='0.2' />
+    <ModulesTextCol r='0.8' g='0.8' b='0.8' a='1.0' />
+    
+    <ModulesHandleCol r='1.0' g='1.0' b='1.0' a='0.2' />
+    <ModulesHandleOverCol r='1.0' g='1.0' b='1.0' a='0.1' />
+    
+    <ParamsBgCol r='1.0' g='1.0' b='1.0' a='0.05' />
+    <ParamsBgOverCol r='0.0' g='0.0' b='0.0' a='0.1' />
+    <ParamsTextCol r='1.0' g='1.0' b='1.0' a='1.0' />
+    
+    <KeyframesBgCol r='0.0' g='0.0' b='0.0' a='0.1' />
+    <KeyframesBgOverCol r='1.0' g='1.0' b='1.0' a='0.6' />
+    <KeyframesBgSelectedCol r='1.0' g='1.0' b='1.0' a='0.6' />
+    <KeyframesGraphCol r='1.0' g='1.0' b='1.0' a='1.0' />
+
+    <CueListBgCol r='0.18' g='0.18' b='0.18' a='1.0' />
+    <CueBgCol r='0.1' g='0.1' b='0.1' a='1.0' />
+    <CueBgOverCol r='1.0' g='1.0' b='1.0' a='0.15' />
+    <CueFgCol r='0.6' g='0.6' b='0.6' a='1.0' />
+    <CueTextCol r='1.0' g='1.0' b='1.0' a='1.0' />
+    
+    <CueHandleCol r='0.3' g='0.3' b='0.3' a='1.0' />
+    <CueHandleOverCol r='0.4' g='0.4' b='0.4' a='1.0' />
+    
+</QTimelineTheme>

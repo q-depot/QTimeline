@@ -92,6 +92,7 @@
 		10B243ED16807E5700C7EAEB /* QTimelineKeyframe.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = QTimelineKeyframe.h; path = src/QTimelineKeyframe.h; sourceTree = "<group>"; };
 		10CF0B091660ED3700CE8505 /* QTimelineTrack.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = QTimelineTrack.h; path = src/QTimelineTrack.h; sourceTree = "<group>"; };
 		10CF0B0B1661026E00CE8505 /* QTimelineParam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QTimelineParam.h; path = src/QTimelineParam.h; sourceTree = "<group>"; };
+		10DBCDBA1690BA34005AC790 /* QTimelineAudioItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = QTimelineAudioItem.h; path = src/QTimelineAudioItem.h; sourceTree = "<group>"; };
 		10E3F5C5165ED81C00EF3FAB /* QTimelineModuleItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QTimelineModuleItem.h; path = src/QTimelineModuleItem.h; sourceTree = "<group>"; };
 		10EDF253162AD418004F4AFD /* QTimeline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QTimeline.h; path = src/QTimeline.h; sourceTree = "<group>"; };
 		10EDF547162AD4D2004F4AFD /* ciUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ciUI.h; sourceTree = "<group>"; };
@@ -398,6 +399,7 @@
 				105EC6BD167F314D0057F873 /* QTimelineCueManager.h */,
 				10B243ED16807E5700C7EAEB /* QTimelineKeyframe.h */,
 				10E3F5C5165ED81C00EF3FAB /* QTimelineModuleItem.h */,
+				10DBCDBA1690BA34005AC790 /* QTimelineAudioItem.h */,
 				106409A5168B13B000FA182E /* QTimelineOscController.h */,
 				10CF0B0B1661026E00CE8505 /* QTimelineParam.h */,
 				10CF0B091660ED3700CE8505 /* QTimelineTrack.h */,
