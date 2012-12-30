@@ -21,12 +21,12 @@ using namespace ci::app;
 using namespace std;
 
 
-QTimelineModuleItem::QTimelineModuleItem( QTimelineModule *targetModule, float startAt, float duration, QTimelineTrackRef trackRef, Timeline *parent )
-: QTimelineWidgetWithHandles( targetModule->getName() )
+QTimelineModuleItem::QTimelineModuleItem( QTimelineModuleRef targetRef, float startAt, float duration, QTimelineTrackRef trackRef, Timeline *parent )
+: QTimelineWidgetWithHandles( targetRef->getName() )
 {
     setAutoRemove(false);
     
-    mTargetModuleRef    = QTimelineModuleRef( targetModule );
+    mTargetModuleRef    = targetRef;
     mParentTrack        = trackRef;
     mParent             = parent;
     
@@ -52,7 +52,6 @@ QTimelineModuleItem::QTimelineModuleItem( QTimelineModule *targetModule, float s
 QTimelineModuleItem::~QTimelineModuleItem()
 {
     console() << "delete QTimelineModuleItem" << endl;
-//    return;
     
     clear();
 }

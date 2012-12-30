@@ -14,12 +14,12 @@
 #pragma once
 
 #include "QTimelineWidget.h"
+#include "QTimelineModule.h"
 
 typedef std::shared_ptr<class QTimelineTrack>       QTimelineTrackRef;
 
 class QTimeline;
 class QTimelineModuleItem;
-class QTimelineModule;
 
 class QTimelineTrack : public QTimelineWidget, public std::enable_shared_from_this<QTimelineTrack>
 {
@@ -38,7 +38,7 @@ public:
     
     QTimelineModuleItemRef createModule( ci::Timeline *parent, std::string name, float startAt, float duration  );
     
-    void addModule( QTimelineModule *module, float startAt, float duration );
+    void addModule( QTimelineModuleRef ref, float startAt, float duration );
     
     ci::Rectf render( ci::Rectf rect, ci::Vec2f timeWindow, double currentTime );
     

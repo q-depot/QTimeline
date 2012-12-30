@@ -27,6 +27,7 @@ class QTimelineModule;
 
 typedef std::shared_ptr<class QTimelineModuleItem>      QTimelineModuleItemRef;
 typedef std::shared_ptr<class QTimelineModule>          QTimelineModuleRef;
+typedef std::shared_ptr<class QTimelineTrack>           QTimelineTrackRef;
 
 
 class QTimelineModuleItem : public ci::TimelineItem, public QTimelineWidgetWithHandles
@@ -39,9 +40,9 @@ class QTimelineModuleItem : public ci::TimelineItem, public QTimelineWidgetWithH
     
 public:
     
-    static QTimelineModuleItemRef create( QTimelineModule *targetModule, float startAt, float duration, QTimelineTrackRef trackRef, ci::Timeline *timeline )
+    static QTimelineModuleItemRef create( QTimelineModuleRef targetRef, float startAt, float duration, QTimelineTrackRef trackRef, ci::Timeline *timeline )
     {
-        return QTimelineModuleItemRef( new QTimelineModuleItem( targetModule, startAt, duration, trackRef, timeline ) );
+        return QTimelineModuleItemRef( new QTimelineModuleItem( targetRef, startAt, duration, trackRef, timeline ) );
     }
   
     ~QTimelineModuleItem();
@@ -122,10 +123,11 @@ public:
     
     std::string getType();
     
+    void resetTarget() { mTargetModuleRef.reset(); }
     
 private:
     
-    QTimelineModuleItem( QTimelineModule *targetModule, float startAt, float duration, QTimelineTrackRef trackRef, ci::Timeline *parent );
+    QTimelineModuleItem( QTimelineModuleRef ref, float startAt, float duration, QTimelineTrackRef trackRef, ci::Timeline *parent );
     
     void menuEventHandler( QTimelineMenuItemRef item );
     

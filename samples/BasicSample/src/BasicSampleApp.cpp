@@ -13,7 +13,6 @@ using namespace ci;
 using namespace ci::app;
 using namespace std;
 
-typedef std::shared_ptr<class QTimelineModule>    QTimelineModuleRef;
 
 class BasicSampleApp : public AppBasic {
 public:
@@ -49,7 +48,7 @@ void BasicSampleApp::setup()
 
     QTimelineModuleRef mod;
     mod = QTimelineModuleRef( new BasicModule( "Sample module one" ) );
-    mTimeline.addModule( mod.get(), 2.0f, 12.0f );
+    mTimeline.addModule( mod, 2.0f, 12.0f );
     mod->init();
     mModules.push_back( mod );
 
@@ -165,7 +164,7 @@ void BasicSampleApp::createModuleCallback( QTimeline::CreateModuleCallbackArgs a
     if ( !mod )
         return;
     
-    mTimeline.addModule( mod.get(), args.startTime, args.duration, args.trackRef );
+    mTimeline.addModule( mod, args.startTime, args.duration, args.trackRef );
     mod->init();
     
     mModules.push_back( mod );
@@ -180,6 +179,7 @@ void BasicSampleApp::deleteModuleCallback( QTimeline::DeleteModuleCallbackArgs a
     for( size_t k=0; k < mModules.size(); k++ )
         if ( mModules[k]->getName() == name && mModules[k]->getType() == type )
         {
+            console() << "deleteModuleCallback: " << name << endl;
             mModules.erase( mModules.begin() + k );
             return;
         }

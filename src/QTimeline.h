@@ -114,9 +114,9 @@ public:
     
     bool isPlaying() { return mIsPlaying; }
     
-    void addModule( QTimelineModule *module, float startAt, float duration );
+    void addModule( QTimelineModuleRef moduleRef, float startAt, float duration );
     
-    void addModule( QTimelineModule *module, float startAt, float duration, QTimelineTrackRef trackRef );
+    void addModule( QTimelineModuleRef moduleRef, float startAt, float duration, QTimelineTrackRef trackRef );
 
     ci::TimelineRef getTimelineRef() { return mTimeline; }
     

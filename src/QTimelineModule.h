@@ -15,6 +15,8 @@
 
 #include "QTimelineModuleItem.h"
 
+typedef std::shared_ptr<class QTimelineModule>    QTimelineModuleRef;
+
 
 class QTimelineModule
 {

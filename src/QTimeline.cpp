@@ -445,14 +445,14 @@ void QTimeline::renderTimeBar()
 }
 
 
-void QTimeline::addModule( QTimelineModule *module, float startAt, float duration )
+void QTimeline::addModule( QTimelineModuleRef moduleRef, float startAt, float duration )
 {
     QTimelineTrackRef nullPtr;
-    addModule( module, startAt, duration, nullPtr );
+    addModule( moduleRef, startAt, duration, nullPtr );
 }
 
 
-void QTimeline::addModule( QTimelineModule *module, float startAt, float duration, QTimelineTrackRef trackRef )
+void QTimeline::addModule( QTimelineModuleRef moduleRef, float startAt, float duration, QTimelineTrackRef trackRef )
 {
     // get track, if it doesn't exists or if trackN == -1, create a new one
     if ( !trackRef )
@@ -468,7 +468,7 @@ void QTimeline::addModule( QTimelineModule *module, float startAt, float duratio
              ( (startAt + duration) >= trackRef->mModules[k]->getStartTime() && ( startAt + duration ) <= trackRef->mModules[k]->getEndTime() ) )
             startAt = trackRef->mModules[k]->getEndTime();
     
-    trackRef->addModule( module, startAt, duration );
+    trackRef->addModule( moduleRef, startAt, duration );
 }
 
 
@@ -695,22 +695,32 @@ void QTimeline::eraseMarkedModules()
         QTimelineModuleItemRef  item    = mModulesMarkedForRemoval[k];
         QTimelineTrackRef       track   = item->mParentTrack;
         
+        console() << "count(1): " << item.use_count() << endl;
         // timeline
-//        mTimeline->remove( item );                                       // remove() flag the item as erase marked, timeline::stepTo() is in charge to actually delete the item
+        mTimeline->remove( item );                                       // remove() flag the item as erase marked, timeline::stepTo() is in charge to actually delete the item
+        updateCurrentTime();
         
+        console() << "count(2): " << item.use_count() << endl;
         // track module
         track->eraseModule( item );
         
+        console() << "count(3): " << item.use_count() << endl;
         // app modules
         callDeleteModuleCb( item );
         
-        console() << "count(1): " << item.use_count() << endl;
-//        mTimeline->remove( item );
-//        updateCurrentTime();
-//        console() << "count(2): " << item.use_count() << endl;
+        item->resetTarget();
+        
+        console() << "count(4): " << item.use_count() << endl;
     }
+    
+    
+    updateCurrentTime();
+    
+    if ( !mModulesMarkedForRemoval.empty() )
+        console() << "count(5): " << mModulesMarkedForRemoval[0].use_count() << endl;
     
     mModulesMarkedForRemoval.clear();
     
-    updateCurrentTime();
+    
+//    updateCurrentTime();
 }

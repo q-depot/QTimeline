@@ -12,7 +12,6 @@
 #include "QTimeline.h"
 #include "QTimelineTrack.h"
 #include "QTimelineModuleItem.h"
-#include "QTimelineModule.h"
 #include "QTimelineParam.h"
 
 using namespace ci;
@@ -204,7 +203,7 @@ Vec2f QTimelineTrack::getTimeWindow()
 }
 
 
-void QTimelineTrack::addModule( QTimelineModule *module, float startAt, float duration )
+void QTimelineTrack::addModule( QTimelineModuleRef ref, float startAt, float duration )
 {
     // TODO add module should always ensure that no other modules exist with the same name
     // perhaps QTimelineModule and QTimelineModuleItem should share a unique ID to be both referred with.
@@ -215,8 +214,8 @@ void QTimelineTrack::addModule( QTimelineModule *module, float startAt, float du
     
     TimelineRef timelineRef = mQTimeline->getTimelineRef();
     
-    QTimelineModuleItemRef moduleItemRef = QTimelineModuleItem::create( module, startAt, duration, QTimelineTrackRef(this), timelineRef.get() );
-    module->setItemRef( moduleItemRef );
+    QTimelineModuleItemRef moduleItemRef = QTimelineModuleItem::create( ref, startAt, duration, QTimelineTrackRef(this), timelineRef.get() );
+    ref->setItemRef( moduleItemRef );
     moduleItemRef->setStartTime( startAt );
     moduleItemRef->setDuration( duration );
     timelineRef->insert( moduleItemRef );
