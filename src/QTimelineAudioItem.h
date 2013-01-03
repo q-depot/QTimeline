@@ -38,6 +38,35 @@ public:
         ci::app::console() << "QTimelineAudioItem::update() " << relativeTime << std::endl;
     }
     
+    void render( bool mouseOver )
+    {
+        // render bg rect
+        glBegin( GL_QUADS );
+                ci::gl::color( ci::Color::white() );
+        ci::gl::vertex( mRect.getUpperLeft() );
+        ci::gl::vertex( mRect.getUpperRight() );
+        ci::gl::vertex( mRect.getLowerRight() );
+        ci::gl::vertex( mRect.getLowerLeft() );
+        glEnd();
+        
+        // render handles
+        if ( mouseOver )
+            renderHandles();
+        
+        ci::gl::color( ci::ColorA( 1.0f, 1.0f, 1.0f, 0.08f ) );
+        glBegin( GL_LINE_STRIP );
+        ci::gl::vertex( mRect.getLowerLeft() );
+        ci::gl::vertex( mRect.getUpperLeft() );
+        ci::gl::vertex( mRect.getUpperRight() );
+        ci::gl::vertex( mRect.getLowerRight() );
+        glEnd();
+        
+        // render name
+        ci::gl::color( ci::Color( 1.0f, 1.0f, 0.0f ) );
+        mFont->drawString( getLabel(), mRect.getCenter() + mLabelStrSize * ci::Vec2f( -0.5f, 0.3f ) );
+    }
+    
+    
     void clear() {}
     
     ci::TimelineItemRef clone() const

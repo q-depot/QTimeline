@@ -33,7 +33,9 @@ public:
     
     ~QTimelineTrack();
     
-    void addModule( QTimelineModuleRef ref, float startAt, float duration );
+    void addModuleItem( QTimelineModuleRef ref, float startTime, float duration );
+    
+    void addAudioItem( float startTime, float duration );
     
     ci::Rectf render( ci::Rectf rect, ci::Vec2f timeWindow, double currentTime );
     

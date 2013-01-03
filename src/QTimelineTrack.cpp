@@ -202,7 +202,7 @@ Vec2f QTimelineTrack::getTimeWindow()
 }
 
 
-void QTimelineTrack::addModule( QTimelineModuleRef targetRef, float startTime, float duration )
+void QTimelineTrack::addModuleItem( QTimelineModuleRef targetRef, float startTime, float duration )
 {
     // TODO add module should always ensure that no other modules exist with the same name
     // perhaps QTimelineModule and QTimelineModuleItem should share a unique ID to be both referred with.
@@ -213,8 +213,24 @@ void QTimelineTrack::addModule( QTimelineModuleRef targetRef, float startTime, f
     
     TimelineRef timelineRef = mQTimeline->getTimelineRef();
     
-    QTimelineItemRef itemRef = QTimelineModuleItem::create( startTime, duration, targetRef, getRef(), timelineRef.get() );
+    QTimelineModuleItemRef itemRef = QTimelineModuleItem::create( startTime, duration, targetRef, getRef(), timelineRef.get() );
     targetRef->setItemRef( itemRef );
+    timelineRef->insert( itemRef );
+    
+    mModules.push_back( itemRef );
+    
+    sort( mModules.begin(), mModules.end(), sortModulesHelper );
+}
+
+
+void QTimelineTrack::addAudioItem( float startTime, float duration )
+{
+    startTime   = mQTimeline->snapTime( startTime );
+    duration    = mQTimeline->snapTime( duration );
+    
+    TimelineRef timelineRef = mQTimeline->getTimelineRef();
+    
+    QTimelineAudioItemRef itemRef = QTimelineAudioItem::create( startTime, duration, getRef(), timelineRef.get() );
     timelineRef->insert( itemRef );
     
     mModules.push_back( itemRef );
@@ -251,10 +267,9 @@ XmlTree QTimelineTrack::getXmlNode()
     XmlTree node( "track", "" );
     node.setAttribute( "name", mName );
 
-//    for( size_t k=0; k < mModules.size(); k++ )
-//    {
-//        node.push_back( mModules[k]->getXmlNode() );
-//    }
+    for( size_t k=0; k < mModules.size(); k++ )
+        node.push_back( mModules[k]->getXmlNode() );
+    
     return node;
 }
 
@@ -275,9 +290,9 @@ void QTimelineTrack::loadXmlNode( ci::XmlTree node )
 
         mQTimeline->callCreateModuleCb( name, type, startTime, duration, getRef() );
         
-//        for( size_t k=0; k < mModules.size(); k++ )
-//            if ( mModules[k]->getName() == name && mModules[k]->getType() == type )
-//                mModules[k]->loadXmlNode( *nodeIt );
+    for( size_t k=0; k < mModules.size(); k++ )
+        if ( mModules[k]->getName() == name && mModules[k]->getType() == type )
+            mModules[k]->loadXmlNode( *nodeIt );
     }
 
     sort( mModules.begin(), mModules.end(), sortModulesHelper );
@@ -286,10 +301,18 @@ void QTimelineTrack::loadXmlNode( ci::XmlTree node )
 
 void QTimelineTrack::menuEventHandler( QTimelineMenuItemRef item )
 {
-    if ( item->getMeta() == "create" )
+    if ( item->getMeta() == "create_module_item" )
     {
         mQTimeline->callCreateModuleCb( "untitled", item->getName(), mQTimeline->getTimeFromPos( mMouseDownPos.x ), 2.0f, getRef() );
         mQTimeline->closeMenu( mMenu );
+    }
+    
+    else if ( item->getMeta() == "create_audio_item" )
+    {
+        addAudioItem( QTimeline::getRef()->getTimeFromPos( mMouseDownPos.x ), 2.0f );
+        mQTimeline->closeMenu( mMenu );
+        
+        console() << "create audio track" << endl;
     }
   
     else if (( item->getMeta() == "new_track_above") || (item->getMeta() == "new_track_below"))
@@ -322,10 +345,19 @@ void QTimelineTrack::initMenu()
     mMenu->addButton("New track below", "new_track_below", this, &QTimelineTrack::menuEventHandler);
     
     mMenu->addSeparator();
+    mMenu->addLabel( "Module items" );
+    mMenu->addSeparator();
     
     map<string, QTimeline::ModuleCallbacks>::iterator it;
     for ( it=mQTimeline->mModuleCallbacks.begin() ; it != mQTimeline->mModuleCallbacks.end(); it++ )
-        mMenu->addButton( it->first, "create", this, &QTimelineTrack::menuEventHandler );
+        mMenu->addButton( it->first, "create_module_item", this, &QTimelineTrack::menuEventHandler );
+    
+    mMenu->addSeparator();
+    mMenu->addLabel( "Audio items" );
+    mMenu->addButton( "new audio item", "create_audio_item", this, &QTimelineTrack::menuEventHandler );
+    mMenu->addSeparator();
+    
+
 }
 
 

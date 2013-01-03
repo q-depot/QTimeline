@@ -71,11 +71,10 @@ void QTimelineModuleItem::update( float relativeTime )
     mTargetModuleRef->update();
 }
 
+
 void QTimelineModuleItem::render( bool mouseOver )
 {
     // render bg rect
-//    if ( mouseOver ) gl::color( mBgOverColor ); else gl::color( mBgColor );
-    
     glBegin( GL_QUADS );
     gl::color( mBgColor );          gl::vertex( mRect.getUpperLeft() );
     gl::color( mBgColor );          gl::vertex( mRect.getUpperRight() );
@@ -179,6 +178,7 @@ bool QTimelineModuleItem::mouseDrag( MouseEvent event )
 
     return false;
 }
+
 
 void QTimelineModuleItem::findModuleBoundaries( float *prevEndTime, float *nextStartTime )
 {
@@ -303,8 +303,8 @@ void QTimelineModuleItem::menuEventHandler( QTimelineMenuItemRef item )
 {
     if ( item->getMeta() == "delete" )
     {
-//        mParentTrack->mQTimeline->closeMenu( mMenu );
-//        mParentTrack->markModuleForRemoval( thisRef() );
+        QTimeline::getRef()->closeMenu( mMenu );
+        mParentTrack->markModuleForRemoval( thisRef() );
     }
     else if ( item->getMeta() == "color_palette" )
     {

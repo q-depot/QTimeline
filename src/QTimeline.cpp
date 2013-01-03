@@ -114,31 +114,7 @@ void QTimeline::init()
     updateTime();
     
     updateTimeWindow();
-    
-    
-    
-    /////////////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////////////
-    // add test audio track
-    /////////////////////////////////////////////////////////////////////////////////////////
-    /*
-    // get track, if it doesn't exists or if trackN == -1, create a new one
-    QTimelineTrackRef ref = mTracks[0];
-    
-    // check new module fits in between the others, if not shift the new module to the first slot available
-    
-    
-    float startAt     = snapTime( 1.0f );
-    float duration    = snapTime( 2.0f );
-    TimelineRef timelineRef = getTimelineRef();
-    
-    QTimelineAudioItemRef itemRef = QTimelineAudioItem::create( startAt, duration, ref, timelineRef.get() );
-    itemRef->setStartTime( startAt );
-    itemRef->setDuration( duration );
-    timelineRef->insert( itemRef );
-    */
-    /////////////////////////////////////////////////////////////////////////////////////////
-    
+
     QTimeline::thisRef = this;
 }
 
@@ -485,7 +461,7 @@ void QTimeline::addModule( QTimelineModuleRef moduleRef, float startAt, float du
 }
 
 
-void QTimeline::addModule( QTimelineModuleRef moduleRef, float startAt, float duration, QTimelineTrackRef trackRef )
+void QTimeline::addModule( QTimelineModuleRef moduleRef, float startTime, float duration, QTimelineTrackRef trackRef )
 {
     // get track, if it doesn't exists or if trackN == -1, create a new one
     if ( !trackRef )
@@ -497,11 +473,11 @@ void QTimeline::addModule( QTimelineModuleRef moduleRef, float startAt, float du
     
     // check new module fits in between the others, if not shift the new module to the first slot available
     for( size_t k=0; k < trackRef->mModules.size(); k++ )
-        if ( ( startAt >= trackRef->mModules[k]->getStartTime() && startAt <= trackRef->mModules[k]->getEndTime() ) ||
-             ( (startAt + duration) >= trackRef->mModules[k]->getStartTime() && ( startAt + duration ) <= trackRef->mModules[k]->getEndTime() ) )
-            startAt = trackRef->mModules[k]->getEndTime();
+        if ( ( startTime >= trackRef->mModules[k]->getStartTime() && startTime <= trackRef->mModules[k]->getEndTime() ) ||
+             ( (startTime + duration) >= trackRef->mModules[k]->getStartTime() && ( startTime + duration ) <= trackRef->mModules[k]->getEndTime() ) )
+            startTime = trackRef->mModules[k]->getEndTime();
     
-    trackRef->addModule( moduleRef, startAt, duration );
+    trackRef->addModuleItem( moduleRef, startTime, duration );
 }
 
 
