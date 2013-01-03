@@ -13,7 +13,7 @@
 
 #pragma once
 
-#include "QTimelineModuleItem.h"
+#include "QTimelineItem.h"
 
 typedef std::shared_ptr<class QTimelineModule>    QTimelineModuleRef;
 
@@ -28,7 +28,7 @@ public:
     virtual ~QTimelineModule()
     {
         ci::app::console() << "delete QTimelineModule base class: " << std::endl;
-        mModuleItemRef.reset();
+        mItemRef.reset();
     }
     
     virtual void update() {}
@@ -39,21 +39,21 @@ public:
     
     std::string getName() { return mName; }
     
-    void setItemRef( QTimelineModuleItemRef ref ) { mModuleItemRef = ref; }
+    void setItemRef( QTimelineItemRef ref ) { mItemRef = ref; }
     
-    QTimelineModuleItemRef getItemRef() { return mModuleItemRef; }
+    QTimelineItemRef getItemRef() { return mItemRef->thisRef(); }
 
-    size_t getNumParams() { return ( mModuleItemRef ) ? mModuleItemRef->getNumParams() : 0; }
+    size_t getNumParams() { return ( mItemRef ) ? mItemRef->getNumParams() : 0; }
     
     std::vector<QTimelineParamRef> getParams()
     {
         std::vector<QTimelineParamRef> emptyVec;
-        return ( mModuleItemRef ) ? mModuleItemRef->getParams() : emptyVec;
+        return ( mItemRef ) ? mItemRef->getParams() : emptyVec;
     }
     
-    float getParamValue( std::string name ) { return ( mModuleItemRef ) ? mModuleItemRef->getParamValue( name ) : 0.0f; }
+    float getParamValue( std::string name ) { return ( mItemRef ) ? mItemRef->getParamValue( name ) : 0.0f; }
 
-    bool isPlaying() { return ( mModuleItemRef ) ? mModuleItemRef->isPlaying() : false; }
+    bool isPlaying() { return ( mItemRef ) ? mItemRef->isPlaying() : false; }
     
     std::string getType() { return mType; }
     
@@ -61,12 +61,12 @@ protected:
     
     void registerParam( const std::string name, float initVal = 0.0f, float minVal = 0.0f, float maxVal = 1.0f )
     {
-        mModuleItemRef->registerParam( name, initVal, minVal, maxVal );
+        mItemRef->registerParam( name, initVal, minVal, maxVal );
     }
 
     void registerParam( const std::string name, float *var, float minVal = 0.0f, float maxVal = 1.0f )
     {
-        mModuleItemRef->registerParam( name, var, minVal, maxVal );
+        mItemRef->registerParam( name, var, minVal, maxVal );
     }
 
 protected:
@@ -74,7 +74,7 @@ protected:
     std::string             mName;
     std::string             mType;
     
-    QTimelineModuleItemRef  mModuleItemRef;
+    QTimelineItemRef  mItemRef;
     
     bool                    mMarkedForRemoval;
 };

@@ -21,8 +21,6 @@
 
 typedef std::shared_ptr<class QTimelineKeyframe>    QTimelineKeyframeRef;
 
-class QTimelineModuleItem;
-
 
 class QTimelineKeyframe {
 

@@ -449,8 +449,8 @@ void QTimeline::renderTimeBar()
     // render module range
     if ( mMouseOnTrack && mMouseOnTrack->isMouseOnModule() )
     {
-        QTimelineModuleItemRef  ref = mMouseOnTrack->getMouseOnModule();
-        Rectf                   r   = ref->getRect();
+        QTimelineItemRef    ref = mMouseOnTrack->getMouseOnModule();
+        Rectf               r   = ref->getRect();
         
         glBegin( GL_QUADS );
 
@@ -577,7 +577,7 @@ void QTimeline::loadTheme( const fs::path &filepath )
     }
     
     QTimelineTrackRef               trackRef;
-    QTimelineModuleItemRef          moduleItemRef;
+    QTimelineItemRef                itemRef;
     QTimelineCueRef                 cueRef;
     std::vector<QTimelineCueRef>    cueList;
     std::vector<QTimelineParamRef>  params;
@@ -592,14 +592,14 @@ void QTimeline::loadTheme( const fs::path &filepath )
         
         for( size_t i=0; i < trackRef->mModules.size(); i++ )
         {
-            moduleItemRef                       = trackRef->mModules[i];
-            moduleItemRef->setBgColor( QTimeline::mModulesBgCol );
-            moduleItemRef->setBgOverColor( QTimeline::mModulesBgOverCol );
-            moduleItemRef->setTextColor( QTimeline::mModulesTextCol );
-            moduleItemRef->setHandleColor( QTimeline::mModulesHandleCol );
-            moduleItemRef->setHandleOverColor( QTimeline::mModulesHandleOverCol );
+            itemRef                       = trackRef->mModules[i];
+            itemRef->setBgColor( QTimeline::mModulesBgCol );
+            itemRef->setBgOverColor( QTimeline::mModulesBgOverCol );
+            itemRef->setTextColor( QTimeline::mModulesTextCol );
+            itemRef->setHandleColor( QTimeline::mModulesHandleCol );
+            itemRef->setHandleOverColor( QTimeline::mModulesHandleOverCol );
             
-            params = moduleItemRef->getParams();
+            params = itemRef->getParams();
             
             for( size_t j=0; j < params.size(); j++ )
             {
@@ -726,8 +726,8 @@ void QTimeline::eraseMarkedModules()
     {
         ci::app::console() << "eraseMarkedModules " << std::endl;
         
-        QTimelineModuleItemRef  item    = mModulesMarkedForRemoval[k];
-        QTimelineTrackRef       track   = item->getParentTrack();
+        QTimelineItemRef    item    = mModulesMarkedForRemoval[k];
+        QTimelineTrackRef   track   = item->getParentTrack();
         
         console() << "count(1): " << item.use_count() << endl;
         // timeline
@@ -741,8 +741,9 @@ void QTimeline::eraseMarkedModules()
         console() << "count(3): " << item.use_count() << endl;
         // app modules
         callDeleteModuleCb( item );
-        
-        item->resetTarget();
+
+        // TODO fix this!
+//        item->resetTarget();
         
         console() << "count(4): " << item.use_count() << endl;
     }

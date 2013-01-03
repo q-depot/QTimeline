@@ -14,29 +14,24 @@
 #pragma once
 
 #include "QTimelineWidget.h"
-#include "QTimelineModule.h"
 
 typedef std::shared_ptr<class QTimelineTrack>       QTimelineTrackRef;
+typedef std::shared_ptr<class QTimelineModule>      QTimelineModuleRef;
+typedef std::shared_ptr<class QTimelineItem>        QTimelineItemRef;
 
 class QTimeline;
-class QTimelineModuleItem;
+class QTimelineItem;
 
 class QTimelineTrack : public QTimelineWidget, public std::enable_shared_from_this<QTimelineTrack>
 {
     
     friend class QTimeline;
-    friend class QTimelineModuleItem;
-    friend class QTimelineParam;
     
 public:
     
     QTimelineTrack( QTimeline *timeline, std::string name );
     
-//    QTimelineTrack( QTimeline *timeline, ci::XmlTree node );
-    
     ~QTimelineTrack();
-    
-    QTimelineModuleItemRef createModule( ci::Timeline *parent, std::string name, float startAt, float duration  );
     
     void addModule( QTimelineModuleRef ref, float startAt, float duration );
     
@@ -60,7 +55,7 @@ public:
     
     ci::Vec2f getTimeWindow();
     
-    void markModuleForRemoval( QTimelineModuleItemRef moduleItemRef );
+    void markModuleForRemoval( QTimelineItemRef moduleItemRef );
     
     ci::XmlTree getXmlNode();
     
@@ -70,11 +65,13 @@ public:
     
     QTimelineTrackRef getRef() { return shared_from_this(); }
     
-    bool isMouseOnModule() { return ( mMouseOnModule ) ? true : false; }
+    bool isMouseOnModule() { return ( mMouseOnItem ) ? true : false; }
     
-    QTimelineModuleItemRef getMouseOnModule() { return mMouseOnModule; }
+    QTimelineItemRef getMouseOnModule() { return mMouseOnItem; }
     
-    void eraseModule( QTimelineModuleItemRef itemRef );
+    void eraseModule( QTimelineItemRef itemRef );
+    
+    std::vector<QTimelineItemRef>   getModules() { return mModules; }
     
 private:
     
@@ -95,18 +92,18 @@ private:
     
 private:
     
-    QTimeline           *mQTimeline;
+    QTimeline                       *mQTimeline;
     
-    std::vector<QTimelineModuleItemRef>     mModules;
+    std::vector<QTimelineItemRef>   mModules;
     
-    QTimelineModuleItemRef  mMouseOnModule;
-    QTimelineModuleItemRef  mSelectedModule;
+    QTimelineItemRef                mMouseOnItem;
+    QTimelineItemRef                mSelectedItem;
     
-    bool                mIsMouseOnTrack;
+    bool                            mIsMouseOnTrack;
     
-    bool                mIsTrackOpen;
+    bool                            mIsTrackOpen;
     
-    double              mMouseDownAt;
+    double                          mMouseDownAt;
 };
 
 

@@ -13,7 +13,6 @@
 
 #pragma once
 
-//#include "cinder/Tween.h"
 #include "cinder/Easing.h"
 #include "QTimelineKeyframe.h"
 
@@ -22,18 +21,14 @@
 typedef std::shared_ptr<class QTimelineParam>       QTimelineParamRef;
 typedef std::shared_ptr<class QTimelineItem>        QTimelineItemRef;
 
-//class QTimelineModuleItem;
 
 class QTimelineParam : public QTimelineWidget
 {
     
     friend class QTimeline;
     friend class QTimelineTrack;
-//    friend class QTimelineModuleItem;
     
 public:
-    
-    //    QTimelineParam( QTimelineModuleItemRef itemRef, const std::string &name, float *var, float minVal, float maxVal, double startTime );
   
     QTimelineParam( QTimelineItemRef itemRef, const std::string &name, float *var, float minVal, float maxVal );
     

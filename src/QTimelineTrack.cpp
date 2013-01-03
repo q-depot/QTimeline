@@ -11,14 +11,12 @@
 #include "cinder/Timeline.h"
 #include "QTimeline.h"
 #include "QTimelineTrack.h"
-#include "QTimelineModuleItem.h"
-#include "QTimelineParam.h"
 
 using namespace ci;
 using namespace ci::app;
 using namespace std;
 
-bool sortModulesHelper( QTimelineModuleItemRef a, QTimelineModuleItemRef b ) { return ( a->getStartTime() < b->getStartTime() ); }
+bool sortModulesHelper( QTimelineItemRef a, QTimelineItemRef b ) { return ( a->getStartTime() < b->getStartTime() ); }
 
 
 QTimelineTrack::QTimelineTrack(  QTimeline *timeline, string name ) : mQTimeline(timeline), QTimelineWidget( name )
@@ -54,16 +52,16 @@ ci::Rectf QTimelineTrack::render( ci::Rectf rect, ci::Vec2f timeWindow, double c
 {
     int maxParamsN  = 0;
     
-    std::vector<QTimelineModuleItemRef>     modulesInWindow;
-    QTimelineModuleItemRef                  module;
+    std::vector<QTimelineItemRef>   itemsInWindow;
+    QTimelineItemRef                itemRef;
     
-    ci::Rectf                               trackRect, moduleRect;
+    ci::Rectf                       trackRect, itemRect;
 
     // gett all modules in time window and calculate the max number of params
     for( size_t k=0; k < mModules.size(); k ++ )
         if ( mModules[k]->isInWindow( timeWindow ) )
         {
-            modulesInWindow.push_back( mModules[k] );
+            itemsInWindow.push_back( mModules[k] );
             if ( mModules[k]->getNumParams() > maxParamsN )
                 maxParamsN = mModules[k]->getNumParams();
         }
@@ -79,23 +77,23 @@ ci::Rectf QTimelineTrack::render( ci::Rectf rect, ci::Vec2f timeWindow, double c
     if ( mIsMouseOnTrack ) ci::gl::color( mBgOverColor ); else ci::gl::color( mBgColor );
     ci::gl::drawSolidRect( mRect );
     
-    for( size_t k=0; k < modulesInWindow.size(); k ++ )
+    for( size_t k=0; k < itemsInWindow.size(); k ++ )
     {
-        module          = modulesInWindow[k];
+        itemRef          = itemsInWindow[k];
 
         // render module
-        moduleRect = makeRect( trackRect, timeWindow, module->getStartTime(), module->getEndTime() );
-        module->setRect( moduleRect );
+        itemRect = makeRect( trackRect, timeWindow, itemRef->getStartTime(), itemRef->getEndTime() );
+        itemRef->setRect( itemRect );
         
         // module render only use the module rect without calculating any offset or returning another rect, it's a bit special :]
         QTimelineParamRef nullPtr;
-        module->render( mMouseOnModule == module && mMouseOnModule->isMouseOnParam( nullPtr ) );
+        itemRef->render( mMouseOnItem == itemRef && mMouseOnItem->isMouseOnParam( nullPtr ) );
         
-        ci::Rectf r = moduleRect;
+        ci::Rectf r = itemRect;
         
         if ( mIsTrackOpen )
         {
-            std::vector<QTimelineParamRef> params = module->getParams();
+            std::vector<QTimelineParamRef> params = itemRef->getParams();
             
             // render params
             for( size_t i=0; i < params.size(); i++ )
@@ -106,7 +104,7 @@ ci::Rectf QTimelineTrack::render( ci::Rectf rect, ci::Vec2f timeWindow, double c
                 params[i]->renderKeyframes();
         }
         
-        module->setRect( Rectf( moduleRect.getUpperLeft(), r.getLowerRight() ) );
+        itemRef->setRect( Rectf( itemRect.getUpperLeft(), r.getLowerRight() ) );
     }
     
     return mRectPaddedHeight;
@@ -115,22 +113,22 @@ ci::Rectf QTimelineTrack::render( ci::Rectf rect, ci::Vec2f timeWindow, double c
 
 bool QTimelineTrack::mouseDown( ci::app::MouseEvent event )
 {
-    mSelectedModule = mMouseOnModule;
+    mSelectedItem = mMouseOnItem;
     mMouseDownPos   = event.getPos();
     
-    if ( mSelectedModule )
+    if ( mSelectedItem )
     {
-        if ( mSelectedModule->contains( event.getPos() ) && !mSelectedModule->isMouseOnParam() && event.isLeftDown() && getElapsedSeconds() - mMouseDownAt < 0.5f )
+        if ( mSelectedItem->contains( event.getPos() ) && !mSelectedItem->isMouseOnParam() && event.isLeftDown() && getElapsedSeconds() - mMouseDownAt < 0.5f )
         {
             toggle();
-            mMouseOnModule.reset();
-            mSelectedModule.reset();
+            mMouseOnItem.reset();
+            mSelectedItem.reset();
             return true;
         }
         
         mMouseDownAt = getElapsedSeconds();
         
-        mSelectedModule->mouseDown( event );
+        mSelectedItem->mouseDown( event );
         return true;
     }
     
@@ -143,19 +141,18 @@ bool QTimelineTrack::mouseDown( ci::app::MouseEvent event )
             mQTimeline->closeMenu( mMenu );
     }
     
-    
     return false;
 }
 
 
 bool QTimelineTrack::mouseUp( ci::app::MouseEvent event )
 {
-    if ( mSelectedModule )
-        mSelectedModule->mouseUp( event );
+    if ( mSelectedItem )
+        mSelectedItem->mouseUp( event );
     
-    mSelectedModule.reset();
+    mSelectedItem.reset();
     
-//    mMouseOnModule.reset();
+//    mMouseOnItem.reset();
     mouseMove(event);
     
     return false;
@@ -166,10 +163,10 @@ bool QTimelineTrack::mouseMove( ci::app::MouseEvent event )
 {    
     mIsMouseOnTrack     = false;
     
-    if ( mMouseOnModule )
+    if ( mMouseOnItem )
     {
-        mMouseOnModule->mouseMove( event );
-        mMouseOnModule.reset();
+        mMouseOnItem->mouseMove( event );
+        mMouseOnItem.reset();
     }
     
     if ( contains( event.getPos() ) )
@@ -179,7 +176,7 @@ bool QTimelineTrack::mouseMove( ci::app::MouseEvent event )
         for( size_t k=0; k < mModules.size(); k++ )
             if ( mModules[k]->mouseMove( event ) )
             {
-                mMouseOnModule = mModules[k];
+                mMouseOnItem = mModules[k];
                 break;
             }
     }
@@ -192,8 +189,8 @@ bool QTimelineTrack::mouseMove( ci::app::MouseEvent event )
 
 bool QTimelineTrack::mouseDrag( ci::app::MouseEvent event )
 {
-    if ( mSelectedModule )
-        mSelectedModule->mouseDrag( event );
+    if ( mSelectedItem )
+        mSelectedItem->mouseDrag( event );
     
     return false;
 }
@@ -216,19 +213,17 @@ void QTimelineTrack::addModule( QTimelineModuleRef targetRef, float startTime, f
     
     TimelineRef timelineRef = mQTimeline->getTimelineRef();
     
-    QTimelineModuleItemRef moduleItemRef = QTimelineModuleItem::create( startTime, duration, targetRef, getRef(), timelineRef.get() );
-    targetRef->setItemRef( moduleItemRef );
-    moduleItemRef->setStartTime( startTime );
-    moduleItemRef->setDuration( duration );
-    timelineRef->insert( moduleItemRef );
+    QTimelineItemRef itemRef = QTimelineModuleItem::create( startTime, duration, targetRef, getRef(), timelineRef.get() );
+    targetRef->setItemRef( itemRef );
+    timelineRef->insert( itemRef );
     
-    mModules.push_back( moduleItemRef );
+    mModules.push_back( itemRef );
     
     sort( mModules.begin(), mModules.end(), sortModulesHelper );
 }
 
 
-void QTimelineTrack::markModuleForRemoval( QTimelineModuleItemRef moduleItemRef )
+void QTimelineTrack::markModuleForRemoval( QTimelineItemRef moduleItemRef )
 {
     for( size_t k=0; k < mModules.size(); k++ )
         if ( mModules[k] == moduleItemRef )
@@ -255,10 +250,11 @@ XmlTree QTimelineTrack::getXmlNode()
 {
     XmlTree node( "track", "" );
     node.setAttribute( "name", mName );
-    
-    for( size_t k=0; k < mModules.size(); k++ )
-        node.push_back( mModules[k]->getXmlNode() );
-    
+
+//    for( size_t k=0; k < mModules.size(); k++ )
+//    {
+//        node.push_back( mModules[k]->getXmlNode() );
+//    }
     return node;
 }
 
@@ -279,9 +275,9 @@ void QTimelineTrack::loadXmlNode( ci::XmlTree node )
 
         mQTimeline->callCreateModuleCb( name, type, startTime, duration, getRef() );
         
-        for( size_t k=0; k < mModules.size(); k++ )
-            if ( mModules[k]->getName() == name && mModules[k]->getType() == type )
-                mModules[k]->loadXmlNode( *nodeIt );
+//        for( size_t k=0; k < mModules.size(); k++ )
+//            if ( mModules[k]->getName() == name && mModules[k]->getType() == type )
+//                mModules[k]->loadXmlNode( *nodeIt );
     }
 
     sort( mModules.begin(), mModules.end(), sortModulesHelper );
@@ -333,10 +329,10 @@ void QTimelineTrack::initMenu()
 }
 
 
-void QTimelineTrack::eraseModule( QTimelineModuleItemRef itemRef )
+void QTimelineTrack::eraseModule( QTimelineItemRef itemRef )
 {
-    mSelectedModule.reset();
-    mMouseOnModule.reset();
+    mSelectedItem.reset();
+    mMouseOnItem.reset();
     
     for( size_t k=0; k < mModules.size(); k++ )
         if ( mModules[k] == itemRef )

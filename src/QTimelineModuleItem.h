@@ -13,7 +13,7 @@
 
 #pragma once
 
-#include "QTimelineWidgetWithHandles.h"
+//#include "QTimelineWidgetWithHandles.h"
 #include "QTimelineItem.h"
 
 class QTimelineModule;
@@ -25,7 +25,7 @@ typedef std::shared_ptr<class QTimelineModuleItem>      QTimelineModuleItemRef;
 typedef std::shared_ptr<class QTimelineModule>          QTimelineModuleRef;
 
 
-class QTimelineModuleItem : public QTimelineItem, public QTimelineWidgetWithHandles
+class QTimelineModuleItem : public QTimelineItem//, public QTimelineWidgetWithHandles
 {
     friend class QTimelineModule;
     
@@ -60,9 +60,6 @@ public:     // QTimelineItem
 		QTimelineItemRef  result                = std::static_pointer_cast<QTimelineItem>( thisTimelineItem );
 		return result;
 	}
-    
-    ////////////////////////////////
-    
     
 public:     // Widget
     

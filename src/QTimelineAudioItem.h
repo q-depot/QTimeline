@@ -15,13 +15,13 @@
 
 //#include "cinder/TimelineItem.h"
 #include "QTimelineItem.h"
-#include "QTimelineWidgetWithHandles.h"
+//#include "QTimelineWidgetWithHandles.h"
 
 
 typedef std::shared_ptr<class QTimelineAudioItem>      QTimelineAudioItemRef;
 
 
-class QTimelineAudioItem : public QTimelineItem, public QTimelineWidgetWithHandles
+class QTimelineAudioItem : public QTimelineItem//, public QTimelineWidgetWithHandles
 {
     
 public:
@@ -64,17 +64,17 @@ public:
     bool mouseUp( ci::app::MouseEvent event ) { return false; }
     
     bool mouseDrag( ci::app::MouseEvent event ) { return false; }
-    
+
 private:
     
     QTimelineAudioItem ( float startTime, float duration, QTimelineTrackRef trackRef, ci::Timeline *ciTimeline )
-    : QTimelineItem( startTime, duration, trackRef, ciTimeline ), QTimelineWidgetWithHandles() {}
+    : QTimelineItem( startTime, duration, "QTimelineAudioItem", "track name!", trackRef, ciTimeline ) {}
     
     void menuEventHandler( QTimelineMenuItemRef item ) {}
     
     void findModuleBoundaries( float *prevEndTime, float *nextStartTime ) {}
     
-    bool dragHandles( ci::app::MouseEvent event ) {}
+    bool dragHandles( ci::app::MouseEvent event ) { return false; }
     
     void dragWidget( ci::app::MouseEvent event ) {}
     

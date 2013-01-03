@@ -14,36 +14,32 @@
 #pragma once
 
 #include "cinder/TimelineItem.h"
+#include "QTimelineWidgetWithHandles.h"
 #include "QTimelineParam.h"
 
 typedef std::shared_ptr<class QTimelineItem>      QTimelineItemRef;
 typedef std::shared_ptr<class QTimelineTrack>     QTimelineTrackRef;
 
 
-class QTimelineItem : public ci::TimelineItem
+class QTimelineItem : public ci::TimelineItem, public QTimelineWidgetWithHandles
 {
     
 protected:
     
-    QTimelineItem( float startTime, float duration, QTimelineTrackRef trackRef, ci::Timeline *ciTimeline )
+    QTimelineItem( float startTime, float duration, std::string type, std::string name, QTimelineTrackRef trackRef, ci::Timeline *ciTimeline ) : QTimelineWidgetWithHandles()
     {
-        ci::app::console() << "QTimelineItem()" << std::endl;
-        
         setAutoRemove(false);
         
         mParentTrack        = trackRef;
         mParent             = ciTimeline;
+        mType               = type;
+        mName               = name;
         
         setStartTime( startTime );
         setDuration( duration );
     }
     
 public:
-    
-//    static QTimelineItemRef create( float startTime, float duration, QTimelineTrackRef trackRef, ci::Timeline *ciTimeline )
-//    {
-//          return QTimelineItemRef( new QTimelineItem( startTime, duration, trackRef, ciTimeline ) );
-//    }
     
     virtual ~QTimelineItem() {}
     
@@ -78,7 +74,6 @@ public:
 		QTimelineItemRef  result                = std::static_pointer_cast<QTimelineItem>( thisTimelineItem );
 		return result;
 	}
-   
     
 protected:
     
@@ -170,66 +165,3 @@ protected:
 
 #endif
 
-
-
-
-
-//////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////
-
-
-/*
-#include "cinder/TimelineItem.h"
-#include "QTimelineWidgetWithHandles.h"
-#include "QTimelineModuleItem.h"
-#include "QTimelineParam.h"
-
-class QTimelineTrack;
-class QTimelineModule
-
-
-typedef std::shared_ptr<class QTimelineModuleItem>      QTimelineModuleItemRef;
-typedef std::shared_ptr<class QTimelineModule>          QTimelineModuleRef;
-typedef std::shared_ptr<class QTimelineTrack>           QTimelineTrackRef;
-
-
-class QTimelineModuleItem : public ci::TimelineItem, public QTimelineWidgetWithHandles
-{
-    
-    friend class QTimeline;
-    friend class QTimelineTrack;
-    friend class QTimelineModule;
-    friend class QTimelineParam;
-    
-public:
-     
-    
-private:
-    
-    
-private:
-    
-    QTimelineTrackRef               mParentTrack;
-    
-    QTimelineParamRef               mMouseOnParam;
-    std::vector<QTimelineParamRef>  mParams;
-    
-    ci::Rectf                       mWidgetRect;    // the rect of the entire widget, size changes in accordance with the params rendered, when only the module is rendered this rect is equal to mRect
-    
-    QTimelineModuleRef              mTargetModuleRef;
-    
-    
-private:
-    // disallow
-    //    QTimelineModuleItem(const QTimelineModuleItem&);
-    //    QTimelineModuleItem& operator=(const QTimelineModuleItem&);
-    
-};
-
-
-#endif
-*/

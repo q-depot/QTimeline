@@ -21,7 +21,7 @@
 
 #include "QTimelineTrack.h"
 #include "QTimelineModuleItem.h"
-//#include "QTimelineParam.h"
+#include "QTimelineAudioItem.h"
 #include "QTimelineModule.h"
 #include "QTimelineCueManager.h"
 #include "QTimelineMenu.h"
@@ -30,15 +30,10 @@
 #define QTIMELINE_SNAP      0.25f
 
 
-typedef std::shared_ptr<class QTimeline>     QTimelineRef;
-
-
 class QTimeline
 {
-    
     friend class QTimelineCue;
     friend class QTimelineTrack;
-    friend class QTimelineModuleItem;
     
 public:
 
@@ -53,7 +48,7 @@ public:
     
     struct DeleteModuleCallbackArgs
     {
-        QTimelineModuleItemRef  itemRef;
+        QTimelineItemRef  itemRef;
     };
     
 private:
@@ -66,7 +61,7 @@ private:
     
     std::map<std::string, ModuleCallbacks>  mModuleCallbacks;
 
-    std::vector<QTimelineModuleItemRef> mModulesMarkedForRemoval;
+    std::vector<QTimelineItemRef> mModulesMarkedForRemoval;
     
     
 public:
@@ -197,7 +192,7 @@ public:
             }
     }
     
-    void callDeleteModuleCb( QTimelineModuleItemRef itemRef )
+    void callDeleteModuleCb( QTimelineItemRef itemRef )
     {
         std::string type = itemRef->getType();
         
@@ -212,7 +207,7 @@ public:
     }
 
     
-    void markModuleForRemoval( QTimelineModuleItemRef item )
+    void markModuleForRemoval( QTimelineItemRef item )
     {
         mModulesMarkedForRemoval.push_back( item );
     }
