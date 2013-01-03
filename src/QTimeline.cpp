@@ -12,6 +12,10 @@
 #include "cinder/Text.h"
 #include <fstream>
 
+
+#include "QTimelineAudioItem.h"
+
+
 #define TIMELINE_WINDOW_BEATS       60      // Beats per window / windowInSec = TIMELINE_WINDOW_BEATS * 60.0f / TIMELINE_BPM
 #define TIMELINE_BPM                60      // the BMP
 #define TIMELINE_BAR_HEIGHT         30
@@ -22,40 +26,42 @@ using namespace ci::app;
 using namespace std;
 
 
-ColorA      QTimeline::mTimeBarBgCol            = ColorA( 0.10f, 0.10f, 0.10f, 1.00f );
-ColorA      QTimeline::mTimeBarFgCol            = ColorA( 1.00f, 1.00f, 1.00f, 0.20f );
-ColorA      QTimeline::mTimeBarTextCol          = ColorA( 1.00f, 1.00f, 1.00f, 1.00f );
-ColorA      QTimeline::mTimeBarMouseBarCol     = ColorA( 1.00f, 1.00f, 1.00f, 1.00f );
-ColorA      QTimeline::mTimeBarModuleRangeCol  = ColorA( 1.00f, 1.00f, 1.00f, 1.00f );
+ColorA          QTimeline::mTimeBarBgCol            = ColorA( 0.10f, 0.10f, 0.10f, 1.00f );
+ColorA          QTimeline::mTimeBarFgCol            = ColorA( 1.00f, 1.00f, 1.00f, 0.20f );
+ColorA          QTimeline::mTimeBarTextCol          = ColorA( 1.00f, 1.00f, 1.00f, 1.00f );
+ColorA          QTimeline::mTimeBarMouseBarCol     = ColorA( 1.00f, 1.00f, 1.00f, 1.00f );
+ColorA          QTimeline::mTimeBarModuleRangeCol  = ColorA( 1.00f, 1.00f, 1.00f, 1.00f );
 
-ColorA      QTimeline::mTransportBgCol          = ColorA( 0.10f, 0.10f, 0.10f, 1.00f );
-ColorA      QTimeline::mTransportTextCol        = ColorA( 1.00f, 1.00f, 1.00f, 1.00f );
+ColorA          QTimeline::mTransportBgCol          = ColorA( 0.10f, 0.10f, 0.10f, 1.00f );
+ColorA          QTimeline::mTransportTextCol        = ColorA( 1.00f, 1.00f, 1.00f, 1.00f );
 
-ColorA      QTimeline::mTracksBgCol             = ColorA( 0.00f, 0.00f, 0.00f, 1.00f );
-ColorA      QTimeline::mTracksBgOverCol         = ColorA( 0.00f, 0.00f, 0.00f, 1.00f );
+ColorA          QTimeline::mTracksBgCol             = ColorA( 0.00f, 0.00f, 0.00f, 1.00f );
+ColorA          QTimeline::mTracksBgOverCol         = ColorA( 0.00f, 0.00f, 0.00f, 1.00f );
 
-ColorA      QTimeline::mModulesBgCol            = ColorA( 0.25f, 0.25f, 0.25f, 1.00f );
-ColorA      QTimeline::mModulesBgOverCol        = ColorA( 0.25f, 0.25f, 0.25f, 1.00f );
-ColorA      QTimeline::mModulesTextCol          = ColorA( 1.00f, 1.00f, 1.00f, 1.00f );
-ColorA      QTimeline::mModulesHandleCol        = ColorA( 1.00f, 1.00f, 1.00f, 0.15f );
-ColorA      QTimeline::mModulesHandleOverCol    = ColorA( 1.00f, 1.00f, 1.00f, 0.30f );
+ColorA          QTimeline::mModulesBgCol            = ColorA( 0.25f, 0.25f, 0.25f, 1.00f );
+ColorA          QTimeline::mModulesBgOverCol        = ColorA( 0.25f, 0.25f, 0.25f, 1.00f );
+ColorA          QTimeline::mModulesTextCol          = ColorA( 1.00f, 1.00f, 1.00f, 1.00f );
+ColorA          QTimeline::mModulesHandleCol        = ColorA( 1.00f, 1.00f, 1.00f, 0.15f );
+ColorA      	QTimeline::mModulesHandleOverCol    = ColorA( 1.00f, 1.00f, 1.00f, 0.30f );
                                                      
-ColorA      QTimeline::mParamsBgCol             = ColorA( 0.15f, 0.15f, 0.15f, 1.00f );
-ColorA      QTimeline::mParamsBgOverCol         = ColorA( 0.15f, 0.15f, 0.15f, 1.00f );
-ColorA      QTimeline::mParamsTextCol           = ColorA( 1.00f, 1.00f, 1.00f, 1.00f );
+ColorA          QTimeline::mParamsBgCol             = ColorA( 0.15f, 0.15f, 0.15f, 1.00f );
+ColorA          QTimeline::mParamsBgOverCol         = ColorA( 0.15f, 0.15f, 0.15f, 1.00f );
+ColorA          QTimeline::mParamsTextCol           = ColorA( 1.00f, 1.00f, 1.00f, 1.00f );
 
-ColorA      QTimeline::mKeyframesBgCol          = ColorA( 1.00f, 1.00f, 1.00f, 0.40f );
-ColorA      QTimeline::mKeyframesBgOverCol      = ColorA( 1.00f, 1.00f, 1.00f, 0.80f );
-ColorA      QTimeline::mKeyframesGraphCol       = ColorA( 1.00f, 1.00f, 1.00f, 0.40f );
-ColorA      QTimeline::mKeyframesBgSelectedCol  = ColorA( 1.00f, 0.40f, 0.40f, 1.00f );
+ColorA          QTimeline::mKeyframesBgCol          = ColorA( 1.00f, 1.00f, 1.00f, 0.40f );
+ColorA          QTimeline::mKeyframesBgOverCol      = ColorA( 1.00f, 1.00f, 1.00f, 0.80f );
+ColorA          QTimeline::mKeyframesGraphCol       = ColorA( 1.00f, 1.00f, 1.00f, 0.40f );
+ColorA          QTimeline::mKeyframesBgSelectedCol  = ColorA( 1.00f, 0.40f, 0.40f, 1.00f );
 
-ColorA      QTimeline::mCueListBgCol            = ColorA( 1.00f, 1.00f, 1.00f, 1.00f );
-ColorA      QTimeline::mCueBgCol                = ColorA( 0.25f, 0.25f, 0.25f, 1.00f );
-ColorA      QTimeline::mCueBgOverCol            = ColorA( 0.25f, 0.25f, 0.25f, 1.00f );
-ColorA      QTimeline::mCueFgCol                = ColorA( 0.25f, 0.25f, 0.25f, 1.00f );
-ColorA      QTimeline::mCueTextCol              = ColorA( 1.00f, 1.00f, 1.00f, 1.00f );
-ColorA      QTimeline::mCueHandleCol            = ColorA( 1.00f, 1.00f, 1.00f, 0.15f );
-ColorA      QTimeline::mCueHandleOverCol        = ColorA( 1.00f, 1.00f, 1.00f, 0.30f );
+ColorA          QTimeline::mCueListBgCol            = ColorA( 1.00f, 1.00f, 1.00f, 1.00f );
+ColorA          QTimeline::mCueBgCol                = ColorA( 0.25f, 0.25f, 0.25f, 1.00f );
+ColorA          QTimeline::mCueBgOverCol            = ColorA( 0.25f, 0.25f, 0.25f, 1.00f );
+ColorA          QTimeline::mCueFgCol                = ColorA( 0.25f, 0.25f, 0.25f, 1.00f );
+ColorA          QTimeline::mCueTextCol              = ColorA( 1.00f, 1.00f, 1.00f, 1.00f );
+ColorA          QTimeline::mCueHandleCol            = ColorA( 1.00f, 1.00f, 1.00f, 0.15f );
+ColorA          QTimeline::mCueHandleOverCol        = ColorA( 1.00f, 1.00f, 1.00f, 0.30f );
+
+QTimeline       *QTimeline::thisRef;    // would be better to use shared_ptr and shared_from_this(), however it seems not working with the static variable.
 
 
 void QTimeline::init()
@@ -108,6 +114,32 @@ void QTimeline::init()
     updateTime();
     
     updateTimeWindow();
+    
+    
+    
+    /////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////
+    // add test audio track
+    /////////////////////////////////////////////////////////////////////////////////////////
+    /*
+    // get track, if it doesn't exists or if trackN == -1, create a new one
+    QTimelineTrackRef ref = mTracks[0];
+    
+    // check new module fits in between the others, if not shift the new module to the first slot available
+    
+    
+    float startAt     = snapTime( 1.0f );
+    float duration    = snapTime( 2.0f );
+    TimelineRef timelineRef = getTimelineRef();
+    
+    QTimelineAudioItemRef itemRef = QTimelineAudioItem::create( startAt, duration, ref, timelineRef.get() );
+    itemRef->setStartTime( startAt );
+    itemRef->setDuration( duration );
+    timelineRef->insert( itemRef );
+    */
+    /////////////////////////////////////////////////////////////////////////////////////////
+    
+    QTimeline::thisRef = this;
 }
 
 
@@ -417,26 +449,27 @@ void QTimeline::renderTimeBar()
     // render module range
     if ( mMouseOnTrack && mMouseOnTrack->isMouseOnModule() )
     {
-        QTimelineModuleItemRef ref = mMouseOnTrack->getMouseOnModule();
+        QTimelineModuleItemRef  ref = mMouseOnTrack->getMouseOnModule();
+        Rectf                   r   = ref->getRect();
         
         glBegin( GL_QUADS );
 
         gl::color( ref->getBgColor() );
-        gl::vertex( Vec2f( ref->mRect.x1,       mTimeBarRect.y1 ) );
-        gl::vertex( Vec2f( ref->mRect.x1 + 1,   mTimeBarRect.y1 ) );
-        gl::vertex( Vec2f( ref->mRect.x1 + 1,   mTimeBarRect.y2 ) );
-        gl::vertex( Vec2f( ref->mRect.x1,       mTimeBarRect.y2 ) );
+        gl::vertex( Vec2f( r.x1,       mTimeBarRect.y1 ) );
+        gl::vertex( Vec2f( r.x1 + 1,   mTimeBarRect.y1 ) );
+        gl::vertex( Vec2f( r.x1 + 1,   mTimeBarRect.y2 ) );
+        gl::vertex( Vec2f( r.x1,       mTimeBarRect.y2 ) );
         
-        gl::vertex( Vec2f( ref->mRect.x2,       mTimeBarRect.y1 ) );
-        gl::vertex( Vec2f( ref->mRect.x2 + 1,   mTimeBarRect.y1 ) );
-        gl::vertex( Vec2f( ref->mRect.x2 + 1,   mTimeBarRect.y2 ) );
-        gl::vertex( Vec2f( ref->mRect.x2,       mTimeBarRect.y2 ) );
+        gl::vertex( Vec2f( r.x2,       mTimeBarRect.y1 ) );
+        gl::vertex( Vec2f( r.x2 + 1,   mTimeBarRect.y1 ) );
+        gl::vertex( Vec2f( r.x2 + 1,   mTimeBarRect.y2 ) );
+        gl::vertex( Vec2f( r.x2,       mTimeBarRect.y2 ) );
         
         float h = 6;
-        gl::vertex( Vec2f( ref->mRect.x1,       mTimeBarRect.y1 + h ) );
-        gl::vertex( Vec2f( ref->mRect.x2,       mTimeBarRect.y1 + h ) );
-        gl::vertex( Vec2f( ref->mRect.x2,       mTimeBarRect.y1 + h + 1 ) );
-        gl::vertex( Vec2f( ref->mRect.x1,       mTimeBarRect.y1 + h + 1 ) );
+        gl::vertex( Vec2f( r.x1,       mTimeBarRect.y1 + h ) );
+        gl::vertex( Vec2f( r.x2,       mTimeBarRect.y1 + h ) );
+        gl::vertex( Vec2f( r.x2,       mTimeBarRect.y1 + h + 1 ) );
+        gl::vertex( Vec2f( r.x1,       mTimeBarRect.y1 + h + 1 ) );
         
         glEnd();
     }
@@ -545,9 +578,9 @@ void QTimeline::loadTheme( const fs::path &filepath )
     
     QTimelineTrackRef               trackRef;
     QTimelineModuleItemRef          moduleItemRef;
-    QTimelineParamRef               paramRef;
     QTimelineCueRef                 cueRef;
     std::vector<QTimelineCueRef>    cueList;
+    std::vector<QTimelineParamRef>  params;
     
     mCueManager->setBgColor( QTimeline::mCueListBgCol );
     
@@ -560,23 +593,24 @@ void QTimeline::loadTheme( const fs::path &filepath )
         for( size_t i=0; i < trackRef->mModules.size(); i++ )
         {
             moduleItemRef                       = trackRef->mModules[i];
-            moduleItemRef->mBgColor             = QTimeline::mModulesBgCol;
-            moduleItemRef->mBgOverColor         = QTimeline::mModulesBgOverCol;
-            moduleItemRef->mTextColor           = QTimeline::mModulesTextCol;
-            moduleItemRef->mHandleColor         = QTimeline::mModulesHandleCol;
-            moduleItemRef->mHandleOverColor     = QTimeline::mModulesHandleOverCol;
+            moduleItemRef->setBgColor( QTimeline::mModulesBgCol );
+            moduleItemRef->setBgOverColor( QTimeline::mModulesBgOverCol );
+            moduleItemRef->setTextColor( QTimeline::mModulesTextCol );
+            moduleItemRef->setHandleColor( QTimeline::mModulesHandleCol );
+            moduleItemRef->setHandleOverColor( QTimeline::mModulesHandleOverCol );
             
-            for( size_t j=0; j < moduleItemRef->mParams.size(); j++ )
+            params = moduleItemRef->getParams();
+            
+            for( size_t j=0; j < params.size(); j++ )
             {
-                paramRef                = moduleItemRef->mParams[j];
-                paramRef->mBgColor      = QTimeline::mParamsBgCol;
-                paramRef->mBgOverColor  = QTimeline::mParamsBgOverCol;
-                paramRef->mTextColor    = QTimeline::mParamsTextCol;
+                params[j]->setBgColor( QTimeline::mParamsBgCol );
+                params[j]->setBgOverColor( QTimeline::mParamsBgOverCol );
+                params[j]->setTextColor( QTimeline::mParamsTextCol );
                 
-                paramRef->mKeyframesBgCol           = QTimeline::mKeyframesBgCol;
-                paramRef->mKeyframesBgOverCol       = QTimeline::mKeyframesBgOverCol;
-                paramRef->mKeyframesBgSelectedCol   = QTimeline::mKeyframesBgSelectedCol;
-                paramRef->mKeyframesGraphCol        = QTimeline::mKeyframesGraphCol;
+                params[j]->setKeyframesBgCol( QTimeline::mKeyframesBgCol );
+                params[j]->setKeyframesBgOverCol( QTimeline::mKeyframesBgOverCol );
+                params[j]->setKeyframesBgSelectedCol( QTimeline::mKeyframesBgSelectedCol );
+                params[j]->setKeyframesGraphCol( QTimeline::mKeyframesGraphCol );
             }
         }
     }
@@ -693,7 +727,7 @@ void QTimeline::eraseMarkedModules()
         ci::app::console() << "eraseMarkedModules " << std::endl;
         
         QTimelineModuleItemRef  item    = mModulesMarkedForRemoval[k];
-        QTimelineTrackRef       track   = item->mParentTrack;
+        QTimelineTrackRef       track   = item->getParentTrack();
         
         console() << "count(1): " << item.use_count() << endl;
         // timeline

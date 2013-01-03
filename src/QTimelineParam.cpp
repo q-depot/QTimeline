@@ -12,6 +12,7 @@
 #include "cinder/Utilities.h"
 
 #include "QTimeline.h"
+#include "QTimelineItem.h"
 #include "QTimelineParam.h"
 
 using namespace ci;
@@ -22,7 +23,7 @@ using namespace std;
 bool sortKeyframesHelper(QTimelineKeyframeRef a, QTimelineKeyframeRef b) { return ( a->getTime() < b->getTime() ); }
 
 
-QTimelineParam::QTimelineParam( QTimelineModuleItemRef itemRef, const std::string &name, float *var, float minVal, float maxVal, double startTime )
+QTimelineParam::QTimelineParam( QTimelineItemRef itemRef, const std::string &name, float *var, float minVal, float maxVal )
 : mParentModule(itemRef), mVar(var), mMax(maxVal), mMin(minVal), QTimelineWidget(name)
 {
     mBgColor                = QTimeline::mParamsBgCol;
@@ -42,8 +43,8 @@ QTimelineParam::QTimelineParam( QTimelineModuleItemRef itemRef, const std::strin
     mDefaultEasingStr   = "EaseNone";
     
     // init rect width
-    setRect( Rectf( mParentModule->mParentTrack->mQTimeline->getPosFromTime( mParentModule->getStartTime() ), 0,
-                    mParentModule->mParentTrack->mQTimeline->getPosFromTime( mParentModule->getEndTime() ), 0 ) );
+    setRect( Rectf( QTimeline::getRef()->getPosFromTime( mParentModule->getStartTime() ), 0,
+                    QTimeline::getRef()->getPosFromTime( mParentModule->getEndTime() ), 0 ) );
     
     updateLabel();
     
@@ -56,7 +57,7 @@ QTimelineParam::~QTimelineParam()
     console() << "delete QTimelineParam: " << getName() << endl;
     
     if ( mMenu )
-        mParentModule->mParentTrack->mQTimeline->closeMenu( mMenu );
+        QTimeline::getRef()->closeMenu( mMenu );
     
     mKeyframes.clear();
     
@@ -156,8 +157,8 @@ void QTimelineParam::renderKeyframes()
     double                  startTime   = mParentModule->getStartTime();
     double                  endTime     = mParentModule->getEndTime();
     
-    Vec2f timeWindow    = mParentModule->mParentTrack->mQTimeline->getTimeWindow();
-    float timeWidth     = mParentModule->mParentTrack->mQTimeline->getTimeBarWidth();
+    Vec2f timeWindow    = QTimeline::getRef()->getTimeWindow();
+    float timeWidth     = QTimeline::getRef()->getTimeBarWidth();
     float oneSecInPx    = timeWidth / ( timeWindow.y - timeWindow.x );
     Rectf actualRect(   ( mParentModule->getStartTime() - timeWindow.x ) * oneSecInPx,
                         mRect.y1,
@@ -172,7 +173,6 @@ void QTimelineParam::renderKeyframes()
     {
         keyframe    = mKeyframes[k];
         keyframePos = getKeyframePos( keyframe );
-        //        keyframePos = keyframe->getAbsolutePosition( actualRect, mMax, mMin, startTime, endTime );
 
         if ( k == 0 && keyframePos.x > mRect.x1 )
         {
@@ -245,7 +245,7 @@ void QTimelineParam::renderKeyframes()
 
 void QTimelineParam::addKeyframe( double time, float value, function<float (float)> fn, string fnStr )
 {
-    time    = mParentModule->mParentTrack->mQTimeline->snapTime( time );
+    time    = QTimeline::getRef()->snapTime( time );
     value   = math<float>::clamp( value, mMin, mMax );
     mKeyframes.push_back( QTimelineKeyframeRef( new QTimelineKeyframe( time, value, fn, fnStr ) ) );
     
@@ -279,7 +279,7 @@ bool QTimelineParam::mouseMove( MouseEvent event )
     
     mMousePos           = event.getPos();
     
-    if ( !mParentModule->isTrackOpen() || mIsOnSelection )
+    if ( !mParentModule->getParentTrack()->isOpen() || mIsOnSelection )
         return false;
     
     if ( contains( mMousePos ) )
@@ -287,8 +287,6 @@ bool QTimelineParam::mouseMove( MouseEvent event )
         // find the first keyframe, perhaps it should find the closest
         for( size_t k=0; k < mKeyframes.size(); k++ )
         {
-            //            if ( mKeyframes[k]->getAbsolutePosition( mRect, mMax, mMin, startTime, endTime ).distance( mMousePos ) <= TIMELINE_KEYFRAME_SIZE )
-            
             if ( getKeyframePos( mKeyframes[k] ).distance( mMousePos ) <= TIMELINE_KEYFRAME_SIZE * 1.5f )
             {
                 mMouseOnKeyframe = mKeyframes[k];
@@ -324,21 +322,22 @@ bool QTimelineParam::mouseDown( MouseEvent event )
         if ( mMouseOnKeyframe )                        // move or delete keyframe
         {
             removeKeyframe( mMouseOnKeyframe );
+            mKeyframesSelection.clear();
             mouseMove( event );
         }
         
         else if ( !mKeyframesSelection.empty() )
-            mParentModule->mParentTrack->mQTimeline->openMenu( mMenu, event.getPos() );
+            QTimeline::getRef()->openMenu( mMenu, event.getPos() );
         
         else
-            mParentModule->mParentTrack->mQTimeline->closeMenu( mMenu );
+            QTimeline::getRef()->closeMenu( mMenu );
     }
     
     else
     {
         mKeyframesSelection.clear();
         mMenu->close();
-        mParentModule->mParentTrack->mQTimeline->closeMenu( mMenu );
+        QTimeline::getRef()->closeMenu( mMenu );
         
         if ( event.isShiftDown() )
         {
@@ -349,7 +348,7 @@ bool QTimelineParam::mouseDown( MouseEvent event )
         else if ( !mMouseOnKeyframe )                        // move or delete keyframe
         {
             // create new keyframe
-            float   time    = mParentModule->mParentTrack->mQTimeline->getTimeFromPos( event.getPos().x );
+            float   time    = QTimeline::getRef()->getTimeFromPos( event.getPos().x );
             time            = math<float>::clamp( time, mParentModule->getStartTime(), mParentModule->getEndTime() );
             float value     = getPosValue( event.getPos().y );
 
@@ -369,16 +368,16 @@ bool QTimelineParam::mouseDrag( MouseEvent event )
     
     if ( mMouseOnKeyframe && !mIsOnSelection )
     {
-        float   time    = mParentModule->mParentTrack->mQTimeline->getTimeFromPos( mMousePos.x );
+        float   time    = QTimeline::getRef()->getTimeFromPos( mMousePos.x );
         time            = math<float>::clamp( time, mParentModule->getStartTime(), mParentModule->getEndTime() );
-        time            = mParentModule->mParentTrack->mQTimeline->snapTime( time );
+        time            = QTimeline::getRef()->snapTime( time );
         float value     = getPosValue( mMousePos.y );
         
         mMouseOnKeyframe->set( time, value );
         
         sort( mKeyframes.begin(), mKeyframes.end(), sortKeyframesHelper );
         
-        mParentModule->mParentTrack->mQTimeline->updateCurrentTime();
+        QTimeline::getRef()->updateCurrentTime();
     }
     
     return false;
@@ -394,8 +393,8 @@ void QTimelineParam::updateKeyframesPos( float deltaT )
 
 void QTimelineParam::findKeyframesInSelection()
 {
-    float startTime = mParentModule->mParentTrack->mQTimeline->getTimeFromPos( mMouseDownPos.x );
-    double endTime  = mParentModule->mParentTrack->mQTimeline->getTimeFromPos( mMousePos.x );
+    float startTime = QTimeline::getRef()->getTimeFromPos( mMouseDownPos.x );
+    double endTime  = QTimeline::getRef()->getTimeFromPos( mMousePos.x );
     
     if ( startTime > endTime )
     {
@@ -433,8 +432,8 @@ void QTimelineParam::menuEventHandler( QTimelineMenuItemRef item )
 
 Vec2f QTimelineParam::getRelPosNorm( Vec2f pos )
 {
-    Vec2f timeWindow    = mParentModule->mParentTrack->mQTimeline->getTimeWindow();
-    float timeWidth     = mParentModule->mParentTrack->mQTimeline->getTimeBarWidth();
+    Vec2f timeWindow    = QTimeline::getRef()->getTimeWindow();
+    float timeWidth     = QTimeline::getRef()->getTimeBarWidth();
     float oneSecInPx    = timeWidth / ( timeWindow.y - timeWindow.x );
     Rectf actualRect(   ( mParentModule->getStartTime() - timeWindow.x ) * oneSecInPx,
                      mRect.y1,
@@ -456,7 +455,7 @@ float QTimelineParam::getPosValue( float yPos )
 Vec2f QTimelineParam::getKeyframePos( QTimelineKeyframeRef ref )
 {
     ci::Vec2f pos;
-    pos.x = mParentModule->mParentTrack->mQTimeline->getPosFromTime( ref->getTime() );
+    pos.x = QTimeline::getRef()->getPosFromTime( ref->getTime() );
     pos.y   = mRect.y2 - mRect.getHeight() * ( ref->getValue() - getMin() ) / ( getMax() - getMin() );
     return pos;
 }

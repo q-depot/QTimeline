@@ -30,7 +30,7 @@ public:
     }
     
     
-    ~QTimelineWidgetWithHandles() {}
+    virtual ~QTimelineWidgetWithHandles() {}
 
     
     virtual void setRect( ci::Rectf rect )
@@ -41,7 +41,7 @@ public:
         mRightHandleRect    = ci::Rectf( mRect.getUpperRight() - ci::Vec2f( TIMELINE_MODULE_HANDLE_WIDTH, 0), mRect.getLowerRight() );
     }
     
-    void renderHandles()
+    virtual void renderHandles()
     {
         if ( mMouseOnHandleType == LEFT_HANDLE ) ci::gl::color( mHandleOverColor ); else ci::gl::color( mHandleColor );
         ci::gl::drawSolidRect( mLeftHandleRect );
@@ -50,7 +50,7 @@ public:
         ci::gl::drawSolidRect( mRightHandleRect );
     }
     
-    bool handlesMouseMove( ci::Vec2f pos )
+    virtual bool handlesMouseMove( ci::Vec2f pos )
     {
         if ( mLeftHandleRect.contains( pos ) )
         {
@@ -67,7 +67,7 @@ public:
         return false;
     }
 
-    bool handlesMouseDown()
+    virtual bool handlesMouseDown()
     {
         mSelectedHandleType = mMouseOnHandleType;
         mLeftHandleRect     = ci::Rectf( mRect.getUpperLeft(), mRect.getLowerLeft() + ci::Vec2f( TIMELINE_MODULE_HANDLE_WIDTH, 0) );
@@ -79,6 +79,9 @@ public:
     virtual bool dragHandles( ci::app::MouseEvent event ) { return false; }
     
     virtual void dragWidget( ci::app::MouseEvent event ) {}
+    
+    
+public:
     
     void setHandleColor( ci::ColorA col ) { mHandleColor = col; }
     

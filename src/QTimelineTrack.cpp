@@ -64,8 +64,8 @@ ci::Rectf QTimelineTrack::render( ci::Rectf rect, ci::Vec2f timeWindow, double c
         if ( mModules[k]->isInWindow( timeWindow ) )
         {
             modulesInWindow.push_back( mModules[k] );
-            if ( mModules[k]->mParams.size() > maxParamsN )
-                maxParamsN = mModules[k]->mParams.size();
+            if ( mModules[k]->getNumParams() > maxParamsN )
+                maxParamsN = mModules[k]->getNumParams();
         }
     
     // calculate module track rect based on the max number of params
@@ -95,16 +95,18 @@ ci::Rectf QTimelineTrack::render( ci::Rectf rect, ci::Vec2f timeWindow, double c
         
         if ( mIsTrackOpen )
         {
+            std::vector<QTimelineParamRef> params = module->getParams();
+            
             // render params
-            for( size_t i=0; i < module->mParams.size(); i++ )
-                r = module->mParams[i]->render( r );
+            for( size_t i=0; i < params.size(); i++ )
+                r = params[i]->render( r );
             
             // render keyframes
-            for( size_t i=0; i < module->mParams.size(); i++ )
-                module->mParams[i]->renderKeyframes();
+            for( size_t i=0; i < params.size(); i++ )
+                params[i]->renderKeyframes();
         }
         
-        module->setWidgetRect( Rectf( moduleRect.getUpperLeft(), r.getLowerRight() ) );
+        module->setRect( Rectf( moduleRect.getUpperLeft(), r.getLowerRight() ) );
     }
     
     return mRectPaddedHeight;
@@ -118,7 +120,7 @@ bool QTimelineTrack::mouseDown( ci::app::MouseEvent event )
     
     if ( mSelectedModule )
     {
-        if ( mSelectedModule->contains( event.getPos() ) && event.isLeftDown() && getElapsedSeconds() - mMouseDownAt < 0.5f )
+        if ( mSelectedModule->contains( event.getPos() ) && !mSelectedModule->isMouseOnParam() && event.isLeftDown() && getElapsedSeconds() - mMouseDownAt < 0.5f )
         {
             toggle();
             mMouseOnModule.reset();
@@ -203,20 +205,20 @@ Vec2f QTimelineTrack::getTimeWindow()
 }
 
 
-void QTimelineTrack::addModule( QTimelineModuleRef ref, float startAt, float duration )
+void QTimelineTrack::addModule( QTimelineModuleRef targetRef, float startTime, float duration )
 {
     // TODO add module should always ensure that no other modules exist with the same name
     // perhaps QTimelineModule and QTimelineModuleItem should share a unique ID to be both referred with.
     // would help to sort out part of the callbacks mess.
 
-    startAt     = mQTimeline->snapTime( startAt );
+    startTime   = mQTimeline->snapTime( startTime );
     duration    = mQTimeline->snapTime( duration );
     
     TimelineRef timelineRef = mQTimeline->getTimelineRef();
     
-    QTimelineModuleItemRef moduleItemRef = QTimelineModuleItem::create( ref, startAt, duration, QTimelineTrackRef(this), timelineRef.get() );
-    ref->setItemRef( moduleItemRef );
-    moduleItemRef->setStartTime( startAt );
+    QTimelineModuleItemRef moduleItemRef = QTimelineModuleItem::create( startTime, duration, targetRef, getRef(), timelineRef.get() );
+    targetRef->setItemRef( moduleItemRef );
+    moduleItemRef->setStartTime( startTime );
     moduleItemRef->setDuration( duration );
     timelineRef->insert( moduleItemRef );
     

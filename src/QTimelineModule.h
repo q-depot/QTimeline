@@ -42,13 +42,13 @@ public:
     void setItemRef( QTimelineModuleItemRef ref ) { mModuleItemRef = ref; }
     
     QTimelineModuleItemRef getItemRef() { return mModuleItemRef; }
-    
-    int getParamsN() { return ( mModuleItemRef ) ? mModuleItemRef->mParams.size() : 0; }
+
+    size_t getNumParams() { return ( mModuleItemRef ) ? mModuleItemRef->getNumParams() : 0; }
     
     std::vector<QTimelineParamRef> getParams()
     {
         std::vector<QTimelineParamRef> emptyVec;
-        return ( mModuleItemRef ) ? mModuleItemRef->mParams : emptyVec;
+        return ( mModuleItemRef ) ? mModuleItemRef->getParams() : emptyVec;
     }
     
     float getParamValue( std::string name ) { return ( mModuleItemRef ) ? mModuleItemRef->getParamValue( name ) : 0.0f; }
@@ -56,8 +56,6 @@ public:
     bool isPlaying() { return ( mModuleItemRef ) ? mModuleItemRef->isPlaying() : false; }
     
     std::string getType() { return mType; }
-    
-//    void markedForRemoval() { mMarkedForRemoval = true; }
     
 protected:
     

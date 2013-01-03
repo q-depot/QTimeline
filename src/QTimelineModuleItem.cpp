@@ -12,32 +12,28 @@
 
 #include "QTimeline.h"
 #include "QTimelineModuleItem.h"
-#include "QTimelineParam.h"
 #include "QTimelineTrack.h"
 #include "QTimelineModule.h"
+
+//#include "QTimelineParam.h"
 
 using namespace ci;
 using namespace ci::app;
 using namespace std;
 
 
-QTimelineModuleItem::QTimelineModuleItem( QTimelineModuleRef targetRef, float startAt, float duration, QTimelineTrackRef trackRef, Timeline *parent )
-: QTimelineWidgetWithHandles( targetRef->getName() )
+QTimelineModuleItem::QTimelineModuleItem( float startTime, float duration, QTimelineModuleRef targetRef, QTimelineTrackRef trackRef, Timeline *ciTimeline )
+: QTimelineItem( startTime, duration, trackRef, ciTimeline ),
+  QTimelineWidgetWithHandles( targetRef->getName() )
 {
-    setAutoRemove(false);
-    
     mTargetModuleRef    = targetRef;
-    mParentTrack        = trackRef;
-    mParent             = parent;
     
-    setStartTime( startAt );
-    setDuration( duration );
-    
-    mBgColor            = QTimeline::mModulesBgCol;
-	mBgOverColor        = QTimeline::mModulesBgOverCol;
-    mTextColor          = QTimeline::mModulesTextCol;
-    mHandleColor        = QTimeline::mModulesHandleCol;
-    mHandleOverColor    = QTimeline::mModulesHandleOverCol;
+    setBgColor( QTimeline::mModulesBgCol );
+    setBgOverColor( QTimeline::mModulesBgOverCol );
+    setTextColor( QTimeline::mModulesTextCol );
+
+    setHandleColor( QTimeline::mModulesHandleCol );
+    setHandleOverColor( QTimeline::mModulesHandleOverCol );
 
     // init rect width
     setRect( Rectf( mParentTrack->mQTimeline->getPosFromTime( getStartTime() ), 0,
@@ -60,7 +56,7 @@ QTimelineModuleItem::~QTimelineModuleItem()
 void QTimelineModuleItem::clear()
 {
     if ( mMenu )
-        mParentTrack->mQTimeline->closeMenu( mMenu );
+        QTimeline::getRef()->closeMenu( mMenu );
     
     mParams.clear();
 }
@@ -77,33 +73,6 @@ void QTimelineModuleItem::update( float relativeTime )
     
     mTargetModuleRef->update();
 }
-
-
-void QTimelineModuleItem::registerParam( const string name, float initVal, float minVal, float maxVal )
-{
-    registerParam( name, new float(initVal), minVal, maxVal );
-}
-
-
-void QTimelineModuleItem::registerParam( const std::string name, float *var, float minVal, float maxVal )
-{
-    for( size_t k=0; k < mParams.size(); k++ )
-        if ( mParams[k]->getName() == name )
-            mParams[k]->mVar = var;
-    
-    mParams.push_back( QTimelineParamRef( new QTimelineParam( thisRef(), name, var, minVal, maxVal, getStartTime() ) ) );
-}
-
-
-float QTimelineModuleItem::getParamValue( const std::string &name )
-{
-    for( size_t k=0; k < mParams.size(); k++ )
-        if ( mParams[k]->getName() == name )
-            return mParams[k]->getValue();
-    
-    return 0.0f;
-}
-
 
 void QTimelineModuleItem::render( bool mouseOver )
 {
@@ -144,12 +113,12 @@ bool QTimelineModuleItem::mouseMove( MouseEvent event )
     
     mMouseOnHandleType  = NO_HANDLE;
     
-    if ( mWidgetRect.contains( event.getPos() ) )
+    if ( contains( event.getPos() ) )
     {
         if ( handlesMouseMove( event.getPos() ) )
             return true;
             
-        else if ( isTrackOpen() )
+        else if ( mParentTrack->isOpen() )
         {
             for( size_t k=0; k < mParams.size(); k++ )
                 if ( mParams[k]->mouseMove(event) )
@@ -213,16 +182,6 @@ bool QTimelineModuleItem::mouseDrag( MouseEvent event )
 
     return false;
 }
-
-
-bool QTimelineModuleItem::isMouseOnParam( QTimelineParamRef ref ) { return ref == mMouseOnParam; };
-
-
-bool QTimelineModuleItem::isMouseOnKeyframe( QTimelineParamRef paramRef, QTimelineKeyframeRef keyframeRef ) { return paramRef == mMouseOnParam && paramRef->isMouseOnKeyframe(keyframeRef); };
-
-
-bool QTimelineModuleItem::isTrackOpen() { return mParentTrack->isOpen(); }
-
 
 void QTimelineModuleItem::findModuleBoundaries( float *prevEndTime, float *nextStartTime )
 {
@@ -345,8 +304,8 @@ void QTimelineModuleItem::menuEventHandler( QTimelineMenuItemRef item )
 {
     if ( item->getMeta() == "delete" )
     {
-        mParentTrack->mQTimeline->closeMenu( mMenu );
-        mParentTrack->markModuleForRemoval( thisRef() );
+//        mParentTrack->mQTimeline->closeMenu( mMenu );
+//        mParentTrack->markModuleForRemoval( thisRef() );
     }
     else if ( item->getMeta() == "color_palette" )
     {
@@ -365,22 +324,5 @@ void QTimelineModuleItem::initMenu()
     mMenu->addSeparator();
     
     mMenu->addButton( "X DELETE", "delete", this, &QTimelineModuleItem::menuEventHandler );
-}
-
-
-string QTimelineModuleItem::getType()
-{
-    return mTargetModuleRef->getType();
-}
-
-
-QTimelineParamRef QTimelineModuleItem::findParamByName( std::string name )
-{
-    for( size_t k=0; k < mParams.size(); k++ )
-        if ( mParams[k]->getName() == name )
-            return mParams[k];
-    
-    QTimelineParamRef nullPtr;
-    return nullPtr;
 }
 

@@ -6,7 +6,6 @@
 #include "Resources.h"
 #include "QTimeline.h"
 
-
 #include "BasicModule.h"
 
 using namespace ci;
@@ -42,7 +41,6 @@ void BasicSampleApp::setup()
     
     mTimeline.initOsc();
     
-    
     // register modules
     mTimeline.registerModule( "BasicModule", this, &BasicSampleApp::createModuleCallback, &BasicSampleApp::deleteModuleCallback );
 
@@ -51,11 +49,6 @@ void BasicSampleApp::setup()
     mTimeline.addModule( mod, 2.0f, 12.0f );
     mod->init();
     mModules.push_back( mod );
-
-//    mod = new BasicModule( "Sample module two" );
-//    mTimeline.addModule( mod, 2.0f, 12.0f );
-//    mod->init();
-//    mModules.push_back( mod );
     
     mTimeline.addCue( "Cue 1", 0.0f, 3.0f );
     mTimeline.addCue( "Another cue", 4.0f, 5.0f );

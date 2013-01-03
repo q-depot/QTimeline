@@ -21,13 +21,16 @@
 
 #include "QTimelineTrack.h"
 #include "QTimelineModuleItem.h"
-#include "QTimelineParam.h"
+//#include "QTimelineParam.h"
 #include "QTimelineModule.h"
 #include "QTimelineCueManager.h"
 #include "QTimelineMenu.h"
 #include "QTimelineOscController.h"
 
 #define QTIMELINE_SNAP      0.25f
+
+
+typedef std::shared_ptr<class QTimeline>     QTimelineRef;
 
 
 class QTimeline
@@ -360,6 +363,14 @@ public:
     static ci::ColorA       mCueHandleCol;
     static ci::ColorA       mCueHandleOverCol;
     
+public:
+    
+    static QTimeline*       getRef() { return thisRef; }
+    
+private:
+
+    static  QTimeline     *thisRef;
+    
 private:
     
     
@@ -411,6 +422,8 @@ private:
     ci::gl::Texture         mHelpTex;
     
     QTimelineOscControllerRef   mOscController;
+   
+    
 };
 
 

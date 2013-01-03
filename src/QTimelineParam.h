@@ -20,19 +20,22 @@
 #define TIMELINE_PARAM_HEIGHT   45
 
 typedef std::shared_ptr<class QTimelineParam>       QTimelineParamRef;
+typedef std::shared_ptr<class QTimelineItem>        QTimelineItemRef;
 
-class QTimelineModuleItem;
+//class QTimelineModuleItem;
 
 class QTimelineParam : public QTimelineWidget
 {
     
     friend class QTimeline;
     friend class QTimelineTrack;
-    friend class QTimelineModuleItem;
+//    friend class QTimelineModuleItem;
     
 public:
     
-    QTimelineParam( QTimelineModuleItemRef itemRef, const std::string &name, float *var, float minVal, float maxVal, double startTime );
+    //    QTimelineParam( QTimelineModuleItemRef itemRef, const std::string &name, float *var, float minVal, float maxVal, double startTime );
+  
+    QTimelineParam( QTimelineItemRef itemRef, const std::string &name, float *var, float minVal, float maxVal );
     
     ~QTimelineParam();
     
@@ -80,6 +83,25 @@ public:
     
     void menuEventHandler( QTimelineMenuItemRef item );
     
+    // at the moment this function might leak,
+    // if the param has been created pssing the pointer to the variable, we can't call delete on the pointer.
+    // on the other hand if the variable has been created by the params(ie when the param is register with a name and without a variable),
+    // we should call the delete on the pointer, otherwise it leaks.
+    // TODO: mVar should be a shared_ptr
+    void swapPointer( float *var ) { mVar = var; }
+    
+    
+    void        setKeyframesBgCol( ci::ColorA col ) { mKeyframesBgCol = col; }
+    ci::ColorA  getKeyframesBgCol() { return mKeyframesBgCol; }
+    
+    void        setKeyframesBgOverCol( ci::ColorA col ) { mKeyframesBgOverCol = col; }
+    ci::ColorA  getKeyframesBgOverCol() { return mKeyframesBgOverCol; }
+    
+    void        setKeyframesBgSelectedCol( ci::ColorA col ) { mKeyframesBgSelectedCol = col; }
+    ci::ColorA  getKeyframesBgSelectedCol() { return mKeyframesBgSelectedCol; }
+    
+    void        setKeyframesGraphCol( ci::ColorA col ) { mKeyframesGraphCol = col; }
+    ci::ColorA  getKeyframesGraphCol() { return mKeyframesGraphCol; }
     
 private:
     
@@ -103,7 +125,7 @@ protected:
     QTimelineKeyframeRef                mMouseOnKeyframe;
     std::vector<QTimelineKeyframeRef>   mKeyframes;
     
-    QTimelineModuleItemRef              mParentModule;
+    QTimelineItemRef                    mParentModule;
     
     ci::Vec2f                           mMousePos;
     bool                                mIsOnSelection;
