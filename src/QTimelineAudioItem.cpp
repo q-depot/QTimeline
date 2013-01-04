@@ -218,20 +218,24 @@ void QTimelineAudioItem::dragWidget( MouseEvent event )
 }
 
 
-
-
 void QTimelineAudioItem::menuEventHandler( QTimelineMenuItemRef item )
 {
     if ( item->getMeta() == "load_track" )
     {
         loadAudioTrack();
     }
+    else if ( item->getMeta() == "color_palette" )
+    {
+        QTimelineMenuColorPalette *palette = (QTimelineMenuColorPalette*)item.get();
+        mBgColor = palette->getColor();
+    }
 }
 
 
 void QTimelineAudioItem::initMenu()
 {
-    mMenu->init( "AUDIO ITEM MENU" );
+    mMenu->init( "AUDIO ITEM" );
+    mMenu->addColorPalette( this, &QTimelineAudioItem::menuEventHandler );
     mMenu->addSeparator();
     mMenu->addButton( "Load track", "load_track", this, &QTimelineAudioItem::menuEventHandler );
 }
