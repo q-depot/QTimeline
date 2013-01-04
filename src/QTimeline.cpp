@@ -725,46 +725,22 @@ void QTimeline::eraseMarkedModules()
 {
     for( size_t k=0; k < mModulesMarkedForRemoval.size(); k++ )
     {
-        ci::app::console() << endl << "eraseMarkedModules " << std::endl;
-        
-        
-        
         QTimelineItemRef    item    = mModulesMarkedForRemoval[k];
         QTimelineTrackRef   track   = item->getParentTrack();
         
-        console() << item->getName() << " " << item->getType();
+        // remove item from the ci::Timeline
+        mTimeline->remove( item );                                          // remove() flag the item as erase marked, timeline::stepTo() is in charge to actually delete the item
+        updateCurrentTime();                                                // force ci::Timeline to delete all marked items
         
-        if ( item->getType() == "QTimelineModuleItem" )
-            console() << " " << ( ( QTimelineModuleItem* ) item.get() )->getTargetType() << endl;
-        
-        console() << "count(1): " << item.use_count() << endl;
-        // timeline
-        mTimeline->remove( item );                                       // remove() flag the item as erase marked, timeline::stepTo() is in charge to actually delete the item
-        updateCurrentTime();
-        
-        console() << "count(2): " << item.use_count() << endl;
-        // track module
+        // remove QTimelineItem from the track
         track->eraseModule( item );
         
-        console() << "count(3): " << item.use_count() << endl;
-        // app modules
+        // delete QTimelineModule
         callDeleteModuleCb( item );
-        
-        console() << "count(4): " << item.use_count() << endl;
+    
+        // destroy params, keyframes and release the QTimelineModule target
         item->clear();
-        
-        console() << "count(5): " << item.use_count() << endl;
-        
     }
     
-    
-    updateCurrentTime();
-    
-    if ( !mModulesMarkedForRemoval.empty() )
-        console() << "count(6): " << mModulesMarkedForRemoval[0].use_count() << endl;
-    
     mModulesMarkedForRemoval.clear();
-    
-    
-//    updateCurrentTime();
 }
