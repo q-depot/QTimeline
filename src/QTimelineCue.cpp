@@ -28,7 +28,7 @@ QTimelineCue::QTimelineCue( QTimeline *qTimeline, QTimelineCueManager *cueManage
     mHandleColor        = QTimeline::mCueHandleCol;
     mHandleOverColor    = QTimeline::mCueHandleOverCol;
 
-    mFont               = ci::gl::TextureFont::create( ci::Font( "Helvetica", 14 ) );
+    mFont               = ci::gl::TextureFont::create( ci::Font( "Helvetica", 12 ) );
 
     mIsMouseOn          = false;
     
@@ -82,7 +82,7 @@ void QTimelineCue::render()
     
     // label
     gl::color( mTextColor );
-    mFont->drawString( mLabel, mRect.getUpperLeft() + Vec2f( TIMELINE_MODULE_HANDLE_WIDTH * 2, 19.0f ) );
+    mFont->drawString( mLabel, mRect.getUpperLeft() + Vec2f( TIMELINE_MODULE_HANDLE_WIDTH * 2, 13.0f ) );
 }
 
 bool QTimelineCue::mouseMove( MouseEvent event )

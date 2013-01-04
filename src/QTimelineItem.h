@@ -77,10 +77,11 @@ public:
     virtual ci::XmlTree getXmlNode()
     {
         ci::XmlTree node( "item", "" );
-        node.setAttribute( "type", getType() );
-        node.setAttribute( "name", getName() );
+        node.setAttribute( "type",      getType() );
+        node.setAttribute( "name",      getName() );
         node.setAttribute( "startTime", getStartTime() );
         node.setAttribute( "duration",  getDuration() );
+//        node.setAttribute( "color",     getBgColor() );
         
         for( size_t k=0; k < mParams.size(); k++ )
             node.push_back( mParams[k]->getXmlNode() );

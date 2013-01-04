@@ -63,7 +63,7 @@ void BasicSampleApp::setup()
     mTimeline->addCue( "Cue 1", 0.0f, 3.0f );
     mTimeline->addCue( "Another cue", 4.0f, 5.0f );
     
-    mTimeline->loadTheme( getAssetPath("theme2.xml").generic_string() );
+    mTimeline->loadTheme( getAssetPath("default_theme.xml").generic_string() );
 }
 
 void BasicSampleApp::keyDown( KeyEvent event )

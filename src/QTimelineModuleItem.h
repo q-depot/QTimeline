@@ -15,14 +15,12 @@
 
 #include "QTimelineItem.h"
 
-class QTimelineModule;
-
-#define TIMELINE_MODULE_HEIGHT          27      // the height in px
-
+#define TIMELINE_MODULE_HEIGHT          20      // the height in px
 
 typedef std::shared_ptr<class QTimelineModuleItem>      QTimelineModuleItemRef;
 typedef std::shared_ptr<class QTimelineModule>          QTimelineModuleRef;
 
+//class QTimelineModule;
 
 class QTimelineModuleItem : public QTimelineItem
 {

@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <QTimeline>
 	<tracks>
-		<track name="track 0"/>
+		<track name="track 0">
+			<item type="QTimelineAudioItem" name="track name!" startTime="10" duration="12.25" trackPath=""/>
+			<item type="QTimelineAudioItem" name="track name!" startTime="25.5" duration="7.25" trackPath=""/>
+		</track>
 		<track name="track untitled">
 			<item type="QTimelineModuleItem" name="Sample module one" startTime="1.75" duration="12" targetModuleType="BasicModule">
 				<param name="radius" value="50" min="0" max="60">
@@ -31,7 +34,8 @@
 					<kf value="0.377777755" time="10.75" fn="EaseNone"/>
 				</param>
 			</item>
-			<item type="QTimelineAudioItem" name="track name!" startTime="16.25" duration="16.25" trackPath=""/>
+			<item type="QTimelineAudioItem" name="track name!" startTime="14.5" duration="17.25" trackPath=""/>
+			<item type="QTimelineAudioItem" name="track name!" startTime="34.75" duration="8.25" trackPath=""/>
 		</track>
 	</tracks>
 	<cueList>

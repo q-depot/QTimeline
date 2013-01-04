@@ -67,6 +67,8 @@ ColorA          QTimeline::mCueTextCol              = ColorA( 1.00f, 1.00f, 1.00
 ColorA          QTimeline::mCueHandleCol            = ColorA( 1.00f, 1.00f, 1.00f, 0.15f );
 ColorA          QTimeline::mCueHandleOverCol        = ColorA( 1.00f, 1.00f, 1.00f, 0.30f );
 
+vector<ColorA>  QTimelineMenuColorPalette::mColors;
+
 QTimeline*      QTimeline::thisRef;    // would be better to use shared_ptr and shared_from_this(), however it seems not working with the static variable.
 
 
@@ -78,6 +80,14 @@ void QTimeline::init()
     
     registerCallbacks();
     
+    // init AT LEAST one color for the menu color palette
+    QTimelineMenuColorPalette::mColors.push_back( ci::ColorA( 0.86f, 0.18f, 0.11f, 1.0f ) );
+    QTimelineMenuColorPalette::mColors.push_back( ci::ColorA( 1.00f, 0.34f, 0.00f, 1.0f ) );
+    QTimelineMenuColorPalette::mColors.push_back( ci::ColorA( 0.86f, 0.62f, 0.00f, 1.0f ) );
+    QTimelineMenuColorPalette::mColors.push_back( ci::ColorA( 0.00f, 0.65f, 0.58f, 1.0f ) );
+    QTimelineMenuColorPalette::mColors.push_back( ci::ColorA( 0.45f, 0.60f, 0.00f, 1.0f ) );
+    QTimelineMenuColorPalette::mColors.push_back( ci::ColorA( 0.50f, 0.50f, 0.50f, 1.0f ) );
+
     mTimeline = ci::Timeline::create();
     
     mTransportRect  = Rectf( 0, getWindowHeight() - TIMELINE_TRANSPORT_HEIGHT, getWindowWidth(), getWindowHeight() );
@@ -433,21 +443,25 @@ void QTimeline::renderTimeBar()
     {
         QTimelineItemRef    ref = mMouseOnTrack->getMouseOnModule();
         Rectf               r   = ref->getRect();
+        float               h   = 6;
         
         glBegin( GL_QUADS );
 
         gl::color( ref->getBgColor() );
+
+        // left bar
         gl::vertex( Vec2f( r.x1,       mTimeBarRect.y1 ) );
         gl::vertex( Vec2f( r.x1 + 1,   mTimeBarRect.y1 ) );
         gl::vertex( Vec2f( r.x1 + 1,   mTimeBarRect.y2 ) );
         gl::vertex( Vec2f( r.x1,       mTimeBarRect.y2 ) );
         
+        // right bar
         gl::vertex( Vec2f( r.x2,       mTimeBarRect.y1 ) );
-        gl::vertex( Vec2f( r.x2 + 1,   mTimeBarRect.y1 ) );
-        gl::vertex( Vec2f( r.x2 + 1,   mTimeBarRect.y2 ) );
+        gl::vertex( Vec2f( r.x2 - 1,   mTimeBarRect.y1 ) );
+        gl::vertex( Vec2f( r.x2 - 1,   mTimeBarRect.y2 ) );
         gl::vertex( Vec2f( r.x2,       mTimeBarRect.y2 ) );
-        
-        float h = 6;
+
+        // line
         gl::vertex( Vec2f( r.x1,       mTimeBarRect.y1 + h ) );
         gl::vertex( Vec2f( r.x2,       mTimeBarRect.y1 + h ) );
         gl::vertex( Vec2f( r.x2,       mTimeBarRect.y1 + h + 1 ) );
@@ -558,6 +572,15 @@ void QTimeline::loadTheme( const fs::path &filepath )
         QTimeline::mCueTextCol              = getThemeColor( theme, "CueTextCol" );
         QTimeline::mCueHandleCol            = getThemeColor( theme, "CueHandleCol" );
         QTimeline::mCueHandleOverCol        = getThemeColor( theme, "CueHandleOverCol" );
+        
+        // Menu color palette
+        QTimelineMenuColorPalette::mColors.clear();
+        XmlTree colorPalette = XmlTree( loadFile( filepath ) ).getChild("/QTimelineTheme/MenuColorPalette");
+        for( XmlTree::Iter nodeIt = colorPalette.begin("Color"); nodeIt != colorPalette.end(); ++nodeIt )
+            QTimelineMenuColorPalette::mColors.push_back( ColorA(   nodeIt->getAttributeValue<float>("r"),
+                                                                    nodeIt->getAttributeValue<float>("g"),
+                                                                    nodeIt->getAttributeValue<float>("b"),
+                                                                    nodeIt->getAttributeValue<float>("a")   ) );
     }
     catch ( ... )
     {

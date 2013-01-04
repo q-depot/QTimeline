@@ -226,30 +226,14 @@ public:
     QTimelineMenuColorPalette( T *obj, void (T::*callback)(QTimelineMenuItemRef) ) : QTimelineMenuItem( "", "color_palette", obj, callback )
     {
         mHeight = TIMELINE_MENU_ITEM_HEIGHT;
-//        0.0	71.0	51.0
-//        0.0	74.0	76.0
-//        98.0	67.0	23.0
-//        0.0	52.0	77.0
-//        100.0	36.0	49.0
-//        100.0	29.0	12.0
-//        0.0	67.0	28.0
+
+//        mColors.push_back( ci::Color( 0.86f, 0.18f, 0.11f ) );
+//        mColors.push_back( ci::Color( 1.0f, 0.34f, 0.0f ) );
+//        mColors.push_back( ci::Color( 0.86f, 0.62f, 0.0f ) );
+//        mColors.push_back( ci::Color( 0.0f, 0.65f, 0.58f ) );
+//        mColors.push_back( ci::Color( 0.45f, 0.60f, 0.0f ) );
+//        mColors.push_back( ci::Color( 0.5f, 0.5f, 0.5f ) );
         
-        mColors.push_back( ci::Color( 0.0f, 0.71f, 0.51f ) );
-        
-        mColors.push_back( ci::Color( 0.0f, 0.74f, 0.76f ) );
-        
-        mColors.push_back( ci::Color( 0.98f, 0.67f, 0.23f ) );
-        
-        mColors.push_back( ci::Color( 0.0f, 0.52f, 0.77f ) );
-        mColors.push_back( ci::Color( 1.0f, 0.36f, 0.49f ) );
-        mColors.push_back( ci::Color( 1.0f, 0.29f, 0.12f ) );
-        mColors.push_back( ci::Color( 0.0f, 0.67f, 0.28f ) );
-        
-//        mColors.push_back( ci::Color( 0.93f, 0.18f, 0.22f ) );
-//        mColors.push_back( ci::Color( 0.2f, 0.75f,  0.85f ) );
-//        mColors.push_back( ci::Color( 0.35f, 0.35f, 0.35f ) );
-//        mColors.push_back( ci::Color( 0.18f, 0.75f, 0.37f ) );
-//        mColors.push_back( ci::Color( 0.08f, 0.67f, 0.78f ) );
     }
     
     ~QTimelineMenuColorPalette() {}
@@ -268,14 +252,14 @@ public:
         ci::gl::vertex( mRect.getLowerLeft() );
 
         // colors
-        float w = mRect.getWidth() / mColors.size();
+        float w = mRect.getWidth() / QTimelineMenuColorPalette::mColors.size();
         
         r = ci::Rectf( mRect.getUpperLeft(), mRect.getLowerLeft() + ci::Vec2f( w, 0 ) );
-        r.inflate( ci::Vec2f( -1.0f, 0.0f ) );
+        r.inflate( ci::Vec2f( -2.0f, -3.0f ) );
         
-        for( size_t k=0; k < mColors.size(); k++ )
+        for( size_t k=0; k < QTimelineMenuColorPalette::mColors.size(); k++ )
         {
-            ci::gl::color( mColors[k] );
+            ci::gl::color( QTimelineMenuColorPalette::mColors[k] );
             ci::gl::vertex( r.getUpperLeft() );
             ci::gl::vertex( r.getUpperRight() );
             ci::gl::vertex( r.getLowerRight() );
@@ -303,8 +287,8 @@ public:
         if ( mRect.contains( pos ) )
         {
             pos         -= mRect.getUpperLeft();
-            float   w   = mRect.getWidth() / mColors.size();
-            int     idx = ci::math<int>::clamp( pos.x / w, 0, mColors.size() - 1 );
+            float   w   = mRect.getWidth() / QTimelineMenuColorPalette::mColors.size();
+            int     idx = ci::math<int>::clamp( pos.x / w, 0, QTimelineMenuColorPalette::mColors.size() - 1 );
             
             mSelectedColor = mColors[idx];
             
@@ -313,10 +297,13 @@ public:
         return false;
     }
     
+public:
+    
+    static std::vector<ci::ColorA> mColors;
+    
 private:
     
     ci::Color               mSelectedColor;
-    std::vector<ci::Color>  mColors;
     
 };
 
@@ -436,7 +423,7 @@ private:
     
     void setWidth()
     {
-        mWidth = 120;
+        mWidth = 150;
 //        int width   = mFont->measureString( mName ).x;
 //        mWidth      = std::max( 30 + width + TIMELINE_MENU_TEXT_INDENT * 2, mWidth );
     }
