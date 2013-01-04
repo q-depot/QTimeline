@@ -25,7 +25,7 @@ QTimelineTrack::QTimelineTrack( string name ) : QTimelineWidget( name )
     mBgOverColor        = QTimeline::mTracksBgCol;
     
     mIsMouseOnTrack     = false;
-    mIsTrackOpen        = true;
+    mIsTrackOpen        = false;
     
     mMouseDownAt        = 0.0f;
     
