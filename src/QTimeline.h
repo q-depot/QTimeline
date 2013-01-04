@@ -29,8 +29,10 @@
 
 #define QTIMELINE_SNAP      0.25f
 
+typedef std::shared_ptr<class QTimeline>		QTimelineRef;
 
-class QTimeline
+
+class QTimeline : public std::enable_shared_from_this<QTimeline>
 {
     friend class QTimelineCue;
     friend class QTimelineTrack;
@@ -254,6 +256,12 @@ public:
     
     void step( int steps = 1 );
 
+    void shutdown()
+    {
+        clear();
+        
+        thisRef = NULL;
+    }
     
 private:
     
@@ -359,7 +367,7 @@ public:
     
 private:
 
-    static  QTimeline     *thisRef;
+    static  QTimeline       *thisRef;
     
 private:
     

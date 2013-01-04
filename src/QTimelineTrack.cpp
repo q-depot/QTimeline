@@ -308,7 +308,7 @@ void QTimelineTrack::loadXmlNode( ci::XmlTree node )
 
 void QTimelineTrack::menuEventHandler( QTimelineMenuItemRef item )
 {
-    QTimeline *timelineRef = QTimeline::getRef();
+    QTimeline   *timelineRef = QTimeline::getRef();
     
     if ( item->getMeta() == "create_module_item" )
     {
@@ -349,7 +349,7 @@ void QTimelineTrack::menuEventHandler( QTimelineMenuItemRef item )
 
 void QTimelineTrack::initMenu()
 {
-    QTimeline *timelineRef = QTimeline::getRef();
+    QTimeline   *timelineRef = QTimeline::getRef();
     
     mMenu->init( "TRACK MENU" );
     

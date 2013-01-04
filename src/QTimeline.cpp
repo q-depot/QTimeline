@@ -67,7 +67,7 @@ ColorA          QTimeline::mCueTextCol              = ColorA( 1.00f, 1.00f, 1.00
 ColorA          QTimeline::mCueHandleCol            = ColorA( 1.00f, 1.00f, 1.00f, 0.15f );
 ColorA          QTimeline::mCueHandleOverCol        = ColorA( 1.00f, 1.00f, 1.00f, 0.30f );
 
-QTimeline       *QTimeline::thisRef;    // would be better to use shared_ptr and shared_from_this(), however it seems not working with the static variable.
+QTimeline*      QTimeline::thisRef;    // would be better to use shared_ptr and shared_from_this(), however it seems not working with the static variable.
 
 
 void QTimeline::init()
