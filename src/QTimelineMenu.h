@@ -325,8 +325,9 @@ public:
     
     QTimelineMenu()
     {
-        mWidth          = 0;
         mIsVisible      = false;
+
+        calculateSize();
     }
     
     ~QTimelineMenu()
@@ -342,6 +343,13 @@ public:
     void open( ci::Vec2f pos  )
     {
         mIsVisible  = true;
+        
+        if ( pos.x + mSize.x > ci::app::getWindowWidth() )
+            pos.x -= mSize.x;
+        
+        if ( pos.y + mSize.y > ci::app::getWindowHeight() )
+            pos.y -= mSize.y;
+
         mPos        = pos;
     }
     
@@ -418,12 +426,17 @@ private:
     void addItem( QTimelineMenuItemRef item )
     {
         mItems.push_back( item );
-        setWidth();
+        calculateSize();
     }
     
-    void setWidth()
+    void calculateSize()
     {
-        mWidth = 150;
+        mSize = ci::Vec2f::zero();
+        
+        for( size_t k=0; k < mItems.size(); k++ )
+            mSize.y += mItems[k]->getHeight();
+        
+        mSize.x = 150;
 //        int width   = mFont->measureString( mName ).x;
 //        mWidth      = std::max( 30 + width + TIMELINE_MENU_TEXT_INDENT * 2, mWidth );
     }
@@ -433,7 +446,7 @@ private:
         if ( !mIsVisible )
             return;
         
-        ci::Rectf r( mPos, mPos + ci::Vec2f( mWidth, 0 ) );
+        ci::Rectf r( mPos, mPos + ci::Vec2f( mSize.x, 0 ) );
         
         bool mouseOver;
         for( size_t k=0; k < mItems.size(); k++ )
@@ -446,13 +459,12 @@ private:
         glBegin( GL_QUADS );
         ci::gl::color( ci::ColorA( 1.0f, 1.0f, 1.0f, 0.2f ) );
         ci::gl::vertex( mPos );
-        ci::gl::vertex( mPos + ci::Vec2f( mWidth,   + 0 ) );
-        ci::gl::vertex( mPos + ci::Vec2f( mWidth,   - 1 ) );
+        ci::gl::vertex( mPos + ci::Vec2f( mSize.x,  + 0 ) );
+        ci::gl::vertex( mPos + ci::Vec2f( mSize.x,  - 1 ) );
         ci::gl::vertex( mPos + ci::Vec2f( 0,        - 1 ) );
         glEnd();
     }
-    
-    
+
 private:
     
     ci::Vec2f                           mPos;
@@ -461,7 +473,7 @@ private:
     
     std::string                         mName;
     std::vector<QTimelineMenuItemRef>   mItems;
-    int                                 mWidth;
+    ci::Vec2f                           mSize;
     QTimelineMenuItemRef                mMouseOnItem;
     bool                                mIsVisible;
 };
