@@ -2,7 +2,7 @@
  *  QTimelineModuleItem.h
  *
  *  Created by Andrea Cuius
- *  Nocte Studio Ltd. Copyright 2012 . All rights reserved.
+ *  Nocte Studio Ltd. Copyright 2013 . All rights reserved.
  *
  *  www.nocte.co.uk
  *
@@ -13,95 +13,52 @@
 
 #pragma once
 
-#include "cinder/TimelineItem.h"
-#include "QTimelineWidgetWithHandles.h"
-#include "QTimelineModuleItem.h"
-#include "QTimelineParam.h"
+#include "QTimelineItem.h"
 
-class QTimelineTrack;
 class QTimelineModule;
-
 
 #define TIMELINE_MODULE_HEIGHT          27      // the height in px
 
 
 typedef std::shared_ptr<class QTimelineModuleItem>      QTimelineModuleItemRef;
 typedef std::shared_ptr<class QTimelineModule>          QTimelineModuleRef;
-typedef std::shared_ptr<class QTimelineTrack>           QTimelineTrackRef;
 
 
-class QTimelineModuleItem : public ci::TimelineItem, public QTimelineWidgetWithHandles
+class QTimelineModuleItem : public QTimelineItem
 {
-    
-    friend class QTimeline;
-    friend class QTimelineTrack;
     friend class QTimelineModule;
-    friend class QTimelineParam;
     
 public:
     
-    static QTimelineModuleItemRef create( QTimelineModuleRef targetRef, float startAt, float duration, QTimelineTrackRef trackRef, ci::Timeline *timeline )
+    static QTimelineModuleItemRef create( float startTime, float duration, QTimelineModuleRef targetRef, QTimelineTrackRef trackRef, ci::Timeline *ciTimeline )
     {
-        return QTimelineModuleItemRef( new QTimelineModuleItem( targetRef, startAt, duration, trackRef, timeline ) );
+        return QTimelineModuleItemRef( new QTimelineModuleItem( startTime, duration, targetRef, trackRef, ciTimeline ) );
     }
-  
+    
     ~QTimelineModuleItem();
     
-    virtual void update( float relativeTime );
+    void update( float relativeTime );
+    
+    void render( bool mouseOver );
     
     void clear();
-    
-    void start( bool reverse ) {}
-    
-    void complete( bool reverse ) {}
-    
-    void reverse() {}
     
     ci::TimelineItemRef clone() const
     {
         return ci::TimelineItemRef( new QTimelineModuleItem(*this) );
     }
     
-    // FIX THIS!
     ci::TimelineItemRef cloneReverse() const
     {
         return ci::TimelineItemRef( new QTimelineModuleItem(*this) );
-        //        Timeline *result = new Timeline( *this );
-        //        for( s_iter iter = result->mItems.begin(); iter != result->mItems.end(); ++iter ) {
-        //            iter->second->reverse();
-        //            iter->second->mStartTime = mDuration + ( mDuration - ( iter->second->mStartTime + iter->second->mDuration ) );
-        //        }
-        //        return TimelineItemRef( result );
     }
     
-    QTimelineModuleItemRef	thisRef()
+    QTimelineItemRef	thisRef()
     {
         ci::TimelineItemRef thisTimelineItem    = TimelineItem::thisRef();
-		QTimelineModuleItemRef  result              = std::static_pointer_cast<QTimelineModuleItem>( thisTimelineItem );
+		QTimelineItemRef  result                = std::static_pointer_cast<QTimelineItem>( thisTimelineItem );
 		return result;
 	}
-    
-    bool isPlaying() { return hasStarted() && !isComplete(); }
-    
-    bool isInWindow( ci::Vec2f window )
-    {
-        if ( getEndTime() < window.x || getStartTime() > window.y )
-            return false;
-        
-        return true;
-    }
-    
-    void registerParam( const std::string name, float initVal = 0.0f, float minVal = 0.0f, float maxVal = 1.0f );
-
-    void registerParam( const std::string name, float *var, float minVal = 0.0f, float maxVal = 1.0f );
-    
-    float getParamValue( const std::string &name );
-    
-    void setWidgetRect( ci::Rectf rect ) { mWidgetRect = rect; }
-    
-    ci::Rectf getWidgetRect() { return mWidgetRect; }
-    
-    void render( bool mouseOver );    
     
     bool mouseMove( ci::app::MouseEvent event );
     
@@ -111,29 +68,21 @@ public:
     
     bool mouseDrag( ci::app::MouseEvent event );
     
-    bool isMouseOnParam( QTimelineParamRef ref );
-    
-    bool isMouseOnKeyframe( QTimelineParamRef paramRef, QTimelineKeyframeRef keyframeRef );
-    
-    bool isTrackOpen();
-    
     ci::XmlTree getXmlNode();
     
     void loadXmlNode( ci::XmlTree node );
     
-    std::string getType();
+public: // custom methods
     
     void resetTarget() { mTargetModuleRef.reset(); }
     
+    std::string getTargetType();
+    
 private:
     
-    QTimelineModuleItem( QTimelineModuleRef ref, float startAt, float duration, QTimelineTrackRef trackRef, ci::Timeline *parent );
+    QTimelineModuleItem( float startTime, float duration, QTimelineModuleRef targetRef, QTimelineTrackRef trackRef, ci::Timeline *ciTimeline );
     
     void menuEventHandler( QTimelineMenuItemRef item );
-    
-    bool updateAtLoopStart() { return false; }
-    
-    void findModuleBoundaries( float *prevEndTime, float *nextStartTime );
     
     bool dragHandles( ci::app::MouseEvent event );
     
@@ -143,16 +92,7 @@ private:
     
     void initMenu();
     
-    QTimelineParamRef findParamByName( std::string name );
-    
 private:
-    
-    QTimelineTrackRef               mParentTrack;
-    
-    QTimelineParamRef               mMouseOnParam;
-    std::vector<QTimelineParamRef>  mParams;
-    
-    ci::Rectf                       mWidgetRect;    // the rect of the entire widget, size changes in accordance with the params rendered, when only the module is rendered this rect is equal to mRect
     
     QTimelineModuleRef              mTargetModuleRef;
     

@@ -2,7 +2,7 @@
  *  QTimelineItem.h
  *
  *  Created by Andrea Cuius
- *  Nocte Studio Ltd. Copyright 2012 . All rights reserved.
+ *  Nocte Studio Ltd. Copyright 2013 . All rights reserved.
  *
  *  www.nocte.co.uk
  *
@@ -15,59 +15,41 @@
 
 #include "cinder/TimelineItem.h"
 #include "QTimelineWidgetWithHandles.h"
-#include "QTimeline.h"
+#include "QTimelineParam.h"
 
-//class QTimelineTrack;
-//class QTimelineModule;
-
-
-#define TIMELINE_MODULE_HEIGHT          27      // the height in px
-
-
-typedef std::shared_ptr<class QTimelineItem>        QTimelineItemRef;
+typedef std::shared_ptr<class QTimelineItem>      QTimelineItemRef;
+typedef std::shared_ptr<class QTimelineTrack>     QTimelineTrackRef;
 
 
 class QTimelineItem : public ci::TimelineItem, public QTimelineWidgetWithHandles
 {
     
-    friend class QTimeline;
-    friend class QTimelineTrack;
-    friend class QTimelineModule;
-    friend class QTimelineParam;
+protected:
     
-public:
-    
-    void init( float startTime, float duration, QTimelineTrackRef trackRef, ci::Timeline *timeline )
+    QTimelineItem( float startTime, float duration, std::string type, std::string name, QTimelineTrackRef trackRef, ci::Timeline *ciTimeline ) : QTimelineWidgetWithHandles( name )
     {
         setAutoRemove(false);
         
         mParentTrack        = trackRef;
-        mParent             = timeline;
+        mParent             = ciTimeline;
+        mType               = type;
         
         setStartTime( startTime );
         setDuration( duration );
-        
-        mBgColor            = QTimeline::mModulesBgCol;
-        mBgOverColor        = QTimeline::mModulesBgOverCol;
-        mTextColor          = QTimeline::mModulesTextCol;
-        mHandleColor        = QTimeline::mModulesHandleCol;
-        mHandleOverColor    = QTimeline::mModulesHandleOverCol;
-        
-        // init rect width
-        setRect( Rectf( mParentTrack->mQTimeline->getPosFromTime( getStartTime() ), 0,
-                        mParentTrack->mQTimeline->getPosFromTime( getEndTime() ), 0 ) );
-        
-        updateLabel();
-        
-        initMenu();
-    
     }
+    
+public:
     
     virtual ~QTimelineItem() {}
     
-    virtual void update( float relativeTime );
+    virtual void update( float relativeTime )
+    {
+        ci::app::console() << "QTimelineItem::update() " << relativeTime << std::endl;
+    }
     
-    virtual void clear();
+    virtual void render( bool mouseOver ) {}
+    
+    virtual void clear() {}
     
     virtual void start( bool reverse ) {}
     
@@ -80,41 +62,33 @@ public:
         return ci::TimelineItemRef( new QTimelineItem(*this) );
     }
     
-    // FIX THIS!
     virtual ci::TimelineItemRef cloneReverse() const
     {
         return ci::TimelineItemRef( new QTimelineItem(*this) );
-        //        Timeline *result = new Timeline( *this );
-        //        for( s_iter iter = result->mItems.begin(); iter != result->mItems.end(); ++iter ) {
-        //            iter->second->reverse();
-        //            iter->second->mStartTime = mDuration + ( mDuration - ( iter->second->mStartTime + iter->second->mDuration ) );
-        //        }
-        //        return TimelineItemRef( result );
     }
     
     virtual QTimelineItemRef	thisRef()
     {
         ci::TimelineItemRef thisTimelineItem    = TimelineItem::thisRef();
-		QTimelineItemRef  result              = std::static_pointer_cast<QTimelineItem>( thisTimelineItem );
+		QTimelineItemRef  result                = std::static_pointer_cast<QTimelineItem>( thisTimelineItem );
 		return result;
 	}
     
-    virtual void render( bool mouseOver );
+    virtual ci::XmlTree getXmlNode()
+    {
+        ci::XmlTree node( "item", "" );
+        node.setAttribute( "type", getType() );
+        node.setAttribute( "name", getName() );
+        node.setAttribute( "startTime", getStartTime() );
+        node.setAttribute( "duration",  getDuration() );
+        
+        for( size_t k=0; k < mParams.size(); k++ )
+            node.push_back( mParams[k]->getXmlNode() );
+        
+        return node;
+    }
     
-    virtual bool mouseMove( ci::app::MouseEvent event );
-    
-    virtual bool mouseDown( ci::app::MouseEvent event );
-    
-    virtual bool mouseUp( ci::app::MouseEvent event );
-    
-    virtual bool mouseDrag( ci::app::MouseEvent event );
-    
-    
-    virtual bool isTrackOpen();
-    
-    virtual ci::XmlTree getXmlNode();
-    
-    virtual void loadXmlNode( ci::XmlTree node );
+public:
     
     bool isPlaying() { return hasStarted() && !isComplete(); }
     
@@ -126,42 +100,82 @@ public:
         return true;
     }
     
-    void setWidgetRect( ci::Rectf rect ) { mWidgetRect = rect; }
+    void registerParam( const std::string name, float initVal, float minVal, float maxVal )
+    {
+        registerParam( name, new float(initVal), minVal, maxVal );
+    }
     
-    ci::Rectf getWidgetRect() { return mWidgetRect; }
+    void registerParam( const std::string name, float *var, float minVal, float maxVal )
+    {
+        for( size_t k=0; k < mParams.size(); k++ )
+            if ( mParams[k]->getName() == name )
+                mParams[k]->swapPointer( var );
+
+        mParams.push_back( QTimelineParamRef( new QTimelineParam( thisRef(), name, var, minVal, maxVal ) ) );
+    }
+    
+    float getParamValue( const std::string &name )
+    {
+        for( size_t k=0; k < mParams.size(); k++ )
+            if ( mParams[k]->getName() == name )
+                return mParams[k]->getValue();
+        
+        return 0.0f;
+    }
+    
+    bool isMouseOnParam()
+    {
+        return mMouseOnParam ? true : false;
+    }
+    
+    bool isMouseOnParam( QTimelineParamRef ref )
+    {
+        return ref == mMouseOnParam;
+    }
+    
+    bool isMouseOnKeyframe( QTimelineParamRef paramRef, QTimelineKeyframeRef keyframeRef )
+    {
+        return paramRef == mMouseOnParam && paramRef->isMouseOnKeyframe(keyframeRef);
+    }
+    
+    std::string getType() { return mType; } 
+    
+    size_t getNumParams() { return mParams.size(); }
+    
+    std::vector<QTimelineParamRef> getParams() { return mParams; }
+    
+    void setParentTrack( QTimelineTrackRef ref ) { mParentTrack.swap( ref ); }
+    
+    QTimelineTrackRef getParentTrack() { return mParentTrack; }
     
     
-private:
+protected:
     
-    virtual void menuEventHandler( QTimelineMenuItemRef item );
+    QTimelineParamRef findParamByName( std::string name )
+    {
+        for( size_t k=0; k < mParams.size(); k++ )
+            if ( mParams[k]->getName() == name )
+                return mParams[k];
+        
+        QTimelineParamRef nullPtr;
+        return nullPtr;
+    }
     
-    virtual bool dragHandles( ci::app::MouseEvent event );
+    void updateParams( float relativeTime )
+    {
+        for( size_t k=0; k < mParams.size(); k++ )
+            mParams[k]->update( relativeTime );
+    }
+        
+protected:
     
-    virtual void dragWidget( ci::app::MouseEvent event );
-    
-    virtual void initMenu();
-    
-    void findModuleBoundaries( float *prevEndTime, float *nextStartTime );
-    
-    QTimelineItemRef getModuleRef();
-    
-    
-private:
-    
+    std::string                     mType;
     QTimelineTrackRef               mParentTrack;
+    
     QTimelineParamRef               mMouseOnParam;
-    
     std::vector<QTimelineParamRef>  mParams;
-    
-    ci::Rectf                       mWidgetRect;    // the rect of the entire widget, size changes in accordance with the params rendered, when only the module is rendered this rect is equal to mRect
-    
-    
-private:
-    // disallow
-    QTimelineItem(const QTimelineItem&);
-    QTimelineItem& operator=(const QTimelineItem&);
-    
 };
 
 
 #endif
+

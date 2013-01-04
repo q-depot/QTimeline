@@ -1,5 +1,5 @@
 /*
- *  QTimelineModuleItem.cpp
+ *  QTimelineAudioItem.cpp
  *
  *  Created by Andrea Cuius
  *  Nocte Studio Ltd. Copyright 2013 . All rights reserved.
@@ -10,29 +10,26 @@
 
 #include "QTimeline.h"
 #include "QTimelineTrack.h"
-#include "QTimelineModuleItem.h"
-#include "QTimelineModule.h"
+#include "QTimelineAudioItem.h"
 
 using namespace ci;
 using namespace ci::app;
 using namespace std;
 
 
-QTimelineModuleItem::QTimelineModuleItem( float startTime, float duration, QTimelineModuleRef targetRef, QTimelineTrackRef trackRef, Timeline *ciTimeline )
-: QTimelineItem( startTime, duration, "QTimelineModuleItem", targetRef->getName(), trackRef, ciTimeline )
+QTimelineAudioItem::QTimelineAudioItem( float startTime, float duration, QTimelineTrackRef trackRef, ci::Timeline *ciTimeline )
+: QTimelineItem( startTime, duration, "QTimelineAudioItem", "track name!", trackRef, ciTimeline )
 {
-    mTargetModuleRef    = targetRef;
+    setBgColor( QTimeline::mAudioItemBgCol );
+    setBgOverColor( QTimeline::mAudioItemBgOverCol );
+    setTextColor( QTimeline::mAudioItemTextCol );
     
-    setBgColor( QTimeline::mModuleItemBgCol );
-    setBgOverColor( QTimeline::mModuleItemBgOverCol );
-    setTextColor( QTimeline::mModuleItemTextCol );
-
-    setHandleColor( QTimeline::mModuleItemHandleCol );
-    setHandleOverColor( QTimeline::mModuleItemHandleOverCol );
-
+    setHandleColor( QTimeline::mAudioItemHandleCol );
+    setHandleOverColor( QTimeline::mAudioItemHandleOverCol );
+    
     // init rect width
-    setRect( Rectf( QTimeline::getRef()->getPosFromTime( getStartTime() ), 0,
-                    QTimeline::getRef()->getPosFromTime( getEndTime() ), 0 ) );
+    setRect( Rectf( QTimeline::getRef()->getPosFromTime( getStartTime() ),  0,
+                    QTimeline::getRef()->getPosFromTime( getEndTime() ),    0 ) );
     
     updateLabel();
     
@@ -40,35 +37,24 @@ QTimelineModuleItem::QTimelineModuleItem( float startTime, float duration, QTime
 }
 
 
-QTimelineModuleItem::~QTimelineModuleItem()
+void QTimelineAudioItem::clear()
 {
-    clear();
+    
 }
 
 
-void QTimelineModuleItem::clear()
-{
-    if ( mMenu )
-        QTimeline::getRef()->closeMenu( mMenu );
-    
-    mParams.clear();
-    
-    resetTarget();
-}
-
-
-void QTimelineModuleItem::update( float relativeTime )
+void QTimelineAudioItem::update( float relativeTime )
 {
     if ( isComplete() )
         return;
     
     updateParams( relativeTime );
     
-    mTargetModuleRef->update();
+    ci::app::console() << "QTimelineAudioItem::update() " << relativeTime << std::endl;
 }
 
 
-void QTimelineModuleItem::render( bool mouseOver )
+void QTimelineAudioItem::render( bool mouseOver )
 {
     // render bg rect
     glBegin( GL_QUADS );
@@ -96,7 +82,8 @@ void QTimelineModuleItem::render( bool mouseOver )
 }
 
 
-bool QTimelineModuleItem::mouseMove( MouseEvent event )
+
+bool QTimelineAudioItem::mouseMove( MouseEvent event )
 {
     if ( mMouseOnParam )
         mMouseOnParam->mouseMove(event);
@@ -109,7 +96,7 @@ bool QTimelineModuleItem::mouseMove( MouseEvent event )
     {
         if ( handlesMouseMove( event.getPos() ) )
             return true;
-            
+        
         else if ( mParentTrack->isOpen() )
         {
             for( size_t k=0; k < mParams.size(); k++ )
@@ -126,7 +113,7 @@ bool QTimelineModuleItem::mouseMove( MouseEvent event )
 }
 
 
-bool QTimelineModuleItem::mouseDown( MouseEvent event )
+bool QTimelineAudioItem::mouseDown( MouseEvent event )
 {
     mMouseDownPos       = event.getPos();
     mMouseDownStartTime = getStartTime();
@@ -134,7 +121,7 @@ bool QTimelineModuleItem::mouseDown( MouseEvent event )
     
     if ( mMouseOnParam )
         mMouseOnParam->mouseDown( event );
-
+    
     else if ( event.isRightDown() )
         QTimeline::getRef()->openMenu( mMenu, event.getPos() );
     
@@ -145,18 +132,18 @@ bool QTimelineModuleItem::mouseDown( MouseEvent event )
 }
 
 
-bool QTimelineModuleItem::mouseUp( MouseEvent event )
+bool QTimelineAudioItem::mouseUp( MouseEvent event )
 {
     if ( mMouseOnParam )
         mMouseOnParam->mouseUp( event );
-  
+    
     mouseMove( event );
     
     return false;
 }
 
 
-bool QTimelineModuleItem::mouseDrag( MouseEvent event )
+bool QTimelineAudioItem::mouseDrag( MouseEvent event )
 {
     // drag param to update a keyframe
     if ( mMouseOnParam )
@@ -171,12 +158,12 @@ bool QTimelineModuleItem::mouseDrag( MouseEvent event )
     }
     
     mMousePrevPos = event.getPos();
-
+    
     return false;
 }
 
 
-bool QTimelineModuleItem::dragHandles( MouseEvent event )
+bool QTimelineAudioItem::dragHandles( MouseEvent event )
 {
     float diff          = QTimeline::getRef()->getPxInSeconds( event.getPos().x - mMouseDownPos.x );
     float startTime, endTime, prevEndTime, nextStartTime;
@@ -191,7 +178,7 @@ bool QTimelineModuleItem::dragHandles( MouseEvent event )
         setStartTime( startTime );
         setDuration( endTime - startTime );
     }
-
+    
     else if ( mSelectedHandleType == RIGHT_HANDLE )
     {
         startTime   = getStartTime();
@@ -199,7 +186,7 @@ bool QTimelineModuleItem::dragHandles( MouseEvent event )
         endTime     = QTimeline::getRef()->snapTime( endTime );
         setDuration( endTime - startTime );
     }
-  
+    
     updateLabel();
     
     for( size_t k=0; k < mParams.size(); k++ )
@@ -212,7 +199,7 @@ bool QTimelineModuleItem::dragHandles( MouseEvent event )
 }
 
 
-void QTimelineModuleItem::dragWidget( MouseEvent event )
+void QTimelineAudioItem::dragWidget( MouseEvent event )
 {
     float diff       = QTimeline::getRef()->getPxInSeconds( event.getPos().x - mMouseDownPos.x );
     float prevEndTime, nextStartTime;
@@ -231,46 +218,11 @@ void QTimelineModuleItem::dragWidget( MouseEvent event )
 }
 
 
-XmlTree QTimelineModuleItem::getXmlNode()
+void QTimelineAudioItem::menuEventHandler( QTimelineMenuItemRef item )
 {
-    XmlTree node = QTimelineItem::getXmlNode();
-    
-    node.setAttribute( "targetModuleType", getTargetType() );
-    
-    return node;
-}
-
-
-void QTimelineModuleItem::loadXmlNode( ci::XmlTree node )
-{
-    float   value, time;
-    string  fnStr;
-    
-    for( XmlTree::Iter paramIt = node.begin("param"); paramIt != node.end(); ++paramIt )
+    if ( item->getMeta() == "load_track" )
     {
-        QTimelineParamRef param = findParamByName( paramIt->getAttributeValue<string>( "name" ) );
-        
-        if ( !param )
-            continue;
-        
-        for( XmlTree::Iter kfIt = paramIt->begin("kf"); kfIt != paramIt->end(); ++kfIt )
-        {
-            value   = kfIt->getAttributeValue<float>( "value" );
-            time    = kfIt->getAttributeValue<float>( "time" );
-            fnStr   = kfIt->getAttributeValue<string>( "fn" );
-            
-            param->addKeyframe( time, value, QTimeline::getEaseFnFromString(fnStr), fnStr );
-        }
-    }
-}
-
-
-void QTimelineModuleItem::menuEventHandler( QTimelineMenuItemRef item )
-{
-    if ( item->getMeta() == "delete" )
-    {
-        QTimeline::getRef()->closeMenu( mMenu );
-        mParentTrack->markModuleForRemoval( thisRef() );
+        loadAudioTrack();
     }
     else if ( item->getMeta() == "color_palette" )
     {
@@ -280,19 +232,64 @@ void QTimelineModuleItem::menuEventHandler( QTimelineMenuItemRef item )
 }
 
 
-void QTimelineModuleItem::initMenu()
+void QTimelineAudioItem::initMenu()
 {
-    mMenu->init( "MODULE MENU" );
-    
-    mMenu->addColorPalette( this, &QTimelineModuleItem::menuEventHandler );
-    
+    mMenu->init( "AUDIO ITEM" );
+    mMenu->addColorPalette( this, &QTimelineAudioItem::menuEventHandler );
     mMenu->addSeparator();
-    
-    mMenu->addButton( "X DELETE", "delete", this, &QTimelineModuleItem::menuEventHandler );
+    mMenu->addButton( "Load track", "load_track", this, &QTimelineAudioItem::menuEventHandler );
 }
 
 
-std::string QTimelineModuleItem::getTargetType()
+void QTimelineAudioItem::loadAudioTrack()
 {
-    return mTargetModuleRef->getType();
+//    
+//    mTrack = audio::Output::addTrack( audio::load( "/Users/Q/Desktop/drums.mp3" ) );
+//    
+//	//if the buffer is null, for example if this gets called before any PCM data has been buffered
+//	//don't do anything
+//	if( ! mPcmBuffer ) {
+//		return;
+//	}
+//	
+//	uint32_t bufferLength = mPcmBuffer->getSampleCount();
+//	audio::Buffer32fRef leftBuffer = mPcmBuffer->getChannelData( audio::CHANNEL_FRONT_LEFT );
+//	audio::Buffer32fRef rightBuffer = mPcmBuffer->getChannelData( audio::CHANNEL_FRONT_RIGHT );
+//    
+//	int displaySize = getWindowWidth();
+//	float scale = displaySize / (float)bufferLength;
+//	
+//	PolyLine<Vec2f>	leftBufferLine;
+//	PolyLine<Vec2f>	rightBufferLine;
+//	
+//	for( int i = 0; i < bufferLength; i++ ) {
+//		float x = ( i * scale );
+//        
+//		//get the PCM value from the left channel buffer
+//		float y = ( ( leftBuffer->mData[i] - 1 ) * - 100 );
+//		leftBufferLine.push_back( Vec2f( x , y) );
+//		
+//		y = ( ( rightBuffer->mData[i] - 1 ) * - 100 );
+//		rightBufferLine.push_back( Vec2f( x , y) );
+//	}
+//	gl::color( Color( 1.0f, 0.5f, 0.25f ) );
+//	gl::draw( leftBufferLine );
+//	gl::draw( rightBufferLine );
+//	
+}
+
+
+XmlTree QTimelineAudioItem::getXmlNode()
+{
+    XmlTree node = QTimelineItem::getXmlNode();
+    
+    node.setAttribute( "trackPath", mTrackFilename );
+    
+    return node;
+}
+
+
+void QTimelineAudioItem::loadXmlNode( ci::XmlTree node )
+{
+    
 }

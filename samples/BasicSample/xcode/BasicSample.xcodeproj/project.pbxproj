@@ -30,6 +30,7 @@
 		10A28CFF166395DA00D082A8 /* QTimelineParam.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10A28CFE166395DA00D082A8 /* QTimelineParam.cpp */; };
 		10A28D01166397E000D082A8 /* QTimelineTrack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10A28D00166397E000D082A8 /* QTimelineTrack.cpp */; };
 		10A28D031663DED900D082A8 /* QTimelineModuleItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10A28D021663DED900D082A8 /* QTimelineModuleItem.cpp */; };
+		10E60E571696E4D700946B3E /* QTimelineAudioItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10E60E561696E4D700946B3E /* QTimelineAudioItem.cpp */; };
 		10EDF274162AD419004F4AFD /* QTimeline.h in Sources */ = {isa = PBXBuildFile; fileRef = 10EDF253162AD418004F4AFD /* QTimeline.h */; };
 		10F43936166D154000EBC1B0 /* assets in Resources */ = {isa = PBXBuildFile; fileRef = 10F43935166D154000EBC1B0 /* assets */; };
 		5323E6B20EAFCA74003A9687 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5323E6B10EAFCA74003A9687 /* CoreVideo.framework */; };
@@ -93,7 +94,9 @@
 		10CF0B091660ED3700CE8505 /* QTimelineTrack.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = QTimelineTrack.h; path = src/QTimelineTrack.h; sourceTree = "<group>"; };
 		10CF0B0B1661026E00CE8505 /* QTimelineParam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QTimelineParam.h; path = src/QTimelineParam.h; sourceTree = "<group>"; };
 		10DBCDBA1690BA34005AC790 /* QTimelineAudioItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = QTimelineAudioItem.h; path = src/QTimelineAudioItem.h; sourceTree = "<group>"; };
+		10E30BA8169580BD004292B3 /* QTimelineItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = QTimelineItem.h; path = src/QTimelineItem.h; sourceTree = "<group>"; };
 		10E3F5C5165ED81C00EF3FAB /* QTimelineModuleItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QTimelineModuleItem.h; path = src/QTimelineModuleItem.h; sourceTree = "<group>"; };
+		10E60E561696E4D700946B3E /* QTimelineAudioItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QTimelineAudioItem.cpp; sourceTree = "<group>"; };
 		10EDF253162AD418004F4AFD /* QTimeline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QTimeline.h; path = src/QTimeline.h; sourceTree = "<group>"; };
 		10EDF547162AD4D2004F4AFD /* ciUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ciUI.h; sourceTree = "<group>"; };
 		10EDF548162AD4D2004F4AFD /* ciUI2DPad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ciUI2DPad.h; sourceTree = "<group>"; };
@@ -330,6 +333,7 @@
 				1009A203166E3CF3008BAFD8 /* QTimelineCue.cpp */,
 				105EC6C1167F6ECE0057F873 /* QTimelineCueManager.cpp */,
 				10A28D021663DED900D082A8 /* QTimelineModuleItem.cpp */,
+				10E60E561696E4D700946B3E /* QTimelineAudioItem.cpp */,
 				10A28CFE166395DA00D082A8 /* QTimelineParam.cpp */,
 				10A28D00166397E000D082A8 /* QTimelineTrack.cpp */,
 			);
@@ -398,6 +402,7 @@
 				10F4392D166CFE7500EBC1B0 /* QTimelineCue.h */,
 				105EC6BD167F314D0057F873 /* QTimelineCueManager.h */,
 				10B243ED16807E5700C7EAEB /* QTimelineKeyframe.h */,
+				10E30BA8169580BD004292B3 /* QTimelineItem.h */,
 				10E3F5C5165ED81C00EF3FAB /* QTimelineModuleItem.h */,
 				10DBCDBA1690BA34005AC790 /* QTimelineAudioItem.h */,
 				106409A5168B13B000FA182E /* QTimelineOscController.h */,
@@ -532,6 +537,7 @@
 				10640A0C168B188C00FA182E /* OscListener.cpp in Sources */,
 				10640A0D168B188C00FA182E /* OscMessage.cpp in Sources */,
 				10640A0E168B188C00FA182E /* OscSender.cpp in Sources */,
+				10E60E571696E4D700946B3E /* QTimelineAudioItem.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

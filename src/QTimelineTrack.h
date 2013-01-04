@@ -2,7 +2,7 @@
  *  QTimelineTrack.h
  *
  *  Created by Andrea Cuius
- *  Nocte Studio Ltd. Copyright 2012 . All rights reserved.
+ *  Nocte Studio Ltd. Copyright 2013 . All rights reserved.
  *
  *  www.nocte.co.uk
  *
@@ -14,31 +14,30 @@
 #pragma once
 
 #include "QTimelineWidget.h"
-#include "QTimelineModule.h"
 
 typedef std::shared_ptr<class QTimelineTrack>       QTimelineTrackRef;
+typedef std::shared_ptr<class QTimelineModule>      QTimelineModuleRef;
+typedef std::shared_ptr<class QTimelineItem>        QTimelineItemRef;
 
 class QTimeline;
-class QTimelineModuleItem;
+class QTimelineItem;
 
 class QTimelineTrack : public QTimelineWidget, public std::enable_shared_from_this<QTimelineTrack>
 {
     
     friend class QTimeline;
-    friend class QTimelineModuleItem;
-    friend class QTimelineParam;
     
 public:
     
-    QTimelineTrack( QTimeline *timeline, std::string name );
-    
-//    QTimelineTrack( QTimeline *timeline, ci::XmlTree node );
+    QTimelineTrack( std::string name );
     
     ~QTimelineTrack();
     
-    QTimelineModuleItemRef createModule( ci::Timeline *parent, std::string name, float startAt, float duration  );
+    void clear();
     
-    void addModule( QTimelineModuleRef ref, float startAt, float duration );
+    void addModuleItem( float startTime, float duration, QTimelineModuleRef ref );
+    
+    void addAudioItem( float startTime, float duration, std::string audioTrackFilename = "" );
     
     ci::Rectf render( ci::Rectf rect, ci::Vec2f timeWindow, double currentTime );
     
@@ -58,9 +57,7 @@ public:
     
     bool isOpen() { return mIsTrackOpen; }
     
-    ci::Vec2f getTimeWindow();
-    
-    void markModuleForRemoval( QTimelineModuleItemRef moduleItemRef );
+    void markModuleForRemoval( QTimelineItemRef moduleItemRef );
     
     ci::XmlTree getXmlNode();
     
@@ -70,11 +67,15 @@ public:
     
     QTimelineTrackRef getRef() { return shared_from_this(); }
     
-    bool isMouseOnModule() { return ( mMouseOnModule ) ? true : false; }
+    bool isMouseOnModule() { return ( mMouseOnItem ) ? true : false; }
     
-    QTimelineModuleItemRef getMouseOnModule() { return mMouseOnModule; }
+    QTimelineItemRef getMouseOnModule() { return mMouseOnItem; }
     
-    void eraseModule( QTimelineModuleItemRef itemRef );
+    void eraseModule( QTimelineItemRef itemRef );
+    
+    std::vector<QTimelineItemRef>   getModules() { return mModules; }
+    
+    void findModuleBoundaries( QTimelineItemRef itemRef, float *prevEndTime, float *nextStartTime );
     
 private:
     
@@ -95,18 +96,16 @@ private:
     
 private:
     
-    QTimeline           *mQTimeline;
+    std::vector<QTimelineItemRef>   mModules;
     
-    std::vector<QTimelineModuleItemRef>     mModules;
+    QTimelineItemRef                mMouseOnItem;
+    QTimelineItemRef                mSelectedItem;
     
-    QTimelineModuleItemRef  mMouseOnModule;
-    QTimelineModuleItemRef  mSelectedModule;
+    bool                            mIsMouseOnTrack;
     
-    bool                mIsMouseOnTrack;
+    bool                            mIsTrackOpen;
     
-    bool                mIsTrackOpen;
-    
-    double              mMouseDownAt;
+    double                          mMouseDownAt;
 };
 
 

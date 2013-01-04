@@ -2,7 +2,7 @@
  *  QTimelineTrack.cpp
  *
  *  Created by Andrea Cuius
- *  Nocte Studio Ltd. Copyright 2012 . All rights reserved.
+ *  Nocte Studio Ltd. Copyright 2013 . All rights reserved.
  *
  *  www.nocte.co.uk
  *
@@ -11,17 +11,15 @@
 #include "cinder/Timeline.h"
 #include "QTimeline.h"
 #include "QTimelineTrack.h"
-#include "QTimelineModuleItem.h"
-#include "QTimelineParam.h"
 
 using namespace ci;
 using namespace ci::app;
 using namespace std;
 
-bool sortModulesHelper( QTimelineModuleItemRef a, QTimelineModuleItemRef b ) { return ( a->getStartTime() < b->getStartTime() ); }
+bool sortModulesHelper( QTimelineItemRef a, QTimelineItemRef b ) { return ( a->getStartTime() < b->getStartTime() ); }
 
 
-QTimelineTrack::QTimelineTrack(  QTimeline *timeline, string name ) : mQTimeline(timeline), QTimelineWidget( name )
+QTimelineTrack::QTimelineTrack( string name ) : QTimelineWidget( name )
 {
     mBgColor            = QTimeline::mTracksBgCol;
     mBgOverColor        = QTimeline::mTracksBgCol;
@@ -37,16 +35,19 @@ QTimelineTrack::QTimelineTrack(  QTimeline *timeline, string name ) : mQTimeline
 
 QTimelineTrack::~QTimelineTrack()
 {
+    clear();
+}
+
+
+void QTimelineTrack::clear()
+{
     if ( mMenu )
-        mQTimeline->closeMenu( mMenu );
+        QTimeline::getRef()->closeMenu( mMenu );
     
-//    for( size_t k=0; k < mModules.size(); k++ )
-//    {
-//        mQTimeline->mTimeline->remove( mModules[k] );                                       // remove() flag the item as erase marked, timeline::stepTo() is in charge to actually delete the item
-//        mQTimeline->updateCurrentTime();                                                    // updateCurrentTime() force the call to stepTo()
-//        mQTimeline->callDeleteModuleCb( mModules[k]->getName(), mModules[k]->getType() );   // callback to delete the QTimelineModule
-//    }
-//    mModules.clear();
+    for( size_t k=0; k < mModules.size(); k++ )
+        markModuleForRemoval( mModules[k] );
+    
+    QTimeline::getRef()->eraseMarkedModules();
 }
 
 
@@ -54,18 +55,18 @@ ci::Rectf QTimelineTrack::render( ci::Rectf rect, ci::Vec2f timeWindow, double c
 {
     int maxParamsN  = 0;
     
-    std::vector<QTimelineModuleItemRef>     modulesInWindow;
-    QTimelineModuleItemRef                  module;
+    std::vector<QTimelineItemRef>   itemsInWindow;
+    QTimelineItemRef                itemRef;
     
-    ci::Rectf                               trackRect, moduleRect;
+    ci::Rectf                       trackRect, itemRect;
 
     // gett all modules in time window and calculate the max number of params
     for( size_t k=0; k < mModules.size(); k ++ )
         if ( mModules[k]->isInWindow( timeWindow ) )
         {
-            modulesInWindow.push_back( mModules[k] );
-            if ( mModules[k]->mParams.size() > maxParamsN )
-                maxParamsN = mModules[k]->mParams.size();
+            itemsInWindow.push_back( mModules[k] );
+            if ( mModules[k]->getNumParams() > maxParamsN )
+                maxParamsN = mModules[k]->getNumParams();
         }
     
     // calculate module track rect based on the max number of params
@@ -79,32 +80,34 @@ ci::Rectf QTimelineTrack::render( ci::Rectf rect, ci::Vec2f timeWindow, double c
     if ( mIsMouseOnTrack ) ci::gl::color( mBgOverColor ); else ci::gl::color( mBgColor );
     ci::gl::drawSolidRect( mRect );
     
-    for( size_t k=0; k < modulesInWindow.size(); k ++ )
+    for( size_t k=0; k < itemsInWindow.size(); k ++ )
     {
-        module          = modulesInWindow[k];
+        itemRef          = itemsInWindow[k];
 
         // render module
-        moduleRect = makeRect( trackRect, timeWindow, module->getStartTime(), module->getEndTime() );
-        module->setRect( moduleRect );
+        itemRect = makeRect( trackRect, timeWindow, itemRef->getStartTime(), itemRef->getEndTime() );
+        itemRef->setRect( itemRect );
         
         // module render only use the module rect without calculating any offset or returning another rect, it's a bit special :]
         QTimelineParamRef nullPtr;
-        module->render( mMouseOnModule == module && mMouseOnModule->isMouseOnParam( nullPtr ) );
+        itemRef->render( mMouseOnItem == itemRef && mMouseOnItem->isMouseOnParam( nullPtr ) );
         
-        ci::Rectf r = moduleRect;
+        ci::Rectf r = itemRect;
         
         if ( mIsTrackOpen )
         {
+            std::vector<QTimelineParamRef> params = itemRef->getParams();
+            
             // render params
-            for( size_t i=0; i < module->mParams.size(); i++ )
-                r = module->mParams[i]->render( r );
+            for( size_t i=0; i < params.size(); i++ )
+                r = params[i]->render( r );
             
             // render keyframes
-            for( size_t i=0; i < module->mParams.size(); i++ )
-                module->mParams[i]->renderKeyframes();
+            for( size_t i=0; i < params.size(); i++ )
+                params[i]->renderKeyframes();
         }
         
-        module->setWidgetRect( Rectf( moduleRect.getUpperLeft(), r.getLowerRight() ) );
+        itemRef->setRect( Rectf( itemRect.getUpperLeft(), r.getLowerRight() ) );
     }
     
     return mRectPaddedHeight;
@@ -113,34 +116,33 @@ ci::Rectf QTimelineTrack::render( ci::Rectf rect, ci::Vec2f timeWindow, double c
 
 bool QTimelineTrack::mouseDown( ci::app::MouseEvent event )
 {
-    mSelectedModule = mMouseOnModule;
+    mSelectedItem = mMouseOnItem;
     mMouseDownPos   = event.getPos();
     
-    if ( mSelectedModule )
+    if ( mSelectedItem )
     {
-        if ( mSelectedModule->contains( event.getPos() ) && event.isLeftDown() && getElapsedSeconds() - mMouseDownAt < 0.5f )
+        if ( mSelectedItem->contains( event.getPos() ) && !mSelectedItem->isMouseOnParam() && event.isLeftDown() && getElapsedSeconds() - mMouseDownAt < 0.5f )
         {
             toggle();
-            mMouseOnModule.reset();
-            mSelectedModule.reset();
+            mMouseOnItem.reset();
+            mSelectedItem.reset();
             return true;
         }
         
         mMouseDownAt = getElapsedSeconds();
         
-        mSelectedModule->mouseDown( event );
+        mSelectedItem->mouseDown( event );
         return true;
     }
     
     else if ( mRect.contains( mMouseDownPos ) )
     {
         if ( event.isRightDown() )
-            mQTimeline->openMenu( mMenu, event.getPos() );
+            QTimeline::getRef()->openMenu( mMenu, event.getPos() );
         
         else if ( event.isLeftDown() && mMenu->isVisible() )
-            mQTimeline->closeMenu( mMenu );
+            QTimeline::getRef()->closeMenu( mMenu );
     }
-    
     
     return false;
 }
@@ -148,12 +150,12 @@ bool QTimelineTrack::mouseDown( ci::app::MouseEvent event )
 
 bool QTimelineTrack::mouseUp( ci::app::MouseEvent event )
 {
-    if ( mSelectedModule )
-        mSelectedModule->mouseUp( event );
+    if ( mSelectedItem )
+        mSelectedItem->mouseUp( event );
     
-    mSelectedModule.reset();
+    mSelectedItem.reset();
     
-//    mMouseOnModule.reset();
+//    mMouseOnItem.reset();
     mouseMove(event);
     
     return false;
@@ -164,10 +166,10 @@ bool QTimelineTrack::mouseMove( ci::app::MouseEvent event )
 {    
     mIsMouseOnTrack     = false;
     
-    if ( mMouseOnModule )
+    if ( mMouseOnItem )
     {
-        mMouseOnModule->mouseMove( event );
-        mMouseOnModule.reset();
+        mMouseOnItem->mouseMove( event );
+        mMouseOnItem.reset();
     }
     
     if ( contains( event.getPos() ) )
@@ -177,7 +179,7 @@ bool QTimelineTrack::mouseMove( ci::app::MouseEvent event )
         for( size_t k=0; k < mModules.size(); k++ )
             if ( mModules[k]->mouseMove( event ) )
             {
-                mMouseOnModule = mModules[k];
+                mMouseOnItem = mModules[k];
                 break;
             }
     }
@@ -190,48 +192,56 @@ bool QTimelineTrack::mouseMove( ci::app::MouseEvent event )
 
 bool QTimelineTrack::mouseDrag( ci::app::MouseEvent event )
 {
-    if ( mSelectedModule )
-        mSelectedModule->mouseDrag( event );
+    if ( mSelectedItem )
+        mSelectedItem->mouseDrag( event );
     
     return false;
 }
 
 
-Vec2f QTimelineTrack::getTimeWindow()
-{
-    return mQTimeline->getTimeWindow();
-}
-
-
-void QTimelineTrack::addModule( QTimelineModuleRef ref, float startAt, float duration )
+void QTimelineTrack::addModuleItem( float startTime, float duration, QTimelineModuleRef targetRef )
 {
     // TODO add module should always ensure that no other modules exist with the same name
     // perhaps QTimelineModule and QTimelineModuleItem should share a unique ID to be both referred with.
     // would help to sort out part of the callbacks mess.
 
-    startAt     = mQTimeline->snapTime( startAt );
-    duration    = mQTimeline->snapTime( duration );
+    startTime   = QTimeline::getRef()->snapTime( startTime );
+    duration    = QTimeline::getRef()->snapTime( duration );
     
-    TimelineRef timelineRef = mQTimeline->getTimelineRef();
+    TimelineRef timelineRef = QTimeline::getRef()->getTimelineRef();
     
-    QTimelineModuleItemRef moduleItemRef = QTimelineModuleItem::create( ref, startAt, duration, QTimelineTrackRef(this), timelineRef.get() );
-    ref->setItemRef( moduleItemRef );
-    moduleItemRef->setStartTime( startAt );
-    moduleItemRef->setDuration( duration );
-    timelineRef->insert( moduleItemRef );
+    QTimelineModuleItemRef itemRef = QTimelineModuleItem::create( startTime, duration, targetRef, getRef(), timelineRef.get() );
+    targetRef->setItemRef( itemRef );
+    timelineRef->insert( itemRef );
     
-    mModules.push_back( moduleItemRef );
+    mModules.push_back( itemRef );
     
     sort( mModules.begin(), mModules.end(), sortModulesHelper );
 }
 
 
-void QTimelineTrack::markModuleForRemoval( QTimelineModuleItemRef moduleItemRef )
+void QTimelineTrack::addAudioItem( float startTime, float duration, string audioTrackFilename )
+{
+    startTime   = QTimeline::getRef()->snapTime( startTime );
+    duration    = QTimeline::getRef()->snapTime( duration );
+    
+    TimelineRef timelineRef = QTimeline::getRef()->getTimelineRef();
+    
+    QTimelineAudioItemRef itemRef = QTimelineAudioItem::create( startTime, duration, getRef(), timelineRef.get() );
+    timelineRef->insert( itemRef );
+    
+    mModules.push_back( itemRef );
+    
+    sort( mModules.begin(), mModules.end(), sortModulesHelper );
+}
+
+
+void QTimelineTrack::markModuleForRemoval( QTimelineItemRef moduleItemRef )
 {
     for( size_t k=0; k < mModules.size(); k++ )
         if ( mModules[k] == moduleItemRef )
         {
-            mQTimeline->markModuleForRemoval( moduleItemRef );
+            QTimeline::getRef()->markModuleForRemoval( moduleItemRef );
             return;
         }
     
@@ -252,8 +262,8 @@ void QTimelineTrack::markModuleForRemoval( QTimelineModuleItemRef moduleItemRef 
 XmlTree QTimelineTrack::getXmlNode()
 {
     XmlTree node( "track", "" );
-    node.setAttribute( "name", mName );
-    
+    node.setAttribute( "name", getName() );
+
     for( size_t k=0; k < mModules.size(); k++ )
         node.push_back( mModules[k]->getXmlNode() );
     
@@ -265,17 +275,27 @@ void QTimelineTrack::loadXmlNode( ci::XmlTree node )
 {
     setName( node.getAttributeValue<string>( "name" ) );
     
-    string  name, type;
+    string  name, type, targetModuleType, audioTrackFilename;
     float   startTime, duration;
     
-    for( XmlTree::Iter nodeIt = node.begin("module"); nodeIt != node.end(); ++nodeIt )
+    for( XmlTree::Iter nodeIt = node.begin("item"); nodeIt != node.end(); ++nodeIt )
     {
-        name       = nodeIt->getAttributeValue<string>( "name" );
-        type       = nodeIt->getAttributeValue<string>( "type" );
-        startTime  = nodeIt->getAttributeValue<float>( "startTime" );
-        duration   = nodeIt->getAttributeValue<float>( "duration" );
+        name                = nodeIt->getAttributeValue<string>( "name" );
+        type                = nodeIt->getAttributeValue<string>( "type" );
+        startTime           = nodeIt->getAttributeValue<float>( "startTime" );
+        duration            = nodeIt->getAttributeValue<float>( "duration" );
 
-        mQTimeline->callCreateModuleCb( name, type, startTime, duration, getRef() );
+        if ( type == "QTimelineModuleItem" )
+        {
+            targetModuleType    = nodeIt->getAttributeValue<string>( "targetModuleType" );
+            QTimeline::getRef()->callCreateModuleCb( name, targetModuleType, startTime, duration, getRef() );
+        }
+        
+        else if ( type == "QTimelineAudioItem" )
+        {
+            audioTrackFilename = nodeIt->getAttributeValue<string>( "trackPath" );
+            addAudioItem( startTime, duration, audioTrackFilename );
+        }
         
         for( size_t k=0; k < mModules.size(); k++ )
             if ( mModules[k]->getName() == name && mModules[k]->getType() == type )
@@ -288,62 +308,105 @@ void QTimelineTrack::loadXmlNode( ci::XmlTree node )
 
 void QTimelineTrack::menuEventHandler( QTimelineMenuItemRef item )
 {
-    if ( item->getMeta() == "create" )
+    QTimeline   *timelineRef = QTimeline::getRef();
+    
+    if ( item->getMeta() == "create_module_item" )
     {
-        mQTimeline->callCreateModuleCb( "untitled", item->getName(), mQTimeline->getTimeFromPos( mMouseDownPos.x ), 2.0f, getRef() );
-        mQTimeline->closeMenu( mMenu );
+        timelineRef->callCreateModuleCb( "untitled", item->getName(), timelineRef->getTimeFromPos( mMouseDownPos.x ), 2.0f, getRef() );
+        timelineRef->closeMenu( mMenu );
+    }
+    
+    else if ( item->getMeta() == "create_audio_item" )
+    {
+        addAudioItem( timelineRef->getTimeFromPos( mMouseDownPos.x ), 2.0f );
+        timelineRef->closeMenu( mMenu );
+        
+        console() << "create audio track" << endl;
     }
   
     else if (( item->getMeta() == "new_track_above") || (item->getMeta() == "new_track_below"))
     {
-        mQTimeline->closeMenu( mMenu );
+        timelineRef->closeMenu( mMenu );
 
-        QTimelineTrackRef ref( new QTimelineTrack( mQTimeline, "track untitled" ) );
+        QTimelineTrackRef ref( new QTimelineTrack( "track untitled" ) );
         // std::find with shared_ptr wasn't happy here..
-        for (auto i = mQTimeline->mTracks.begin(); i != mQTimeline->mTracks.end(); i++)
+        vector<QTimelineTrackRef> tracks = timelineRef->mTracks;
+        for (auto i = tracks.begin(); i != tracks.end(); i++)
         {
             if (i->get() == this)
             {
                 int offset = item->getMeta() == "new_track_above" ? 0 : 1;
-                mQTimeline->mTracks.insert(i+offset, ref);
-                mQTimeline->update();
+                timelineRef->mTracks.insert(i+offset, ref);
+                timelineRef->update();
                 return;
             }
         }
-        mQTimeline->mTracks.push_back(ref);
-        mQTimeline->update();
+        timelineRef->mTracks.push_back(ref);
+        timelineRef->update();
     }
 }
 
 
 void QTimelineTrack::initMenu()
 {
+    QTimeline   *timelineRef = QTimeline::getRef();
+    
     mMenu->init( "TRACK MENU" );
     
     mMenu->addButton("New track above", "new_track_above", this, &QTimelineTrack::menuEventHandler);
     mMenu->addButton("New track below", "new_track_below", this, &QTimelineTrack::menuEventHandler);
     
     mMenu->addSeparator();
+    mMenu->addLabel( "Module items" );
+    mMenu->addSeparator();
     
     map<string, QTimeline::ModuleCallbacks>::iterator it;
-    for ( it=mQTimeline->mModuleCallbacks.begin() ; it != mQTimeline->mModuleCallbacks.end(); it++ )
-        mMenu->addButton( it->first, "create", this, &QTimelineTrack::menuEventHandler );
+    for ( it=timelineRef->mModuleCallbacks.begin() ; it != timelineRef->mModuleCallbacks.end(); it++ )
+        mMenu->addButton( it->first, "create_module_item", this, &QTimelineTrack::menuEventHandler );
+    
+    mMenu->addSeparator();
+    mMenu->addLabel( "Audio items" );
+    mMenu->addButton( "new audio item", "create_audio_item", this, &QTimelineTrack::menuEventHandler );
+    mMenu->addSeparator();
+    
+
 }
 
 
-void QTimelineTrack::eraseModule( QTimelineModuleItemRef itemRef )
+void QTimelineTrack::eraseModule( QTimelineItemRef itemRef )
 {
-    mSelectedModule.reset();
-    mMouseOnModule.reset();
+    mSelectedItem.reset();
+    mMouseOnItem.reset();
     
     for( size_t k=0; k < mModules.size(); k++ )
         if ( mModules[k] == itemRef )
         {
-            // force to release params that refer to the module itself, otherwise the deconstructor never gets called
-            // this might be an issue with the actual class design, perhaps I should remove the module ref from the params
-            mModules[k]->clear();
             mModules.erase( mModules.begin()+k );
             return;
         }
 }
+
+
+void QTimelineTrack::findModuleBoundaries( QTimelineItemRef itemRef, float *prevEndTime, float *nextStartTime )
+{
+    QTimelineItemRef            prevModule, nextModule;
+    
+    for( size_t k=0; k < mModules.size(); k++ )
+    {
+        if ( mModules[k].get() != itemRef.get() )
+            continue;
+        
+        if ( k > 0 )
+            prevModule = mModules[k-1];
+        
+        if ( k != mModules.size() - 1 )
+            nextModule = mModules[k+1];
+        
+        break;
+    }
+    
+    *prevEndTime    = prevModule ? prevModule->getEndTime()     : 0.0f;
+    *nextStartTime  = nextModule ? nextModule->getStartTime()   : 10000;    // max bound should be the timeline or cue end time
+}
+
 
