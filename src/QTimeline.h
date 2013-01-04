@@ -121,6 +121,22 @@ public:
     void addModule( QTimelineModuleRef moduleRef, float startAt, float duration );
     
     void addModule( QTimelineModuleRef moduleRef, float startAt, float duration, QTimelineTrackRef trackRef );
+    
+    void addTrack( QTimelineTrackRef ref ) { mTracks.push_back( ref ); }                    // just push back a new track ref
+    
+    void addTrack( QTimelineTrackRef newRef, QTimelineTrackRef otherRef, bool addAbove )    // add track in a specific position(relative to "otherRef")
+    {
+        for( auto trackIt = mTracks.begin(); trackIt != mTracks.end(); trackIt++ )
+        {
+            if ( trackIt->get() == otherRef.get() )
+            {
+                int offset = addAbove ? 0 : 1;
+                mTracks.insert( trackIt + offset, newRef );
+                update();
+                return;
+            }
+        }
+    }
 
     ci::TimelineRef getTimelineRef() { return mTimeline; }
     

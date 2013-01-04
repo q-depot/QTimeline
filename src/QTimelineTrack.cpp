@@ -311,39 +311,25 @@ void QTimelineTrack::menuEventHandler( QTimelineMenuItemRef item )
     QTimeline   *timelineRef = QTimeline::getRef();
     
     if ( item->getMeta() == "create_module_item" )
-    {
         timelineRef->callCreateModuleCb( "untitled", item->getName(), timelineRef->getTimeFromPos( mMouseDownPos.x ), 2.0f, getRef() );
-        timelineRef->closeMenu( mMenu );
-    }
     
     else if ( item->getMeta() == "create_audio_item" )
     {
         addAudioItem( timelineRef->getTimeFromPos( mMouseDownPos.x ), 2.0f );
-        timelineRef->closeMenu( mMenu );
-        
         console() << "create audio track" << endl;
     }
   
-    else if (( item->getMeta() == "new_track_above") || (item->getMeta() == "new_track_below"))
+    else if ( ( item->getMeta() == "new_track_above" ) || ( item->getMeta() == "new_track_below" ) )
     {
-        timelineRef->closeMenu( mMenu );
-
         QTimelineTrackRef ref( new QTimelineTrack( "track untitled" ) );
-        // std::find with shared_ptr wasn't happy here..
-        vector<QTimelineTrackRef> tracks = timelineRef->mTracks;
-        for (auto i = tracks.begin(); i != tracks.end(); i++)
-        {
-            if (i->get() == this)
-            {
-                int offset = item->getMeta() == "new_track_above" ? 0 : 1;
-                timelineRef->mTracks.insert(i+offset, ref);
-                timelineRef->update();
-                return;
-            }
-        }
-        timelineRef->mTracks.push_back(ref);
-        timelineRef->update();
+        
+        if ( item->getMeta() == "new_track_above" )
+            timelineRef->addTrack( ref, getRef(), true );
+        else
+            timelineRef->addTrack( ref, getRef(), false );
     }
+    
+    timelineRef->closeMenu( mMenu );
 }
 
 
