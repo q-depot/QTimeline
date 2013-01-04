@@ -2,7 +2,7 @@
  *  QTimeline.cpp
  *
  *  Created by Andrea Cuius
- *  Nocte Studio Ltd. Copyright 2012 . All rights reserved.
+ *  Nocte Studio Ltd. Copyright 2013 . All rights reserved.
  *
  *  www.nocte.co.uk
  *
@@ -38,11 +38,17 @@ ColorA          QTimeline::mTransportTextCol        = ColorA( 1.00f, 1.00f, 1.00
 ColorA          QTimeline::mTracksBgCol             = ColorA( 0.00f, 0.00f, 0.00f, 1.00f );
 ColorA          QTimeline::mTracksBgOverCol         = ColorA( 0.00f, 0.00f, 0.00f, 1.00f );
 
-ColorA          QTimeline::mModulesBgCol            = ColorA( 0.25f, 0.25f, 0.25f, 1.00f );
-ColorA          QTimeline::mModulesBgOverCol        = ColorA( 0.25f, 0.25f, 0.25f, 1.00f );
-ColorA          QTimeline::mModulesTextCol          = ColorA( 1.00f, 1.00f, 1.00f, 1.00f );
-ColorA          QTimeline::mModulesHandleCol        = ColorA( 1.00f, 1.00f, 1.00f, 0.15f );
-ColorA      	QTimeline::mModulesHandleOverCol    = ColorA( 1.00f, 1.00f, 1.00f, 0.30f );
+ColorA          QTimeline::mModuleItemBgCol         = ColorA( 0.25f, 0.25f, 0.25f, 1.00f );
+ColorA          QTimeline::mModuleItemBgOverCol     = ColorA( 0.25f, 0.25f, 0.25f, 1.00f );
+ColorA          QTimeline::mModuleItemTextCol       = ColorA( 1.00f, 1.00f, 1.00f, 1.00f );
+ColorA          QTimeline::mModuleItemHandleCol     = ColorA( 1.00f, 1.00f, 1.00f, 0.15f );
+ColorA      	QTimeline::mModuleItemHandleOverCol = ColorA( 1.00f, 1.00f, 1.00f, 0.30f );
+
+ColorA          QTimeline::mAudioItemBgCol          = ColorA( 0.25f, 0.25f, 0.25f, 1.00f );
+ColorA          QTimeline::mAudioItemBgOverCol      = ColorA( 0.25f, 0.25f, 0.25f, 1.00f );
+ColorA          QTimeline::mAudioItemTextCol        = ColorA( 1.00f, 1.00f, 1.00f, 1.00f );
+ColorA          QTimeline::mAudioItemHandleCol      = ColorA( 1.00f, 1.00f, 1.00f, 0.15f );
+ColorA      	QTimeline::mAudioItemHandleOverCol  = ColorA( 1.00f, 1.00f, 1.00f, 0.30f );
                                                      
 ColorA          QTimeline::mParamsBgCol             = ColorA( 0.15f, 0.15f, 0.15f, 1.00f );
 ColorA          QTimeline::mParamsBgOverCol         = ColorA( 0.15f, 0.15f, 0.15f, 1.00f );
@@ -519,13 +525,19 @@ void QTimeline::loadTheme( const fs::path &filepath )
         QTimeline::mTracksBgCol             = getThemeColor( theme, "TracksBgCol" );
         QTimeline::mTracksBgOverCol         = getThemeColor( theme, "TracksBgOverCol" );
         
-        // Modules
-        QTimeline::mModulesBgCol            = getThemeColor( theme, "ModulesBgCol" );
-        QTimeline::mModulesBgOverCol        = getThemeColor( theme, "ModulesBgOverCol" );
-        QTimeline::mModulesTextCol          = getThemeColor( theme, "ModulesTextCol" );
-        
-        QTimeline::mModulesHandleCol        = getThemeColor( theme, "ModulesHandleCol" );
-        QTimeline::mModulesHandleOverCol    = getThemeColor( theme, "ModulesHandleOverCol" );
+        // Module Items
+        QTimeline::mModuleItemBgCol         = getThemeColor( theme, "ModuleItemBgCol" );
+        QTimeline::mModuleItemBgOverCol     = getThemeColor( theme, "ModuleItemBgOverCol" );
+        QTimeline::mModuleItemTextCol       = getThemeColor( theme, "ModuleItemTextCol" );
+        QTimeline::mModuleItemHandleCol     = getThemeColor( theme, "ModuleItemHandleCol" );
+        QTimeline::mModuleItemHandleOverCol = getThemeColor( theme, "ModuleItemHandleOverCol" );
+
+        // Audio Items
+        QTimeline::mAudioItemBgCol          = getThemeColor( theme, "AudioItemBgCol" );
+        QTimeline::mAudioItemBgOverCol      = getThemeColor( theme, "AudioItemBgOverCol" );
+        QTimeline::mAudioItemTextCol        = getThemeColor( theme, "AudioItemTextCol" );
+        QTimeline::mAudioItemHandleCol      = getThemeColor( theme, "AudioItemHandleCol" );
+        QTimeline::mAudioItemHandleOverCol  = getThemeColor( theme, "AudioItemHandleOverCol" );
 
         // Params
         QTimeline::mParamsBgCol             = getThemeColor( theme, "ParamsBgCol" );
@@ -568,12 +580,25 @@ void QTimeline::loadTheme( const fs::path &filepath )
         
         for( size_t i=0; i < trackRef->mModules.size(); i++ )
         {
-            itemRef                       = trackRef->mModules[i];
-            itemRef->setBgColor( QTimeline::mModulesBgCol );
-            itemRef->setBgOverColor( QTimeline::mModulesBgOverCol );
-            itemRef->setTextColor( QTimeline::mModulesTextCol );
-            itemRef->setHandleColor( QTimeline::mModulesHandleCol );
-            itemRef->setHandleOverColor( QTimeline::mModulesHandleOverCol );
+            itemRef = trackRef->mModules[i];
+            
+            if ( itemRef->getType() == "QTimelineModuleItem" )
+            {
+                itemRef->setBgColor( QTimeline::mModuleItemBgCol );
+                itemRef->setBgOverColor( QTimeline::mModuleItemBgOverCol );
+                itemRef->setTextColor( QTimeline::mModuleItemTextCol );
+                itemRef->setHandleColor( QTimeline::mModuleItemHandleCol );
+                itemRef->setHandleOverColor( QTimeline::mModuleItemHandleOverCol );
+            }
+            
+            else if ( itemRef->getType() == "QTimelineAudioItem" )
+            {
+                itemRef->setBgColor( QTimeline::mAudioItemBgCol );
+                itemRef->setBgOverColor( QTimeline::mAudioItemBgOverCol );
+                itemRef->setTextColor( QTimeline::mAudioItemTextCol );
+                itemRef->setHandleColor( QTimeline::mAudioItemHandleCol );
+                itemRef->setHandleOverColor( QTimeline::mAudioItemHandleOverCol );
+            }
             
             params = itemRef->getParams();
             
@@ -700,10 +725,17 @@ void QTimeline::eraseMarkedModules()
 {
     for( size_t k=0; k < mModulesMarkedForRemoval.size(); k++ )
     {
-        ci::app::console() << "eraseMarkedModules " << std::endl;
+        ci::app::console() << endl << "eraseMarkedModules " << std::endl;
+        
+        
         
         QTimelineItemRef    item    = mModulesMarkedForRemoval[k];
         QTimelineTrackRef   track   = item->getParentTrack();
+        
+        console() << item->getName() << " " << item->getType();
+        
+        if ( item->getType() == "QTimelineModuleItem" )
+            console() << " " << ( ( QTimelineModuleItem* ) item.get() )->getTargetType() << endl;
         
         console() << "count(1): " << item.use_count() << endl;
         // timeline
@@ -717,18 +749,19 @@ void QTimeline::eraseMarkedModules()
         console() << "count(3): " << item.use_count() << endl;
         // app modules
         callDeleteModuleCb( item );
-
-        // TODO fix this!
-//        item->resetTarget();
         
         console() << "count(4): " << item.use_count() << endl;
+        item->clear();
+        
+        console() << "count(5): " << item.use_count() << endl;
+        
     }
     
     
     updateCurrentTime();
     
     if ( !mModulesMarkedForRemoval.empty() )
-        console() << "count(5): " << mModulesMarkedForRemoval[0].use_count() << endl;
+        console() << "count(6): " << mModulesMarkedForRemoval[0].use_count() << endl;
     
     mModulesMarkedForRemoval.clear();
     

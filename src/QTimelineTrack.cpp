@@ -2,7 +2,7 @@
  *  QTimelineTrack.cpp
  *
  *  Created by Andrea Cuius
- *  Nocte Studio Ltd. Copyright 2012 . All rights reserved.
+ *  Nocte Studio Ltd. Copyright 2013 . All rights reserved.
  *
  *  www.nocte.co.uk
  *
@@ -369,11 +369,32 @@ void QTimelineTrack::eraseModule( QTimelineItemRef itemRef )
     for( size_t k=0; k < mModules.size(); k++ )
         if ( mModules[k] == itemRef )
         {
-            // force to release params that refer to the module itself, otherwise the deconstructor never gets called
-            // this might be an issue with the actual class design, perhaps I should remove the module ref from the params
-            mModules[k]->clear();
             mModules.erase( mModules.begin()+k );
             return;
         }
 }
+
+
+void QTimelineTrack::findModuleBoundaries( QTimelineItemRef itemRef, float *prevEndTime, float *nextStartTime )
+{
+    QTimelineItemRef            prevModule, nextModule;
+    
+    for( size_t k=0; k < mModules.size(); k++ )
+    {
+        if ( mModules[k].get() != itemRef.get() )
+            continue;
+        
+        if ( k > 0 )
+            prevModule = mModules[k-1];
+        
+        if ( k != mModules.size() - 1 )
+            nextModule = mModules[k+1];
+        
+        break;
+    }
+    
+    *prevEndTime    = prevModule ? prevModule->getEndTime()     : 0.0f;
+    *nextStartTime  = nextModule ? nextModule->getStartTime()   : 10000;    // max bound should be the timeline or cue end time
+}
+
 

@@ -14,12 +14,17 @@
     <TracksBgCol  r='0.1' g='0.1' b='0.12' a='1.0' />
     <TracksBgOverCol r='0.1' g='0.1' b='0.12' a='1.0' />
     
-    <ModulesBgCol r='1.0' g='1.0' b='1.0' a='0.15' />
-    <ModulesBgOverCol r='1.0' g='1.0' b='1.0' a='0.2' />
-    <ModulesTextCol r='0.8' g='0.8' b='0.8' a='1.0' />
+    <ModuleItemBgCol r='1.0' g='1.0' b='1.0' a='0.15' />
+    <ModuleItemBgOverCol r='1.0' g='1.0' b='1.0' a='0.2' />
+    <ModuleItemTextCol r='0.8' g='0.8' b='0.8' a='1.0' />
+    <ModuleItemHandleCol r='1.0' g='1.0' b='1.0' a='0.2' />
+    <ModuleItemHandleOverCol r='1.0' g='1.0' b='1.0' a='0.1' />
     
-    <ModulesHandleCol r='1.0' g='1.0' b='1.0' a='0.2' />
-    <ModulesHandleOverCol r='1.0' g='1.0' b='1.0' a='0.1' />
+    <AudioItemBgCol r='1.0' g='1.0' b='1.0' a='0.15' />
+    <AudioItemBgOverCol r='1.0' g='1.0' b='1.0' a='0.2' />
+    <AudioItemTextCol r='0.8' g='0.8' b='0.8' a='1.0' />
+    <AudioItemHandleCol r='1.0' g='1.0' b='1.0' a='0.2' />
+    <AudioItemHandleOverCol r='1.0' g='1.0' b='1.0' a='0.1' />
     
     <ParamsBgCol r='1.0' g='1.0' b='1.0' a='0.05' />
     <ParamsBgOverCol r='0.0' g='0.0' b='0.0' a='0.1' />

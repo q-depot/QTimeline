@@ -2,7 +2,7 @@
  *  QTimelineModuleItem.h
  *
  *  Created by Andrea Cuius
- *  Nocte Studio Ltd. Copyright 2012 . All rights reserved.
+ *  Nocte Studio Ltd. Copyright 2013 . All rights reserved.
  *
  *  www.nocte.co.uk
  *
@@ -13,7 +13,6 @@
 
 #pragma once
 
-//#include "QTimelineWidgetWithHandles.h"
 #include "QTimelineItem.h"
 
 class QTimelineModule;
@@ -25,11 +24,11 @@ typedef std::shared_ptr<class QTimelineModuleItem>      QTimelineModuleItemRef;
 typedef std::shared_ptr<class QTimelineModule>          QTimelineModuleRef;
 
 
-class QTimelineModuleItem : public QTimelineItem//, public QTimelineWidgetWithHandles
+class QTimelineModuleItem : public QTimelineItem
 {
     friend class QTimelineModule;
     
-public:     // QTimelineItem
+public:
     
     static QTimelineModuleItemRef create( float startTime, float duration, QTimelineModuleRef targetRef, QTimelineTrackRef trackRef, ci::Timeline *ciTimeline )
     {
@@ -61,8 +60,6 @@ public:     // QTimelineItem
 		return result;
 	}
     
-public:     // Widget
-    
     bool mouseMove( ci::app::MouseEvent event );
     
     bool mouseDown( ci::app::MouseEvent event );
@@ -75,10 +72,9 @@ public:     // Widget
     
     void loadXmlNode( ci::XmlTree node );
     
-    
-public:     // custom functions
-    
     void resetTarget() { mTargetModuleRef.reset(); }
+    
+    std::string getTargetType();
     
 private:
     
@@ -86,7 +82,7 @@ private:
     
     void menuEventHandler( QTimelineMenuItemRef item );
     
-    void findModuleBoundaries( float *prevEndTime, float *nextStartTime );
+//    void findModuleBoundaries( float *prevEndTime, float *nextStartTime );
     
     bool dragHandles( ci::app::MouseEvent event );
     

@@ -2,7 +2,7 @@
  *  QTimeline.h
  *
  *  Created by Andrea Cuius
- *  Nocte Studio Ltd. Copyright 2012 . All rights reserved.
+ *  Nocte Studio Ltd. Copyright 2013 . All rights reserved.
  *
  *  www.nocte.co.uk
  *
@@ -194,11 +194,11 @@ public:
     
     void callDeleteModuleCb( QTimelineItemRef itemRef )
     {
-        std::string type = itemRef->getType();
-        
+        std::string targetModuleType = ( (QTimelineModuleItem*)itemRef.get() )->getTargetType();
+
         std::map<std::string, ModuleCallbacks>::iterator it;
         for ( it=mModuleCallbacks.begin(); it != mModuleCallbacks.end(); it++ )
-            if( it->first == type )
+            if( it->first == targetModuleType )
             {
                 DeleteModuleCallbackArgs args = { itemRef };
                 it->second.deleteCb.call(args);
@@ -206,25 +206,10 @@ public:
             }
     }
 
-    
     void markModuleForRemoval( QTimelineItemRef item )
     {
         mModulesMarkedForRemoval.push_back( item );
     }
-    
-/*
-    void callDeleteModuleCb( std::string moduleName, std::string moduleType )
-    {
-        std::map<std::string, ModuleCallbacks>::iterator it;
-        for ( it=mModuleCallbacks.begin(); it != mModuleCallbacks.end(); it++ )
-            if( it->first == moduleType )
-            {
-                ModuleCallbackArgs args = { moduleName, moduleType };
-                it->second.deleteCb.call(args);
-                return;
-            }
-    }
-  */
     
     PlayMode getPlayMode() { return mPlayMode; }
     
@@ -335,11 +320,17 @@ public:
     static ci::ColorA       mTracksBgCol;
     static ci::ColorA       mTracksBgOverCol;
     
-    static ci::ColorA       mModulesBgCol;
-    static ci::ColorA       mModulesBgOverCol;
-    static ci::ColorA       mModulesTextCol;
-    static ci::ColorA       mModulesHandleCol;
-    static ci::ColorA       mModulesHandleOverCol;
+    static ci::ColorA       mModuleItemBgCol;
+    static ci::ColorA       mModuleItemBgOverCol;
+    static ci::ColorA       mModuleItemTextCol;
+    static ci::ColorA       mModuleItemHandleCol;
+    static ci::ColorA       mModuleItemHandleOverCol;
+    
+    static ci::ColorA       mAudioItemBgCol;
+    static ci::ColorA       mAudioItemBgOverCol;
+    static ci::ColorA       mAudioItemTextCol;
+    static ci::ColorA       mAudioItemHandleCol;
+    static ci::ColorA       mAudioItemHandleOverCol;
     
     static ci::ColorA       mParamsBgCol;
     static ci::ColorA       mParamsBgOverCol;

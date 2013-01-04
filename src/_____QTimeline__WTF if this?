@@ -1,0 +1,481 @@
+/*
+ *  QTimeline.cpp
+ *
+ *  Created by Andrea Cuius
+ *  Nocte Studio Ltd. Copyright 2012 . All rights reserved.
+ *
+ *  www.nocte.co.uk
+ *
+ */
+
+#include "cinder/gl/gl.h"
+#include "cinder/Utilities.h"
+
+#include "QTimeline.h"
+
+#define TIMELINE_WINDOW_BEATS       20      // Beats per window / windowInSec = TIMELINE_WINDOW_BEATS * 60.0f / TIMELINE_BPM
+#define TIMELINE_BPM                60      // the BMP
+#define TIMELINE_BAR_HEIGHT         30
+#define TIMELINE_TRANSPORT_HEIGHT   30
+#define TIMELINE_CUELIST_HEIGHT     30
+
+using namespace ci;
+using namespace ci::app;
+using namespace std;
+
+
+ColorA       QTimeline::mTimeBarBgCol           = ColorA( 0.10f, 0.10f, 0.10f, 1.00f );
+ColorA       QTimeline::mTimeBarFgCol           = ColorA( 1.00f, 1.00f, 1.00f, 0.20f );
+ColorA       QTimeline::mTimeBarTextCol         = ColorA( 1.00f, 1.00f, 1.00f, 1.00f );
+
+ColorA       QTimeline::mTransportBgCol         = ColorA( 0.10f, 0.10f, 0.10f, 1.00f );
+ColorA       QTimeline::mTransportTextCol       = ColorA( 1.00f, 1.00f, 1.00f, 1.00f );
+
+ColorA       QTimeline::mTracksBgCol            = ColorA( 0.00f, 0.00f, 0.00f, 1.00f );
+ColorA       QTimeline::mTracksBgOverCol        = ColorA( 0.00f, 0.00f, 0.00f, 1.00f );
+
+ColorA       QTimeline::mModulesBgCol           = ColorA( 0.25f, 0.25f, 0.25f, 1.00f );
+ColorA       QTimeline::mModulesBgOverCol       = ColorA( 0.25f, 0.25f, 0.25f, 1.00f );
+ColorA       QTimeline::mModulesTextCol         = ColorA( 1.00f, 1.00f, 1.00f, 1.00f );
+ColorA       QTimeline::mModulesHandleCol       = ColorA( 1.00f, 1.00f, 1.00f, 0.15f );
+ColorA       QTimeline::mModulesHandleOverCol   = ColorA( 1.00f, 1.00f, 1.00f, 0.30f );
+                                                     
+ColorA       QTimeline::mParamsBgCol            = ColorA( 0.15f, 0.15f, 0.15f, 1.00f );
+ColorA       QTimeline::mParamsBgOverCol        = ColorA( 0.15f, 0.15f, 0.15f, 1.00f );
+ColorA       QTimeline::mParamsTextCol          = ColorA( 1.00f, 1.00f, 1.00f, 1.00f );
+
+ColorA       QTimeline::mKeyframesBgCol         = ColorA( 1.00f, 1.00f, 1.00f, 0.40f );
+ColorA       QTimeline::mKeyframesBgOverCol     = ColorA( 1.00f, 1.00f, 1.00f, 0.80f );
+ColorA       QTimeline::mKeyframesGraphCol      = ColorA( 1.00f, 1.00f, 1.00f, 0.40f );
+ColorA       QTimeline::mKeyframesBgSelectedCol = ColorA( 1.00f, 0.40f, 0.40f, 1.00f );
+
+
+void QTimeline::init()
+{
+    mApp = ci::app::App::get();
+    
+    registerCallbacks();
+    
+    mTimeline = ci::Timeline::create();
+    
+    mTransportRect  = Rectf( 0, getWindowHeight() - TIMELINE_TRANSPORT_HEIGHT, getWindowWidth(), getWindowHeight() );
+    
+    mFontSmall              = ci::gl::TextureFont::create( ci::Font( "Helvetica", 12 ) );
+    mFontMedium             = ci::gl::TextureFont::create( ci::Font( "Helvetica", 14 ) );
+    mFontBig                = ci::gl::TextureFont::create( ci::Font( "Helvetica", 16 ) );
+    
+    mZoom                   = 1.0f;
+    
+    mIsVisible              = true;
+    
+    mIsMouseDragTimeBar     = false;
+    
+    mCurrentCue             = NULL;
+    
+    play( false, FREE_RUN );
+    
+    addCue( "hello cue", 0.0f, 3.0f );
+    addCue( "second cue", 4.0f, 3.0f );
+}
+
+
+void QTimeline::update()
+{
+    updateTime();
+    
+    updateTimeWindow();
+    
+    mTimeNorm   = ( mTime - mTimeWindow.x ) / ( mTimeWindow.y - mTimeWindow.x );
+
+    char buff[100];
+    sprintf( buff, "%02d:%02d:%02d", (int)( mTime / 3600.0f ), (int)( mTime / 60.0f ), (int)mTime % 60 );
+    mTimeStr    = buff;
+    
+}
+
+void QTimeline::render()
+{
+    if ( !mIsVisible )
+        return;
+    
+    // render transport
+    gl::color( mTransportBgCol );
+    gl::drawSolidRect( mTransportRect );
+  
+    gl::color( mTransportTextCol );
+    mFontBig->drawString( mTimeStr, mTransportRect.getUpperRight() + Vec2f( -70, 19 ) );
+
+    // render tracks
+    mTracksRect = mTransportRect;
+    mTracksRect.offset( Vec2f( 0, - TIMELINE_WIDGET_PADDING ) );
+    for( int k=mTracks.size()-1; k >= 0; k-- )
+        mTracksRect = mTracks[k]->render( mTracksRect, mTimeWindow, mTime );
+ 
+    // render Time bar
+    renderTimeBar();
+    
+    // render Cue list
+    Rectf r;
+    float startPos, endPos;
+    for( size_t k=0; k < mCueList.size(); k++ )
+    {
+        startPos    = getPosFromTime( mCueList[k]->mStartTime );
+        endPos      = startPos +getPosFromTime( mCueList[k]->mDuration );
+        r = Rectf( startPos, mTimeBarRect.y1 - TIMELINE_CUELIST_HEIGHT, endPos, mTimeBarRect.y1 );
+        gl::drawStrokedRect(r);
+        
+        mFontMedium->drawString( mCueList[k]->mName, Vec2f( r.x1, r.y1 ) );
+    }
+    
+    
+    
+    
+    // render debug info
+    Vec2f debugOffset( 15, 50 );
+    mFontMedium->drawString( "TIMELINE DEBUG:",                         debugOffset ); debugOffset += Vec2f( 0, 20 );
+    mFontMedium->drawString( "Time:\t"   + toString( mTime ),           debugOffset ); debugOffset += Vec2f( 0, 15 );
+    mFontMedium->drawString( "Window:\t" + toString( mTimeWindow ),     debugOffset ); debugOffset += Vec2f( 0, 15 );
+    mFontMedium->drawString( "BPM:\t"    + toString( TIMELINE_BPM ),    debugOffset ); debugOffset += Vec2f( 0, 15 );
+    string str = ( isPlaying() ? "TRUE" : "FALSE" );
+    mFontMedium->drawString( "PLAY:\t"   + str,                         debugOffset ); debugOffset += Vec2f( 0, 15 );
+    string str = ( mPlayMode == FREE_RUN ? " FREE_RUN" : "CUE_LIST" );
+    mFontMedium->drawString( "MODE:\t"   + str,                         debugOffset ); debugOffset += Vec2f( 0, 15 );
+}
+
+
+void QTimeline::registerCallbacks()
+{
+    mCbMouseDown    = mApp->registerMouseDown(  this, &QTimeline::mouseDown );
+    mCbMouseUp      = mApp->registerMouseUp(    this, &QTimeline::mouseUp );
+    mCbMouseMove    = mApp->registerMouseMove(  this, &QTimeline::mouseMove );
+    mCbMouseDrag    = mApp->registerMouseDrag(  this, &QTimeline::mouseDrag );
+    mCbMouseWheel   = mApp->registerMouseWheel( this, &QTimeline::mouseWheel );
+    
+    mCbKeyDown      = mApp->registerKeyDown(    this, &QTimeline::keyDown );
+    mCbKeyUp        = mApp->registerKeyUp(      this, &QTimeline::keyUp );
+}
+
+
+bool QTimeline::mouseDown( ci::app::MouseEvent event )
+{
+    for( size_t k=0; k < mTracks.size(); k++ )
+        mTracks[k]->mouseDown( event );
+    
+    // time bar handler
+    mIsMouseDragTimeBar = mTimeBarRect.contains( event.getPos() );
+    
+    mouseDrag( event );
+    
+    return false;
+}
+
+
+bool QTimeline::mouseUp( ci::app::MouseEvent event )
+{
+    for( size_t k=0; k < mTracks.size(); k++ )
+        mTracks[k]->mouseUp( event );
+    
+    mIsMouseDragTimeBar = false;
+    
+    return false;
+}
+
+
+bool QTimeline::mouseMove( ci::app::MouseEvent event )
+{
+    for( size_t k=0; k < mTracks.size(); k++ )
+        mTracks[k]->mouseMove( event );
+    
+    return false;
+}
+
+
+bool QTimeline::mouseDrag( MouseEvent event )
+{
+    for( size_t k=0; k < mTracks.size(); k++ )
+        mTracks[k]->mouseDrag( event );
+    
+    // time bar handler
+    if ( mIsMouseDragTimeBar )
+    {
+//        float valueNorm = ( event.getPos().x - mTimeBarRect.x1 ) / mTimeBarRect.getWidth();
+//        mTimeline->stepTo( mTimeWindow.x + ( mTimeWindow.y - mTimeWindow.x ) * valueNorm );
+        mTimeline->stepTo( getTimeFromPos( event.getPos().x ) );
+    }
+    
+    return false;
+}
+
+
+bool QTimeline::mouseWheel( MouseEvent event )
+{
+    if ( event.isAltDown() )
+        mZoom = math<float>::clamp( mZoom + event.getWheelIncrement(), 0.2f, 3.0f );
+    
+    return false;
+}
+
+
+bool QTimeline::keyDown( KeyEvent event )
+{
+    int code = event.getChar();
+    
+    if ( code == KeyEvent::KEY_SPACE )
+        play( !isPlaying(), FREE_RUN );
+    
+    else if ( code == KeyEvent::KEY_RETURN )
+        playCue();
+    
+    else if ( code == KeyEvent::KEY_DELETE )
+        mTimeline->stepTo(0.0f);   
+    
+    return false;
+}
+
+
+bool QTimeline::keyUp( KeyEvent event )
+{
+    return false;
+}
+
+
+void QTimeline::updateTimeWindow()
+{
+    float   windowInSec = ( TIMELINE_WINDOW_BEATS * 60.0f / TIMELINE_BPM ) / mZoom;
+    int     windowN     = mTimeline->getCurrentTime() / windowInSec;
+    
+    mTimeWindow.x       = windowN * windowInSec;
+    mTimeWindow.y       = mTimeWindow.x + windowInSec;
+}
+
+
+void QTimeline::updateTime()
+{
+    mTime = mTimeline->getCurrentTime();
+    
+    if ( isPlaying() )
+    {
+        if ( mPlayMode == FREE_RUN )
+            mTimeline->stepTo( mTime + getElapsedSeconds() - mPrevTime );
+        
+        else if ( mPlayMode == CUE_LIST )
+        {
+            console() << mCurrentCue->getStartTime() << " " << mTime << " " << mCurrentCue->getEndTime() << endl;
+            
+            if ( mTime >= mCurrentCue->getStartTime() && mTime < mCurrentCue->getEndTime() )
+                mTimeline->stepTo( min( mTime + getElapsedSeconds() - mPrevTime, mCurrentCue->getEndTime() ) );
+            else
+                play( false, CUE_LIST );
+            
+//            mCurrentCue = mCueList[0];
+            
+//            mTimeline->stepTo( mTime + getElapsedSeconds() - mPrevTime );
+            
+//            mCueList
+        }
+    }
+    
+    mPrevTime   = getElapsedSeconds();
+}
+
+
+void QTimeline::play( bool play, PlayMode mode )
+{
+    mPrevTime   = ci::app::getElapsedSeconds();
+    mIsPlaying  = play;
+    mPlayMode   = mode;
+}
+
+
+void QTimeline::playCue( )
+{
+    play( !isPlaying(), CUE_LIST );
+
+    if ( mCueList.empty() )
+        return;
+    
+    if ( !mCurrentCue )                                     // get first cue
+        mCurrentCue = mCueList[0];
+
+    else if ( mTime >= mCurrentCue->getEndTime() )          // get next cue
+    {
+        for( size_t k=0; k < mCueList.size(); k++ )
+        {
+            if ( mCueList[k] == mCurrentCue )
+            {
+                mCurrentCue = mCueList[ (k+1) % mCueList.size() ];
+                mTime       = mCurrentCue->getStartTime();
+                break;
+            }
+        }
+    }
+}
+
+
+void QTimeline::renderTimeBar()
+{
+    // render time bar
+    float timelinePosX = mTimeBarRect.getWidth() * mTimeNorm;
+    mTimeBarRect  = Rectf( mTracksRect.getUpperLeft() - Vec2f( 0, TIMELINE_BAR_HEIGHT ), mTracksRect.getUpperRight() );
+    gl::color( mTimeBarBgCol );
+    gl::drawSolidRect( mTimeBarRect );
+    gl::color( mTimeBarFgCol );
+    gl::drawSolidRect( Rectf( mTimeBarRect.getUpperLeft(), mTimeBarRect.getLowerLeft() + Vec2f( timelinePosX, 0 ) ) );
+    
+    // render time bar indicator
+    gl::color( mTimeBarFgCol );
+    gl::drawLine( Vec2f( timelinePosX, mTimeBarRect.getY1() ), Vec2f( timelinePosX, mTransportRect.getY1() ) );
+    
+    // render beat and bar labels
+    float   windowInSec     = ( TIMELINE_WINDOW_BEATS * 60.0f / TIMELINE_BPM ) / mZoom;
+    int     nSecs           = windowInSec + 1;
+    float   oneSecInPx      = mTimeBarRect.getWidth() / windowInSec;
+    
+    glLineWidth(1.0f);
+    glBegin( GL_LINES );
+    for( int k=0; k < nSecs; k++ )
+    {
+        gl::vertex( Vec2f( (int)(k * oneSecInPx), mTimeBarRect.y1 ) );
+        gl::vertex( Vec2f( (int)(k * oneSecInPx), mTimeBarRect.y2 ) );
+    }
+    glEnd();
+    
+    // render labels
+    gl::color( mTimeBarTextCol );
+    for( int k=0; k < nSecs; k+=4 )
+        mFontMedium->drawString( toString( mTimeWindow.x + k ),  Vec2f( k * oneSecInPx + 4, mTimeBarRect.y1 + 12 ) );
+    
+    gl::color( Color::white() );
+}
+
+
+QTimelineModuleItemRef QTimeline::addModule( QTimelineModule *module, float startAt, float duration, int trackN )
+{
+    QTimelineTrack *track;
+    
+    // get track, if it doesn't exists or if trackN == -1, create a new one
+    if ( trackN == -1 || trackN >= mTracks.size() )
+    {
+        track = new QTimelineTrack( this );
+        mTracks.push_back( track );
+    }
+    else
+        track = mTracks[trackN];
+    
+    // check new module fits in between the others, if not shift the new module to the first slot available
+    for( size_t k=0; k < track->mModules.size(); k++ )
+        if ( ( startAt >= track->mModules[k]->getStartTime() && startAt <= track->mModules[k]->getEndTime() ) ||
+             ( (startAt + duration) >= track->mModules[k]->getStartTime() && ( startAt + duration ) <= track->mModules[k]->getEndTime() ) )
+            startAt = track->mModules[k]->getEndTime();
+    
+    QTimelineModuleItemRef moduleItemRef = QTimelineModuleItem::create( module, track, mTimeline.get() );
+    module->setItemRef( moduleItemRef );
+    moduleItemRef->setStartTime( startAt );
+    moduleItemRef->setDuration( duration );
+    mTimeline->insert( moduleItemRef );
+    
+    track->addModuleItem( moduleItemRef );
+    
+    return moduleItemRef;
+}
+
+
+ci::ColorA QTimeline::getThemeColor( XmlTree tree, string tag )
+{
+    ColorA col;
+    
+    if ( tree.hasChild( tag ) )
+    {
+        tree    = tree.getChild(tag);
+        col     = ColorA(   tree.getAttributeValue<float>("r"),
+                            tree.getAttributeValue<float>("g"),
+                            tree.getAttributeValue<float>("b"),
+                            tree.getAttributeValue<float>("a") );
+    }
+    
+    return col;
+}
+
+
+void QTimeline::loadTheme( const fs::path &filepath )
+{
+    try
+    {
+        XmlTree theme = XmlTree( loadFile( filepath ) ).getChild("/QTimelineTheme");
+        
+        // Time bar
+        QTimeline::mTimeBarBgCol            = getThemeColor( theme, "TimeBarBgCol" );
+        QTimeline::mTimeBarFgCol            = getThemeColor( theme, "TimeBarFgCol" );
+        QTimeline::mTimeBarTextCol          = getThemeColor( theme, "TimeBarTextCol" );
+        
+        // Transport
+        QTimeline::mTransportBgCol          = getThemeColor( theme, "TransportBgCol" );
+        QTimeline::mTransportTextCol        = getThemeColor( theme, "TransportTextCol" );
+        
+        // Tracks
+        QTimeline::mTracksBgCol             = getThemeColor( theme, "TracksBgCol" );
+        QTimeline::mTracksBgOverCol         = getThemeColor( theme, "TracksBgOverCol" );
+        
+        // Modules
+        QTimeline::mModulesBgCol            = getThemeColor( theme, "ModulesBgCol" );
+        QTimeline::mModulesBgOverCol        = getThemeColor( theme, "ModulesBgOverCol" );
+        QTimeline::mModulesTextCol          = getThemeColor( theme, "ModulesTextCol" );
+        
+        QTimeline::mModulesHandleCol        = getThemeColor( theme, "ModulesHandleCol" );
+        QTimeline::mModulesHandleOverCol    = getThemeColor( theme, "ModulesHandleOverCol" );
+
+        // Params
+        QTimeline::mParamsBgCol             = getThemeColor( theme, "ParamsBgCol" );
+        QTimeline::mParamsBgOverCol         = getThemeColor( theme, "ParamsBgOverCol" );
+        QTimeline::mParamsTextCol           = getThemeColor( theme, "ParamsTextCol" );
+        
+        QTimeline::mKeyframesBgCol          = getThemeColor( theme, "KeyframesBgCol" );
+        QTimeline::mKeyframesBgOverCol      = getThemeColor( theme, "KeyframesBgOverCol" );
+        QTimeline::mKeyframesBgSelectedCol  = getThemeColor( theme, "KeyframesBgSelectedCol" );
+        QTimeline::mKeyframesGraphCol       = getThemeColor( theme, "KeyframesGraphCol" );
+    }
+    catch ( ... )
+    {
+        console() << "ERROR > QTimeline theme NOT loaded!" << endl;
+    }
+    
+    QTimelineTrack      *track;
+    QTimelineModuleItemRef module;
+    QTimelineParam      *param;
+    
+    for( size_t k=0; k < mTracks.size(); k++ )
+    {
+        track               = mTracks[k];
+        track->mBgColor     = QTimeline::mTracksBgCol;
+        track->mBgOverColor = QTimeline::mTracksBgOverCol;
+        
+        for( size_t i=0; i < track->mModules.size(); i++ )
+        {
+            module                  = track->mModules[i];
+            module->mBgColor        = QTimeline::mModulesBgCol;
+            module->mBgOverColor    = QTimeline::mModulesBgOverCol;
+            module->mTextColor      = QTimeline::mModulesTextCol;
+            
+            for( size_t j=0; j < module->mParams.size(); j++ )
+            {
+                param = module->mParams[j];
+                param->mBgColor        = QTimeline::mParamsBgCol;
+                param->mBgOverColor    = QTimeline::mParamsBgOverCol;
+                param->mTextColor      = QTimeline::mParamsTextCol;
+                
+                param->mKeyframesBgCol          = QTimeline::mKeyframesBgCol;
+                param->mKeyframesBgOverCol      = QTimeline::mKeyframesBgOverCol;
+                param->mKeyframesBgSelectedCol  = QTimeline::mKeyframesBgSelectedCol;
+                param->mKeyframesGraphCol       = QTimeline::mKeyframesGraphCol;
+            }
+        }
+    }
+    
+}
+
+
+void QTimeline::addCue( string name, double startTime, double duration )
+{
+    mCueList.push_back( new QTimelineCue( name, startTime, duration ) );
+}
+

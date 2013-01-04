@@ -2,7 +2,7 @@
  *  QTimelineItem.h
  *
  *  Created by Andrea Cuius
- *  Nocte Studio Ltd. Copyright 2012 . All rights reserved.
+ *  Nocte Studio Ltd. Copyright 2013 . All rights reserved.
  *
  *  www.nocte.co.uk
  *
@@ -26,14 +26,13 @@ class QTimelineItem : public ci::TimelineItem, public QTimelineWidgetWithHandles
     
 protected:
     
-    QTimelineItem( float startTime, float duration, std::string type, std::string name, QTimelineTrackRef trackRef, ci::Timeline *ciTimeline ) : QTimelineWidgetWithHandles()
+    QTimelineItem( float startTime, float duration, std::string type, std::string name, QTimelineTrackRef trackRef, ci::Timeline *ciTimeline ) : QTimelineWidgetWithHandles( name )
     {
         setAutoRemove(false);
         
         mParentTrack        = trackRef;
         mParent             = ciTimeline;
         mType               = type;
-        mName               = name;
         
         setStartTime( startTime );
         setDuration( duration );
@@ -74,10 +73,6 @@ public:
 		QTimelineItemRef  result                = std::static_pointer_cast<QTimelineItem>( thisTimelineItem );
 		return result;
 	}
-    
-protected:
-    
-    virtual void findModuleBoundaries( float *prevEndTime, float *nextStartTime ) {}
     
     
 public:
@@ -153,6 +148,12 @@ protected:
         return nullPtr;
     }
     
+    void updateParams( float relativeTime )
+    {
+        for( size_t k=0; k < mParams.size(); k++ )
+            mParams[k]->update( relativeTime );
+    }
+        
 protected:
     
     std::string                     mType;

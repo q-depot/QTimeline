@@ -2,7 +2,7 @@
  *  QTimelineAudioItem.h
  *
  *  Created by Andrea Cuius
- *  Nocte Studio Ltd. Copyright 2012 . All rights reserved.
+ *  Nocte Studio Ltd. Copyright 2013 . All rights reserved.
  *
  *  www.nocte.co.uk
  *
@@ -13,15 +13,13 @@
 
 #pragma once
 
-//#include "cinder/TimelineItem.h"
 #include "QTimelineItem.h"
-//#include "QTimelineWidgetWithHandles.h"
-
+#include "cinder/audio/Output.h"
 
 typedef std::shared_ptr<class QTimelineAudioItem>      QTimelineAudioItemRef;
 
 
-class QTimelineAudioItem : public QTimelineItem//, public QTimelineWidgetWithHandles
+class QTimelineAudioItem : public QTimelineItem
 {
     
 public:
@@ -33,41 +31,11 @@ public:
     
     ~QTimelineAudioItem() {}
     
-    void update( float relativeTime )
-    {
-        ci::app::console() << "QTimelineAudioItem::update() " << relativeTime << std::endl;
-    }
+    void update( float relativeTime );
     
-    void render( bool mouseOver )
-    {
-        // render bg rect
-        glBegin( GL_QUADS );
-                ci::gl::color( ci::Color::white() );
-        ci::gl::vertex( mRect.getUpperLeft() );
-        ci::gl::vertex( mRect.getUpperRight() );
-        ci::gl::vertex( mRect.getLowerRight() );
-        ci::gl::vertex( mRect.getLowerLeft() );
-        glEnd();
-        
-        // render handles
-        if ( mouseOver )
-            renderHandles();
-        
-        ci::gl::color( ci::ColorA( 1.0f, 1.0f, 1.0f, 0.08f ) );
-        glBegin( GL_LINE_STRIP );
-        ci::gl::vertex( mRect.getLowerLeft() );
-        ci::gl::vertex( mRect.getUpperLeft() );
-        ci::gl::vertex( mRect.getUpperRight() );
-        ci::gl::vertex( mRect.getLowerRight() );
-        glEnd();
-        
-        // render name
-        ci::gl::color( ci::Color( 1.0f, 1.0f, 0.0f ) );
-        mFont->drawString( getLabel(), mRect.getCenter() + mLabelStrSize * ci::Vec2f( -0.5f, 0.3f ) );
-    }
+    void render( bool mouseOver );
     
-    
-    void clear() {}
+    void clear();
     
     ci::TimelineItemRef clone() const
     {
@@ -86,30 +54,196 @@ public:
 		return result;
 	}
     
-    bool mouseMove( ci::app::MouseEvent event ) { return false; }
+    bool mouseMove( ci::app::MouseEvent event );
     
-    bool mouseDown( ci::app::MouseEvent event ) { return false; }
+    bool mouseDown( ci::app::MouseEvent event );
     
-    bool mouseUp( ci::app::MouseEvent event ) { return false; }
+    bool mouseUp( ci::app::MouseEvent event );
     
-    bool mouseDrag( ci::app::MouseEvent event ) { return false; }
+    bool mouseDrag( ci::app::MouseEvent event );
 
+    
 private:
     
-    QTimelineAudioItem ( float startTime, float duration, QTimelineTrackRef trackRef, ci::Timeline *ciTimeline )
-    : QTimelineItem( startTime, duration, "QTimelineAudioItem", "track name!", trackRef, ciTimeline ) {}
+    QTimelineAudioItem ( float startTime, float duration, QTimelineTrackRef trackRef, ci::Timeline *ciTimeline );
     
-    void menuEventHandler( QTimelineMenuItemRef item ) {}
+    void menuEventHandler( QTimelineMenuItemRef item );
     
-    void findModuleBoundaries( float *prevEndTime, float *nextStartTime ) {}
+    bool dragHandles( ci::app::MouseEvent event );
     
-    bool dragHandles( ci::app::MouseEvent event ) { return false; }
+    void dragWidget( ci::app::MouseEvent event );
     
-    void dragWidget( ci::app::MouseEvent event ) {}
+    void initMenu();
     
-    void initMenu() {}
+    void loadAudioTrack();
+    
+private:
+        
+    ci::audio::TrackRef mTrack;
+    
 };
 
 
 #endif
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+
+
+
+
+#include "cinder/app/AppBasic.h"
+#include "cinder/audio/Io.h"
+#include "cinder/audio/Output.h"
+#include "cinder/audio/FftProcessor.h"
+#include "cinder/audio/PcmBuffer.h"
+
+#include "Resources.h"
+using namespace ci;
+using namespace ci::app;
+using namespace std;
+
+// We'll create a new Cinder Application by deriving from the AppBasic class
+class AudioAnalysisSampleApp : public AppBasic {
+public:
+	void setup();
+	void update();
+	void draw();
+	void keyDown( KeyEvent e );
+	
+	void drawWaveForm();
+	void drawFft();
+	
+	audio::TrackRef mTrack;
+	audio::PcmBuffer32fRef mPcmBuffer;
+};
+
+void AudioAnalysisSampleApp::setup()
+{
+	//add the audio track the default audio output
+	mTrack = audio::Output::addTrack( audio::load( loadResource( RES_GUITAR ) ) );
+	
+	//you must enable enable PCM buffering on the track to be able to call getPcmBuffer on it later
+	mTrack->enablePcmBuffering( true );
+}
+
+void AudioAnalysisSampleApp::keyDown( KeyEvent e ) {
+	if( e.getChar() == 'p' ) {
+		( mTrack->isPlaying() ) ? mTrack->stop() : mTrack->play();
+	}
+}
+
+void AudioAnalysisSampleApp::update()
+{
+	//get the latest pcm buffer from the track
+	mPcmBuffer = mTrack->getPcmBuffer();
+}
+
+void AudioAnalysisSampleApp::draw()
+{
+	gl::clear( Color( 0.0f, 0.0f, 0.0f ) );
+	
+	glPushMatrix();
+    glTranslatef( 0.0, 0.0, 0.0 );
+    drawWaveForm();
+#if defined( CINDER_MAC )
+    glTranslatef( 0.0, 200.0, 0.0 );
+    drawFft();
+#endif
+	glPopMatrix();
+}
+
+void AudioAnalysisSampleApp::drawWaveForm()
+{
+	//if the buffer is null, for example if this gets called before any PCM data has been buffered
+	//don't do anything
+	if( ! mPcmBuffer ) {
+		return;
+	}
+	
+	uint32_t bufferLength = mPcmBuffer->getSampleCount();
+	audio::Buffer32fRef leftBuffer = mPcmBuffer->getChannelData( audio::CHANNEL_FRONT_LEFT );
+	audio::Buffer32fRef rightBuffer = mPcmBuffer->getChannelData( audio::CHANNEL_FRONT_RIGHT );
+    
+	int displaySize = getWindowWidth();
+	float scale = displaySize / (float)bufferLength;
+	
+	PolyLine<Vec2f>	leftBufferLine;
+	PolyLine<Vec2f>	rightBufferLine;
+	
+	for( int i = 0; i < bufferLength; i++ ) {
+		float x = ( i * scale );
+        
+		//get the PCM value from the left channel buffer
+		float y = ( ( leftBuffer->mData[i] - 1 ) * - 100 );
+		leftBufferLine.push_back( Vec2f( x , y) );
+		
+		y = ( ( rightBuffer->mData[i] - 1 ) * - 100 );
+		rightBufferLine.push_back( Vec2f( x , y) );
+	}
+	gl::color( Color( 1.0f, 0.5f, 0.25f ) );
+	gl::draw( leftBufferLine );
+	gl::draw( rightBufferLine );
+	
+}
+
+void AudioAnalysisSampleApp::drawFft()
+{
+	float ht = 100.0f;
+	uint16_t bandCount = 32;
+	
+	if( ! mPcmBuffer ) return;
+	
+	//use the most recent Pcm data to calculate the Fft
+	std::shared_ptr<float> fftRef = audio::calculateFft( mPcmBuffer->getChannelData( audio::CHANNEL_FRONT_LEFT ), bandCount );
+	if( ! fftRef ) {
+		return;
+	}
+	
+	float * fftBuffer = fftRef.get();
+	
+	//draw the bands
+	for( int i = 0; i < ( bandCount ); i++ ) {
+		float barY = fftBuffer[i] / bandCount * ht;
+		glBegin( GL_QUADS );
+        glColor3f( 255.0f, 255.0f, 0.0f );
+        glVertex2f( i * 3, ht );
+        glVertex2f( i * 3 + 1, ht );
+        glColor3f( 0.0f, 255.0f, 0.0f );
+        glVertex2f( i * 3 + 1, ht - barY );
+        glVertex2f( i * 3, ht - barY );
+		glEnd();
+	}
+}
+*/
