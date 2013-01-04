@@ -35,7 +35,7 @@
     <KeyframesBgCol r='0.0' g='0.0' b='0.0' a='0.1' />
     <KeyframesBgOverCol r='1.0' g='1.0' b='1.0' a='0.6' />
     <KeyframesBgSelectedCol r='1.0' g='1.0' b='1.0' a='0.6' />
-    <KeyframesGraphCol r='1.0' g='1.0' b='1.0' a='1.0' />
+    <KeyframesGraphCol r='1.0' g='1.0' b='1.0' a='0.6' />
 
     <CueListBgCol r='0.18' g='0.18' b='0.18' a='1.0' />
     <CueBgCol r='0.1' g='0.1' b='0.1' a='1.0' />

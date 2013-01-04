@@ -106,8 +106,6 @@ ci::Rectf QTimelineTrack::render( ci::Rectf rect, ci::Vec2f timeWindow, double c
             for( size_t i=0; i < params.size(); i++ )
                 params[i]->renderKeyframes();
         }
-        
-        itemRef->setRect( Rectf( itemRect.getUpperLeft(), r.getLowerRight() ) );
     }
     
     return mRectPaddedHeight;
@@ -121,7 +119,8 @@ bool QTimelineTrack::mouseDown( ci::app::MouseEvent event )
     
     if ( mSelectedItem )
     {
-        if ( mSelectedItem->contains( event.getPos() ) && !mSelectedItem->isMouseOnParam() && event.isLeftDown() && getElapsedSeconds() - mMouseDownAt < 0.5f )
+        if (    mSelectedItem->contains( event.getPos() ) && !mSelectedItem->isMouseOnParam() &&
+                event.isLeftDown() && getElapsedSeconds() - mMouseDownAt < 0.5f )
         {
             toggle();
             mMouseOnItem.reset();
@@ -135,7 +134,7 @@ bool QTimelineTrack::mouseDown( ci::app::MouseEvent event )
         return true;
     }
     
-    else if ( mRect.contains( mMouseDownPos ) )
+    else if ( contains( mMouseDownPos ) )
     {
         if ( event.isRightDown() )
             QTimeline::getRef()->openMenu( mMenu, event.getPos() );
@@ -155,7 +154,6 @@ bool QTimelineTrack::mouseUp( ci::app::MouseEvent event )
     
     mSelectedItem.reset();
     
-//    mMouseOnItem.reset();
     mouseMove(event);
     
     return false;

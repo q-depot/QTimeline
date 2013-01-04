@@ -43,6 +43,8 @@ public:
     float getValue()    { return *mVar; }
     float *getRef()     { return mVar; }
     
+    float getValueNorm()    { return ( *mVar + mMin ) / ( mMax - mMin ); }
+    
     void setValue( float val ) { *mVar = ci::math<float>::clamp( val, mMin, mMax ); }
     
     float getMin()    { return mMin; }

@@ -31,7 +31,7 @@ public:
     
     void init()
     {
-        registerParam( "radius", 50.0f, 0.0f, 60.0f );
+        registerParam( "radius", 5.0f, 0.0f, 60.0f );
         
         registerParam( "pos_x", &mPos.x, 0, ci::app::getWindowWidth() );
         registerParam( "pos_y", &mPos.y, 0, ci::app::getWindowHeight() );

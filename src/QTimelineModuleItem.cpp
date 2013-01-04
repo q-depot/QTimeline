@@ -110,17 +110,18 @@ bool QTimelineModuleItem::mouseMove( MouseEvent event )
     {
         if ( handlesMouseMove( event.getPos() ) )
             return true;
-            
-        else if ( mParentTrack->isOpen() )
-        {
-            for( size_t k=0; k < mParams.size(); k++ )
-                if ( mParams[k]->mouseMove(event) )
-                {
-                    mMouseOnParam = mParams[k];
-                    return true;
-                }
-        }
+
         return true;
+    }
+    
+    else if ( mParentTrack->isOpen() )
+    {
+        for( size_t k=0; k < mParams.size(); k++ )
+            if ( mParams[k]->mouseMove(event) )
+            {
+                mMouseOnParam = mParams[k];
+                return true;
+            }
     }
     
     return false;

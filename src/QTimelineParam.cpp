@@ -166,7 +166,7 @@ void QTimelineParam::renderKeyframes()
     gl::color( mKeyframesGraphCol );
     
     glBegin( GL_LINE_STRIP );
-    
+        
     for( size_t k=0; k < mKeyframes.size(); k++ )
     {
         keyframe    = mKeyframes[k];
@@ -202,6 +202,13 @@ void QTimelineParam::renderKeyframes()
             gl::vertex( Vec2f( math<float>::clamp( keyframePos.x, mRect.x1, mRect.x2 ), keyframePos.y ) );
             gl::vertex( Vec2f( mRect.x2, keyframePos.y ) );
         }
+    }
+    
+    if ( mKeyframes.empty() )
+    {
+        float y = mRect.y2 - getValueNorm() * mRect.getHeight();
+        gl::vertex( Vec2f( actualRect.x1, y ) );
+        gl::vertex( Vec2f( actualRect.x2, y ) );
     }
     
     glEnd();
