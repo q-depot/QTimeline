@@ -54,14 +54,6 @@ public:
 		return result;
 	}
     
-    bool mouseMove( ci::app::MouseEvent event );
-    
-    bool mouseDown( ci::app::MouseEvent event );
-    
-    bool mouseUp( ci::app::MouseEvent event );
-    
-    bool mouseDrag( ci::app::MouseEvent event );
-    
     ci::XmlTree getXmlNode();
     
     void loadXmlNode( ci::XmlTree node );
@@ -71,10 +63,6 @@ private:
     QTimelineAudioItem ( float startTime, float duration, QTimelineTrackRef trackRef, ci::Timeline *ciTimeline );
     
     void menuEventHandler( QTimelineMenuItemRef item );
-    
-    bool dragHandles( ci::app::MouseEvent event );
-    
-    void dragWidget( ci::app::MouseEvent event );
     
     void initMenu();
     

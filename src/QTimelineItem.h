@@ -81,13 +81,29 @@ public:
         node.setAttribute( "name",      getName() );
         node.setAttribute( "startTime", getStartTime() );
         node.setAttribute( "duration",  getDuration() );
-//        node.setAttribute( "color",     getBgColor() );
+        //        node.setAttribute( "color",     getBgColor() );
+
         
         for( size_t k=0; k < mParams.size(); k++ )
             node.push_back( mParams[k]->getXmlNode() );
         
         return node;
     }
+    
+    virtual bool mouseMove( ci::app::MouseEvent Event );
+    
+    virtual bool mouseDown( ci::app::MouseEvent Event );
+    
+    virtual bool mouseUp( ci::app::MouseEvent Event );
+    
+    virtual bool mouseDrag( ci::app::MouseEvent Event );
+  
+    
+protected:
+    
+    virtual void dragWidget( ci::app::MouseEvent event );
+    
+    virtual bool dragHandles( ci::app::MouseEvent event );
     
 public:
     
