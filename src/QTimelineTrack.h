@@ -29,13 +29,15 @@ class QTimelineTrack : public QTimelineWidget, public std::enable_shared_from_th
     
 public:
     
-    QTimelineTrack( QTimeline *timeline, std::string name );
+    QTimelineTrack( std::string name );
     
     ~QTimelineTrack();
     
-    void addModuleItem( QTimelineModuleRef ref, float startTime, float duration );
+    void clear();
     
-    void addAudioItem( float startTime, float duration );
+    void addModuleItem( float startTime, float duration, QTimelineModuleRef ref );
+    
+    void addAudioItem( float startTime, float duration, std::string audioTrackFilename = "" );
     
     ci::Rectf render( ci::Rectf rect, ci::Vec2f timeWindow, double currentTime );
     
@@ -54,8 +56,6 @@ public:
     void toggle() { mIsTrackOpen = !mIsTrackOpen; }
     
     bool isOpen() { return mIsTrackOpen; }
-    
-    ci::Vec2f getTimeWindow();
     
     void markModuleForRemoval( QTimelineItemRef moduleItemRef );
     
@@ -95,8 +95,6 @@ private:
     
     
 private:
-    
-    QTimeline                       *mQTimeline;
     
     std::vector<QTimelineItemRef>   mModules;
     

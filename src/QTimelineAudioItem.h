@@ -61,7 +61,10 @@ public:
     bool mouseUp( ci::app::MouseEvent event );
     
     bool mouseDrag( ci::app::MouseEvent event );
-
+    
+    ci::XmlTree getXmlNode();
+    
+    void loadXmlNode( ci::XmlTree node );
     
 private:
     
@@ -80,7 +83,7 @@ private:
 private:
         
     ci::audio::TrackRef mTrack;
-    
+    std::string         mTrackFilename;
 };
 
 

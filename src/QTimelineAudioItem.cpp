@@ -274,3 +274,18 @@ void QTimelineAudioItem::loadAudioTrack()
 //	
 }
 
+
+XmlTree QTimelineAudioItem::getXmlNode()
+{
+    XmlTree node = QTimelineItem::getXmlNode();
+    
+    node.setAttribute( "trackPath", mTrackFilename );
+    
+    return node;
+}
+
+
+void QTimelineAudioItem::loadXmlNode( ci::XmlTree node )
+{
+    
+}

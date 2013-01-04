@@ -27,7 +27,6 @@ public:
     
     virtual ~QTimelineModule()
     {
-        ci::app::console() << "delete QTimelineModule base class: " << std::endl;
         mItemRef.reset();
     }
     

@@ -72,6 +72,8 @@ public:
     
     void loadXmlNode( ci::XmlTree node );
     
+public: // custom methods
+    
     void resetTarget() { mTargetModuleRef.reset(); }
     
     std::string getTargetType();
@@ -81,8 +83,6 @@ private:
     QTimelineModuleItem( float startTime, float duration, QTimelineModuleRef targetRef, QTimelineTrackRef trackRef, ci::Timeline *ciTimeline );
     
     void menuEventHandler( QTimelineMenuItemRef item );
-    
-//    void findModuleBoundaries( float *prevEndTime, float *nextStartTime );
     
     bool dragHandles( ci::app::MouseEvent event );
     

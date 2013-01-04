@@ -42,8 +42,6 @@ QTimelineModuleItem::QTimelineModuleItem( float startTime, float duration, QTime
 
 QTimelineModuleItem::~QTimelineModuleItem()
 {
-    console() << "delete QTimelineModuleItem" << endl;
-    
     clear();
 }
 
@@ -235,14 +233,9 @@ void QTimelineModuleItem::dragWidget( MouseEvent event )
 
 XmlTree QTimelineModuleItem::getXmlNode()
 {
-    XmlTree node( "module", "" );
-    node.setAttribute( "name", getName() );
-    node.setAttribute( "type", mTargetModuleRef->getType() );
-    node.setAttribute( "startTime", getStartTime() );
-    node.setAttribute( "duration",  getDuration() );
+    XmlTree node = QTimelineItem::getXmlNode();
     
-    for( size_t k=0; k < mParams.size(); k++ )
-        node.push_back( mParams[k]->getXmlNode() );
+    node.setAttribute( "targetModuleType", getTargetType() );
     
     return node;
 }

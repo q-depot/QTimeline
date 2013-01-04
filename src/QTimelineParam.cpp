@@ -53,9 +53,7 @@ QTimelineParam::QTimelineParam( QTimelineItemRef itemRef, const std::string &nam
 
 
 QTimelineParam::~QTimelineParam()
-{
-    console() << "delete QTimelineParam: " << getName() << endl;
-    
+{    
     if ( mMenu )
         QTimeline::getRef()->closeMenu( mMenu );
     

@@ -169,15 +169,11 @@ void BasicSampleApp::deleteModuleCallback( QTimeline::DeleteModuleCallbackArgs a
     QTimelineModuleItem* itemPtr = (QTimelineModuleItem*)args.itemRef.get();
     
     string name             = itemPtr->getName();
-//    string type             = itemPtr->getType();
     string targetModuleType = itemPtr->getTargetType();
-
-    console() << "BasicSampleApp::deleteModuleCallback " << name << " " << targetModuleType << endl;
     
     for( size_t k=0; k < mModules.size(); k++ )
         if ( mModules[k]->getName() == name && mModules[k]->getType() == targetModuleType )
         {
-            console() << "deleteModuleCallback: " << name << endl;
             mModules.erase( mModules.begin() + k );
             return;
         }

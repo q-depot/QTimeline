@@ -72,7 +72,9 @@ QTimeline       *QTimeline::thisRef;    // would be better to use shared_ptr and
 
 void QTimeline::init()
 {
-    mApp = ci::app::App::get();
+    QTimeline::thisRef      = this;
+    
+    mApp                    = ci::app::App::get();
     
     registerCallbacks();
     
@@ -96,7 +98,7 @@ void QTimeline::init()
     mCueManager             = new QTimelineCueManager(this);
     
     // create default track
-    mTracks.push_back( QTimelineTrackRef( new QTimelineTrack( this, "track 0" ) ) );
+    mTracks.push_back( QTimelineTrackRef( new QTimelineTrack( "track 0" ) ) );
     
     play( false, FREE_RUN );
     
@@ -120,8 +122,6 @@ void QTimeline::init()
     updateTime();
     
     updateTimeWindow();
-
-    QTimeline::thisRef = this;
 }
 
 
@@ -472,7 +472,7 @@ void QTimeline::addModule( QTimelineModuleRef moduleRef, float startTime, float 
     // get track, if it doesn't exists or if trackN == -1, create a new one
     if ( !trackRef )
     {
-        QTimelineTrackRef ref( new QTimelineTrack( this, "track untitled" ) );
+        QTimelineTrackRef ref( new QTimelineTrack( "track untitled" ) );
         trackRef.swap( ref );
         mTracks.push_back( trackRef );
     }
@@ -483,7 +483,7 @@ void QTimeline::addModule( QTimelineModuleRef moduleRef, float startTime, float 
              ( (startTime + duration) >= trackRef->mModules[k]->getStartTime() && ( startTime + duration ) <= trackRef->mModules[k]->getEndTime() ) )
             startTime = trackRef->mModules[k]->getEndTime();
     
-    trackRef->addModuleItem( moduleRef, startTime, duration );
+    trackRef->addModuleItem( startTime, duration, moduleRef );
 }
 
 
@@ -633,7 +633,7 @@ void QTimeline::loadTheme( const fs::path &filepath )
 
 void QTimeline::save( const std::string &filename )
 {
-    XmlTree doc( "qTimeline", "" );
+    XmlTree doc( "QTimeline", "" );
 
     XmlTree tracks( "tracks", "" );    
     for( size_t k=0; k < mTracks.size(); k++ )
@@ -644,23 +644,24 @@ void QTimeline::save( const std::string &filename )
     doc.push_back( mCueManager->getXmlNode() );
 
     doc.write( writeFile( filename ) );
-
 }
 
 
 void QTimeline::load( const std::string &filename )
 {
     clear();
-    
+ 
     XmlTree doc;
     
     try
     {
         doc = XmlTree( loadFile(filename) );
 
+        
         for( XmlTree::Iter nodeIt = doc.begin("QTimeline/tracks/track"); nodeIt != doc.end(); ++nodeIt )
         {
-            QTimelineTrackRef trackRef = QTimelineTrackRef( new QTimelineTrack( this, "" ) );
+            string              trackName   = nodeIt->getAttributeValue<string>("name");
+            QTimelineTrackRef   trackRef    = QTimelineTrackRef( new QTimelineTrack( trackName ) );
             mTracks.push_back( trackRef );
             trackRef->loadXmlNode( *nodeIt );
         }
@@ -727,6 +728,7 @@ void QTimeline::eraseMarkedModules()
     {
         QTimelineItemRef    item    = mModulesMarkedForRemoval[k];
         QTimelineTrackRef   track   = item->getParentTrack();
+        string              type    = item->getType();
         
         // remove item from the ci::Timeline
         mTimeline->remove( item );                                          // remove() flag the item as erase marked, timeline::stepTo() is in charge to actually delete the item
@@ -736,7 +738,8 @@ void QTimeline::eraseMarkedModules()
         track->eraseModule( item );
         
         // delete QTimelineModule
-        callDeleteModuleCb( item );
+        if ( type == "QTimelineModuleItem" )
+            callDeleteModuleCb( item );
     
         // destroy params, keyframes and release the QTimelineModule target
         item->clear();

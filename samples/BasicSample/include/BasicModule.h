@@ -27,10 +27,7 @@ public:
         mPos    = ci::app::getWindowSize() / 2;
     }
     
-    ~BasicModule()
-    {
-        ci::app::console() << "delete basic module " << getName() << " " << ci::app::getElapsedSeconds() << std::endl;
-    }
+    ~BasicModule() {}
     
     void init()
     {

@@ -77,7 +77,6 @@ public:
     
     ~QTimeline()
     {
-
         mTracks.clear();
         
         delete mCueManager;
@@ -87,6 +86,11 @@ public:
     void clear()
     {
         closeMenu();
+        
+        mMouseOnTrack.reset();
+        
+        for( size_t k=0; k < mTracks.size(); k++ )
+            mTracks[k]->clear();
         
         mTracks.clear();
         
