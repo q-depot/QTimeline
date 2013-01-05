@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <QTimeline>
 	<tracks>
-		<track name="track 0">
-			<item type="QTimelineAudioItem" name="track name!" startTime="3.5" duration="8.25" color_r="0.860000014" color_g="0.180000007" color_b="0.109999999" color_a="1" trackPath=""/>
-		</track>
+		<track name="track 0"/>
 		<track name="Untitled">
-			<item type="QTimelineModuleItem" name="Fuffa" startTime="1" duration="8" color_r="0.200000003" color_g="0.200000003" color_b="0.200000003" color_a="1" targetModuleType="BasicModule">
+			<item type="QTimelineModuleItem" name="Fuffa" startTime="3" duration="8" color_r="0" color_g="0.649999976" color_b="0.579999983" color_a="1" targetModuleType="BasicModule">
 				<param name="radius" value="5" min="0" max="60"/>
 				<param name="pos_x" value="523" min="0" max="1200"/>
 				<param name="pos_y" value="62" min="0" max="800"/>
@@ -13,19 +11,11 @@
 				<param name="green" value="1" min="0" max="1"/>
 				<param name="blue" value="1" min="0" max="1"/>
 			</item>
-			<item type="QTimelineModuleItem" name="untitled" startTime="10" duration="19.5" color_r="0.860000014" color_g="0.620000005" color_b="0" color_a="1" targetModuleType="BasicModule">
-				<param name="radius" value="5" min="0" max="60"/>
-				<param name="pos_x" value="158" min="0" max="1200"/>
-				<param name="pos_y" value="238" min="0" max="800"/>
-				<param name="red" value="1" min="0" max="1"/>
-				<param name="green" value="1" min="0" max="1"/>
-				<param name="blue" value="1" min="0" max="1"/>
-			</item>
 		</track>
 	</tracks>
 	<cueList>
-		<cue name="Cue 1" startTime="0" duration="3"/>
-		<cue name="Another cue" startTime="4" duration="5"/>
+		<cue name="Cue 1" startTime="0" duration="3" color_r="0.860000014" color_g="0.180000007" color_b="0.109999999" color_a="1"/>
+		<cue name="Another cue" startTime="4" duration="5" color_r="0.860000014" color_g="0.180000007" color_b="0.109999999" color_a="1"/>
 	</cueList>
 </QTimeline>
 

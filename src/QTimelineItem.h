@@ -144,12 +144,6 @@ public:
     
     QTimelineTrackRef getParentTrack() { return mParentTrack; }
     
-    // each item has a primary color, these should be the only public methods that get or set the color
-    // QTimelineWidget getter and setter should be private or protected.
-    ci::ColorA getColor() { return getBgColor(); }
-    
-    void setColor( ci::ColorA col ) { return setBgColor( col ); }
-    
     void setTargetModule( QTimelineModuleRef ref ) { mTargetModuleRef = ref; }
     
     QTimelineModuleRef getTargetModule() { return mTargetModuleRef; }

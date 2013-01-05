@@ -9,9 +9,11 @@
 - Audio item playback
 - OSC controller + OSC debugger to log and send out states or failure via OSC + OSC console to remotely catch the logs
 - minimal visualzation: render blocks as thin rectangles like in Ableton
+- include licensing
 
 QTimelineItem getBgCol getFgCol etc should be private
 
 callCreateModuleCb should receive a QTimelineModuleItem to then only create and link the BaseModule
 
 implement QTimelineModuleItem( XmlTree node )
+

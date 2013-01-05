@@ -44,10 +44,11 @@ void QTimelineCue::render()
 {
     // bg
     glBegin( GL_QUADS );
-    gl::color( mBgColor );          gl::vertex( mRect.getUpperLeft() );
-    gl::color( mBgColor );          gl::vertex( mRect.getUpperRight() );
-    gl::color( mBgColor * 0.8f );   gl::vertex( mRect.getLowerRight() );
-    gl::color( mBgColor * 0.8f );   gl::vertex( mRect.getLowerLeft() );
+    gl::color( mBgColor );
+    gl::vertex( mRect.getUpperLeft() );
+    gl::vertex( mRect.getUpperRight() );
+    gl::vertex( mRect.getLowerRight() );
+    gl::vertex( mRect.getLowerLeft() );
     glEnd();
     
     // current time bar
@@ -216,8 +217,17 @@ void QTimelineCue::findModuleBoundaries( float *prevEndTime, float *nextStartTim
 
 void QTimelineCue::menuEventHandler( QTimelineMenuItemRef item )
 {
-    mQTimeline->closeMenu( mMenu );
-    mCueManager->deleteCue( this );
+    if ( item->getMeta() == "delete" )
+    {
+        mQTimeline->closeMenu( mMenu );
+        mCueManager->deleteCue( this );
+    }
+    
+    else if ( item->getMeta() == "color_palette" )
+    {
+        QTimelineMenuColorPalette *palette = (QTimelineMenuColorPalette*)item.get();
+        setColor( palette->getColor() );
+    }
 }
 
 
@@ -225,7 +235,11 @@ void QTimelineCue::initMenu()
 {
     mMenu->init( "CUE MENU" );
     
-    mMenu->addButton( "DELETE", "", this, &QTimelineCue::menuEventHandler );
+    mMenu->addColorPalette( this, &QTimelineCue::menuEventHandler );
+    
+    mMenu->addSeparator();
+    
+    mMenu->addButton( "X DELETE", "delete", this, &QTimelineCue::menuEventHandler );
 }
 
 
@@ -247,10 +261,17 @@ void QTimelineCue::updateLabel()
 
 XmlTree QTimelineCue::getXmlNode()
 {
+    ColorA col = getColor();
+    
     ci::XmlTree node( "cue", "" );
     node.setAttribute( "name",      getName() );
     node.setAttribute( "startTime", getStartTime() );
     node.setAttribute( "duration",  getDuration() );
+    node.setAttribute( "color_r",   col.r );
+    node.setAttribute( "color_g",   col.g );
+    node.setAttribute( "color_b",   col.b );
+    node.setAttribute( "color_a",   col.a );
+    
     return node;
 }
 

@@ -27,7 +27,13 @@
 #include "QTimelineMenu.h"
 #include "QTimelineOscController.h"
 
-#define QTIMELINE_SNAP      0.25f
+#define QTIMELINE_SNAP              0.25f
+#define TIMELINE_WINDOW_BEATS       60      // Beats per window / windowInSec = TIMELINE_WINDOW_BEATS * 60.0f / TIMELINE_BPM
+#define TIMELINE_BPM                60      // the BMP
+#define TIMELINE_BAR_HEIGHT         25
+#define TIMELINE_TRANSPORT_HEIGHT   30
+
+
 
 typedef std::shared_ptr<class QTimeline>		QTimelineRef;
 

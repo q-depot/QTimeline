@@ -79,7 +79,7 @@ protected:
     virtual void menuEventHandler( QTimelineMenuItemRef item ) {}
     
     virtual void initMenu() {}
-
+    
     
 public:
     
@@ -106,6 +106,11 @@ public:
     
     float       getHeight() { return mRect.getHeight(); }
     
+    // each item has a primary color, these should be the only public methods that get or set the color
+    // QTimelineWidget getter and setter should be private or protected.
+    ci::ColorA getColor() { return getBgColor(); }
+    void setColor( ci::ColorA col ) { return setBgColor( col ); }
+        
 	ci::ColorA  getBgColor() { return mBgColor; }
     void        setBgColor( ci::ColorA col )        { mBgColor      = col; }
     

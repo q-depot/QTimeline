@@ -31,6 +31,7 @@ void QTimelineCueManager::render()
     float           startPos, endPos;
     
     gl::color( mBgColor );
+    
     glBegin( GL_QUADS );
     gl::vertex( mRect.getUpperLeft() );
     gl::vertex( mRect.getUpperRight() );
@@ -197,16 +198,24 @@ XmlTree QTimelineCueManager::getXmlNode()
 
 void QTimelineCueManager::loadXmlNode( XmlTree node )
 {
-    string name;
-    float startTime, duration;
+    string  name;
+    float   startTime, duration;
+    ColorA  col;
     
     for( XmlTree::Iter nodeIt = node.begin("cue"); nodeIt != node.end(); ++nodeIt )
     {
         name        = nodeIt->getAttributeValue<string>( "name" );
         startTime   = nodeIt->getAttributeValue<float>( "startTime" );
         duration    = nodeIt->getAttributeValue<float>( "duration" );
+        col.r       = nodeIt->getAttributeValue<float>( "color_r" );
+        col.g       = nodeIt->getAttributeValue<float>( "color_g" );
+        col.b       = nodeIt->getAttributeValue<float>( "color_b" );
+        col.a       = nodeIt->getAttributeValue<float>( "color_a" );
         
-        mCueList.push_back( QTimelineCueRef( new QTimelineCue( mQTimeline, this, name, startTime, duration ) ) );
+        QTimelineCueRef ref = QTimelineCueRef( new QTimelineCue( mQTimeline, this, name, startTime, duration ) );
+        ref->setColor( col );
+        
+        mCueList.push_back( ref );
     }
     
     sort( mCueList.begin(), mCueList.end(), sortCueListHelper );

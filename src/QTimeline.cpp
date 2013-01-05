@@ -12,14 +12,7 @@
 #include "cinder/Text.h"
 #include <fstream>
 
-
 #include "QTimelineAudioItem.h"
-
-
-#define TIMELINE_WINDOW_BEATS       60      // Beats per window / windowInSec = TIMELINE_WINDOW_BEATS * 60.0f / TIMELINE_BPM
-#define TIMELINE_BPM                60      // the BMP
-#define TIMELINE_BAR_HEIGHT         30
-#define TIMELINE_TRANSPORT_HEIGHT   30
 
 using namespace ci;
 using namespace ci::app;
@@ -164,27 +157,19 @@ void QTimeline::render()
     mFontBig->drawString( mTimeStr, mTransportRect.getUpperRight() + Vec2f( -125, 19 ) );
     mFontSmall->drawString( toString( (int)App::get()->getAverageFps() ) + " FPS", mTransportRect.getUpperRight() + Vec2f( -50, 19 ) );
 
-    
     // render tracks
     mTracksRect = mTransportRect;
     mTracksRect.offset( Vec2f( 0, - TIMELINE_WIDGET_PADDING ) );
-    
     for( int k=mTracks.size()-1; k >= 0; k-- )
-    {
-        if ( mTracks[k] )
-            mTracksRect = mTracks[k]->render( mTracksRect, mTimeWindow, getTime() );
-        else
-            console() << "ERROR " << getElapsedSeconds() << endl;
-        
-        
-    }
+        mTracksRect = mTracks[k]->render( mTracksRect, mTimeWindow, getTime() );
+    
     // render Time bar
     renderTimeBar();
     
     // render Cue list
     if ( mCueManager )
     {
-        mCueManager->setRect( Rectf( mTimeBarRect.x1, mTimeBarRect.y1 - TIMELINE_CUELIST_HEIGHT, mTimeBarRect.x2, mTimeBarRect.y1 ) );
+        mCueManager->setRect( Rectf( mTimeBarRect.x1, mTimeBarRect.y1 - TIMELINE_CUELIST_HEIGHT - 1, mTimeBarRect.x2, mTimeBarRect.y1 - 1 ) );
         mCueManager->render();
     }
     
@@ -277,6 +262,9 @@ bool QTimeline::mouseMove( ci::app::MouseEvent event )
 
 bool QTimeline::mouseDrag( MouseEvent event )
 {
+    if ( mSelectedMenu && mSelectedMenu->isVisible() && mSelectedMenu->mouseDrag(event) )
+        return true;
+    
     for( size_t k=0; k < mTracks.size(); k++ )
         mTracks[k]->mouseDrag( event );
     
@@ -397,7 +385,8 @@ void QTimeline::renderTimeBar()
     gl::vertex( barOver.getLowerLeft() );
     
     // render current time bar indicator
-    gl::color( QTimeline::mTimeBarFgCol );
+    
+    gl::color( QTimeline::mTimeBarMouseBarCol );
     gl::vertex( Vec2f( timelinePosX,    mTimeBarRect.getY1() ) );
     gl::vertex( Vec2f( timelinePosX+1,  mTimeBarRect.getY1() ) );
     gl::vertex( Vec2f( timelinePosX+1,  mTransportRect.getY1() ) );
@@ -409,6 +398,8 @@ void QTimeline::renderTimeBar()
     float   windowInSec     = ( TIMELINE_WINDOW_BEATS * 60.0f / TIMELINE_BPM ) / mZoom;
     int     nSecs           = windowInSec + 1;
     float   oneSecInPx      = mTimeBarRect.getWidth() / windowInSec;
+    
+    gl::color( QTimeline::mTimeBarFgCol );
     
     glBegin( GL_QUADS );
     for( int k=0; k < nSecs; k++ )
@@ -447,7 +438,7 @@ void QTimeline::renderTimeBar()
         
         glBegin( GL_QUADS );
 
-        gl::color( ref->getBgColor() );
+        gl::color( ref->getColor() );
 
         // left bar
         gl::vertex( Vec2f( r.x1,       mTimeBarRect.y1 ) );

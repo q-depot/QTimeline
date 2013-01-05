@@ -381,6 +381,14 @@ public:
         
         return false;
     }
+    
+    bool mouseDrag( ci::app::MouseEvent event )
+    {
+        if ( mMouseOnItem )
+            return true;
+        
+        return false;
+    }
 
     bool isVisible() { return mIsVisible; }
     

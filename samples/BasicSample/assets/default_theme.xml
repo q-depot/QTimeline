@@ -3,9 +3,9 @@
 <QTimelineTheme name='basic theme'>
     
     <TimeBarBgCol r='0.05' g='0.05' b='0.05' a='1.0' />
-    <TimeBarFgCol r='1.0' g='1.0' b='1.0' a='0.2' />
+    <TimeBarFgCol r='1.0' g='1.0' b='1.0' a='0.12' />
     <TimeBarTextCol r='0.44' g='0.44' b='0.44' a='1.0' />
-    <TimeBarMouseBarCol r='0.0' g='1.0' b='1.0' a='0.4' />
+    <TimeBarMouseBarCol r='1.0' g='1.0' b='1.0' a='0.4' />
     <TimeBarModuleRangeCol r='1.0' g='0.0' b='1.0' a='0.4' />
     
     <TransportBgCol r='0.05' g='0.05' b='0.05' a='1.0' />
@@ -14,18 +14,16 @@
     <TracksBgCol  r='0.1' g='0.1' b='0.12' a='1.0' />
     <TracksBgOverCol r='0.1' g='0.1' b='0.12' a='1.0' />
     
-    <ModuleItemBgCol r='0.5' g='0.5' b='0.5' a='1.0' />
-    <ModuleItemBgOverCol r='0.5' g='0.5' b='0.5' a='1.0' />
+    <ModuleItemBgCol r='0.0' g='0.65' b='0.58' a='1.0' />
+    <ModuleItemBgOverCol r='0.0' g='0.65' b='0.58' a='1.0' />
     <ModuleItemTextCol r='0.0' g='0.0' b='0.0' a='0.7' />
-    
     <ModuleItemHandleCol r='0.0' g='0.0' b='0.0' a='0.15' />
     <ModuleItemHandleOverCol r='0.0' g='0.0' b='0.0' a='0.3' />
     
     <AudioItemBgCol r='0.45' g='0.60' b='0.0' a='1.0' />
     <AudioItemBgOverCol r='0.45' g='0.60' b='0.0' a='1.0' />
     <AudioItemTextCol r='0.0' g='0.0' b='0.0' a='0.7' />
-    
-    <AudioItemHandleCol r='0.0' g='0.0' b='0.0' a='0.2' />
+    <AudioItemHandleCol r='0.0' g='0.0' b='0.0' a='0.15' />
     <AudioItemHandleOverCol r='0.0' g='0.0' b='0.0' a='0.3' />
     
     <ParamsBgCol r='1.0' g='1.0' b='1.0' a='0.05' />
@@ -37,14 +35,13 @@
     <KeyframesBgSelectedCol r='1.0' g='1.0' b='1.0' a='0.6' />
     <KeyframesGraphCol r='1.0' g='1.0' b='1.0' a='0.8' />
 
-    <CueListBgCol r='0.18' g='0.18' b='0.18' a='1.0' />
-    <CueBgCol r='0.1' g='0.1' b='0.1' a='1.0' />
-    <CueBgOverCol r='1.0' g='1.0' b='1.0' a='0.15' />
-    <CueFgCol r='0.6' g='0.6' b='0.6' a='1.0' />
-    <CueTextCol r='1.0' g='1.0' b='1.0' a='1.0' />
-    
-    <CueHandleCol r='0.3' g='0.3' b='0.3' a='1.0' />
-    <CueHandleOverCol r='0.4' g='0.4' b='0.4' a='1.0' />
+    <CueListBgCol r='0.12' g='0.12' b='0.12' a='1.0' />
+    <CueBgCol r='0.5' g='0.5' b='0.5' a='1.0' />
+    <CueBgOverCol r='0.5' g='0.5' b='0.5' a='1.0' />
+    <CueFgCol r='0.0' g='0.0' b='0.0' a='0.2' />
+    <CueTextCol r='0.0' g='0.0' b='0.0' a='0.7' />
+    <CueHandleCol r='0.0' g='0.0' b='0.0' a='0.15' />
+    <CueHandleOverCol r='0.0' g='0.0' b='0.0' a='0.3' />
     
     <MenuColorPalette>
         <Color r='0.86' g='0.18' b='0.11' a='1.0' />
