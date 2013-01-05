@@ -302,6 +302,8 @@ private:
     
     bool mouseWheel( ci::app::MouseEvent event );
     
+    bool keyDown( ci::app::KeyEvent event );
+    
     bool resize( ci::app::ResizeEvent event );
     
     void renderTimeBar();
@@ -392,6 +394,7 @@ private:
     
     ci::app::App            *mApp;
     ci::CallbackId          mCbMouseDown, mCbMouseDrag, mCbMouseUp, mCbMouseMove, mCbMouseWheel;
+    ci::CallbackId          mCbKeyDown;
     ci::CallbackId          mCbResize;
     
     ci::Vec2f               mMousePrevPos;

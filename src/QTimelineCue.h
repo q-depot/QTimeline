@@ -78,7 +78,7 @@ protected:
     QTimeline               *mQTimeline;
     QTimelineCueManager     *mCueManager;
     
-    std::string             mName;
+//    std::string             mName;
     double                  mStartTime;
     double                  mDuration;
     

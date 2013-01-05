@@ -102,16 +102,28 @@ void QTimelineAudioItem::menuEventHandler( QTimelineMenuItemRef item )
         QTimeline::getPtr()->markItemForRemoval( thisRef() );
     }
     
+    else if ( item->getMeta() == "name_text_box" )
+    {
+        setName( item->getName() );
+        QTimeline::getPtr()->closeMenu( mMenu );
+    }
 }
 
 
 void QTimelineAudioItem::initMenu()
 {
     mMenu->init( "AUDIO ITEM" );
+    
+    mMenu->addTextBox( getName(), "name_text_box", this, &QTimelineAudioItem::menuEventHandler );
+    
     mMenu->addColorPalette( this, &QTimelineAudioItem::menuEventHandler );
+    
     mMenu->addSeparator();
+    
     mMenu->addButton( "Load track", "load_track", this, &QTimelineAudioItem::menuEventHandler );
+    
     mMenu->addSeparator();
+   
     mMenu->addButton( "X DELETE", "delete", this, &QTimelineAudioItem::menuEventHandler );
 }
 

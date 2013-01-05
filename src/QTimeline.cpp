@@ -194,6 +194,7 @@ void QTimeline::registerCallbacks()
     mCbMouseMove    = mApp->registerMouseMove(  this, &QTimeline::mouseMove );
     mCbMouseDrag    = mApp->registerMouseDrag(  this, &QTimeline::mouseDrag );
     mCbMouseWheel   = mApp->registerMouseWheel( this, &QTimeline::mouseWheel );
+    mCbKeyDown      = mApp->registerKeyDown( this, &QTimeline::keyDown );
     mCbResize       = mApp->registerResize(     this, &QTimeline::resize );
 }
 
@@ -275,6 +276,15 @@ bool QTimeline::mouseDrag( MouseEvent event )
         mTimeline->stepTo( snapTime( getTimeFromPos( event.getPos().x ) ) );
     
     mMousePrevPos = event.getPos();
+    
+    return false;
+}
+
+
+bool QTimeline::keyDown( KeyEvent event )
+{
+    if ( mSelectedMenu && mSelectedMenu->isVisible() && mSelectedMenu->keyDown(event) )
+        return true;
     
     return false;
 }

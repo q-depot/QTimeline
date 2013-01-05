@@ -2,18 +2,9 @@
 === Andrea ===
 --------------
 
-- export/import item color(xml)
-- Use unique ids to refer to a module, ie load xml node should not use name and type to find the module
 - Rename timeline item(cue/module/audio)
 - Audio item wave form
 - Audio item playback
 - OSC controller + OSC debugger to log and send out states or failure via OSC + OSC console to remotely catch the logs
 - minimal visualzation: render blocks as thin rectangles like in Ableton
 - include licensing
-
-QTimelineItem getBgCol getFgCol etc should be private
-
-callCreateModuleCb should receive a QTimelineModuleItem to then only create and link the BaseModule
-
-implement QTimelineModuleItem( XmlTree node )
-

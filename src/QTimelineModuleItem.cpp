@@ -116,12 +116,20 @@ void QTimelineModuleItem::menuEventHandler( QTimelineMenuItemRef item )
         QTimelineMenuColorPalette *palette = (QTimelineMenuColorPalette*)item.get();
         setColor( palette->getColor() );
     }
+    
+    else if ( item->getMeta() == "name_text_box" )
+    {
+        setName( item->getName() );
+        QTimeline::getPtr()->closeMenu( mMenu );
+    }
 }
 
 
 void QTimelineModuleItem::initMenu()
 {
     mMenu->init( "MODULE MENU" );
+
+    mMenu->addTextBox( getName(), "name_text_box", this, &QTimelineModuleItem::menuEventHandler );
     
     mMenu->addColorPalette( this, &QTimelineModuleItem::menuEventHandler );
     

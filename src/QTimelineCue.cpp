@@ -19,7 +19,7 @@ using namespace std;
 
 
 QTimelineCue::QTimelineCue( QTimeline *qTimeline, QTimelineCueManager *cueManager, string name, double startTime, double duration )
-: mQTimeline(qTimeline), mCueManager(cueManager), mName(name), mStartTime(startTime), mDuration(duration), QTimelineWidgetWithHandles(name)
+: mQTimeline(qTimeline), mCueManager(cueManager), mStartTime(startTime), mDuration(duration), QTimelineWidgetWithHandles(name)
 {
     mBgColor            = QTimeline::mCueBgCol;
     mBgOverColor        = QTimeline::mCueBgOverCol;
@@ -34,6 +34,8 @@ QTimelineCue::QTimelineCue( QTimeline *qTimeline, QTimelineCueManager *cueManage
     
     // init rect width
     setRect( Rectf( mQTimeline->getPosFromTime( getStartTime() ), 0, mQTimeline->getPosFromTime( getEndTime() ), 0 ) );
+    
+    setName( name );
     
     updateLabel();
     
@@ -228,13 +230,22 @@ void QTimelineCue::menuEventHandler( QTimelineMenuItemRef item )
         QTimelineMenuColorPalette *palette = (QTimelineMenuColorPalette*)item.get();
         setColor( palette->getColor() );
     }
+    
+    else if ( item->getMeta() == "name_text_box" )
+    {
+        setName( item->getName() );
+        QTimeline::getPtr()->closeMenu( mMenu );
+        updateLabel();
+    }
 }
 
 
 void QTimelineCue::initMenu()
 {
     mMenu->init( "CUE MENU" );
-    
+
+    mMenu->addTextBox( getName(), "name_text_box", this, &QTimelineCue::menuEventHandler );
+
     mMenu->addColorPalette( this, &QTimelineCue::menuEventHandler );
     
     mMenu->addSeparator();
