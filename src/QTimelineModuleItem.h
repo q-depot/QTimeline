@@ -60,7 +60,7 @@ public:
     
     ci::XmlTree getXmlNode();
     
-    void loadXmlNode( ci::XmlTree node );
+//    void loadXmlNode( ci::XmlTree node );
     
 public: // custom methods
     

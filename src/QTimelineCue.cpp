@@ -82,7 +82,7 @@ void QTimelineCue::render()
     
     // label
     gl::color( mTextColor );
-    mFont->drawString( mLabel, mRect.getUpperLeft() + Vec2f( TIMELINE_MODULE_HANDLE_WIDTH * 2, 13.0f ) );
+    mFont->drawString( mLabel, mRect.getUpperLeft() + Vec2f( TIMELINE_MODULE_HANDLE_WIDTH * 2, 16.0f ) );
 }
 
 bool QTimelineCue::mouseMove( MouseEvent event )

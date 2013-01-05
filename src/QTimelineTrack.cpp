@@ -273,8 +273,8 @@ void QTimelineTrack::loadXmlNode( ci::XmlTree node )
 {
     setName( node.getAttributeValue<string>( "name" ) );
     
-    string  name, type, targetModuleType, audioTrackFilename;
-    float   startTime, duration;
+    string              name, type, targetModuleType, audioTrackFilename;
+    float               startTime, duration;
     
     for( XmlTree::Iter nodeIt = node.begin("item"); nodeIt != node.end(); ++nodeIt )
     {
@@ -282,7 +282,7 @@ void QTimelineTrack::loadXmlNode( ci::XmlTree node )
         type                = nodeIt->getAttributeValue<string>( "type" );
         startTime           = nodeIt->getAttributeValue<float>( "startTime" );
         duration            = nodeIt->getAttributeValue<float>( "duration" );
-
+                
         if ( type == "QTimelineModuleItem" )
         {
             targetModuleType    = nodeIt->getAttributeValue<string>( "targetModuleType" );

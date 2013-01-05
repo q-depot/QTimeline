@@ -11,6 +11,10 @@
 #include "QTimeline.h"
 #include "QTimelineItem.h"
 
+using namespace ci;
+using namespace ci::app;
+using namespace std;
+
 
 bool QTimelineItem::mouseMove( ci::app::MouseEvent event )
 {
@@ -147,3 +151,62 @@ void QTimelineItem::dragWidget( ci::app::MouseEvent event )
         mParams[k]->updateKeyframesPos( time - startTime );
 }
 
+
+XmlTree QTimelineItem::getXmlNode()
+{
+    ColorA col = getColor();
+    
+    XmlTree node( "item", "" );
+    node.setAttribute( "type",      getType() );
+    node.setAttribute( "name",      getName() );
+    node.setAttribute( "startTime", getStartTime() );
+    node.setAttribute( "duration",  getDuration() );
+    node.setAttribute( "color_r",  col.r );
+    node.setAttribute( "color_g",  col.g );
+    node.setAttribute( "color_b",  col.b );
+    node.setAttribute( "color_a",  col.a );
+    
+    for( size_t k=0; k < mParams.size(); k++ )
+        node.push_back( mParams[k]->getXmlNode() );
+    
+    return node;
+}
+
+
+void QTimelineItem::loadXmlNode( XmlTree node )
+{
+    float   value, time;
+    string  fnStr;
+    
+    ColorA  col;
+    
+    try {
+        col.r               = node.getAttributeValue<float>( "color_r" );
+        col.g               = node.getAttributeValue<float>( "color_g" );
+        col.b               = node.getAttributeValue<float>( "color_b" );
+        col.a               = node.getAttributeValue<float>( "color_a" );
+        
+        setColor( col );
+    }
+    catch ( ... )
+    {
+        ci::app::console() << "QTimelineItem::loadXmlNode() " << getName() << " color not found!" << std::endl;
+    }
+    
+    for( XmlTree::Iter paramIt = node.begin("param"); paramIt != node.end(); ++paramIt )
+    {
+        QTimelineParamRef param = findParamByName( paramIt->getAttributeValue<string>( "name" ) );
+        
+        if ( !param )
+            continue;
+        
+        for( XmlTree::Iter kfIt = paramIt->begin("kf"); kfIt != paramIt->end(); ++kfIt )
+        {
+            value   = kfIt->getAttributeValue<float>( "value" );
+            time    = kfIt->getAttributeValue<float>( "time" );
+            fnStr   = kfIt->getAttributeValue<string>( "fn" );
+            
+            param->addKeyframe( time, value, QTimeline::getEaseFnFromString(fnStr), fnStr );
+        }
+    }
+}

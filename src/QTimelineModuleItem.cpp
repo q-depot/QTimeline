@@ -107,30 +107,6 @@ XmlTree QTimelineModuleItem::getXmlNode()
 }
 
 
-void QTimelineModuleItem::loadXmlNode( ci::XmlTree node )
-{
-    float   value, time;
-    string  fnStr;
-    
-    for( XmlTree::Iter paramIt = node.begin("param"); paramIt != node.end(); ++paramIt )
-    {
-        QTimelineParamRef param = findParamByName( paramIt->getAttributeValue<string>( "name" ) );
-        
-        if ( !param )
-            continue;
-        
-        for( XmlTree::Iter kfIt = paramIt->begin("kf"); kfIt != paramIt->end(); ++kfIt )
-        {
-            value   = kfIt->getAttributeValue<float>( "value" );
-            time    = kfIt->getAttributeValue<float>( "time" );
-            fnStr   = kfIt->getAttributeValue<string>( "fn" );
-            
-            param->addKeyframe( time, value, QTimeline::getEaseFnFromString(fnStr), fnStr );
-        }
-    }
-}
-
-
 void QTimelineModuleItem::menuEventHandler( QTimelineMenuItemRef item )
 {
     if ( item->getMeta() == "delete" )

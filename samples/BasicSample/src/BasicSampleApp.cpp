@@ -147,8 +147,6 @@ void BasicSampleApp::draw()
         if ( mModules[k]->isPlaying() )
             mModules[k]->render();
     
-    gl::drawString( "modules: " + toString( mModules.size() ), Vec2i( 300, 15 ) );
-    
     mTimeline->render();
 
     gl::color( Color::white() );
@@ -162,7 +160,7 @@ void BasicSampleApp::createModuleCallback( QTimeline::CreateModuleCallbackArgs a
     if( args.type == "BasicModule" )
         mod = QTimelineModuleRef( new BasicModule( args.name ) );
     
-    // ...
+    // else if ...
     
     if ( !mod )
         return;

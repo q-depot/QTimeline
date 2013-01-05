@@ -119,7 +119,10 @@ XmlTree QTimelineAudioItem::getXmlNode()
 }
 
 
-void QTimelineAudioItem::loadXmlNode( ci::XmlTree node )
+void QTimelineAudioItem::loadXmlNode( XmlTree node )
 {
-    
+    QTimelineItem::loadXmlNode( node );
+
+    // load track path
 }
+

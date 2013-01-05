@@ -16,7 +16,7 @@
 #include "QTimelineWidget.h"
 #include "QTimelineCue.h"
 
-#define TIMELINE_CUELIST_HEIGHT     20
+#define TIMELINE_CUELIST_HEIGHT     25
 
 
 class QTimeline;

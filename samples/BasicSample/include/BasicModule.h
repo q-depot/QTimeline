@@ -24,7 +24,8 @@ public:
     BasicModule( std::string name ) : QTimelineModule( name, "BasicModule" )
     {
         mColor  = ci::Color::white();
-        mPos    = ci::app::getWindowSize() / 2;
+        mPos.x  = ci::Rand::randInt( ci::app::getWindowWidth() );
+        mPos.y  = ci::Rand::randInt( ci::app::getWindowHeight() * 0.4f );
     }
     
     ~BasicModule() {}

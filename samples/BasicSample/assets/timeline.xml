@@ -2,40 +2,18 @@
 <QTimeline>
 	<tracks>
 		<track name="track 0">
-			<item type="QTimelineAudioItem" name="track name!" startTime="10" duration="12.25" trackPath=""/>
-			<item type="QTimelineAudioItem" name="track name!" startTime="25.5" duration="7.25" trackPath=""/>
+			<item type="QTimelineAudioItem" name="track name!" startTime="4" duration="10.75" color_r="0.860000014" color_g="0.180000007" color_b="0.109999999" color_a="1" trackPath=""/>
+			<item type="QTimelineAudioItem" name="track name!" startTime="15.5" duration="25.25" color_r="0" color_g="0.649999976" color_b="0.579999983" color_a="1" trackPath=""/>
 		</track>
 		<track name="track untitled">
-			<item type="QTimelineModuleItem" name="Sample module one" startTime="1.75" duration="12" targetModuleType="BasicModule">
-				<param name="radius" value="50" min="0" max="60">
-					<kf value="17.3333321" time="3.5" fn="EaseInQuad"/>
-					<kf value="34.6666641" time="5" fn="EaseInQuad"/>
-					<kf value="37.3333321" time="10.25" fn="EaseInQuad"/>
-				</param>
-				<param name="pos_x" value="600" min="0" max="1200">
-					<kf value="960" time="3.25" fn="EaseOutQuad"/>
-					<kf value="53.3333282" time="12" fn="EaseOutQuad"/>
-				</param>
-				<param name="pos_y" value="400" min="0" max="800">
-					<kf value="159.999985" time="3" fn="EaseInOutQuad"/>
-					<kf value="693.333313" time="10" fn="EaseInOutQuad"/>
-				</param>
-				<param name="red" value="1" min="0" max="1">
-					<kf value="0.733333349" time="3.5" fn="EaseOutInQuad"/>
-					<kf value="0.333333313" time="10.5" fn="EaseOutInQuad"/>
-				</param>
-				<param name="green" value="1" min="0" max="1">
-					<kf value="0.222222209" time="5.25" fn="EaseNone"/>
-					<kf value="0.288888872" time="9.5" fn="EaseNone"/>
-					<kf value="0.911111116" time="11.25" fn="EaseNone"/>
-				</param>
-				<param name="blue" value="1" min="0" max="1">
-					<kf value="0.622222185" time="4.25" fn="EaseNone"/>
-					<kf value="0.377777755" time="10.75" fn="EaseNone"/>
-				</param>
+			<item type="QTimelineModuleItem" name="Sample module one" startTime="2" duration="18.25" color_r="0.860000014" color_g="0.620000005" color_b="0" color_a="1" targetModuleType="BasicModule">
+				<param name="radius" value="5" min="0" max="60"/>
+				<param name="pos_x" value="523" min="0" max="1200"/>
+				<param name="pos_y" value="62" min="0" max="800"/>
+				<param name="red" value="1" min="0" max="1"/>
+				<param name="green" value="1" min="0" max="1"/>
+				<param name="blue" value="1" min="0" max="1"/>
 			</item>
-			<item type="QTimelineAudioItem" name="track name!" startTime="14.5" duration="17.25" trackPath=""/>
-			<item type="QTimelineAudioItem" name="track name!" startTime="34.75" duration="8.25" trackPath=""/>
 		</track>
 	</tracks>
 	<cueList>

@@ -74,21 +74,9 @@ public:
 		return result;
 	}
     
-    virtual ci::XmlTree getXmlNode()
-    {
-        ci::XmlTree node( "item", "" );
-        node.setAttribute( "type",      getType() );
-        node.setAttribute( "name",      getName() );
-        node.setAttribute( "startTime", getStartTime() );
-        node.setAttribute( "duration",  getDuration() );
-        //        node.setAttribute( "color",     getBgColor() );
-
-        
-        for( size_t k=0; k < mParams.size(); k++ )
-            node.push_back( mParams[k]->getXmlNode() );
-        
-        return node;
-    }
+    virtual ci::XmlTree getXmlNode();
+    
+    virtual void loadXmlNode( ci::XmlTree node );
     
     virtual bool mouseMove( ci::app::MouseEvent Event );
     
@@ -165,6 +153,11 @@ public:
     
     QTimelineTrackRef getParentTrack() { return mParentTrack; }
     
+    // each item has a primary color, these should be the only public methods that get or set the color
+    // QTimelineWidget getter and setter should be private or protected.
+    ci::ColorA getColor() { return getBgColor(); }
+    
+    void setColor( ci::ColorA col ) { return setBgColor( col ); }
     
 protected:
     
