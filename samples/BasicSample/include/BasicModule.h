@@ -21,7 +21,12 @@ class BasicModule : public QTimelineModule
     
 public:
     
-    BasicModule( std::string name ) : QTimelineModule( name, "BasicModule" )
+    BasicModule() : QTimelineModule( "BasicModule" )
+    {
+        
+    }
+    
+    BasicModule( QTimelineItemRef item ) : QTimelineModule( item, "BasicModule" )
     {
         mColor  = ci::Color::white();
         mPos.x  = ci::Rand::randInt( ci::app::getWindowWidth() );
@@ -54,7 +59,6 @@ public:
         ci::gl::color( mColor );
         ci::gl::drawSolidCircle( mPos, getParamValue("radius") );
         ci::gl::drawStringCentered( ci::toString( getParamValue("radius") ), mPos, ci::Color::white() );
-        ci::gl::drawStringCentered( mName, mPos + ci::Vec2f(0,70), ci::Color::white() );
     }
     
 private:

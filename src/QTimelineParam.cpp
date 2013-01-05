@@ -43,8 +43,8 @@ QTimelineParam::QTimelineParam( QTimelineItemRef itemRef, const std::string &nam
     mDefaultEasingStr   = "EaseNone";
     
     // init rect width
-    setRect( Rectf( QTimeline::getRef()->getPosFromTime( mParentModule->getStartTime() ), 0,
-                    QTimeline::getRef()->getPosFromTime( mParentModule->getEndTime() ), 0 ) );
+    setRect( Rectf( QTimeline::getPtr()->getPosFromTime( mParentModule->getStartTime() ), 0,
+                    QTimeline::getPtr()->getPosFromTime( mParentModule->getEndTime() ), 0 ) );
     
     updateLabel();
     
@@ -55,7 +55,7 @@ QTimelineParam::QTimelineParam( QTimelineItemRef itemRef, const std::string &nam
 QTimelineParam::~QTimelineParam()
 {    
     if ( mMenu )
-        QTimeline::getRef()->closeMenu( mMenu );
+        QTimeline::getPtr()->closeMenu( mMenu );
     
     mKeyframes.clear();
     
@@ -155,8 +155,8 @@ void QTimelineParam::renderKeyframes()
     double                  startTime   = mParentModule->getStartTime();
     double                  endTime     = mParentModule->getEndTime();
     
-    Vec2f timeWindow    = QTimeline::getRef()->getTimeWindow();
-    float timeWidth     = QTimeline::getRef()->getTimeBarWidth();
+    Vec2f timeWindow    = QTimeline::getPtr()->getTimeWindow();
+    float timeWidth     = QTimeline::getPtr()->getTimeBarWidth();
     float oneSecInPx    = timeWidth / ( timeWindow.y - timeWindow.x );
     Rectf actualRect(   ( mParentModule->getStartTime() - timeWindow.x ) * oneSecInPx,
                         mRect.y1,
@@ -250,7 +250,7 @@ void QTimelineParam::renderKeyframes()
 
 void QTimelineParam::addKeyframe( double time, float value, function<float (float)> fn, string fnStr )
 {
-    time    = QTimeline::getRef()->snapTime( time );
+    time    = QTimeline::getPtr()->snapTime( time );
     value   = math<float>::clamp( value, mMin, mMax );
     mKeyframes.push_back( QTimelineKeyframeRef( new QTimelineKeyframe( time, value, fn, fnStr ) ) );
     
@@ -332,17 +332,17 @@ bool QTimelineParam::mouseDown( MouseEvent event )
         }
         
         else if ( !mKeyframesSelection.empty() )
-            QTimeline::getRef()->openMenu( mMenu, event.getPos() );
+            QTimeline::getPtr()->openMenu( mMenu, event.getPos() );
         
         else
-            QTimeline::getRef()->closeMenu( mMenu );
+            QTimeline::getPtr()->closeMenu( mMenu );
     }
     
     else
     {
         mKeyframesSelection.clear();
         mMenu->close();
-        QTimeline::getRef()->closeMenu( mMenu );
+        QTimeline::getPtr()->closeMenu( mMenu );
         
         if ( event.isShiftDown() )
         {
@@ -353,7 +353,7 @@ bool QTimelineParam::mouseDown( MouseEvent event )
         else if ( !mMouseOnKeyframe )                        // move or delete keyframe
         {
             // create new keyframe
-            float   time    = QTimeline::getRef()->getTimeFromPos( event.getPos().x );
+            float   time    = QTimeline::getPtr()->getTimeFromPos( event.getPos().x );
             time            = math<float>::clamp( time, mParentModule->getStartTime(), mParentModule->getEndTime() );
             float value     = getPosValue( event.getPos().y );
 
@@ -373,16 +373,16 @@ bool QTimelineParam::mouseDrag( MouseEvent event )
     
     if ( mMouseOnKeyframe && !mIsOnSelection )
     {
-        float   time    = QTimeline::getRef()->getTimeFromPos( mMousePos.x );
+        float   time    = QTimeline::getPtr()->getTimeFromPos( mMousePos.x );
         time            = math<float>::clamp( time, mParentModule->getStartTime(), mParentModule->getEndTime() );
-        time            = QTimeline::getRef()->snapTime( time );
+        time            = QTimeline::getPtr()->snapTime( time );
         float value     = getPosValue( mMousePos.y );
         
         mMouseOnKeyframe->set( time, value );
         
         sort( mKeyframes.begin(), mKeyframes.end(), sortKeyframesHelper );
         
-        QTimeline::getRef()->updateCurrentTime();
+        QTimeline::getPtr()->updateCurrentTime();
     }
     
     return false;
@@ -398,8 +398,8 @@ void QTimelineParam::updateKeyframesPos( float deltaT )
 
 void QTimelineParam::findKeyframesInSelection()
 {
-    float startTime = QTimeline::getRef()->getTimeFromPos( mMouseDownPos.x );
-    double endTime  = QTimeline::getRef()->getTimeFromPos( mMousePos.x );
+    float startTime = QTimeline::getPtr()->getTimeFromPos( mMouseDownPos.x );
+    double endTime  = QTimeline::getPtr()->getTimeFromPos( mMousePos.x );
     
     if ( startTime > endTime )
     {
@@ -437,8 +437,8 @@ void QTimelineParam::menuEventHandler( QTimelineMenuItemRef item )
 
 Vec2f QTimelineParam::getRelPosNorm( Vec2f pos )
 {
-    Vec2f timeWindow    = QTimeline::getRef()->getTimeWindow();
-    float timeWidth     = QTimeline::getRef()->getTimeBarWidth();
+    Vec2f timeWindow    = QTimeline::getPtr()->getTimeWindow();
+    float timeWidth     = QTimeline::getPtr()->getTimeBarWidth();
     float oneSecInPx    = timeWidth / ( timeWindow.y - timeWindow.x );
     Rectf actualRect(   ( mParentModule->getStartTime() - timeWindow.x ) * oneSecInPx,
                      mRect.y1,
@@ -460,7 +460,7 @@ float QTimelineParam::getPosValue( float yPos )
 Vec2f QTimelineParam::getKeyframePos( QTimelineKeyframeRef ref )
 {
     ci::Vec2f pos;
-    pos.x = QTimeline::getRef()->getPosFromTime( ref->getTime() );
+    pos.x = QTimeline::getPtr()->getPosFromTime( ref->getTime() );
     pos.y   = mRect.y2 - mRect.getHeight() * ( ref->getValue() - getMin() ) / ( getMax() - getMin() );
     return pos;
 }

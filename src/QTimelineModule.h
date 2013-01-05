@@ -23,7 +23,9 @@ class QTimelineModule
     
 public:
     
-    QTimelineModule( std::string name, std::string type ) : mName(name), mType(type), mMarkedForRemoval(false) {}
+    QTimelineModule( std::string type ) : mType(type), mMarkedForRemoval(false) {}
+    
+    QTimelineModule( QTimelineItemRef item, std::string type ) : mItemRef(item), mType(type), mMarkedForRemoval(false) {}
     
     virtual ~QTimelineModule()
     {
@@ -36,7 +38,7 @@ public:
     
     virtual void init() {}
     
-    std::string getName() { return mName; }
+//    std::string getName() { return mName; }
     
     void setItemRef( QTimelineItemRef ref ) { mItemRef = ref; }
     
@@ -70,7 +72,7 @@ protected:
 
 protected:
     
-    std::string             mName;
+//    std::string             mName;
     std::string             mType;
     
     QTimelineItemRef  mItemRef;

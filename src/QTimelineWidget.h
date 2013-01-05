@@ -104,7 +104,7 @@ public:
     
     ci::Rectf   getRectPaddedHeight() { return mRectPaddedHeight; }
     
-    float	getHeight() { return mRect.getHeight(); }
+    float       getHeight() { return mRect.getHeight(); }
     
 	ci::ColorA  getBgColor() { return mBgColor; }
     void        setBgColor( ci::ColorA col )        { mBgColor      = col; }

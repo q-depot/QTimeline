@@ -49,17 +49,24 @@ void BasicSampleApp::setup()
     
     mTimeline->init();
     
-    mTimeline->initOsc();
+   // mTimeline->initOsc();
     
     // register modules
     mTimeline->registerModule( "BasicModule", this, &BasicSampleApp::createModuleCallback, &BasicSampleApp::deleteModuleCallback );
+    
+    // create a timeline item
+    QTimelineItemRef    item = mTimeline->addModule( 3.0f, 8.0f, "Fuffa" );
 
-    QTimelineModuleRef mod;
-    mod = QTimelineModuleRef( new BasicModule( "Sample module one" ) );
-    mTimeline->addModule( mod, 2.0f, 12.0f );
+    // create a module
+    QTimelineModuleRef  mod = QTimelineModuleRef( new BasicModule( item ) );
     mod->init();
+    
+    // set item target
+    item->setTargetModule( mod );
+    
     mModules.push_back( mod );
     
+    // Cue list
     mTimeline->addCue( "Cue 1", 0.0f, 3.0f );
     mTimeline->addCue( "Another cue", 4.0f, 5.0f );
     
@@ -104,19 +111,6 @@ void BasicSampleApp::keyDown( KeyEvent event )
     
     else if ( c == 'c' )
         mTimeline->collapse();
-    
-    else if ( c == 'r' )
-    {
-//        for( size_t k=0; k < mModules.size(); k++ )
-//        delete mModules[0];
-        
-        mTimeline->clear();
-        
-//        mModules.clear();
-    }
-    
-    else if ( c == 't' )
-        mTimeline->addOscMessage( "/test", "f0.3" );
 
     else if ( (int)c >= 48 && (int)c <= 57 )
         mTimeline->playCue( (int)c - 49 );
@@ -155,17 +149,21 @@ void BasicSampleApp::draw()
 
 void BasicSampleApp::createModuleCallback( QTimeline::CreateModuleCallbackArgs args )
 {
-    QTimelineModuleRef mod;
+    QTimelineModuleRef  mod;
+    QTimelineItemRef    item = args.itemRef;
     
     if( args.type == "BasicModule" )
-        mod = QTimelineModuleRef( new BasicModule( args.name ) );
+        mod = QTimelineModuleRef( new BasicModule( item ) );
     
     // else if ...
     
     if ( !mod )
         return;
+
+    //
     
-    mTimeline->addModule( mod, args.startTime, args.duration, args.trackRef );
+    item->setTargetModule( mod );
+    
     mod->init();
     
     mModules.push_back( mod );
@@ -174,13 +172,8 @@ void BasicSampleApp::createModuleCallback( QTimeline::CreateModuleCallbackArgs a
 
 void BasicSampleApp::deleteModuleCallback( QTimeline::DeleteModuleCallbackArgs args )
 {
-    QTimelineModuleItem* itemPtr = (QTimelineModuleItem*)args.itemRef.get();
-    
-    string name             = itemPtr->getName();
-    string targetModuleType = itemPtr->getTargetType();
-    
     for( size_t k=0; k < mModules.size(); k++ )
-        if ( mModules[k]->getName() == name && mModules[k]->getType() == targetModuleType )
+        if ( mModules[k] == args.itemRef->getTargetModule() )
         {
             mModules.erase( mModules.begin() + k );
             return;

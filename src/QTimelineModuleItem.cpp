@@ -11,34 +11,30 @@
 #include "QTimeline.h"
 #include "QTimelineTrack.h"
 #include "QTimelineModuleItem.h"
-#include "QTimelineModule.h"
 
 using namespace ci;
 using namespace ci::app;
 using namespace std;
 
 
-QTimelineModuleItem::QTimelineModuleItem( float startTime, float duration, QTimelineModuleRef targetRef, QTimelineTrackRef trackRef, Timeline *ciTimeline )
-: QTimelineItem( startTime, duration, "QTimelineModuleItem", targetRef->getName(), trackRef, ciTimeline )
+QTimelineModuleItem::QTimelineModuleItem( std::string name, float startTime, float duration, QTimelineTrackRef trackRef )
+: QTimelineItem( startTime, duration, "QTimelineModuleItem", name, trackRef )
 {
-    mTargetModuleRef    = targetRef;
-    
     setBgColor( QTimeline::mModuleItemBgCol );
     setBgOverColor( QTimeline::mModuleItemBgOverCol );
     setTextColor( QTimeline::mModuleItemTextCol );
-
+    
     setHandleColor( QTimeline::mModuleItemHandleCol );
     setHandleOverColor( QTimeline::mModuleItemHandleOverCol );
-
+    
     // init rect width
-    setRect( Rectf( QTimeline::getRef()->getPosFromTime( getStartTime() ), 0,
-                    QTimeline::getRef()->getPosFromTime( getEndTime() ), 0 ) );
+    setRect( Rectf( QTimeline::getPtr()->getPosFromTime( getStartTime() ), 0,
+                   QTimeline::getPtr()->getPosFromTime( getEndTime() ), 0 ) );
     
     updateLabel();
     
     initMenu();
 }
-
 
 QTimelineModuleItem::~QTimelineModuleItem()
 {
@@ -49,11 +45,11 @@ QTimelineModuleItem::~QTimelineModuleItem()
 void QTimelineModuleItem::clear()
 {
     if ( mMenu )
-        QTimeline::getRef()->closeMenu( mMenu );
+        QTimeline::getPtr()->closeMenu( mMenu );
     
     mParams.clear();
     
-    resetTarget();
+    resetTargetModule();
 }
 
 
@@ -111,14 +107,14 @@ void QTimelineModuleItem::menuEventHandler( QTimelineMenuItemRef item )
 {
     if ( item->getMeta() == "delete" )
     {
-        QTimeline::getRef()->closeMenu( mMenu );
-        mParentTrack->markModuleForRemoval( thisRef() );
+        QTimeline::getPtr()->closeMenu( mMenu );
+        QTimeline::getPtr()->markItemForRemoval( thisRef() );
     }
+    
     else if ( item->getMeta() == "color_palette" )
     {
         QTimelineMenuColorPalette *palette = (QTimelineMenuColorPalette*)item.get();
-//        mHandleColor = palette->getColor();
-        setBgColor( palette->getColor() );
+        setColor( palette->getColor() );
     }
 }
 
@@ -134,8 +130,3 @@ void QTimelineModuleItem::initMenu()
     mMenu->addButton( "X DELETE", "delete", this, &QTimelineModuleItem::menuEventHandler );
 }
 
-
-std::string QTimelineModuleItem::getTargetType()
-{
-    return mTargetModuleRef->getType();
-}

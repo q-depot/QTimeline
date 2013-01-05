@@ -18,19 +18,17 @@
 #define TIMELINE_MODULE_HEIGHT          20      // the height in px
 
 typedef std::shared_ptr<class QTimelineModuleItem>      QTimelineModuleItemRef;
-typedef std::shared_ptr<class QTimelineModule>          QTimelineModuleRef;
 
-//class QTimelineModule;
 
 class QTimelineModuleItem : public QTimelineItem
 {
     friend class QTimelineModule;
     
 public:
-    
-    static QTimelineModuleItemRef create( float startTime, float duration, QTimelineModuleRef targetRef, QTimelineTrackRef trackRef, ci::Timeline *ciTimeline )
+
+    static QTimelineModuleItemRef create( std::string name, float startTime, float duration, QTimelineTrackRef trackRef )
     {
-        return QTimelineModuleItemRef( new QTimelineModuleItem( startTime, duration, targetRef, trackRef, ciTimeline ) );
+        return QTimelineModuleItemRef( new QTimelineModuleItem( name, startTime, duration, trackRef ) );
     }
     
     ~QTimelineModuleItem();
@@ -61,16 +59,11 @@ public:
     ci::XmlTree getXmlNode();
     
 //    void loadXmlNode( ci::XmlTree node );
-    
-public: // custom methods
-    
-    void resetTarget() { mTargetModuleRef.reset(); }
-    
-    std::string getTargetType();
+
     
 private:
     
-    QTimelineModuleItem( float startTime, float duration, QTimelineModuleRef targetRef, QTimelineTrackRef trackRef, ci::Timeline *ciTimeline );
+    QTimelineModuleItem( std::string name, float startTime, float duration, QTimelineTrackRef trackRef );
     
     void menuEventHandler( QTimelineMenuItemRef item );
     
@@ -78,9 +71,6 @@ private:
     
     void initMenu();
     
-private:
-    
-    QTimelineModuleRef              mTargetModuleRef;
     
     
 private:

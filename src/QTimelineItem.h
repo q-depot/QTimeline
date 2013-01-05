@@ -19,6 +19,7 @@
 
 typedef std::shared_ptr<class QTimelineItem>      QTimelineItemRef;
 typedef std::shared_ptr<class QTimelineTrack>     QTimelineTrackRef;
+typedef std::shared_ptr<class QTimelineModule>    QTimelineModuleRef;
 
 
 class QTimelineItem : public ci::TimelineItem, public QTimelineWidgetWithHandles
@@ -26,17 +27,7 @@ class QTimelineItem : public ci::TimelineItem, public QTimelineWidgetWithHandles
     
 protected:
     
-    QTimelineItem( float startTime, float duration, std::string type, std::string name, QTimelineTrackRef trackRef, ci::Timeline *ciTimeline ) : QTimelineWidgetWithHandles( name )
-    {
-        setAutoRemove(false);
-        
-        mParentTrack        = trackRef;
-        mParent             = ciTimeline;
-        mType               = type;
-        
-        setStartTime( startTime );
-        setDuration( duration );
-    }
+    QTimelineItem( float startTime, float duration, std::string type, std::string name, QTimelineTrackRef trackRef );
     
 public:
     
@@ -159,6 +150,14 @@ public:
     
     void setColor( ci::ColorA col ) { return setBgColor( col ); }
     
+    void setTargetModule( QTimelineModuleRef ref ) { mTargetModuleRef = ref; }
+    
+    QTimelineModuleRef getTargetModule() { return mTargetModuleRef; }
+    
+    void resetTargetModule() { mTargetModuleRef.reset(); }
+    
+    std::string getTargetType();
+    
 protected:
     
     QTimelineParamRef findParamByName( std::string name )
@@ -184,8 +183,11 @@ protected:
     
     QTimelineParamRef               mMouseOnParam;
     std::vector<QTimelineParamRef>  mParams;
+    
+    QTimelineModuleRef              mTargetModuleRef;
 };
 
 
 #endif
+
 

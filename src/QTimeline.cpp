@@ -80,7 +80,7 @@ void QTimeline::init()
     
     registerCallbacks();
     
-    // init AT LEAST one color for the menu color palette
+    // initialise AT LEAST one color for the menu color palette
     QTimelineMenuColorPalette::mColors.push_back( ci::ColorA( 0.86f, 0.18f, 0.11f, 1.0f ) );
     QTimelineMenuColorPalette::mColors.push_back( ci::ColorA( 1.00f, 0.34f, 0.00f, 1.0f ) );
     QTimelineMenuColorPalette::mColors.push_back( ci::ColorA( 0.86f, 0.62f, 0.00f, 1.0f ) );
@@ -137,7 +137,7 @@ void QTimeline::init()
 
 void QTimeline::update()
 {
-    eraseMarkedModules();
+    eraseMarkedItems();
     
     updateTime();
     
@@ -474,30 +474,20 @@ void QTimeline::renderTimeBar()
 }
 
 
-void QTimeline::addModule( QTimelineModuleRef moduleRef, float startAt, float duration )
+QTimelineItemRef QTimeline::addModule( float startTime, float duration, string name )
 {
-    QTimelineTrackRef nullPtr;
-    addModule( moduleRef, startAt, duration, nullPtr );
+    QTimelineTrackRef trackRef( new QTimelineTrack( "Untitled" ) );
+    mTracks.push_back( trackRef );
+    
+    QTimelineItemRef item = trackRef->addModuleItem( startTime, duration, name );
+    return item;
 }
 
 
-void QTimeline::addModule( QTimelineModuleRef moduleRef, float startTime, float duration, QTimelineTrackRef trackRef )
+QTimelineItemRef QTimeline::addModule( QTimelineTrackRef trackRef, float startTime, float duration, string name )
 {
-    // get track, if it doesn't exists or if trackN == -1, create a new one
-    if ( !trackRef )
-    {
-        QTimelineTrackRef ref( new QTimelineTrack( "track untitled" ) );
-        trackRef.swap( ref );
-        mTracks.push_back( trackRef );
-    }
-    
-    // check new module fits in between the others, if not shift the new module to the first slot available
-    for( size_t k=0; k < trackRef->mModules.size(); k++ )
-        if ( ( startTime >= trackRef->mModules[k]->getStartTime() && startTime <= trackRef->mModules[k]->getEndTime() ) ||
-             ( (startTime + duration) >= trackRef->mModules[k]->getStartTime() && ( startTime + duration ) <= trackRef->mModules[k]->getEndTime() ) )
-            startTime = trackRef->mModules[k]->getEndTime();
-    
-    trackRef->addModuleItem( startTime, duration, moduleRef );
+    QTimelineItemRef item = trackRef->addModuleItem( startTime, duration, name );
+    return item;
 }
 
 
@@ -601,9 +591,9 @@ void QTimeline::loadTheme( const fs::path &filepath )
         trackRef->mBgColor      = QTimeline::mTracksBgCol;
         trackRef->mBgOverColor  = QTimeline::mTracksBgOverCol;
         
-        for( size_t i=0; i < trackRef->mModules.size(); i++ )
+        for( size_t i=0; i < trackRef->mItems.size(); i++ )
         {
-            itemRef = trackRef->mModules[i];
+            itemRef = trackRef->mItems[i];
             
             if ( itemRef->getType() == "QTimelineModuleItem" )
             {
@@ -732,7 +722,7 @@ void QTimeline::renderDebugInfo()
     
     int j = 0;
     for( size_t k=0; k < mTracks.size();k ++ )
-        j += mTracks[k]->mModules.size();
+        j += mTracks[k]->mItems.size();
     
     mFontMedium->drawString( "Track modules:\t"   + toString( j ),       debugOffset ); debugOffset += Vec2f( 0, 15 );
 }
@@ -745,11 +735,11 @@ void QTimeline::step( int steps )
 }
 
 
-void QTimeline::eraseMarkedModules()
+void QTimeline::eraseMarkedItems()
 {
-    for( size_t k=0; k < mModulesMarkedForRemoval.size(); k++ )
+    for( size_t k=0; k < mItemsMarkedForRemoval.size(); k++ )
     {
-        QTimelineItemRef    item    = mModulesMarkedForRemoval[k];
+        QTimelineItemRef    item    = mItemsMarkedForRemoval[k];
         QTimelineTrackRef   track   = item->getParentTrack();
         string              type    = item->getType();
         
@@ -763,10 +753,10 @@ void QTimeline::eraseMarkedModules()
         // delete QTimelineModule
         if ( type == "QTimelineModuleItem" )
             callDeleteModuleCb( item );
-    
+        
         // destroy params, keyframes and release the QTimelineModule target
         item->clear();
     }
     
-    mModulesMarkedForRemoval.clear();
+    mItemsMarkedForRemoval.clear();
 }

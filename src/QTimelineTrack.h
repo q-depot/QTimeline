@@ -18,6 +18,7 @@
 typedef std::shared_ptr<class QTimelineTrack>       QTimelineTrackRef;
 typedef std::shared_ptr<class QTimelineModule>      QTimelineModuleRef;
 typedef std::shared_ptr<class QTimelineItem>        QTimelineItemRef;
+typedef std::shared_ptr<class QTimelineModuleItem>  QTimelineModuleItemRef;
 
 class QTimeline;
 class QTimelineItem;
@@ -35,9 +36,9 @@ public:
     
     void clear();
     
-    void addModuleItem( float startTime, float duration, QTimelineModuleRef ref );
+    QTimelineItemRef addModuleItem( float startTime, float duration, std::string name = "" );
     
-    void addAudioItem( float startTime, float duration, std::string audioTrackFilename = "" );
+    QTimelineItemRef addAudioItem( float startTime, float duration, std::string audioTrackFilename = "" );
     
     ci::Rectf render( ci::Rectf rect, ci::Vec2f timeWindow, double currentTime );
     
@@ -57,8 +58,6 @@ public:
     
     bool isOpen() { return mIsTrackOpen; }
     
-    void markModuleForRemoval( QTimelineItemRef moduleItemRef );
-    
     ci::XmlTree getXmlNode();
     
     void loadXmlNode( ci::XmlTree node );
@@ -73,9 +72,10 @@ public:
     
     void eraseModule( QTimelineItemRef itemRef );
     
-    std::vector<QTimelineItemRef>   getModules() { return mModules; }
+    std::vector<QTimelineItemRef>   getModules() { return mItems; }
     
     void findModuleBoundaries( QTimelineItemRef itemRef, float *prevEndTime, float *nextStartTime );
+    
     
 private:
     
@@ -96,7 +96,7 @@ private:
     
 private:
     
-    std::vector<QTimelineItemRef>   mModules;
+    std::vector<QTimelineItemRef>   mItems;
     
     QTimelineItemRef                mMouseOnItem;
     QTimelineItemRef                mSelectedItem;

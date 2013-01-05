@@ -41,11 +41,8 @@ public:
 
     struct CreateModuleCallbackArgs
     {
-        std::string             name;
-        std::string             type;
-        float                   startTime;
-        float                   duration;
-        QTimelineTrackRef       trackRef;
+        std::string         type;
+        QTimelineItemRef    itemRef;
     };
     
     struct DeleteModuleCallbackArgs
@@ -63,7 +60,7 @@ private:
     
     std::map<std::string, ModuleCallbacks>  mModuleCallbacks;
 
-    std::vector<QTimelineItemRef> mModulesMarkedForRemoval;
+    std::vector<QTimelineItemRef> mItemsMarkedForRemoval;
     
     
 public:
@@ -117,10 +114,10 @@ public:
     ci::Vec2f getTimeWindow() { return mTimeWindow; }
     
     bool isPlaying() { return mIsPlaying; }
+
+    QTimelineItemRef addModule( float startTime, float duration, std::string name = "" );
     
-    void addModule( QTimelineModuleRef moduleRef, float startAt, float duration );
-    
-    void addModule( QTimelineModuleRef moduleRef, float startAt, float duration, QTimelineTrackRef trackRef );
+    QTimelineItemRef addModule( QTimelineTrackRef trackRef, float startTime, float duration, std::string name = "" );
     
     void addTrack( QTimelineTrackRef ref ) { mTracks.push_back( ref ); }                    // just push back a new track ref
     
@@ -201,14 +198,14 @@ public:
         for( size_t k=0; k < mTracks.size(); k++ )
             mTracks[k]->initMenu();
     }
-    
-    void callCreateModuleCb( std::string moduleName, std::string moduleType, float startAt, float duration, QTimelineTrackRef trackRef )
+
+    void callCreateModuleCb( std::string moduleType, QTimelineItemRef itemRef )
     {
         std::map<std::string, ModuleCallbacks>::iterator it;
         for ( it=mModuleCallbacks.begin(); it != mModuleCallbacks.end(); it++ )
             if( it->first == moduleType )
             {
-                CreateModuleCallbackArgs args = { moduleName, moduleType, startAt, duration, trackRef };
+                CreateModuleCallbackArgs args = { moduleType, itemRef };
                 it->second.createCb.call(args);
                 return;
             }
@@ -228,9 +225,9 @@ public:
             }
     }
 
-    void markModuleForRemoval( QTimelineItemRef item )
+    void markItemForRemoval( QTimelineItemRef item )
     {
-        mModulesMarkedForRemoval.push_back( item );
+        mItemsMarkedForRemoval.push_back( item );
     }
     
     PlayMode getPlayMode() { return mPlayMode; }
@@ -305,7 +302,7 @@ private:
     
     void renderDebugInfo();
     
-    void eraseMarkedModules();
+    void eraseMarkedItems();
 
     
 public:
@@ -379,14 +376,13 @@ public:
     
 public:
     
-    static QTimeline*       getRef() { return thisRef; }
+    static QTimeline*       getPtr() { return thisRef; }
     
 private:
 
     static  QTimeline       *thisRef;
     
 private:
-    
     
     ci::app::App            *mApp;
     ci::CallbackId          mCbMouseDown, mCbMouseDrag, mCbMouseUp, mCbMouseMove, mCbMouseWheel;

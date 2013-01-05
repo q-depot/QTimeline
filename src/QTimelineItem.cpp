@@ -10,10 +10,25 @@
 
 #include "QTimeline.h"
 #include "QTimelineItem.h"
+#include "QTimelineModule.h"
 
 using namespace ci;
 using namespace ci::app;
 using namespace std;
+
+
+QTimelineItem::QTimelineItem( float startTime, float duration, std::string type, std::string name, QTimelineTrackRef trackRef )
+: QTimelineWidgetWithHandles( name )
+{
+    setAutoRemove(false);
+    
+    mParentTrack        = trackRef;
+    mParent             = QTimeline::getPtr()->getTimelineRef().get();
+    mType               = type;
+    
+    setStartTime( startTime );
+    setDuration( duration );
+}
 
 
 bool QTimelineItem::mouseMove( ci::app::MouseEvent event )
@@ -57,7 +72,7 @@ bool QTimelineItem::mouseDown( ci::app::MouseEvent event )
         mMouseOnParam->mouseDown( event );
 
     else if ( event.isRightDown() )
-        QTimeline::getRef()->openMenu( mMenu, event.getPos() );
+        QTimeline::getPtr()->openMenu( mMenu, event.getPos() );
 
     else
         handlesMouseDown();
@@ -88,7 +103,7 @@ bool QTimelineItem::mouseDrag( ci::app::MouseEvent event )
         if ( !dragHandles( event ) )
             dragWidget( event );
         
-        QTimeline::getRef()->updateCurrentTime();
+        QTimeline::getPtr()->updateCurrentTime();
     }
 
     mMousePrevPos = event.getPos();
@@ -99,7 +114,7 @@ bool QTimelineItem::mouseDrag( ci::app::MouseEvent event )
 
 bool QTimelineItem::dragHandles( ci::app::MouseEvent event )
 {
-    float diff          = QTimeline::getRef()->getPxInSeconds( event.getPos().x - mMouseDownPos.x );
+    float diff          = QTimeline::getPtr()->getPxInSeconds( event.getPos().x - mMouseDownPos.x );
     float startTime, endTime, prevEndTime, nextStartTime;
     
     mParentTrack->findModuleBoundaries( thisRef(), &prevEndTime, &nextStartTime );
@@ -107,8 +122,8 @@ bool QTimelineItem::dragHandles( ci::app::MouseEvent event )
     if ( mSelectedHandleType == LEFT_HANDLE )
     {
         endTime     = getEndTime();
-        startTime   = ci::math<float>::clamp( mMouseDownStartTime + diff, prevEndTime, endTime - QTimeline::getRef()->getPxInSeconds( TIMELINE_MODULE_HANDLE_WIDTH * 2 ) );
-        startTime   = QTimeline::getRef()->snapTime( startTime );
+        startTime   = ci::math<float>::clamp( mMouseDownStartTime + diff, prevEndTime, endTime - QTimeline::getPtr()->getPxInSeconds( TIMELINE_MODULE_HANDLE_WIDTH * 2 ) );
+        startTime   = QTimeline::getPtr()->snapTime( startTime );
         setStartTime( startTime );
         setDuration( endTime - startTime );
     }
@@ -116,8 +131,8 @@ bool QTimelineItem::dragHandles( ci::app::MouseEvent event )
     else if ( mSelectedHandleType == RIGHT_HANDLE )
     {
         startTime   = getStartTime();
-        endTime     = ci::math<float>::clamp( mMouseDownEndTime + diff, startTime + QTimeline::getRef()->getPxInSeconds( TIMELINE_MODULE_HANDLE_WIDTH * 2 ), nextStartTime );
-        endTime     = QTimeline::getRef()->snapTime( endTime );
+        endTime     = ci::math<float>::clamp( mMouseDownEndTime + diff, startTime + QTimeline::getPtr()->getPxInSeconds( TIMELINE_MODULE_HANDLE_WIDTH * 2 ), nextStartTime );
+        endTime     = QTimeline::getPtr()->snapTime( endTime );
         setDuration( endTime - startTime );
     }
     
@@ -135,14 +150,14 @@ bool QTimelineItem::dragHandles( ci::app::MouseEvent event )
 
 void QTimelineItem::dragWidget( ci::app::MouseEvent event )
 {
-    float diff       = QTimeline::getRef()->getPxInSeconds( event.getPos().x - mMouseDownPos.x );
+    float diff       = QTimeline::getPtr()->getPxInSeconds( event.getPos().x - mMouseDownPos.x );
     float prevEndTime, nextStartTime;
     
     mParentTrack->findModuleBoundaries( thisRef(), &prevEndTime, &nextStartTime );
     
     float startTime = getStartTime();
     float time      = ci::math<float>::clamp( mMouseDownStartTime + diff, prevEndTime, nextStartTime - getDuration() );
-    time            = QTimeline::getRef()->snapTime( time );
+    time            = QTimeline::getPtr()->snapTime( time );
     
     setStartTime( time );
     
@@ -210,3 +225,13 @@ void QTimelineItem::loadXmlNode( XmlTree node )
         }
     }
 }
+
+
+string QTimelineItem::getTargetType()
+{
+    if ( mTargetModuleRef )
+        return mTargetModuleRef->getType();
+    else
+        return "";
+}
+

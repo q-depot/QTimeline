@@ -18,7 +18,7 @@ using namespace std;
 
 
 QTimelineAudioItem::QTimelineAudioItem( float startTime, float duration, QTimelineTrackRef trackRef, ci::Timeline *ciTimeline )
-: QTimelineItem( startTime, duration, "QTimelineAudioItem", "track name!", trackRef, ciTimeline )
+: QTimelineItem( startTime, duration, "QTimelineAudioItem", "track name!", trackRef )
 {
     setBgColor( QTimeline::mAudioItemBgCol );
     setBgOverColor( QTimeline::mAudioItemBgOverCol );
@@ -28,8 +28,8 @@ QTimelineAudioItem::QTimelineAudioItem( float startTime, float duration, QTimeli
     setHandleOverColor( QTimeline::mAudioItemHandleOverCol );
     
     // init rect width
-    setRect( Rectf( QTimeline::getRef()->getPosFromTime( getStartTime() ),  0,
-                    QTimeline::getRef()->getPosFromTime( getEndTime() ),    0 ) );
+    setRect( Rectf( QTimeline::getPtr()->getPosFromTime( getStartTime() ),  0,
+                    QTimeline::getPtr()->getPosFromTime( getEndTime() ),    0 ) );
     
     updateLabel();
     
@@ -89,11 +89,19 @@ void QTimelineAudioItem::menuEventHandler( QTimelineMenuItemRef item )
     {
         loadAudioTrack();
     }
+    
     else if ( item->getMeta() == "color_palette" )
     {
         QTimelineMenuColorPalette *palette = (QTimelineMenuColorPalette*)item.get();
         mBgColor = palette->getColor();
     }
+    
+    else if ( item->getMeta() == "delete" )
+    {
+        QTimeline::getPtr()->closeMenu( mMenu );
+        QTimeline::getPtr()->markItemForRemoval( thisRef() );
+    }
+    
 }
 
 
@@ -103,6 +111,8 @@ void QTimelineAudioItem::initMenu()
     mMenu->addColorPalette( this, &QTimelineAudioItem::menuEventHandler );
     mMenu->addSeparator();
     mMenu->addButton( "Load track", "load_track", this, &QTimelineAudioItem::menuEventHandler );
+    mMenu->addSeparator();
+    mMenu->addButton( "X DELETE", "delete", this, &QTimelineAudioItem::menuEventHandler );
 }
 
 
