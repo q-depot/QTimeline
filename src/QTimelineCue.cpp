@@ -80,8 +80,8 @@ void QTimelineCue::render()
     glEnd();
     
     // handles
-    if ( mIsMouseOn )
-        renderHandles();
+//    if ( mIsMouseOn )
+    renderHandles();
     
     // label
     gl::color( mTextColor );

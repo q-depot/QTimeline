@@ -82,6 +82,10 @@ public:
     
     virtual bool keyDown( ci::app::KeyEvent event ) { return false; }
     
+    virtual void open() {}
+    
+    virtual void close() {}
+    
 protected:
     
     float                       mHeight;
@@ -342,8 +346,6 @@ public:
     QTimelineMenuTextBox( std::string text, std::string meta, T *obj, void (T::*callback)(QTimelineMenuItemRef) ) : QTimelineMenuItem( text, meta, obj, callback )
     {
         mHeight = TIMELINE_MENU_ITEM_HEIGHT;
-
-//        setText(text);
     }
     
     ~QTimelineMenuTextBox() {}
@@ -397,7 +399,7 @@ public:
         
         // label
         ci::gl::color( ci::ColorA( 1.0f, 1.0f, 1.0f, 1.0f ) );
-        mFont->drawString( getName(), mRect.getUpperLeft() + textOffset );
+        mFont->drawString( mLabel, mRect.getUpperLeft() + textOffset );
         
         return mRect;
     }
@@ -405,7 +407,7 @@ public:
     bool mouseDown( ci::app::MouseEvent event )
     {
         float       x           = event.getPos().x  - mRect.x1 - TIMELINE_MENU_TEXT_INDENT;
-        std::string text        = getName();
+        std::string text        = mLabel;
         ci::Vec2f   textSize    = mFont->measureString( text );
         mCursorIdx              = text.size();
         
@@ -437,8 +439,7 @@ public:
         {
             if ( mCursorIdx > 0 )
             {
-                std::string text = getName().erase( mCursorIdx - 1, 1 );
-                setName( text );
+                mLabel = mLabel.erase( mCursorIdx - 1, 1 );
                 mCursorIdx -= 1;
                 setCursorPos( mCursorIdx );
             }
@@ -454,7 +455,7 @@ public:
         
         else if ( code == ci::app::KeyEvent::KEY_RIGHT )
         {
-            int maxSize = getName().size();
+            int maxSize = mLabel.size();
             mCursorIdx = std::min( mCursorIdx + 1, maxSize );
             setCursorPos( mCursorIdx );
             return true;
@@ -462,9 +463,7 @@ public:
         
         else
         {
-            std::string text    = getName();
-            text                = text.insert( mCursorIdx, 1, c );
-            setName( text );
+            mLabel = mLabel.insert( mCursorIdx, 1, c );
             mCursorIdx += 1;
             setCursorPos( mCursorIdx );
             return true;
@@ -473,19 +472,22 @@ public:
         return false;
     }
     
+    void open() { mLabel = getName(); }
+    
 private:
     
     void setCursorPos( int idx )
     {
-        std::string text = getName();
+        std::string text = mLabel;
         text = text.erase( idx, text.size() - idx );
         mCursorPosX = mFont->measureString( text ).x + mRect.x1 + TIMELINE_MENU_TEXT_INDENT;
     }
     
 private:
     
-    int         mCursorIdx;
-    float       mCursorPosX;
+    int             mCursorIdx;
+    float           mCursorPosX;
+    std::string     mLabel;
     
 };
 
@@ -525,6 +527,9 @@ public:
     
     void open( ci::Vec2f pos  )
     {
+        for( size_t k=0; k < mItems.size(); k++ )
+            mItems[k]->open();
+        
         mIsVisible  = true;
         
         if ( pos.x + mSize.x > ci::app::getWindowWidth() )
