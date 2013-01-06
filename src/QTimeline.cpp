@@ -283,6 +283,14 @@ bool QTimeline::mouseDrag( MouseEvent event )
 
 bool QTimeline::keyDown( KeyEvent event )
 {
+    int code = event.getCode();
+    
+    if ( code == KeyEvent::KEY_ESCAPE )
+    {
+        closeMenu();
+        return true;
+    }
+    
     if ( mSelectedMenu && mSelectedMenu->isVisible() && mSelectedMenu->keyDown(event) )
         return true;
     

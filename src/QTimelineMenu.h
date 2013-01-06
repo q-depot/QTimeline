@@ -18,7 +18,7 @@
 #include "cinder/Function.h"
 
 #define TIMELINE_MENU_ITEM_HEIGHT   22
-#define TIMELINE_MENU_TEXT_INDENT   4
+#define TIMELINE_MENU_TEXT_INDENT   5
 
 typedef std::shared_ptr<class QTimelineMenuItem>    QTimelineMenuItemRef;
 
@@ -31,7 +31,6 @@ class QTimelineMenuItem : public std::enable_shared_from_this<QTimelineMenuItem>
     friend class QTimelineMenu;
     
 public:
-
     
     QTimelineMenuItem( std::string name = "", std::string meta = "", bool isActive = false ) : mName(name), mMeta(meta), mIsActive(isActive)
     {
@@ -362,10 +361,19 @@ public:
         else
             ci::gl::color( ci::ColorA( 0.15f, 0.15f, 0.15f, 1.0f ) );
         
+        // bg
         ci::gl::vertex( mRect.getUpperLeft() );
         ci::gl::vertex( mRect.getUpperRight() );
         ci::gl::vertex( mRect.getLowerRight() );
         ci::gl::vertex( mRect.getLowerLeft() );
+        
+        // container
+        ci::gl::color( ci::ColorA( 0.0f, 0.0f, 0.0f, 0.3f ) );
+        ci::Rectf boxRect = mRect.inflated( ci::Vec2f( -3.0f, -3.0f ) );
+        ci::gl::vertex( boxRect.getUpperLeft() );
+        ci::gl::vertex( boxRect.getUpperRight() );
+        ci::gl::vertex( boxRect.getLowerRight() );
+        ci::gl::vertex( boxRect.getLowerLeft() );
         
         // border bottom
         ci::gl::color( ci::ColorA( 1.0f, 1.0f, 1.0f, 0.2f ) );
@@ -377,12 +385,10 @@ public:
         // cursor
         if ( isOnFocus )
         {
-            float alpha = ( sin( 5.0f * ci::app::getElapsedSeconds() ) + 1.0f ) / 2.0f;
-            alpha       = std::min( 0.2f + alpha, 1.0f );
-            
+            int alpha = fmod( ci::app::getElapsedSeconds(), 1.0f ) + 0.5f;
             ci::gl::color( ci::ColorA( 1.0f, 1.0f, 1.0f, alpha  ) );
-            ci::gl::vertex( ci::Vec2f( mCursorPosX,     mRect.y1 + 2 ) );
-            ci::gl::vertex( ci::Vec2f( mCursorPosX + 1, mRect.y1 + 2 ) );
+            ci::gl::vertex( ci::Vec2f( mCursorPosX,     mRect.y1 + 4 ) );
+            ci::gl::vertex( ci::Vec2f( mCursorPosX + 1, mRect.y1 + 4 ) );
             ci::gl::vertex( ci::Vec2f( mCursorPosX + 1, mRect.y1 + 16 ) );
             ci::gl::vertex( ci::Vec2f( mCursorPosX,     mRect.y1 + 16 ) );
         }
@@ -528,6 +534,8 @@ public:
             pos.y -= mSize.y;
 
         mPos        = pos;
+        
+        mItemOnFocus.reset();
     }
     
     void close() { mIsVisible = false; }
