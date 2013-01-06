@@ -27,7 +27,7 @@ class QTimelineCue : public QTimelineWidgetWithHandles
     
 public:
     
-    QTimelineCue( QTimeline *qTimeline, QTimelineCueManager *cueManager, std::string name = "untitled cue", double startTime = 0.0f, double duration = 1.0f );
+    QTimelineCue( QTimelineCueManager *cueManager, std::string name = "untitled", double startTime = 0.0f, double duration = 1.0f );
     
     ~QTimelineCue() {}
     
@@ -75,14 +75,13 @@ private:
     
 protected:
     
-    QTimeline               *mQTimeline;
     QTimelineCueManager     *mCueManager;
     
-//    std::string             mName;
     double                  mStartTime;
     double                  mDuration;
     
     bool                    mIsMouseOn;
+    
 };
 
 #endif

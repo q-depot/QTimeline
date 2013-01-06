@@ -98,7 +98,7 @@ void QTimeline::init()
     
     mSelectedMenu           = NULL;
     
-    mCueManager             = new QTimelineCueManager(this);
+    mCueManager             = new QTimelineCueManager();
     
     // create default track
     mTracks.push_back( QTimelineTrackRef( new QTimelineTrack( "track 0" ) ) );

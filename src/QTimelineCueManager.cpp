@@ -18,7 +18,7 @@ using namespace ci::app;
 using namespace std;
 
 
-QTimelineCueManager::QTimelineCueManager( QTimeline *qTimeline ) : mQTimeline(qTimeline)
+QTimelineCueManager::QTimelineCueManager()
 {
     initMenu();
 }
@@ -44,8 +44,8 @@ void QTimelineCueManager::render()
         cue     = mCueList[k];
         cueRect = cue->getRect();
         
-        startPos    = mQTimeline->getPosFromTime( cue->getStartTime() );
-        endPos      = mQTimeline->getPosFromTime( cue->getEndTime() );
+        startPos    = QTimeline::getPtr()->getPosFromTime( cue->getStartTime() );
+        endPos      = QTimeline::getPtr()->getPosFromTime( cue->getEndTime() );
         cue->setRect( Rectf( startPos, mRect.y1, endPos, mRect.y2 ) );
         
         cue->render();
@@ -55,7 +55,7 @@ void QTimelineCueManager::render()
 
 void QTimelineCueManager::addCue( std::string name, double startTime, double duration )
 {
-    mCueList.push_back( QTimelineCueRef( new QTimelineCue( mQTimeline, this, name, startTime, duration ) ) );
+    mCueList.push_back( QTimelineCueRef( new QTimelineCue( this, name, startTime, duration ) ) );
     
     sort( mCueList.begin(), mCueList.end(), sortCueListHelper );
 }
@@ -91,7 +91,7 @@ bool QTimelineCueManager::mouseDown( ci::app::MouseEvent event )
             mouseOnCue = true;
 
     if ( !mouseOnCue && event.isRightDown() && mRect.contains( event.getPos() ) )
-        mQTimeline->openMenu( mMenu, event.getPos() );
+        QTimeline::getPtr()->openMenu( mMenu, event.getPos() );
 
     mMouseDownPos = event.getPos();
     
@@ -123,8 +123,8 @@ void QTimelineCueManager::menuEventHandler( QTimelineMenuItemRef item )
 {
     console() << "create new cue" << endl;
     
-    addCue( "CUE " + toString( mCueList.size() ), mQTimeline->getTimeFromPos( mMouseDownPos.x ), 1.0f );
-    mQTimeline->closeMenu( mMenu );
+    addCue( "CUE " + toString( mCueList.size() ), QTimeline::getPtr()->getTimeFromPos( mMouseDownPos.x ), 1.0f );
+    QTimeline::getPtr()->closeMenu( mMenu );
 }
 
 
@@ -166,7 +166,7 @@ bool QTimelineCueManager::playCue( int cueN )
         if ( mCueList[k] == mCurrentCue )
         {
             mCurrentCue = mCueList[ (k+1) % mCueList.size() ];
-            mQTimeline->setTime( mCurrentCue->getStartTime() );
+            QTimeline::getPtr()->setTime( mCurrentCue->getStartTime() );
             return true;                                            // select cue
         }
     }
@@ -177,7 +177,7 @@ bool QTimelineCueManager::playCue( int cueN )
 
 bool QTimelineCueManager::isTimeOnCue()
 {
-    double time = mQTimeline->getTime();
+    double time = QTimeline::getPtr()->getTime();
     if ( time >= mCurrentCue->getStartTime() && time < mCurrentCue->getEndTime() )
         return true;
     
@@ -212,7 +212,7 @@ void QTimelineCueManager::loadXmlNode( XmlTree node )
         col.b       = nodeIt->getAttributeValue<float>( "color_b" );
         col.a       = nodeIt->getAttributeValue<float>( "color_a" );
         
-        QTimelineCueRef ref = QTimelineCueRef( new QTimelineCue( mQTimeline, this, name, startTime, duration ) );
+        QTimelineCueRef ref = QTimelineCueRef( new QTimelineCue( this, name, startTime, duration ) );
         ref->setColor( col );
         
         mCueList.push_back( ref );

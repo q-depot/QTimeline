@@ -431,6 +431,7 @@ public:
         
         if ( code == ci::app::KeyEvent::KEY_RETURN )
         {
+            setName( mLabel );
             call();
             return true;
         }

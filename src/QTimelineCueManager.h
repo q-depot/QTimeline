@@ -19,8 +19,6 @@
 #define TIMELINE_CUELIST_HEIGHT     25
 
 
-class QTimeline;
-
 class QTimelineCueManager : public QTimelineWidget
 {
     
@@ -28,7 +26,7 @@ class QTimelineCueManager : public QTimelineWidget
     
 public:
     
-    QTimelineCueManager( QTimeline *qTimeline );
+    QTimelineCueManager();
     
     ~QTimelineCueManager()
     {
@@ -38,6 +36,8 @@ public:
     void clear()
     {
         mCueList.clear();
+        
+        mCurrentCue.reset();
     }
     
     void render();
@@ -78,7 +78,6 @@ private:
     
 private:
     
-    QTimeline                       *mQTimeline;
     std::vector<QTimelineCueRef>    mCueList;
     QTimelineCueRef                 mCurrentCue;
     

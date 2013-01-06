@@ -38,8 +38,6 @@ public:
     
     virtual void init() {}
     
-//    std::string getName() { return mName; }
-    
     void setItemRef( QTimelineItemRef ref ) { mItemRef = ref; }
     
     QTimelineItemRef getItemRef() { return mItemRef->thisRef(); }
@@ -72,12 +70,13 @@ protected:
 
 protected:
     
-//    std::string             mName;
     std::string             mType;
     
-    QTimelineItemRef  mItemRef;
+    QTimelineItemRef        mItemRef;
     
     bool                    mMarkedForRemoval;
+    
 };
 
 #endif
+
