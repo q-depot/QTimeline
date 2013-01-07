@@ -60,7 +60,7 @@ public:
             mCallback.call( shared_from_this() );
     }
     
-    virtual ci::Rectf render( ci::Rectf r, bool mouseOver, bool isOnFocuse = false ) { return r; }
+    virtual ci::Rectf render( ci::Rectf r, bool mouseOver, bool isOnFocus = false ) { return r; }
     
     virtual bool contains( ci::Vec2f pos ) { return mRect.contains( pos ); }
     
@@ -117,7 +117,7 @@ public:
     
     ~QTimelineMenuButton() {}
     
-    ci::Rectf render( ci::Rectf r, bool mouseOver, bool isOnFocuse = false )
+    ci::Rectf render( ci::Rectf r, bool mouseOver, bool isOnFocus = false )
     {
         mRect = ci::Rectf( r.getLowerLeft(), r.getLowerRight() + ci::Vec2f( 0, mHeight ) );
         
@@ -172,7 +172,7 @@ public:
     
     ~QTimelineMenuLabel() {}
     
-    ci::Rectf render( ci::Rectf r, bool mouseOver, bool isOnFocuse = false )
+    ci::Rectf render( ci::Rectf r, bool mouseOver, bool isOnFocus = false )
     {
         mRect = ci::Rectf( r.getLowerLeft(), r.getLowerRight() + ci::Vec2f( 0, mHeight ) );
         
@@ -216,7 +216,7 @@ public:
     
     ~QTimelineMenuSeparator() {}
     
-    ci::Rectf render( ci::Rectf r, bool mouseOver, bool isOnFocuse = false )
+    ci::Rectf render( ci::Rectf r, bool mouseOver, bool isOnFocus = false )
     {
         mRect = ci::Rectf( r.getLowerLeft(), r.getLowerRight() + ci::Vec2f( 0, mHeight ) );
         
@@ -256,7 +256,7 @@ public:
     
     ~QTimelineMenuColorPalette() {}
     
-    ci::Rectf render( ci::Rectf r, bool mouseOver, bool isOnFocuse = false )
+    ci::Rectf render( ci::Rectf r, bool mouseOver, bool isOnFocus = false )
     {
         mRect = ci::Rectf( r.getLowerLeft(), r.getLowerRight() + ci::Vec2f( 0, mHeight ) );
         
@@ -685,7 +685,7 @@ private:
         {
             mouseOver = ( mItems[k] == mMouseOnItem ) ? true : false;
             isOnFocus = ( mItems[k] == mItemOnFocus ) ? true : false;
-            r = mItems[k]->render( r, mouseOver, mItemOnFocus );
+            r = mItems[k]->render( r, mouseOver, isOnFocus );
         }
         
         // border top
