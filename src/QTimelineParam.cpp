@@ -166,7 +166,7 @@ void QTimelineParam::renderKeyframes()
     gl::color( mKeyframesGraphCol );
     
     glBegin( GL_LINE_STRIP );
-        
+    
     for( size_t k=0; k < mKeyframes.size(); k++ )
     {
         keyframe    = mKeyframes[k];

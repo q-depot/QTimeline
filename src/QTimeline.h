@@ -151,16 +151,20 @@ public:
     
     void loadTheme( const ci::fs::path &filepath );
     
-    float getTimeFromPos( float x )
+    float getTimeFromPos( float x, bool absolute = false )
     {
-        return mTimeWindow.x + ( mTimeWindow.y - mTimeWindow.x ) * ( x - mTransportRect.x1 ) / mTransportRect.getWidth();
+        if ( absolute )
+            return ( mTimeWindow.y - mTimeWindow.x ) * ( x - mTransportRect.x1 ) / mTransportRect.getWidth();
+
+        else
+            return mTimeWindow.x + ( mTimeWindow.y - mTimeWindow.x ) * ( x - mTransportRect.x1 ) / mTransportRect.getWidth();
     }
     
     float getPosFromTime( double time )
     {
         return mTransportRect.getWidth() * ( time - mTimeWindow.x ) / ( mTimeWindow.y - mTimeWindow.x );
     }
-
+    
     float getTimeBarWidth() { return mTimeBarRect.x2 - mTimeBarRect.x1; }
     
     float getPxInSeconds( int n = 1 )

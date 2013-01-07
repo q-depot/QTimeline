@@ -34,6 +34,8 @@ QTimelineAudioItem::QTimelineAudioItem( float startTime, float duration, QTimeli
     updateLabel();
     
     initMenu();
+    
+    loadAudioTrack();
 }
 
 
@@ -46,11 +48,28 @@ void QTimelineAudioItem::clear()
 void QTimelineAudioItem::update( float relativeTime )
 {
     if ( isComplete() )
+    {
+//        if ( mTrack->isPlaying() )
+//        {
+//            ci::app::console() << "set time" << std::endl;
+//            mTrack->setTime( 0.0f );
+//            mTrack->stop();
+//        }
+//        
         return;
+    }
     
     updateParams( relativeTime );
     
-    ci::app::console() << "QTimelineAudioItem::update() " << relativeTime << std::endl;
+    
+//    if ( !mTrack->isPlaying() )
+//    {
+//        // set time, getTimeFromPos
+//        mTrack->setTime( 0.0f );
+//        mTrack->play();
+//    }
+    
+//    ci::app::console() << "QTimelineAudioItem::update() " << relativeTime << " " << mTrack->getTime() << std::endl;
 }
 
 
@@ -66,8 +85,7 @@ void QTimelineAudioItem::render( bool mouseOver )
     glEnd();
     
     // render handles
-//    if ( mouseOver )
-        renderHandles();
+    renderHandles();
     
     gl::color( ColorA( 1.0f, 1.0f, 1.0f, 0.08f ) );
     glBegin( GL_LINE_STRIP );
@@ -80,6 +98,31 @@ void QTimelineAudioItem::render( bool mouseOver )
     // render name
     gl::color( mTextColor );
     mFont->drawString( getLabel(), mRect.getCenter() + mLabelStrSize * Vec2f( -0.5f, 0.3f ) );
+    
+    
+    
+	gl::color( Color( 1.0f, 0.5f, 0.0f ) );
+	gl::draw( mLeftBufferLine );
+//	gl::draw( mRightBufferLine );
+
+    /*
+	gl::color( Color( 1.0f, 0.5f, 0.25f ) );
+	// grab 512 samples of the wave data
+	float waveData[512];
+	mSystem->getWaveData( waveData, 512, 0 );
+	
+	// prep 512 Vec2fs as the positions to render our waveform
+	vector<Vec2f> vertices;
+	for( int i = 0; i < 512; ++i )
+		vertices.push_back( Vec2f( getWindowWidth() / 512.0f * i, getWindowCenter().y + 100 * waveData[i] ) );
+    
+	// draw the points as a line strip
+	glEnableClientState( GL_VERTEX_ARRAY );
+	gl::color( Color( 1.0f, 0.5f, 0.25f ) );
+    glVertexPointer( 2, GL_FLOAT, 0, &vertices[0] );
+    glDrawArrays( GL_LINE_STRIP, 0, vertices.size() );
+    */
+    
 }
 
 
@@ -128,7 +171,101 @@ void QTimelineAudioItem::initMenu()
 }
 
 
-void QTimelineAudioItem::loadAudioTrack() {}
+void QTimelineAudioItem::loadAudioTrack()
+{   
+    //add the audio track the default audio output
+	mTrack = audio::Output::addTrack( audio::load( loadAsset( "booyah.mp3" ) ), true );
+	//you must enable enable PCM buffering on the track to be able to call getPcmBuffer on it later
+	mTrack->enablePcmBuffering( true );
+    
+    while( !mPcmBuffer )
+    {
+        mPcmBuffer = mTrack->getPcmBuffer();
+        ci::sleep( 15.0f );
+    }
+    
+    float time = 0;
+    int c =0;
+    while( mTrack->isPlaying() )
+    {
+        mTrack->setTime( time );
+        
+        mPcmBuffer = mTrack->getPcmBuffer();
+        
+        uint32_t bufferLength = mPcmBuffer->getSampleCount();
+        audio::Buffer32fRef leftBuffer = mPcmBuffer->getChannelData( audio::CHANNEL_FRONT_LEFT );
+        audio::Buffer32fRef rightBuffer = mPcmBuffer->getChannelData( audio::CHANNEL_FRONT_RIGHT );
+        
+        int displaySize = getWindowWidth();
+        float scale = displaySize / (float)bufferLength;
+        float val = 0;
+        for( int i = 0; i < bufferLength; i++ ) {
+            float x = ( i * scale );
+            
+            //get the PCM value from the left channel buffer
+            float y = ( ( leftBuffer->mData[i] - 1 ) * - 100 );
+            val += y;
+//            mLeftBufferLine.push_back( Vec2f( x , y) );
+        }
+        
+        val /= bufferLength;
+        
+        mLeftBufferLine.push_back( Vec2f( c++ , val) );
+        
+        time += 0.1f;
+    }
+    
+    
+    
+/*
+ FMOD::System_Create( &mSystem );
+    mSystem->init( 32, FMOD_INIT_NORMAL | FMOD_INIT_ENABLE_PROFILE, NULL );
+    
+    mSystem->createSound( getAssetPath( "booyah.mp3" ).string().c_str(), FMOD_SOFTWARE, NULL, &mSound );
+	mSound->setMode( FMOD_LOOP_NORMAL );
+    
+    mSystem->playSound( FMOD_CHANNEL_FREE, mSound, true, &mChannel );
+    
+    
+    
+    unsigned int length;
+    
+    mSound->getLength( &length, FMOD_TIMEUNIT_MS );
+    
+    
+    float waveData[512];
+    float mean;
+    unsigned int pos;
+    
+    for( unsigned int k=0; k < length; k+=10 )
+    {
+        mChannel->setPosition( k, FMOD_TIMEUNIT_MS );
+        
+//        if ( mChannel->getWaveData( waveData, 512, 0 ) != FMOD_OK )
+//            console() << k << " no data" << endl;
+        
+        mSystem->getWaveData( waveData, 512, 0 );
+        
+        // prep 512 Vec2fs as the positions to render our waveform
+        mean = 0;
+        for( int i = 0; i < 512; ++i )
+            mean += 100 * waveData[i];
+        
+        mChannel->getPosition( &pos, FMOD_TIMEUNIT_MS );
+
+        console() << k << " " << pos << " " << mean << " " << endl;;
+        
+        mean /= 512;
+        
+        mLeftBufferLine.push_back( Vec2f( k, mean ) );
+
+    }
+    console() << endl;
+//    mChannel->getPosition( &pos, FMOD_TIMEUNIT_MS );
+    
+//    console() << " pos: " << pos << endl;
+ */
+}
 
 
 XmlTree QTimelineAudioItem::getXmlNode()
@@ -147,4 +284,5 @@ void QTimelineAudioItem::loadXmlNode( XmlTree node )
 
     // load track path
 }
+
 
