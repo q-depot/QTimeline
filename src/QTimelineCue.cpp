@@ -70,17 +70,7 @@ void QTimelineCue::render()
         }
     }
 
-    // border
-    gl::color( ColorA( 1.0f, 1.0f, 1.0f, 0.08f ) );
-    glBegin( GL_LINE_STRIP );
-    gl::vertex( mRect.getLowerLeft() );
-    gl::vertex( mRect.getUpperLeft() );
-    gl::vertex( mRect.getUpperRight() );
-    gl::vertex( mRect.getLowerRight() );
-    glEnd();
-    
     // handles
-//    if ( mIsMouseOn )
     renderHandles();
     
     // label
