@@ -17,7 +17,6 @@
 		00CCAF15116A9FEE008396D5 /* CinderApp.icns in Resources */ = {isa = PBXBuildFile; fileRef = 00CCAF14116A9FEE008396D5 /* CinderApp.icns */; };
 		1009A204166E3CF3008BAFD8 /* QTimelineCue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1009A203166E3CF3008BAFD8 /* QTimelineCue.cpp */; };
 		1009A208166E6D51008BAFD8 /* timeline.xml in Resources */ = {isa = PBXBuildFile; fileRef = 1009A207166E6D51008BAFD8 /* timeline.xml */; };
-		10125BEE1699DEAC0000C8E6 /* libfmodex.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 10125BDF1699DEAB0000C8E6 /* libfmodex.dylib */; };
 		104AFFFD16415316005AB633 /* QTimeline.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 104AFFFC16415316005AB633 /* QTimeline.cpp */; };
 		105EC6C2167F6ECE0057F873 /* QTimelineCueManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105EC6C1167F6ECE0057F873 /* QTimelineCueManager.cpp */; };
 		106409F7168B188C00FA182E /* osc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 106409BF168B188B00FA182E /* osc.a */; };
@@ -65,7 +64,6 @@
 		1009A202166E2718008BAFD8 /* QTimelineWidgetWithHandles.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = QTimelineWidgetWithHandles.h; path = src/QTimelineWidgetWithHandles.h; sourceTree = "<group>"; };
 		1009A203166E3CF3008BAFD8 /* QTimelineCue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QTimelineCue.cpp; sourceTree = "<group>"; };
 		1009A207166E6D51008BAFD8 /* timeline.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = timeline.xml; path = ../resources/timeline.xml; sourceTree = "<group>"; };
-		10125BDF1699DEAB0000C8E6 /* libfmodex.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libfmodex.dylib; sourceTree = "<group>"; };
 		1017B6C61666440E0075E09B /* BasicModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BasicModule.h; path = ../include/BasicModule.h; sourceTree = "<group>"; };
 		1017B6C81666570C0075E09B /* QTimelineModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = QTimelineModule.h; path = src/QTimelineModule.h; sourceTree = "<group>"; };
 		1020A4111662449900DCF5E3 /* QTimelineWidget.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = QTimelineWidget.h; path = src/QTimelineWidget.h; sourceTree = "<group>"; };
@@ -146,7 +144,6 @@
 				106409F8168B188C00FA182E /* osc.a in Frameworks */,
 				106409F9168B188C00FA182E /* osc.lib in Frameworks */,
 				106409FA168B188C00FA182E /* osc_d.lib in Frameworks */,
-				10125BEE1699DEAC0000C8E6 /* libfmodex.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -159,31 +156,6 @@
 				00BAE6590E7ED9C10018A608 /* BasicSampleApp.cpp */,
 			);
 			name = Source;
-			sourceTree = "<group>";
-		};
-		10125BD11699DEAB0000C8E6 /* FMOD */ = {
-			isa = PBXGroup;
-			children = (
-				10125BDD1699DEAB0000C8E6 /* lib */,
-			);
-			name = FMOD;
-			path = ../../../../FMOD;
-			sourceTree = "<group>";
-		};
-		10125BDD1699DEAB0000C8E6 /* lib */ = {
-			isa = PBXGroup;
-			children = (
-				10125BDE1699DEAB0000C8E6 /* macosx */,
-			);
-			path = lib;
-			sourceTree = "<group>";
-		};
-		10125BDE1699DEAB0000C8E6 /* macosx */ = {
-			isa = PBXGroup;
-			children = (
-				10125BDF1699DEAB0000C8E6 /* libfmodex.dylib */,
-			);
-			path = macosx;
 			sourceTree = "<group>";
 		};
 		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
@@ -314,7 +286,6 @@
 		10EDF232162AD407004F4AFD /* blocks */ = {
 			isa = PBXGroup;
 			children = (
-				10125BD11699DEAB0000C8E6 /* FMOD */,
 				106409A7168B188B00FA182E /* osc */,
 				10EDF234162AD418004F4AFD /* QTimeline */,
 			);
@@ -517,8 +488,6 @@
 					"\"$(SRCROOT)/../../../../osc/lib/iphone\"",
 					"\"$(SRCROOT)/../../../../osc/lib/macosx\"",
 					"\"$(SRCROOT)/../../../../osc/lib/vc10\"",
-					"\"$(SRCROOT)/../../../../FMOD/lib/macosx\"",
-					"\"$(SRCROOT)/../../../../FMOD/lib/msw\"",
 				);
 				OTHER_LDFLAGS = (
 					"\"$(CINDER_PATH)/lib/libcinder_d.a\"",
@@ -549,8 +518,6 @@
 					"\"$(SRCROOT)/../../../../osc/lib/iphone\"",
 					"\"$(SRCROOT)/../../../../osc/lib/macosx\"",
 					"\"$(SRCROOT)/../../../../osc/lib/vc10\"",
-					"\"$(SRCROOT)/../../../../FMOD/lib/macosx\"",
-					"\"$(SRCROOT)/../../../../FMOD/lib/msw\"",
 				);
 				OTHER_LDFLAGS = (
 					"\"$(CINDER_PATH)/lib/libcinder.a\"",
@@ -573,7 +540,7 @@
 				HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/boost\"";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				SDKROOT = macosx10.8;
-				USER_HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/include\" ../include \"$(CINDER_PATH)/blocks/osc/include\" \"$(CINDER_PATH)/blocks/FMOD/include\"";
+				USER_HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/include\" ../include \"$(CINDER_PATH)/blocks/osc/include\"";
 			};
 			name = Debug;
 		};
@@ -588,7 +555,7 @@
 				HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/boost\"";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				SDKROOT = macosx10.8;
-				USER_HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/include\" ../include \"$(CINDER_PATH)/blocks/osc/include\" \"$(CINDER_PATH)/blocks/FMOD/include\"";
+				USER_HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/include\" ../include \"$(CINDER_PATH)/blocks/osc/include\"";
 			};
 			name = Release;
 		};

@@ -8,3 +8,4 @@
 - minimal view: render blocks as thin rectangles like in Ableton
 - include licensing
 - xml cinder block template
+- find out why the new module takes so long to be created
