@@ -53,6 +53,9 @@ void QTimelineCue::render()
     gl::vertex( mRect.getLowerLeft() );
     glEnd();
     
+    // handles
+    renderHandles();
+    
     // current time bar
     if ( QTimeline::getPtr()->mPlayMode == QTimeline::CUE_LIST )
     {
@@ -60,7 +63,8 @@ void QTimelineCue::render()
         if ( timeNorm >= 0.0f && timeNorm <= 1.0f )
         {
             float posX = mRect.x1 + mRect.getWidth() * timeNorm;
-            gl::color( mFgColor );
+            Color col = getColor() * 0.6f;
+            gl::color( col );
             glBegin( GL_QUADS );
             gl::vertex( Vec2i( mRect.x1, mRect.y1 )                 );
             gl::vertex( Vec2i( posX, mRect.y1 )                     );
@@ -70,8 +74,6 @@ void QTimelineCue::render()
         }
     }
 
-    // handles
-    renderHandles();
     
     // label
     gl::color( mTextColor );
