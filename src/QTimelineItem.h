@@ -40,7 +40,7 @@ public:
     
     virtual void render( bool mouseOver ) {}
     
-    virtual void clear() {}
+    virtual void clear();
     
     virtual void start( bool reverse ) {}
     
@@ -77,6 +77,7 @@ public:
     
     virtual bool mouseDrag( ci::app::MouseEvent Event );
   
+    virtual void onTimeChange() {}
     
 protected:
     

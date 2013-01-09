@@ -12,8 +12,6 @@
 #include "cinder/Text.h"
 #include <fstream>
 
-#include "QTimelineAudioItem.h"
-
 using namespace ci;
 using namespace ci::app;
 using namespace std;
@@ -125,6 +123,9 @@ void QTimeline::init()
     updateTime();
     
     updateTimeWindow();
+
+    // init BASS library
+    BASS_Init( -1, 44100, 0, 0, NULL );
 }
 
 
@@ -272,8 +273,7 @@ bool QTimeline::mouseDrag( MouseEvent event )
     mCueManager->mouseDrag( event );
     
     // time bar handler
-    if ( mMouseDragTimeBar )
-        mTimeline->stepTo( snapTime( getTimeFromPos( event.getPos().x ) ) );
+    dragTimeBar( event.getPos().x );
     
     mMousePrevPos = event.getPos();
     
@@ -769,3 +769,24 @@ void QTimeline::eraseMarkedItems()
     
     mItemsMarkedForRemoval.clear();
 }
+
+
+void QTimeline::dragTimeBar(float posX )
+{
+    if ( !mMouseDragTimeBar )
+        return;
+        
+    mTimeline->stepTo( snapTime( getTimeFromPos( posX ) ) );
+    
+    vector<QTimelineItemRef>    items;
+    
+    for( size_t k=0; k < mTracks.size(); k++ )
+    {
+        items = mTracks[k]->getModules();
+        
+        for( size_t i=0; i < items.size(); i++ )
+            items[i]->onTimeChange();
+    }
+}
+
+

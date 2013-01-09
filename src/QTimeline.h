@@ -160,14 +160,22 @@ public:
             return mTimeWindow.x + ( mTimeWindow.y - mTimeWindow.x ) * ( x - mTransportRect.x1 ) / mTransportRect.getWidth();
     }
     
-    float getPosFromTime( double time )
+    float getPosFromTime( double time, bool absolute = false )
     {
-        return mTransportRect.getWidth() * ( time - mTimeWindow.x ) / ( mTimeWindow.y - mTimeWindow.x );
+        if ( absolute )
+            return mTransportRect.getWidth() * time / ( mTimeWindow.y - mTimeWindow.x );
+        else
+            return mTransportRect.getWidth() * ( time - mTimeWindow.x ) / ( mTimeWindow.y - mTimeWindow.x );
     }
     
     float getTimeBarWidth() { return mTimeBarRect.x2 - mTimeBarRect.x1; }
     
     float getPxInSeconds( int n = 1 )
+    {
+        return n * ( mTimeWindow.y - mTimeWindow.x ) / mTransportRect.getWidth();
+    }
+    
+    float getSecondsInPx( int n = 1 )
     {
         return n * ( mTimeWindow.y - mTimeWindow.x ) / mTransportRect.getWidth();
     }
@@ -316,6 +324,7 @@ private:
     
     void eraseMarkedItems();
 
+    void dragTimeBar( float posX );
     
 public:
     

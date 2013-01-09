@@ -15,10 +15,11 @@
 
 #include "QTimelineItem.h"
 #include "cinder/audio/Output.h"
-//#include "FMOD.hpp"
+#include "bass.h"
 
 typedef std::shared_ptr<class QTimelineAudioItem>      QTimelineAudioItemRef;
 
+#define AUDIO_WAVEFORM_PRECISION    0.050f    // plot the waveform every N seconds
 
 class QTimelineAudioItem : public QTimelineItem
 {
@@ -30,7 +31,10 @@ public:
         return QTimelineAudioItemRef( new QTimelineAudioItem( startTime, duration, trackRef, ciTimeline ) );
     }
     
-    ~QTimelineAudioItem() {}
+    ~QTimelineAudioItem()
+    {
+        clear();
+    }
     
     void update( float relativeTime );
     
@@ -69,22 +73,19 @@ private:
     
     void loadAudioTrack();
     
+    void cacheWaveForm();
+    
+    void onTimeChange();
+    
 private:
-        
-    ci::audio::TrackRef     	mTrack;
+    
     std::string                 mTrackFilename;
-    
-    ci::audio::PcmBuffer32fRef  mPcmBuffer;
-    
-//	FMOD::System	*mSystem;
-//    FMOD::Sound    	*mSound;
-//	FMOD::Channel	*mChannel;
-    
-    ci::PolyLine<ci::Vec2f>     mLeftBufferLine;
-    ci::PolyLine<ci::Vec2f>     mRightBufferLine;
+    double                      mTrackDuration;
+    HSTREAM                     mAudioHandle;
+    std::vector<float>          mWaveFormLeft;
+    std::vector<float>          mWaveFormRight;
     
 };
 
 
 #endif
-

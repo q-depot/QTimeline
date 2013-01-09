@@ -44,10 +44,7 @@ QTimelineModuleItem::~QTimelineModuleItem()
 
 void QTimelineModuleItem::clear()
 {
-    if ( mMenu )
-        QTimeline::getPtr()->closeMenu( mMenu );
-    
-    mParams.clear();
+    QTimelineItem::clear();
     
     resetTargetModule();
 }
@@ -61,6 +58,7 @@ void QTimelineModuleItem::update( float relativeTime )
     updateParams( relativeTime );
     
     mTargetModuleRef->update();
+    
 }
 
 
@@ -76,7 +74,6 @@ void QTimelineModuleItem::render( bool mouseOver )
     glEnd();
     
     // render handles
-//    if ( mouseOver )
     renderHandles();
     
     gl::color( ColorA( 1.0f, 1.0f, 1.0f, 0.08f ) );

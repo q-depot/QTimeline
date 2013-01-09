@@ -380,4 +380,3 @@ void QTimelineTrack::findModuleBoundaries( QTimelineItemRef itemRef, float *prev
     *nextStartTime  = nextModule ? nextModule->getStartTime()   : 10000;    // max bound should be the timeline or cue end time
 }
 
-

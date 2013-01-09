@@ -30,6 +30,15 @@ QTimelineItem::QTimelineItem( float startTime, float duration, std::string type,
     setDuration( duration );
 }
 
+void QTimelineItem::clear()
+{
+    
+    if ( mMenu )
+        QTimeline::getPtr()->closeMenu( mMenu );
+    
+    mParams.clear();
+}
+
 
 bool QTimelineItem::mouseMove( ci::app::MouseEvent event )
 {

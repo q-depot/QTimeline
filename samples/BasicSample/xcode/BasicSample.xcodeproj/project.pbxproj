@@ -17,6 +17,8 @@
 		00CCAF15116A9FEE008396D5 /* CinderApp.icns in Resources */ = {isa = PBXBuildFile; fileRef = 00CCAF14116A9FEE008396D5 /* CinderApp.icns */; };
 		1009A204166E3CF3008BAFD8 /* QTimelineCue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1009A203166E3CF3008BAFD8 /* QTimelineCue.cpp */; };
 		1009A208166E6D51008BAFD8 /* timeline.xml in Resources */ = {isa = PBXBuildFile; fileRef = 1009A207166E6D51008BAFD8 /* timeline.xml */; };
+		1024469C169D8AF500CF7B0B /* libbass.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1024469B169D8AF500CF7B0B /* libbass.dylib */; };
+		1024469E169D8AFE00CF7B0B /* libbass.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1024469B169D8AF500CF7B0B /* libbass.dylib */; };
 		104AFFFD16415316005AB633 /* QTimeline.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 104AFFFC16415316005AB633 /* QTimeline.cpp */; };
 		105EC6C2167F6ECE0057F873 /* QTimelineCueManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105EC6C1167F6ECE0057F873 /* QTimelineCueManager.cpp */; };
 		106409F7168B188C00FA182E /* osc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 106409BF168B188B00FA182E /* osc.a */; };
@@ -47,6 +49,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 6;
 			files = (
+				1024469E169D8AFE00CF7B0B /* libbass.dylib in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -67,6 +70,7 @@
 		1017B6C61666440E0075E09B /* BasicModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BasicModule.h; path = ../include/BasicModule.h; sourceTree = "<group>"; };
 		1017B6C81666570C0075E09B /* QTimelineModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = QTimelineModule.h; path = src/QTimelineModule.h; sourceTree = "<group>"; };
 		1020A4111662449900DCF5E3 /* QTimelineWidget.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = QTimelineWidget.h; path = src/QTimelineWidget.h; sourceTree = "<group>"; };
+		1024469B169D8AF500CF7B0B /* libbass.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libbass.dylib; sourceTree = "<group>"; };
 		1046BDAE166FA3E50059154D /* QTimelineMenu.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = QTimelineMenu.h; path = src/QTimelineMenu.h; sourceTree = "<group>"; };
 		104AFFFC16415316005AB633 /* QTimeline.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QTimeline.cpp; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
@@ -144,6 +148,7 @@
 				106409F8168B188C00FA182E /* osc.a in Frameworks */,
 				106409F9168B188C00FA182E /* osc.lib in Frameworks */,
 				106409FA168B188C00FA182E /* osc_d.lib in Frameworks */,
+				1024469C169D8AF500CF7B0B /* libbass.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -156,6 +161,22 @@
 				00BAE6590E7ED9C10018A608 /* BasicSampleApp.cpp */,
 			);
 			name = Source;
+			sourceTree = "<group>";
+		};
+		10244699169D8AF500CF7B0B /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				1024469A169D8AF500CF7B0B /* macosx */,
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
+		1024469A169D8AF500CF7B0B /* macosx */ = {
+			isa = PBXGroup;
+			children = (
+				1024469B169D8AF500CF7B0B /* libbass.dylib */,
+			);
+			path = macosx;
 			sourceTree = "<group>";
 		};
 		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
@@ -295,6 +316,7 @@
 		10EDF234162AD418004F4AFD /* QTimeline */ = {
 			isa = PBXGroup;
 			children = (
+				10244699169D8AF500CF7B0B /* lib */,
 				10F6BD4F1667E7C100C2F602 /* include */,
 				10EDF252162AD418004F4AFD /* src */,
 			);
@@ -488,10 +510,12 @@
 					"\"$(SRCROOT)/../../../../osc/lib/iphone\"",
 					"\"$(SRCROOT)/../../../../osc/lib/macosx\"",
 					"\"$(SRCROOT)/../../../../osc/lib/vc10\"",
+					"\"$(SRCROOT)/../../../lib/macosx\"",
 				);
 				OTHER_LDFLAGS = (
 					"\"$(CINDER_PATH)/lib/libcinder_d.a\"",
 					"\"$(CINDER_PATH)/blocks/osc/lib/macosx/osc.a\"",
+					"\"$(CINDER_PATH)/blocks/QTimeline/lib/macosx/libbass.dylib\"",
 				);
 				PRODUCT_NAME = BasicSample;
 				WRAPPER_EXTENSION = app;
@@ -518,10 +542,12 @@
 					"\"$(SRCROOT)/../../../../osc/lib/iphone\"",
 					"\"$(SRCROOT)/../../../../osc/lib/macosx\"",
 					"\"$(SRCROOT)/../../../../osc/lib/vc10\"",
+					"\"$(SRCROOT)/../../../lib/macosx\"",
 				);
 				OTHER_LDFLAGS = (
 					"\"$(CINDER_PATH)/lib/libcinder.a\"",
 					"\"$(CINDER_PATH)/blocks/osc/lib/macosx/osc.a\"",
+					"\"$(CINDER_PATH)/blocks/QTimeline/lib/macosx/libbass.dylib\"",
 				);
 				PRODUCT_NAME = BasicSample;
 				STRIP_INSTALLED_PRODUCT = YES;

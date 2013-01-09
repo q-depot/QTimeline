@@ -18,7 +18,7 @@ using namespace std;
 
 
 QTimelineAudioItem::QTimelineAudioItem( float startTime, float duration, QTimelineTrackRef trackRef, ci::Timeline *ciTimeline )
-: QTimelineItem( startTime, duration, "QTimelineAudioItem", "track name!", trackRef )
+: QTimelineItem( startTime, duration, "QTimelineAudioItem", "untitled", trackRef )
 {
     setBgColor( QTimeline::mAudioItemBgCol );
     setBgOverColor( QTimeline::mAudioItemBgOverCol );
@@ -31,45 +31,61 @@ QTimelineAudioItem::QTimelineAudioItem( float startTime, float duration, QTimeli
     setRect( Rectf( QTimeline::getPtr()->getPosFromTime( getStartTime() ),  0,
                     QTimeline::getPtr()->getPosFromTime( getEndTime() ),    0 ) );
     
+    loadAudioTrack();
+    
     updateLabel();
     
     initMenu();
-    
-    loadAudioTrack();
 }
 
 
 void QTimelineAudioItem::clear()
 {
+    QTimelineItem::clear();
     
+    if ( !BASS_StreamFree( mAudioHandle ) )
+    {
+        console() << "ERROR QTimelineAudioItem::clear() failed to free the stream: ";
+        console() << BASS_ErrorGetCode() << endl;
+    }
 }
 
 
 void QTimelineAudioItem::update( float relativeTime )
 {
-    if ( isComplete() )
+    DWORD trackState = BASS_ChannelIsActive( mAudioHandle );
+    
+    double currentTime = QTimeline::getPtr()->getTime();
+    
+    if ( !QTimeline::getPtr()->isPlaying() || currentTime < getStartTime() || currentTime > getEndTime() )
     {
-//        if ( mTrack->isPlaying() )
-//        {
-//            ci::app::console() << "set time" << std::endl;
-//            mTrack->setTime( 0.0f );
-//            mTrack->stop();
-//        }
-//        
+        if ( trackState == BASS_ACTIVE_PLAYING )                        // stop track
+        {
+            if ( !BASS_ChannelPause( mAudioHandle ) )
+            {
+                console() << "ERROR QTimelineAudioItem BASS_ChannelPause failed! ";
+                console() << BASS_ErrorGetCode() << endl;
+            }
+        }
+     
         return;
     }
     
+    if ( trackState != BASS_ACTIVE_PLAYING )                            // play track
+    {
+        double time = QTimeline::getPtr()->getTime() - getStartTime();
+        time = math<double>::max( 0.0f, time );
+        QWORD channelPos = BASS_ChannelSeconds2Bytes( mAudioHandle, time );
+        BASS_ChannelSetPosition( mAudioHandle, channelPos, BASS_POS_BYTE );
+
+        if ( !BASS_ChannelPlay( mAudioHandle, false ) )
+        {
+            console() << "ERROR QTimelineAudioItem BASS_ChannelPlay failed! ";
+            console() << BASS_ErrorGetCode() << endl;
+        }
+    }
+    
     updateParams( relativeTime );
-    
-    
-//    if ( !mTrack->isPlaying() )
-//    {
-//        // set time, getTimeFromPos
-//        mTrack->setTime( 0.0f );
-//        mTrack->play();
-//    }
-    
-//    ci::app::console() << "QTimelineAudioItem::update() " << relativeTime << " " << mTrack->getTime() << std::endl;
 }
 
 
@@ -95,45 +111,49 @@ void QTimelineAudioItem::render( bool mouseOver )
     gl::vertex( mRect.getLowerRight() );
     glEnd();
     
+    // render waveform
+    float stepInPx = QTimeline::getPtr()->getPtr()->getPosFromTime( AUDIO_WAVEFORM_PRECISION, true );
+    
+    Vec2f plot;
+    
+    gl::color( ColorA( 0.0f, 0.0f, 0.0f, 0.4f ) );
+    
+    glBegin( GL_LINE_STRIP );
+    for( size_t k=0; k < mWaveFormLeft.size(); k++ )
+    {
+        plot.x = mRect.x1 + stepInPx * k;
+        plot.y = mRect.y1 + mRect.getHeight() * 0.5 * ( 1 - mWaveFormLeft[k] );
+        
+        if ( plot.x > mRect.x2 )
+            break;
+        
+        gl::vertex( plot );
+    }
+    glEnd();
+    
+    glBegin( GL_LINE_STRIP );
+    for( size_t k=0; k < mWaveFormRight.size(); k++ )
+    {
+        plot.x = mRect.x1 + stepInPx * k;
+        plot.y = mRect.y1 + mRect.getHeight() * 0.5 * ( 1 + mWaveFormRight[k] );
+        
+        if ( plot.x > mRect.x2 )
+            break;
+        
+        gl::vertex( plot );
+    }
+    glEnd();
+    
     // render name
     gl::color( mTextColor );
     mFont->drawString( getLabel(), mRect.getCenter() + mLabelStrSize * Vec2f( -0.5f, 0.3f ) );
-    
-    
-    
-	gl::color( Color( 1.0f, 0.5f, 0.0f ) );
-	gl::draw( mLeftBufferLine );
-//	gl::draw( mRightBufferLine );
 
-    /*
-	gl::color( Color( 1.0f, 0.5f, 0.25f ) );
-	// grab 512 samples of the wave data
-	float waveData[512];
-	mSystem->getWaveData( waveData, 512, 0 );
-	
-	// prep 512 Vec2fs as the positions to render our waveform
-	vector<Vec2f> vertices;
-	for( int i = 0; i < 512; ++i )
-		vertices.push_back( Vec2f( getWindowWidth() / 512.0f * i, getWindowCenter().y + 100 * waveData[i] ) );
-    
-	// draw the points as a line strip
-	glEnableClientState( GL_VERTEX_ARRAY );
-	gl::color( Color( 1.0f, 0.5f, 0.25f ) );
-    glVertexPointer( 2, GL_FLOAT, 0, &vertices[0] );
-    glDrawArrays( GL_LINE_STRIP, 0, vertices.size() );
-    */
-    
 }
 
 
 void QTimelineAudioItem::menuEventHandler( QTimelineMenuItemRef item )
 {
-    if ( item->getMeta() == "load_track" )
-    {
-        loadAudioTrack();
-    }
-    
-    else if ( item->getMeta() == "color_palette" )
+    if ( item->getMeta() == "color_palette" )
     {
         QTimelineMenuColorPalette *palette = (QTimelineMenuColorPalette*)item.get();
         mBgColor = palette->getColor();
@@ -162,109 +182,67 @@ void QTimelineAudioItem::initMenu()
     mMenu->addColorPalette( this, &QTimelineAudioItem::menuEventHandler );
     
     mMenu->addSeparator();
-    
-    mMenu->addButton( "Load track", "load_track", this, &QTimelineAudioItem::menuEventHandler );
-    
-    mMenu->addSeparator();
    
     mMenu->addButton( "X DELETE", "delete", this, &QTimelineAudioItem::menuEventHandler );
 }
 
-
 void QTimelineAudioItem::loadAudioTrack()
-{   
-    //add the audio track the default audio output
-	mTrack = audio::Output::addTrack( audio::load( loadAsset( "booyah.mp3" ) ), true );
-	//you must enable enable PCM buffering on the track to be able to call getPcmBuffer on it later
-	mTrack->enablePcmBuffering( true );
+{
+    cacheWaveForm();
+    fs::path filePath( getAssetPath( "Blank__Kytt_-_08_-_RSPN.mp3" ) );
     
-    while( !mPcmBuffer )
+    mAudioHandle = BASS_StreamCreateFile(   FALSE,
+                                         filePath.generic_string().c_str(),
+                                         0, 0, BASS_SAMPLE_FLOAT | BASS_STREAM_PRESCAN );
+    if ( !mAudioHandle )
     {
-        mPcmBuffer = mTrack->getPcmBuffer();
-        ci::sleep( 15.0f );
+        console() << "ERROR QTimelineAudioItem::loadAudioTrack(): ";
+        console() << BASS_ErrorGetCode() << endl;
     }
-    
-    float time = 0;
-    int c =0;
-    while( mTrack->isPlaying() )
-    {
-        mTrack->setTime( time );
-        
-        mPcmBuffer = mTrack->getPcmBuffer();
-        
-        uint32_t bufferLength = mPcmBuffer->getSampleCount();
-        audio::Buffer32fRef leftBuffer = mPcmBuffer->getChannelData( audio::CHANNEL_FRONT_LEFT );
-        audio::Buffer32fRef rightBuffer = mPcmBuffer->getChannelData( audio::CHANNEL_FRONT_RIGHT );
-        
-        int displaySize = getWindowWidth();
-        float scale = displaySize / (float)bufferLength;
-        float val = 0;
-        for( int i = 0; i < bufferLength; i++ ) {
-            float x = ( i * scale );
-            
-            //get the PCM value from the left channel buffer
-            float y = ( ( leftBuffer->mData[i] - 1 ) * - 100 );
-            val += y;
-//            mLeftBufferLine.push_back( Vec2f( x , y) );
-        }
-        
-        val /= bufferLength;
-        
-        mLeftBufferLine.push_back( Vec2f( c++ , val) );
-        
-        time += 0.1f;
-    }
-    
-    
-    
-/*
- FMOD::System_Create( &mSystem );
-    mSystem->init( 32, FMOD_INIT_NORMAL | FMOD_INIT_ENABLE_PROFILE, NULL );
-    
-    mSystem->createSound( getAssetPath( "booyah.mp3" ).string().c_str(), FMOD_SOFTWARE, NULL, &mSound );
-	mSound->setMode( FMOD_LOOP_NORMAL );
-    
-    mSystem->playSound( FMOD_CHANNEL_FREE, mSound, true, &mChannel );
-    
-    
-    
-    unsigned int length;
-    
-    mSound->getLength( &length, FMOD_TIMEUNIT_MS );
-    
-    
-    float waveData[512];
-    float mean;
-    unsigned int pos;
-    
-    for( unsigned int k=0; k < length; k+=10 )
-    {
-        mChannel->setPosition( k, FMOD_TIMEUNIT_MS );
-        
-//        if ( mChannel->getWaveData( waveData, 512, 0 ) != FMOD_OK )
-//            console() << k << " no data" << endl;
-        
-        mSystem->getWaveData( waveData, 512, 0 );
-        
-        // prep 512 Vec2fs as the positions to render our waveform
-        mean = 0;
-        for( int i = 0; i < 512; ++i )
-            mean += 100 * waveData[i];
-        
-        mChannel->getPosition( &pos, FMOD_TIMEUNIT_MS );
+}
 
-        console() << k << " " << pos << " " << mean << " " << endl;;
-        
-        mean /= 512;
-        
-        mLeftBufferLine.push_back( Vec2f( k, mean ) );
-
-    }
-    console() << endl;
-//    mChannel->getPosition( &pos, FMOD_TIMEUNIT_MS );
+void QTimelineAudioItem::cacheWaveForm()
+{
+    mWaveFormLeft.clear();
+    mWaveFormRight.clear();
     
-//    console() << " pos: " << pos << endl;
- */
+    fs::path filePath( getAssetPath( "Blank__Kytt_-_08_-_RSPN.mp3" ) );
+    
+    mAudioHandle = BASS_StreamCreateFile(   FALSE,
+                                            filePath.generic_string().c_str(),
+                                            0, 0, BASS_STREAM_DECODE | BASS_SAMPLE_FLOAT | BASS_STREAM_PRESCAN );
+    
+    QWORD len       = BASS_ChannelGetLength( mAudioHandle, BASS_POS_BYTE );     // the length in bytes
+    mTrackDuration  = BASS_ChannelBytes2Seconds( mAudioHandle, len );           // the length in seconds
+    int samplesN    = mTrackDuration / AUDIO_WAVEFORM_PRECISION;
+    
+    if ( !mAudioHandle )
+    {
+        console() << "ERROR QTimelineAudioItem::cacheWaveForm(): ";
+        console() << BASS_ErrorGetCode() << endl;
+    }
+    
+    for( int i = 0; i < samplesN; i++ )
+    {
+        QWORD pos = BASS_ChannelSeconds2Bytes( mAudioHandle, ( mTrackDuration / (float)samplesN ) * (float)i );
+        BASS_ChannelSetPosition( mAudioHandle, pos, BASS_POS_BYTE );
+        DWORD level = BASS_ChannelGetLevel( mAudioHandle );
+        float left  = (float) LOWORD( level ) / 65535.0f;
+        float right = (float) HIWORD( level ) / 65535.0f;
+        
+        mWaveFormLeft.push_back( left );
+        mWaveFormRight.push_back( right );
+    }
+    
+    setName( filePath.filename().generic_string() );
+    
+    setDuration( mTrackDuration );
+
+    if ( !BASS_StreamFree( mAudioHandle ) )
+    {
+        console() << "ERROR QTimelineAudioItem::cacheWaveForm() failed to free the stream: ";
+        console() << BASS_ErrorGetCode() << endl;
+    }
 }
 
 
@@ -286,3 +264,55 @@ void QTimelineAudioItem::loadXmlNode( XmlTree node )
 }
 
 
+// TODO : this function should also be called when the time bar is set by using the left and right key
+void QTimelineAudioItem::onTimeChange()
+{
+    DWORD   trackState  = BASS_ChannelIsActive( mAudioHandle );
+    double  currentTime = QTimeline::getPtr()->getTime();
+    
+    //    if ( !QTimeline::getPtr()->isPlaying() || currentTime < getStartTime() || currentTime > getEndTime() )
+    if ( currentTime < getStartTime() || currentTime > getEndTime() )
+    {
+        if ( trackState == BASS_ACTIVE_PLAYING )                                    // track is playing, STOP
+        {
+            if ( !BASS_ChannelPause( mAudioHandle ) )
+            {
+                console() << "ERROR QTimelineAudioItem BASS_ChannelPause failed! ";
+                console() << BASS_ErrorGetCode() << endl;
+            }
+        }
+        
+        return;
+    }
+    
+    double time = QTimeline::getPtr()->getTime() - getStartTime();
+    time = math<double>::max( 0.0f, time );
+    QWORD channelPos = BASS_ChannelSeconds2Bytes( mAudioHandle, time );
+    BASS_ChannelSetPosition( mAudioHandle, channelPos, BASS_POS_BYTE );                 // if the module is playing update the position
+  
+    // TODO : if the timeline is not playing I still want to playback one frame of the audio track, dunno how!
+    if ( !QTimeline::getPtr()->isPlaying()  )
+    {
+//        if ( !BASS_ChannelPlay( mAudioHandle, false ) )
+//        {
+//            console() << "ERROR QTimelineAudioItem BASS_ChannelPlay failed! ";
+//            console() << BASS_ErrorGetCode() << endl;
+//        }
+//        sleep( 15.0f );
+        
+        if ( trackState == BASS_ACTIVE_PLAYING || trackState == BASS_ACTIVE_STALLED )   // track is playing, STOP
+        {
+            if ( !BASS_ChannelPause( mAudioHandle ) )
+            {
+                console() << "ERROR QTimelineAudioItem BASS_ChannelPause failed! ";
+                console() << BASS_ErrorGetCode() << endl;
+            }
+        }
+        
+        return;
+    }
+    
+    if ( trackState != BASS_ACTIVE_PLAYING )                                            // if it's not playing, PLAY
+        BASS_ChannelPlay( mAudioHandle, false );
+    
+}
