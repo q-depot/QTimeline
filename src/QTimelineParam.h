@@ -87,7 +87,6 @@ public:
     // TODO: mVar should be a shared_ptr
     void swapPointer( float *var ) { mVar = var; }
     
-    
     void        setKeyframesBgCol( ci::ColorA col ) { mKeyframesBgCol = col; }
     ci::ColorA  getKeyframesBgCol() { return mKeyframesBgCol; }
     

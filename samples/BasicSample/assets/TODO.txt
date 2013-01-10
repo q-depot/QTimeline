@@ -10,3 +10,4 @@
 - include licensing
 - xml cinder block template
 - find out why the new module takes so long to be created
+- audio item serialization

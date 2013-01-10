@@ -17,7 +17,7 @@ using namespace ci::app;
 using namespace std;
 
 
-QTimelineAudioItem::QTimelineAudioItem( float startTime, float duration, QTimelineTrackRef trackRef, ci::Timeline *ciTimeline )
+QTimelineAudioItem::QTimelineAudioItem( float startTime, float duration, string filename, QTimelineTrackRef trackRef, ci::Timeline *ciTimeline )
 : QTimelineItem( startTime, duration, "QTimelineAudioItem", "untitled", trackRef )
 {
     setBgColor( QTimeline::mAudioItemBgCol );
@@ -31,7 +31,7 @@ QTimelineAudioItem::QTimelineAudioItem( float startTime, float duration, QTimeli
     setRect( Rectf( QTimeline::getPtr()->getPosFromTime( getStartTime() ),  0,
                     QTimeline::getPtr()->getPosFromTime( getEndTime() ),    0 ) );
     
-    loadAudioTrack();
+    loadAudioTrack( filename );
     
     updateLabel();
     
@@ -42,6 +42,12 @@ QTimelineAudioItem::QTimelineAudioItem( float startTime, float duration, QTimeli
 void QTimelineAudioItem::clear()
 {
     QTimelineItem::clear();
+    
+    if ( !BASS_ChannelStop( mAudioHandle ) )
+    {
+        console() << "ERROR QTimelineAudioItem BASS_ChannelStop failed! ";
+        console() << BASS_ErrorGetCode() << endl;
+    }
     
     if ( !BASS_StreamFree( mAudioHandle ) )
     {
@@ -112,19 +118,67 @@ void QTimelineAudioItem::render( bool mouseOver )
     glEnd();
     
     // render waveform
+    if ( mParentTrack->isOpen() )
+    {
+        Rectf waveFormRect( mRect.x1,
+                            mRect.y2 + TIMELINE_WIDGET_PADDING,
+                            mRect.x2,
+                            mRect.y2 + TIMELINE_WIDGET_PADDING + TIMELINE_PARAM_HEIGHT );
+
+        gl::color( ColorA( 1.0f, 1.0f, 1.0f, 0.05f ) );
+        glBegin( GL_QUADS );
+        gl::vertex( waveFormRect.getUpperLeft() );
+        gl::vertex( waveFormRect.getUpperRight() );
+        gl::vertex( waveFormRect.getLowerRight() );
+        gl::vertex( waveFormRect.getLowerLeft() );
+        glEnd();
+        
+        gl::color( mBgColor );
+        renderWaveForm( waveFormRect );
+    }
+    else
+    {
+        gl::color( ColorA( 0.0f, 0.0f, 0.0f, 0.4f ) );
+        renderWaveForm( mRect );
+    }
+    
+    // render name
+    gl::color( mTextColor );
+    mFont->drawString( getLabel(), mRect.getCenter() + mLabelStrSize * Vec2f( -0.5f, 0.3f ) );
+    
+    
+}
+
+
+void QTimelineAudioItem::renderWaveForm( ci::Rectf rect )
+{
+    Vec2f plot;
     float stepInPx = QTimeline::getPtr()->getPtr()->getPosFromTime( AUDIO_WAVEFORM_PRECISION, true );
     
-    Vec2f plot;
     
-    gl::color( ColorA( 0.0f, 0.0f, 0.0f, 0.4f ) );
-    
+//    glBegin( GL_LINES );
+//    float posX, posY1, posY2;
+//    for( size_t k=0; k < mWaveFormLeft.size(); k++ )
+//    {
+//        posX    = rect.x1 + stepInPx * k;
+//        posY1   = rect.y1 + rect.getHeight() * 0.5 * ( 1 - mWaveFormLeft[k] );
+//        posY2   = rect.y1 + rect.getHeight() * 0.5 * ( 1 + mWaveFormRight[k] );
+//        
+//        if ( plot.x > rect.x2 )
+//            break;
+//        
+//        gl::vertex( Vec2f( posX, posY1 ) );
+//        gl::vertex( Vec2f( posX, posY2 ) );
+//    }
+//    glEnd();
+     
     glBegin( GL_LINE_STRIP );
     for( size_t k=0; k < mWaveFormLeft.size(); k++ )
     {
-        plot.x = mRect.x1 + stepInPx * k;
-        plot.y = mRect.y1 + mRect.getHeight() * 0.5 * ( 1 - mWaveFormLeft[k] );
+        plot.x = rect.x1 + stepInPx * k;
+        plot.y = rect.y1 + rect.getHeight() * 0.5 * ( 1 - mWaveFormLeft[k] );
         
-        if ( plot.x > mRect.x2 )
+        if ( plot.x > rect.x2 )
             break;
         
         gl::vertex( plot );
@@ -134,20 +188,15 @@ void QTimelineAudioItem::render( bool mouseOver )
     glBegin( GL_LINE_STRIP );
     for( size_t k=0; k < mWaveFormRight.size(); k++ )
     {
-        plot.x = mRect.x1 + stepInPx * k;
-        plot.y = mRect.y1 + mRect.getHeight() * 0.5 * ( 1 + mWaveFormRight[k] );
+        plot.x = rect.x1 + stepInPx * k;
+        plot.y = rect.y1 + rect.getHeight() * 0.5 * ( 1 + mWaveFormRight[k] );
         
-        if ( plot.x > mRect.x2 )
+        if ( plot.x > rect.x2 )
             break;
         
         gl::vertex( plot );
     }
     glEnd();
-    
-    // render name
-    gl::color( mTextColor );
-    mFont->drawString( getLabel(), mRect.getCenter() + mLabelStrSize * Vec2f( -0.5f, 0.3f ) );
-
 }
 
 
@@ -186,30 +235,43 @@ void QTimelineAudioItem::initMenu()
     mMenu->addButton( "X DELETE", "delete", this, &QTimelineAudioItem::menuEventHandler );
 }
 
-void QTimelineAudioItem::loadAudioTrack()
+
+void QTimelineAudioItem::loadAudioTrack( string filename )
 {
+//    fs::path filePath = getOpenFilePath();
+//    
+//    if ( filePath.empty() )
+//        return;
+
+    mFilePath = getAssetPath( "audio/" + filename );
+    
+    if ( mFilePath.empty() )
+        return;
+    
     cacheWaveForm();
-    fs::path filePath( getAssetPath( "Blank__Kytt_-_08_-_RSPN.mp3" ) );
     
     mAudioHandle = BASS_StreamCreateFile(   FALSE,
-                                         filePath.generic_string().c_str(),
-                                         0, 0, BASS_SAMPLE_FLOAT | BASS_STREAM_PRESCAN );
+                                            mFilePath.generic_string().c_str(),
+                                            0, 0, BASS_SAMPLE_FLOAT | BASS_STREAM_PRESCAN );
     if ( !mAudioHandle )
     {
         console() << "ERROR QTimelineAudioItem::loadAudioTrack(): ";
         console() << BASS_ErrorGetCode() << endl;
     }
+    
+    setName( mFilePath.filename().generic_string() );
+    
+    setDuration( mTrackDuration );
 }
+
 
 void QTimelineAudioItem::cacheWaveForm()
 {
     mWaveFormLeft.clear();
     mWaveFormRight.clear();
     
-    fs::path filePath( getAssetPath( "Blank__Kytt_-_08_-_RSPN.mp3" ) );
-    
     mAudioHandle = BASS_StreamCreateFile(   FALSE,
-                                            filePath.generic_string().c_str(),
+                                            mFilePath.generic_string().c_str(),
                                             0, 0, BASS_STREAM_DECODE | BASS_SAMPLE_FLOAT | BASS_STREAM_PRESCAN );
     
     QWORD len       = BASS_ChannelGetLength( mAudioHandle, BASS_POS_BYTE );     // the length in bytes
@@ -233,10 +295,6 @@ void QTimelineAudioItem::cacheWaveForm()
         mWaveFormLeft.push_back( left );
         mWaveFormRight.push_back( right );
     }
-    
-    setName( filePath.filename().generic_string() );
-    
-    setDuration( mTrackDuration );
 
     if ( !BASS_StreamFree( mAudioHandle ) )
     {
@@ -250,21 +308,12 @@ XmlTree QTimelineAudioItem::getXmlNode()
 {
     XmlTree node = QTimelineItem::getXmlNode();
     
-    node.setAttribute( "trackPath", mTrackFilename );
+    node.setAttribute( "filename", mFilePath.filename().generic_string() );
     
     return node;
 }
 
 
-void QTimelineAudioItem::loadXmlNode( XmlTree node )
-{
-    QTimelineItem::loadXmlNode( node );
-
-    // load track path
-}
-
-
-// TODO : this function should also be called when the time bar is set by using the left and right key
 void QTimelineAudioItem::onTimeChange()
 {
     DWORD   trackState  = BASS_ChannelIsActive( mAudioHandle );
@@ -293,13 +342,6 @@ void QTimelineAudioItem::onTimeChange()
     // TODO : if the timeline is not playing I still want to playback one frame of the audio track, dunno how!
     if ( !QTimeline::getPtr()->isPlaying()  )
     {
-//        if ( !BASS_ChannelPlay( mAudioHandle, false ) )
-//        {
-//            console() << "ERROR QTimelineAudioItem BASS_ChannelPlay failed! ";
-//            console() << BASS_ErrorGetCode() << endl;
-//        }
-//        sleep( 15.0f );
-        
         if ( trackState == BASS_ACTIVE_PLAYING || trackState == BASS_ACTIVE_STALLED )   // track is playing, STOP
         {
             if ( !BASS_ChannelPause( mAudioHandle ) )
@@ -316,3 +358,5 @@ void QTimelineAudioItem::onTimeChange()
         BASS_ChannelPlay( mAudioHandle, false );
     
 }
+
+

@@ -182,7 +182,12 @@ public:
     
     double getTime() { return mTimeline->getCurrentTime(); }
     
-    void setTime( double time ) { mTimeline->stepTo( time ); }
+    void setTime( double time )
+    {
+        mTimeline->stepTo( time );
+        
+        callItemsOnTimeChange();
+    }
     
     void updateCurrentTime();
     
@@ -325,6 +330,8 @@ private:
     void eraseMarkedItems();
 
     void dragTimeBar( float posX );
+    
+    void callItemsOnTimeChange();
     
 public:
     

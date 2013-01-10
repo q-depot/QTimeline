@@ -15,8 +15,6 @@
 
 #include "QTimelineItem.h"
 
-#define TIMELINE_MODULE_HEIGHT          20      // the height in px
-
 typedef std::shared_ptr<class QTimelineModuleItem>      QTimelineModuleItemRef;
 
 
@@ -60,6 +58,14 @@ public:
     
 //    void loadXmlNode( ci::XmlTree node );
 
+    float getHeight()
+    {
+        if ( mParentTrack->isOpen() )
+            return  TIMELINE_ITEM_HEIGHT + TIMELINE_WIDGET_PADDING +
+            mParams.size() * (  TIMELINE_PARAM_HEIGHT + TIMELINE_WIDGET_PADDING );
+        else
+            return TIMELINE_ITEM_HEIGHT + TIMELINE_WIDGET_PADDING;
+    }
     
 private:
     

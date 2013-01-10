@@ -21,6 +21,7 @@ typedef std::shared_ptr<class QTimelineItem>      QTimelineItemRef;
 typedef std::shared_ptr<class QTimelineTrack>     QTimelineTrackRef;
 typedef std::shared_ptr<class QTimelineModule>    QTimelineModuleRef;
 
+#define TIMELINE_ITEM_HEIGHT          20      // the height in px
 
 class QTimelineItem : public ci::TimelineItem, public QTimelineWidgetWithHandles
 {
@@ -78,6 +79,8 @@ public:
     virtual bool mouseDrag( ci::app::MouseEvent Event );
   
     virtual void onTimeChange() {}
+    
+    virtual float getHeight() { return 0.0f; }
     
 protected:
     

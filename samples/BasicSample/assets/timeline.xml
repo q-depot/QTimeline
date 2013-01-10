@@ -2,27 +2,11 @@
 <QTimeline>
 	<tracks>
 		<track name="track 0">
-			<item type="QTimelineAudioItem" name="track name!" startTime="13" duration="13" color_r="0.449999988" color_g="0.600000024" color_b="0" color_a="1" trackPath=""/>
+			<item type="QTimelineAudioItem" name="Blank__Kytt_-_08_-_RSPN.mp3" startTime="0.75" duration="45.8448982" color_r="0.860000014" color_g="0.620000005" color_b="0" color_a="1" filename="Blank__Kytt_-_08_-_RSPN.mp3"/>
 		</track>
 		<track name="Untitled">
-			<item type="QTimelineModuleItem" name="hello" startTime="3" duration="8" color_r="0.449999988" color_g="0.600000024" color_b="0" color_a="1" targetModuleType="BasicModule">
+			<item type="QTimelineModuleItem" name="Fuffa" startTime="3" duration="8" color_r="0" color_g="0.649999976" color_b="0.579999983" color_a="1" targetModuleType="BasicModule">
 				<param name="radius" value="5" min="0" max="60"/>
-				<param name="pos_x" value="523" min="0" max="1200"/>
-				<param name="pos_y" value="62" min="0" max="800"/>
-				<param name="red" value="1" min="0" max="1"/>
-				<param name="green" value="1" min="0" max="1"/>
-				<param name="blue" value="1" min="0" max="1"/>
-			</item>
-			<item type="QTimelineModuleItem" name="untitled" startTime="12.5" duration="17.25" color_r="0.5" color_g="0.5" color_b="0.5" color_a="1" targetModuleType="BasicModule">
-				<param name="radius" value="43.5882454" min="0" max="60">
-					<kf value="60" time="12.5" fn="EaseNone"/>
-					<kf value="39.9999962" time="15.75" fn="EaseOutQuad"/>
-					<kf value="10.666666" time="16" fn="EaseOutQuad"/>
-					<kf value="21.3333321" time="16.5" fn="EaseOutQuad"/>
-					<kf value="37.3333321" time="21.25" fn="EaseOutQuad"/>
-					<kf value="22.666666" time="25.25" fn="EaseOutQuad"/>
-					<kf value="39.9999962" time="27.25" fn="EaseOutQuad"/>
-				</param>
 				<param name="pos_x" value="158" min="0" max="1200"/>
 				<param name="pos_y" value="238" min="0" max="800"/>
 				<param name="red" value="1" min="0" max="1"/>

@@ -57,27 +57,28 @@ void QTimelineTrack::clear()
 
 ci::Rectf QTimelineTrack::render( ci::Rectf rect, ci::Vec2f timeWindow, double currentTime )
 {
-    int maxParamsN  = 0;
-    
     std::vector<QTimelineItemRef>   itemsInWindow;
     QTimelineItemRef                itemRef;
     
     ci::Rectf                       trackRect, itemRect;
-
-    // gett all modules in time window and calculate the max number of params
+    
+    float maxHeight = 0.0f;
+    float h;
+    
+    // get all modules in time window and calculate the max height
     for( size_t k=0; k < mItems.size(); k ++ )
         if ( mItems[k]->isInWindow( timeWindow ) )
         {
             itemsInWindow.push_back( mItems[k] );
-            if ( mItems[k]->getNumParams() > maxParamsN )
-                maxParamsN = mItems[k]->getNumParams();
+            h = mItems[k]->getHeight();
+            if ( h > maxHeight )
+                maxHeight = h;
         }
     
-    // calculate module track rect based on the max number of params
-    trackRect = Rectf( rect.getUpperLeft() - Vec2f( 0, TIMELINE_MODULE_HEIGHT ), rect.getUpperRight() );
+    trackRect = Rectf( rect.getUpperLeft() - Vec2f( 0, TIMELINE_ITEM_HEIGHT ), rect.getUpperRight() );
     
-    if ( mIsTrackOpen )
-        trackRect.offset( - maxParamsN * ci::Vec2f( 0, TIMELINE_PARAM_HEIGHT + TIMELINE_WIDGET_PADDING ) );
+    if ( mIsTrackOpen )    
+        trackRect.offset( Vec2f( 0, - maxHeight + TIMELINE_ITEM_HEIGHT ) );
     
     setRect( Rectf( trackRect.getUpperLeft(), rect.getUpperRight() ) );
     
@@ -219,14 +220,14 @@ QTimelineItemRef QTimelineTrack::addModuleItem( float startTime, float duration,
 }
 
 
-QTimelineItemRef QTimelineTrack::addAudioItem( float startTime, float duration, string audioTrackFilename )
+QTimelineItemRef QTimelineTrack::addAudioItem( float startTime, float duration, string filename )
 {
     startTime   = QTimeline::getPtr()->snapTime( startTime );
     duration    = QTimeline::getPtr()->snapTime( duration );
     
     TimelineRef timelineRef = QTimeline::getPtr()->getTimelineRef();
     
-    QTimelineAudioItemRef itemRef = QTimelineAudioItem::create( startTime, duration, getRef(), timelineRef.get() );
+    QTimelineAudioItemRef itemRef = QTimelineAudioItem::create( startTime, duration, filename, getRef(), timelineRef.get() );
     timelineRef->insert( itemRef );
     
     mItems.push_back( itemRef );
@@ -253,7 +254,7 @@ void QTimelineTrack::loadXmlNode( ci::XmlTree node )
 {
     setName( node.getAttributeValue<string>( "name" ) );
     
-    string              name, type, targetModuleType, audioTrackFilename;
+    string              name, type, targetModuleType, trackFilename;
     float               startTime, duration;
     
     for( XmlTree::Iter nodeIt = node.begin("item"); nodeIt != node.end(); ++nodeIt )
@@ -274,8 +275,8 @@ void QTimelineTrack::loadXmlNode( ci::XmlTree node )
         
         else if ( type == "QTimelineAudioItem" )
         {
-            audioTrackFilename              = nodeIt->getAttributeValue<string>( "trackPath" );
-            QTimelineItemRef    itemRef     = addAudioItem( startTime, duration, audioTrackFilename );
+            trackFilename = nodeIt->getAttributeValue<string>( "filename" );
+            QTimelineItemRef    itemRef     = addAudioItem( startTime, duration, trackFilename );
             
             itemRef->loadXmlNode( *nodeIt );
         }
@@ -300,7 +301,7 @@ void QTimelineTrack::menuEventHandler( QTimelineMenuItemRef item )
     
     else if ( item->getMeta() == "create_audio_item" )
     {
-        addAudioItem( timelineRef->getTimeFromPos( mMouseDownPos.x ), 2.0f );
+        addAudioItem( timelineRef->getTimeFromPos( mMouseDownPos.x ), 2.0f, "Blank__Kytt_-_08_-_RSPN.mp3" );
         console() << "create audio track" << endl;
     }
   

@@ -38,7 +38,7 @@ public:
     
     QTimelineItemRef addModuleItem( float startTime, float duration, std::string name = "" );
     
-    QTimelineItemRef addAudioItem( float startTime, float duration, std::string audioTrackFilename = "" );
+    QTimelineItemRef addAudioItem( float startTime, float duration, std::string filename );
     
     ci::Rectf render( ci::Rectf rect, ci::Vec2f timeWindow, double currentTime );
     

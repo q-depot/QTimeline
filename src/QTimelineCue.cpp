@@ -63,17 +63,15 @@ void QTimelineCue::render()
         if ( timeNorm >= 0.0f && timeNorm <= 1.0f )
         {
             float posX = mRect.x1 + mRect.getWidth() * timeNorm;
-            Color col = getColor() * 0.6f;
-            gl::color( col );
+            gl::color( mFgColor );
             glBegin( GL_QUADS );
-            gl::vertex( Vec2i( mRect.x1, mRect.y1 )                 );
-            gl::vertex( Vec2i( posX, mRect.y1 )                     );
-            gl::vertex( Vec2i( posX, mRect.y1 )     + Vec2i( 0, 5 ) );
-            gl::vertex( Vec2i( mRect.x1, mRect.y1 ) + Vec2i( 0, 5 ) );
+            gl::vertex( Vec2i( mRect.x1, mRect.y1 ) );
+            gl::vertex( Vec2i( posX, mRect.y1 )     );
+            gl::vertex( Vec2i( posX, mRect.y2)      );
+            gl::vertex( Vec2i( mRect.x1, mRect.y2 ) );
             glEnd();
         }
     }
-
     
     // label
     gl::color( mTextColor );

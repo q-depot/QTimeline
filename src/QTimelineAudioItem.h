@@ -26,9 +26,9 @@ class QTimelineAudioItem : public QTimelineItem
     
 public:
     
-    static QTimelineAudioItemRef create( float startTime, float duration, QTimelineTrackRef trackRef, ci::Timeline *ciTimeline )
+    static QTimelineAudioItemRef create( float startTime, float duration, std::string filename, QTimelineTrackRef trackRef, ci::Timeline *ciTimeline )
     {
-        return QTimelineAudioItemRef( new QTimelineAudioItem( startTime, duration, trackRef, ciTimeline ) );
+        return QTimelineAudioItemRef( new QTimelineAudioItem( startTime, duration, filename, trackRef, ciTimeline ) );
     }
     
     ~QTimelineAudioItem()
@@ -61,25 +61,34 @@ public:
     
     ci::XmlTree getXmlNode();
     
-    void loadXmlNode( ci::XmlTree node );
+    float getHeight()
+    {
+        if ( mParentTrack->isOpen() )
+            return  TIMELINE_ITEM_HEIGHT + TIMELINE_WIDGET_PADDING +
+                    ( 1 + mParams.size() ) * ( TIMELINE_PARAM_HEIGHT + TIMELINE_WIDGET_PADDING ); // waveform + params
+        else
+            return TIMELINE_ITEM_HEIGHT + TIMELINE_WIDGET_PADDING;
+    }
     
 private:
     
-    QTimelineAudioItem ( float startTime, float duration, QTimelineTrackRef trackRef, ci::Timeline *ciTimeline );
+    QTimelineAudioItem ( float startTime, float duration, std::string filename, QTimelineTrackRef trackRef, ci::Timeline *ciTimeline );
     
     void menuEventHandler( QTimelineMenuItemRef item );
     
     void initMenu();
     
-    void loadAudioTrack();
+    void loadAudioTrack( std::string filename );
     
     void cacheWaveForm();
     
     void onTimeChange();
     
+    void renderWaveForm( ci::Rectf rect );
+    
 private:
     
-    std::string                 mTrackFilename;
+    ci::fs::path                mFilePath;
     double                      mTrackDuration;
     HSTREAM                     mAudioHandle;
     std::vector<float>          mWaveFormLeft;

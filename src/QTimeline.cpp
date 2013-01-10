@@ -359,7 +359,9 @@ void QTimeline::play( bool play, PlayMode mode )
     mPrevElapsedSeconds = getElapsedSeconds();
     mIsPlaying          = play;
     mPlayMode           = mode;
-
+    
+    callItemsOnTimeChange();
+    
     addOscMessage( OSC_ADDRESS_PLAY, "i" + toString(mPlayMode) + " i" + toString(mIsPlaying) );
 }
 
@@ -368,12 +370,9 @@ void QTimeline::playCue( int cueN )
 {
     // OR cue != current cue ?
     if ( isPlaying() )
-    {
         play( false, CUE_LIST );
-        return;
-    }
     
-    if ( mCueManager->playCue( cueN ) )
+    else if ( mCueManager->playCue( cueN ) )
     {
         mTimeline->stepTo( mCueManager->getCueStartTime() );
         play( true, CUE_LIST );
@@ -692,7 +691,7 @@ void QTimeline::load( const std::string &filename )
     }
     catch ( ... )
     {
-        console() << "Error > QTimeline::load(): " << filename << " not found!" << endl;
+        console() << "Error > QTimeline::load(): " << filename << endl;
         return;
     }
     
@@ -778,6 +777,11 @@ void QTimeline::dragTimeBar(float posX )
         
     mTimeline->stepTo( snapTime( getTimeFromPos( posX ) ) );
     
+    callItemsOnTimeChange();
+}
+
+void QTimeline::callItemsOnTimeChange()
+{
     vector<QTimelineItemRef>    items;
     
     for( size_t k=0; k < mTracks.size(); k++ )
@@ -788,5 +792,4 @@ void QTimeline::dragTimeBar(float posX )
             items[i]->onTimeChange();
     }
 }
-
 
