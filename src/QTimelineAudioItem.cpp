@@ -35,6 +35,12 @@ QTimelineAudioItem::QTimelineAudioItem( float startTime, float duration, string 
     
     loadAudioTrack( filename );
     
+    // set rect width to calculate the label length when the item is created
+    Rectf r( QTimeline::getPtr()->getPosFromTime( getStartTime() ), 0.0f,
+             QTimeline::getPtr()->getPosFromTime( getEndTime() ),   0.0f   );
+    
+    setRect( r );
+    
     updateLabel();
     
     initMenu();

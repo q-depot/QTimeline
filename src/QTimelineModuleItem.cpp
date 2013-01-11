@@ -27,9 +27,11 @@ QTimelineModuleItem::QTimelineModuleItem( std::string name, float startTime, flo
     setHandleColor( QTimeline::mModuleItemHandleCol );
     setHandleOverColor( QTimeline::mModuleItemHandleOverCol );
     
-    // init rect width
-    setRect( Rectf( QTimeline::getPtr()->getPosFromTime( getStartTime() ), 0,
-                   QTimeline::getPtr()->getPosFromTime( getEndTime() ), 0 ) );
+    // set rect width to calculate the label length when the item is created
+    Rectf r( QTimeline::getPtr()->getPosFromTime( getStartTime() ), 0.0f,
+             QTimeline::getPtr()->getPosFromTime( getEndTime() ),   0.0f   );
+    
+    setRect( r );
     
     updateLabel();
     

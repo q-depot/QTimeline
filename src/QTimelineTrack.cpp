@@ -300,10 +300,7 @@ void QTimelineTrack::menuEventHandler( QTimelineMenuItemRef item )
     }
     
     else if ( item->getMeta() == "create_audio_item" )
-    {
         addAudioItem( timelineRef->getTimeFromPos( mMouseDownPos.x ), 2.0f, item->getName() );
-        console() << "create audio track" << endl;
-    }
   
     else if ( ( item->getMeta() == "new_track_above" ) || ( item->getMeta() == "new_track_below" ) )
     {
