@@ -16,10 +16,42 @@
 #include "QTimelineItem.h"
 #include "cinder/audio/Output.h"
 #include "bass.h"
+#include <boost/algorithm/string.hpp>
 
 typedef std::shared_ptr<class QTimelineAudioItem>      QTimelineAudioItemRef;
 
 #define AUDIO_WAVEFORM_PRECISION    0.050f    // plot the waveform every N seconds
+
+
+class SupportedFormat
+{
+    
+public:
+    
+    SupportedFormat( std::string formats )
+    {
+        std::vector<std::string> strs;
+        boost::split( strs, formats, boost::is_any_of(" ") );
+        
+        for( size_t k=0; k < strs.size(); k++ )
+            mFormats.push_back( strs[k] );
+    }
+    
+    bool isSupported( std::string format )
+    {
+        for( size_t k=0; k < mFormats.size(); k++ )
+            if ( mFormats[k] == format )
+                return true;
+        
+        return false;
+    }
+    
+private:
+    
+    std::vector<std::string>    mFormats;
+    
+};
+
 
 class QTimelineAudioItem : public QTimelineItem
 {
@@ -70,6 +102,7 @@ public:
             return TIMELINE_ITEM_HEIGHT + TIMELINE_WIDGET_PADDING;
     }
     
+    
 private:
     
     QTimelineAudioItem ( float startTime, float duration, std::string filename, QTimelineTrackRef trackRef, ci::Timeline *ciTimeline );
@@ -85,6 +118,12 @@ private:
     void onTimeChange();
     
     void renderWaveForm( ci::Rectf rect );
+    
+    
+public:
+    
+    static SupportedFormat supportedFormats;
+    
     
 private:
     

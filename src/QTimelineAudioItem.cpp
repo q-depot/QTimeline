@@ -16,6 +16,8 @@ using namespace ci;
 using namespace ci::app;
 using namespace std;
 
+SupportedFormat QTimelineAudioItem::supportedFormats = SupportedFormat( ".mp3 .wav" );
+
 
 QTimelineAudioItem::QTimelineAudioItem( float startTime, float duration, string filename, QTimelineTrackRef trackRef, ci::Timeline *ciTimeline )
 : QTimelineItem( startTime, duration, "QTimelineAudioItem", "untitled", trackRef )

@@ -301,7 +301,7 @@ void QTimelineTrack::menuEventHandler( QTimelineMenuItemRef item )
     
     else if ( item->getMeta() == "create_audio_item" )
     {
-        addAudioItem( timelineRef->getTimeFromPos( mMouseDownPos.x ), 2.0f, "Blank__Kytt_-_08_-_RSPN.mp3" );
+        addAudioItem( timelineRef->getTimeFromPos( mMouseDownPos.x ), 2.0f, item->getName() );
         console() << "create audio track" << endl;
     }
   
@@ -338,10 +338,19 @@ void QTimelineTrack::initMenu()
     
     mMenu->addSeparator();
     mMenu->addLabel( "Audio items" );
-    mMenu->addButton( "new audio item", "create_audio_item", this, &QTimelineTrack::menuEventHandler );
-    mMenu->addSeparator();
     
+    fs::path filePath;
+    fs::path audioDir = getAssetPath("audio");
+    fs::directory_iterator endIt;
+    
+    for( fs::directory_iterator dirIt( audioDir ) ; dirIt != endIt ; ++dirIt )
+    {
+        filePath = dirIt->path();
+        if ( QTimelineAudioItem::supportedFormats.isSupported( filePath.extension().generic_string() ) )
+            mMenu->addButton( filePath.filename().generic_string(), "create_audio_item", this, &QTimelineTrack::menuEventHandler );
+    }
 
+    mMenu->addSeparator();
 }
 
 

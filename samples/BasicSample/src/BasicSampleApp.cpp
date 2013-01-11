@@ -90,7 +90,6 @@ void BasicSampleApp::keyDown( KeyEvent event )
             mTimeline->load( "/Users/Q/Code/Cinder/blocks/QTimeline/samples/BasicSample/assets/timeline.xml" );
     }
     
-    
     if ( code == KeyEvent::KEY_SPACE )
         mTimeline->play( !mTimeline->isPlaying(), QTimeline::FREE_RUN );
     
