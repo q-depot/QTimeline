@@ -103,6 +103,9 @@ bool QTimelineItem::mouseUp( ci::app::MouseEvent event )
 
 bool QTimelineItem::mouseDrag( ci::app::MouseEvent event )
 {
+    if ( event.isRightDown() )
+        return false;
+    
     // drag param to update a keyframe
     if ( mMouseOnParam )
         mMouseOnParam->mouseDrag( event );

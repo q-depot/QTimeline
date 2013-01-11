@@ -326,7 +326,7 @@ void QTimelineTrack::initMenu()
     mMenu->addButton("New track below", "new_track_below", this, &QTimelineTrack::menuEventHandler);
     
     mMenu->addSeparator();
-    mMenu->addLabel( "Module items" );
+    mMenu->addLabel( "MODULES" );
     mMenu->addSeparator();
     
     map<string, QTimeline::ModuleCallbacks>::iterator it;
@@ -334,7 +334,7 @@ void QTimelineTrack::initMenu()
         mMenu->addButton( it->first, "create_module_item", this, &QTimelineTrack::menuEventHandler );
     
     mMenu->addSeparator();
-    mMenu->addLabel( "Audio items" );
+    mMenu->addLabel( "AUDIO" );
     
     fs::path filePath;
     fs::path audioDir = getAssetPath("audio");

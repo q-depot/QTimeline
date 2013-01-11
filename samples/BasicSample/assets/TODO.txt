@@ -3,8 +3,6 @@
 --------------
 
 - fix module/cue render bug, handles should only be visible if the the module is entirely included in the time window
-- Audio item wave form
-- Audio item playback
 - OSC controller + OSC debugger to log and send out states or failure via OSC + OSC console to remotely catch the logs
 - minimal view: render blocks as thin rectangles like in Ableton
 - include licensing

@@ -123,7 +123,7 @@ bool QTimelineCue::mouseUp( MouseEvent event )
 
 bool QTimelineCue::mouseDrag( MouseEvent event )
 {
-    if ( !mIsMouseOn )
+    if ( !mIsMouseOn || event.isRightDown() )
         return false;
 
     if ( !dragHandles( event ) )
