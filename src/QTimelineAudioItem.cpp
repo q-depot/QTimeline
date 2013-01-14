@@ -163,13 +163,17 @@ void QTimelineAudioItem::render( bool mouseOver )
 void QTimelineAudioItem::renderWaveForm( ci::Rectf rect )
 {
     Vec2f   plot;
-    float   stepInPx    = QTimeline::getPtr()->getPtr()->getPosFromTime( AUDIO_WAVEFORM_PRECISION, true );
-    float   timeOffset  = getStartTime() - mTrackStartTime;
+    float   stepInPx    = QTimeline::getPtr()->getPosFromTime( AUDIO_WAVEFORM_PRECISION, true );
+    double  startTime   = getStartTime();
+    float   timeOffset  = startTime - mTrackStartTime;
+    Vec2f   timeWindow  = QTimeline::getPtr()->getTimeWindow();
+    
+    if ( startTime < timeWindow.x )                         // include the offset of the previous time windows
+        timeOffset += timeWindow.x - startTime;
+    
     int     offset      = ( timeOffset != 0 ) ? (int)(  timeOffset / AUDIO_WAVEFORM_PRECISION ) : 0;
     size_t  offset_t    = math<int>::max( 0, offset );
     int     pxOffset    = ( offset < 0 ) ? ( - offset * stepInPx + 0.5f     ) : 0;
-    
-    console() << "renderWaveForm: " << mRect << endl;
     
     /*
     console() << "stepInPx: "   << stepInPx << " | ";
@@ -177,7 +181,7 @@ void QTimelineAudioItem::renderWaveForm( ci::Rectf rect )
     console() << "offset: "     << offset << " | ";
     console() << "offset_t: "   << offset_t << " | ";
     console() << "pxOffset: "   << pxOffset << " | ";
-    console() << "precision: "   << AUDIO_WAVEFORM_PRECISION << " | ";
+    console() << "precision: "  << AUDIO_WAVEFORM_PRECISION << " | ";
     console() << endl;
     */
     

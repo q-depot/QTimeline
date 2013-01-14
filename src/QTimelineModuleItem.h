@@ -55,8 +55,6 @@ public:
 	}
     
     ci::XmlTree getXmlNode();
-    
-//    void loadXmlNode( ci::XmlTree node );
 
     float getHeight()
     {
