@@ -300,8 +300,13 @@ bool QTimeline::keyDown( KeyEvent event )
 
 bool QTimeline::mouseWheel( MouseEvent event )
 {
+    float incr = snapTime( event.getWheelIncrement() );
+    console() << "getWheelIncrement " << event.getWheelIncrement() << " " << incr << endl;
+    
     if ( event.isAltDown() )
-        mZoom = math<float>::clamp( mZoom + event.getWheelIncrement(), 0.2f, 3.0f );
+        mZoom = math<float>::clamp( mZoom + incr, 0.2f, 3.0f );
+    
+//        mZoom = math<float>::clamp( mZoom + event.getWheelIncrement(), 0.2f, 3.0f );
     
     return false;
 }

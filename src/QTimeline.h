@@ -299,6 +299,16 @@ public:
         thisRef = NULL;
     }
     
+    void zoomIn()
+    {
+        mZoom *= 2.0f;
+    }
+    
+    void zoomOut()
+    {
+        mZoom /= 2.0f;
+    }
+    
 private:
     
     ci::ColorA getThemeColor( ci::XmlTree tree, std::string tag );
