@@ -290,7 +290,19 @@ public:
             mOscController->addMessage( address, args );
     }
     
-    void step( int steps = 1 );
+    void step( int steps = 1 )
+    {
+        float newTime = mTimeline->getCurrentTime() + steps * QTIMELINE_SNAP;
+        mTimeline->stepTo( ci::math<float>::max( 0.0f, newTime ) );
+    }
+    
+    void stepTimeWindow( int steps = 1 )
+    {
+        float windowInSecs  = ( TIMELINE_WINDOW_BEATS * 60.0f / TIMELINE_BPM ) / mZoom;
+        float newTime       = getTime() + windowInSecs * steps;
+        newTime             = ci::math<float>::max( 0.0f, newTime );
+        mTimeline->stepTo( newTime );
+    }
     
     void shutdown()
     {

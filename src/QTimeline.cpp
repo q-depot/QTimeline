@@ -760,13 +760,6 @@ void QTimeline::renderDebugInfo()
 }
 
 
-void QTimeline::step( int steps )
-{
-    float newTime = mTimeline->getCurrentTime() + steps * QTIMELINE_SNAP;
-    mTimeline->stepTo( max( 0.0f, newTime ) );
-}
-
-
 void QTimeline::eraseMarkedItems()
 {
     for( size_t k=0; k < mItemsMarkedForRemoval.size(); k++ )
