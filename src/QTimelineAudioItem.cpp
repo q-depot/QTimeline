@@ -169,14 +169,15 @@ void QTimelineAudioItem::renderWaveForm( ci::Rectf rect )
     size_t  offset_t    = math<int>::max( 0, offset );
     int     pxOffset    = ( offset < 0 ) ? ( - offset * stepInPx + 0.5f     ) : 0;
     
+    /*
     console() << "stepInPx: "   << stepInPx << " | ";
     console() << "timeOffset: " << timeOffset << " | ";
     console() << "offset: "     << offset << " | ";
     console() << "offset_t: "   << offset_t << " | ";
     console() << "pxOffset: "   << pxOffset << " | ";
     console() << "precision: "   << AUDIO_WAVEFORM_PRECISION << " | ";
-    
     console() << endl;
+    */
     
     glBegin( GL_LINE_STRIP );
     for( size_t k=offset_t; k < mWaveFormRight.size(); k++ )
