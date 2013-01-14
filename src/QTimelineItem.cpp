@@ -150,9 +150,6 @@ bool QTimelineItem::dragHandles( ci::app::MouseEvent event )
     
     updateLabel();
     
-    for( size_t k=0; k < mParams.size(); k++ )
-        mParams[k]->updateLabel();
-    
     if ( mSelectedHandleType != NO_HANDLE )
         return true;
     

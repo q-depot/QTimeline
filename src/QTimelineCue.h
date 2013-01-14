@@ -51,6 +51,9 @@ public:
     
     float getTimeNorm();
     
+    void updateLabel();
+    
+    
 private:
     
     bool mouseMove( ci::app::MouseEvent event );
@@ -71,7 +74,6 @@ private:
     
     void initMenu();
     
-    void updateLabel();
     
 protected:
     

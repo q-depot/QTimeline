@@ -72,7 +72,7 @@ public:
     
     void eraseModule( QTimelineItemRef itemRef );
     
-    std::vector<QTimelineItemRef>   getModules() { return mItems; }
+    std::vector<QTimelineItemRef>   getItems() { return mItems; }
     
     void findModuleBoundaries( QTimelineItemRef itemRef, float *prevEndTime, float *nextStartTime );
     

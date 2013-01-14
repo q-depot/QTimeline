@@ -82,6 +82,14 @@ public:
     
     virtual float getHeight() { return 0.0f; }
     
+    void updateLabel()
+    {
+        QTimelineWidget::updateLabel();
+        
+        for( size_t k=0; k < mParams.size(); k++ )
+            mParams[k]->updateLabel();
+    }
+    
 protected:
     
     virtual void dragWidget( ci::app::MouseEvent event );

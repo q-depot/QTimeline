@@ -300,13 +300,27 @@ bool QTimeline::keyDown( KeyEvent event )
 
 bool QTimeline::mouseWheel( MouseEvent event )
 {
-    float incr = snapTime( event.getWheelIncrement() );
-    console() << "getWheelIncrement " << event.getWheelIncrement() << " " << incr << endl;
+    if ( !event.isAltDown() )
+        return false;
     
-    if ( event.isAltDown() )
-        mZoom = math<float>::clamp( mZoom + incr, 0.2f, 3.0f );
+    // update zoom
+    float incr  = ( event.getWheelIncrement() > 0 ) ? 0.05f : -0.05f;
+    mZoom       = (int)( ( mZoom + incr ) * 100.0f + 0.5f ) / 100.0f;   // +0.5f fix floating point madness
+    mZoom       = math<float>::clamp( mZoom, 0.25f, 4.0f );
     
-//        mZoom = math<float>::clamp( mZoom + event.getWheelIncrement(), 0.2f, 3.0f );
+    // update items labels
+    vector<QTimelineItemRef> items;
+    for( size_t k=0; k < mTracks.size(); k++ )
+    {
+        items = mTracks[k]->getItems();
+        for( size_t j=0; j<items.size(); j++ )
+            items[j]->updateLabel();
+    }
+    
+    // update cue list labels
+    vector<QTimelineCueRef> cueList = mCueManager->getCueList();
+    for( size_t k=0; k < cueList.size(); k++ )
+        cueList[k]->updateLabel();
     
     return false;
 }
@@ -420,12 +434,16 @@ void QTimeline::renderTimeBar()
     float   windowInSec     = ( TIMELINE_WINDOW_BEATS * 60.0f / TIMELINE_BPM ) / mZoom;
     int     nSecs           = windowInSec + 1;
     float   oneSecInPx      = mTimeBarRect.getWidth() / windowInSec;
-    
-    gl::color( QTimeline::mTimeBarFgCol );
-    
+    int     incr            = ( oneSecInPx < 20 ) ? 4 : 1;
+    ColorA  colMarked       = QTimeline::mTimeBarFgCol; colMarked.a *= 2.5f;
     glBegin( GL_QUADS );
-    for( int k=0; k < nSecs; k++ )
+    for( int k=0; k < nSecs; k+=incr )
     {
+        if ( k%4 == 0 )
+            gl::color( colMarked );
+        else
+            gl::color( QTimeline::mTimeBarFgCol );
+            
         gl::vertex( Vec2f( (int)(k * oneSecInPx),   mTimeBarRect.y1 ) );
         gl::vertex( Vec2f( (int)(k * oneSecInPx)+1, mTimeBarRect.y1 ) );
         gl::vertex( Vec2f( (int)(k * oneSecInPx)+1, mTimeBarRect.y2 ) );
@@ -707,31 +725,32 @@ void QTimeline::load( const std::string &filename )
 void QTimeline::renderDebugInfo()
 {    
     Vec2f debugOffset( 15, 50 );
-    mFontMedium->drawString( "TIMELINE DEBUG:",                         debugOffset ); debugOffset += Vec2f( 0, 20 );
-    mFontMedium->drawString( "Time:\t"   + toString( getTime() ),       debugOffset ); debugOffset += Vec2f( 0, 15 );
-    mFontMedium->drawString( "Window:\t" + toString( mTimeWindow ),     debugOffset ); debugOffset += Vec2f( 0, 15 );
-    mFontMedium->drawString( "BPM:\t"    + toString( TIMELINE_BPM ),    debugOffset ); debugOffset += Vec2f( 0, 15 );
+    mFontMedium->drawString( "TIMELINE DEBUG:",                             debugOffset ); debugOffset += Vec2f( 0, 20 );
+    mFontMedium->drawString( "Time:\t"      + toString( getTime() ),        debugOffset ); debugOffset += Vec2f( 0, 15 );
+    mFontMedium->drawString( "Window:\t"    + toString( mTimeWindow ),      debugOffset ); debugOffset += Vec2f( 0, 15 );
+    mFontMedium->drawString( "Zoom:\t"      + toString( mZoom ),            debugOffset ); debugOffset += Vec2f( 0, 15 );
+    mFontMedium->drawString( "BPM:\t"       + toString( TIMELINE_BPM ),     debugOffset ); debugOffset += Vec2f( 0, 15 );
     string str = isPlaying() ? "TRUE" : "FALSE";
-    mFontMedium->drawString( "PLAY:\t"   + str,                         debugOffset ); debugOffset += Vec2f( 0, 15 );
+    mFontMedium->drawString( "PLAY:\t"      + str,                          debugOffset ); debugOffset += Vec2f( 0, 15 );
     str = mPlayMode == FREE_RUN ? "FREE_RUN" : "CUE_LIST";
-    mFontMedium->drawString( "MODE:\t"   + str,                         debugOffset ); debugOffset += Vec2f( 0, 15 );
+    mFontMedium->drawString( "MODE:\t"      + str,                          debugOffset ); debugOffset += Vec2f( 0, 15 );
     
     if ( mSelectedMenu )
     {
         str = "MENU OPEN: visible " + toString(mSelectedMenu->mPos) + " " + mSelectedMenu->getName();
-        mFontMedium->drawString( str,                                   debugOffset ); debugOffset += Vec2f( 0, 15 );
+        mFontMedium->drawString( str,                                       debugOffset ); debugOffset += Vec2f( 0, 15 );
     }
     
     vector<QTimelineCueRef> cueList = mCueManager->getCueList();
-    mFontMedium->drawString( "CUES: " + toString( cueList.size() ),     debugOffset ); debugOffset += Vec2f( 0, 15 );
+    mFontMedium->drawString( "CUES: " + toString( cueList.size() ),         debugOffset ); debugOffset += Vec2f( 0, 15 );
     
     QTimelineCueRef currentCue = mCueManager->getCurrentCue();
     str = "CUE: ";
     if ( currentCue ) str += currentCue->getName(); else str += "NONE";
-    mFontMedium->drawString( str,                                       debugOffset ); debugOffset += Vec2f( 0, 15 );
+    mFontMedium->drawString( str,                                           debugOffset ); debugOffset += Vec2f( 0, 15 );
     
-    mFontMedium->drawString( "Timeline modules:\t"   + toString( mTimeline->getNumItems() ),       debugOffset ); debugOffset += Vec2f( 0, 15 );
-    mFontMedium->drawString( "Timeline tracks:\t"   + toString( mTracks.size() ),       debugOffset ); debugOffset += Vec2f( 0, 15 );
+    mFontMedium->drawString( "Timeline modules:\t"   + toString( mTimeline->getNumItems() ),    debugOffset ); debugOffset += Vec2f( 0, 15 );
+    mFontMedium->drawString( "Timeline tracks:\t"   + toString( mTracks.size() ),               debugOffset ); debugOffset += Vec2f( 0, 15 );
     
     int j = 0;
     for( size_t k=0; k < mTracks.size();k ++ )
@@ -785,13 +804,14 @@ void QTimeline::dragTimeBar(float posX )
     callItemsOnTimeChange();
 }
 
+
 void QTimeline::callItemsOnTimeChange()
 {
     vector<QTimelineItemRef>    items;
     
     for( size_t k=0; k < mTracks.size(); k++ )
     {
-        items = mTracks[k]->getModules();
+        items = mTracks[k]->getItems();
         
         for( size_t i=0; i < items.size(); i++ )
             items[i]->onTimeChange();

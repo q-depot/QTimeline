@@ -291,22 +291,12 @@ public:
     }
     
     void step( int steps = 1 );
-
+    
     void shutdown()
     {
         clear();
         
         thisRef = NULL;
-    }
-    
-    void zoomIn()
-    {
-        mZoom *= 2.0f;
-    }
-    
-    void zoomOut()
-    {
-        mZoom /= 2.0f;
     }
     
 private:
