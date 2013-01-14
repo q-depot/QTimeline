@@ -119,6 +119,10 @@ private:
     
     void renderWaveForm( ci::Rectf rect );
     
+    void calculateTrackDuration();
+    
+    void dragWidget( ci::app::MouseEvent event );
+    
     
 public:
     
@@ -128,7 +132,11 @@ public:
 private:
     
     ci::fs::path                mFilePath;
+    // this is the actual track time, it can be cropped by the item start-end time and shifted by the item drag event
+    double                      mTrackStartTime;
+    double                      mTrackEndTime;
     double                      mTrackDuration;
+    
     HSTREAM                     mAudioHandle;
     std::vector<float>          mWaveFormLeft;
     std::vector<float>          mWaveFormRight;

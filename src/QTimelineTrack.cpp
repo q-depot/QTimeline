@@ -75,6 +75,8 @@ ci::Rectf QTimelineTrack::render( ci::Rectf rect, ci::Vec2f timeWindow, double c
                 maxHeight = h;
         }
     
+    maxHeight = math<float>::max( TIMELINE_ITEM_HEIGHT, maxHeight );
+    
     trackRect = Rectf( rect.getUpperLeft() - Vec2f( 0, TIMELINE_ITEM_HEIGHT ), rect.getUpperRight() );
     
     if ( mIsTrackOpen )    

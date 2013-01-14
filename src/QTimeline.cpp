@@ -301,8 +301,12 @@ bool QTimeline::keyDown( KeyEvent event )
 bool QTimeline::mouseWheel( MouseEvent event )
 {
     if ( event.isAltDown() )
-        mZoom = math<float>::clamp( mZoom + event.getWheelIncrement(), 0.2f, 3.0f );
-    
+    {
+        if ( event.getWheelIncrement() > 0 )
+            mZoom = math<float>::clamp( mZoom + 0.05 , 0.2f, 3.0f );
+        else
+            mZoom = math<float>::clamp( mZoom - 0.05 , 0.2f, 3.0f );
+    }
     return false;
 }
 

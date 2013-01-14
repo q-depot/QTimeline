@@ -71,7 +71,9 @@ void QTimelineAudioItem::update( float relativeTime )
     
     double currentTime = QTimeline::getPtr()->getTime();
     
-    if ( !QTimeline::getPtr()->isPlaying() || currentTime < getStartTime() || currentTime > getEndTime() )
+    if (    !QTimeline::getPtr()->isPlaying() ||
+            currentTime < getStartTime() || currentTime > getEndTime() ||
+            currentTime < mTrackStartTime || currentTime > mTrackEndTime    )
     {
         if ( trackState == BASS_ACTIVE_PLAYING )                        // stop track
         {
@@ -87,7 +89,7 @@ void QTimelineAudioItem::update( float relativeTime )
     
     if ( trackState != BASS_ACTIVE_PLAYING )                            // play track
     {
-        double time = QTimeline::getPtr()->getTime() - getStartTime();
+        double time = QTimeline::getPtr()->getTime() - mTrackStartTime;
         time = math<double>::max( 0.0f, time );
         QWORD channelPos = BASS_ChannelSeconds2Bytes( mAudioHandle, time );
         BASS_ChannelSetPosition( mAudioHandle, channelPos, BASS_POS_BYTE );
@@ -160,30 +162,26 @@ void QTimelineAudioItem::render( bool mouseOver )
 
 void QTimelineAudioItem::renderWaveForm( ci::Rectf rect )
 {
-    Vec2f plot;
-    float stepInPx = QTimeline::getPtr()->getPtr()->getPosFromTime( AUDIO_WAVEFORM_PRECISION, true );
+    Vec2f   plot;
+    float   stepInPx    = QTimeline::getPtr()->getPtr()->getPosFromTime( AUDIO_WAVEFORM_PRECISION, true );
+    float   timeOffset  = getStartTime() - mTrackStartTime;
+    int     offset      = ( timeOffset != 0 ) ? (int)(  timeOffset / AUDIO_WAVEFORM_PRECISION ) : 0;
+    size_t  offset_t    = math<int>::max( 0, offset );
+    int     pxOffset    = ( offset < 0 ) ? ( - offset * stepInPx + 0.5f     ) : 0;
     
+    console() << "stepInPx: "   << stepInPx << " | ";
+    console() << "timeOffset: " << timeOffset << " | ";
+    console() << "offset: "     << offset << " | ";
+    console() << "offset_t: "   << offset_t << " | ";
+    console() << "pxOffset: "   << pxOffset << " | ";
+    console() << "precision: "   << AUDIO_WAVEFORM_PRECISION << " | ";
     
-//    glBegin( GL_LINES );
-//    float posX, posY1, posY2;
-//    for( size_t k=0; k < mWaveFormLeft.size(); k++ )
-//    {
-//        posX    = rect.x1 + stepInPx * k;
-//        posY1   = rect.y1 + rect.getHeight() * 0.5 * ( 1 - mWaveFormLeft[k] );
-//        posY2   = rect.y1 + rect.getHeight() * 0.5 * ( 1 + mWaveFormRight[k] );
-//        
-//        if ( plot.x > rect.x2 )
-//            break;
-//        
-//        gl::vertex( Vec2f( posX, posY1 ) );
-//        gl::vertex( Vec2f( posX, posY2 ) );
-//    }
-//    glEnd();
-     
+    console() << endl;
+    
     glBegin( GL_LINE_STRIP );
-    for( size_t k=0; k < mWaveFormLeft.size(); k++ )
+    for( size_t k=offset_t; k < mWaveFormRight.size(); k++ )
     {
-        plot.x = rect.x1 + stepInPx * k;
+        plot.x = rect.x1 + stepInPx * ( k - offset_t ) + pxOffset;
         plot.y = rect.y1 + rect.getHeight() * 0.5 * ( 1 - mWaveFormLeft[k] );
         
         if ( plot.x > rect.x2 )
@@ -194,9 +192,9 @@ void QTimelineAudioItem::renderWaveForm( ci::Rectf rect )
     glEnd();
     
     glBegin( GL_LINE_STRIP );
-    for( size_t k=0; k < mWaveFormRight.size(); k++ )
+    for( size_t k=offset_t; k < mWaveFormRight.size(); k++ )
     {
-        plot.x = rect.x1 + stepInPx * k;
+        plot.x = rect.x1 + stepInPx * ( k - offset_t ) + pxOffset;
         plot.y = rect.y1 + rect.getHeight() * 0.5 * ( 1 + mWaveFormRight[k] );
         
         if ( plot.x > rect.x2 )
@@ -255,6 +253,8 @@ void QTimelineAudioItem::loadAudioTrack( string filename )
     
     if ( mFilePath.empty() )
         return;
+
+    calculateTrackDuration();
     
     cacheWaveForm();
     
@@ -282,8 +282,6 @@ void QTimelineAudioItem::cacheWaveForm()
                                             mFilePath.generic_string().c_str(),
                                             0, 0, BASS_STREAM_DECODE | BASS_SAMPLE_FLOAT | BASS_STREAM_PRESCAN );
     
-    QWORD len       = BASS_ChannelGetLength( mAudioHandle, BASS_POS_BYTE );     // the length in bytes
-    mTrackDuration  = BASS_ChannelBytes2Seconds( mAudioHandle, len );           // the length in seconds
     int samplesN    = mTrackDuration / AUDIO_WAVEFORM_PRECISION;
     
     if ( !mAudioHandle )
@@ -312,6 +310,21 @@ void QTimelineAudioItem::cacheWaveForm()
 }
 
 
+void QTimelineAudioItem::calculateTrackDuration()
+{
+    mAudioHandle = BASS_StreamCreateFile(   FALSE,
+                                            mFilePath.generic_string().c_str(),
+                                            0, 0, BASS_STREAM_DECODE | BASS_SAMPLE_FLOAT | BASS_STREAM_PRESCAN );
+    
+    QWORD len       = BASS_ChannelGetLength( mAudioHandle, BASS_POS_BYTE );     // the length in bytes
+    mTrackDuration  = BASS_ChannelBytes2Seconds( mAudioHandle, len );           // the length in seconds
+    mTrackStartTime = getStartTime();
+    mTrackEndTime   = mTrackStartTime + mTrackDuration;
+    
+    BASS_StreamFree( mAudioHandle );
+}
+
+
 XmlTree QTimelineAudioItem::getXmlNode()
 {
     XmlTree node = QTimelineItem::getXmlNode();
@@ -327,8 +340,8 @@ void QTimelineAudioItem::onTimeChange()
     DWORD   trackState  = BASS_ChannelIsActive( mAudioHandle );
     double  currentTime = QTimeline::getPtr()->getTime();
     
-    //    if ( !QTimeline::getPtr()->isPlaying() || currentTime < getStartTime() || currentTime > getEndTime() )
-    if ( currentTime < getStartTime() || currentTime > getEndTime() )
+    if ( currentTime < getStartTime() || currentTime > getEndTime() ||
+         currentTime < mTrackStartTime || currentTime > mTrackEndTime   )
     {
         if ( trackState == BASS_ACTIVE_PLAYING )                                    // track is playing, STOP
         {
@@ -342,7 +355,7 @@ void QTimelineAudioItem::onTimeChange()
         return;
     }
     
-    double time = QTimeline::getPtr()->getTime() - getStartTime();
+    double time = QTimeline::getPtr()->getTime() - mTrackStartTime;
     time = math<double>::max( 0.0f, time );
     QWORD channelPos = BASS_ChannelSeconds2Bytes( mAudioHandle, time );
     BASS_ChannelSetPosition( mAudioHandle, channelPos, BASS_POS_BYTE );                 // if the module is playing update the position
@@ -367,4 +380,14 @@ void QTimelineAudioItem::onTimeChange()
     
 }
 
+
+void QTimelineAudioItem::dragWidget( MouseEvent event )
+{
+    float diff = getStartTime() - mTrackStartTime;
+
+    QTimelineItem::dragWidget( event );
+    
+    mTrackStartTime = getStartTime() - diff;
+    mTrackEndTime   = mTrackStartTime + mTrackDuration;
+}
 
