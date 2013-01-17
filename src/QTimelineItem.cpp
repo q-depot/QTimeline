@@ -31,38 +31,25 @@ QTimelineItem::QTimelineItem( float startTime, float duration, std::string type,
 }
 
 void QTimelineItem::clear()
-{
-    
+{    
     if ( mMenu )
         QTimeline::getPtr()->closeMenu( mMenu );
     
     mParams.clear();
 }
 
+
 void QTimelineItem::checkActive()
 {
-    float currT = QTimeline::getPtr()->getTime();
-    bool running = ((mStartTime <= currT) && ((mStartTime + getDuration()) > currT));
+    bool running = isRunning();
     
-    if (running)
-    {
-        mParentTrack->mActiveItem = thisRef();
-    } else {
-        if (mParentTrack->mActiveItem == thisRef())
-            mParentTrack->mActiveItem = QTimelineItemRef();
-    }
-    if (mTargetModuleRef)
-        mTargetModuleRef->activeChanged(running);
-}
+    if ( running )
+        mParentTrack->setActiveItem( thisRef() );
+    else
+        mParentTrack->releaseActiveItem( thisRef() );
 
-void QTimelineItem::start( bool reverse )
-{
-    checkActive();
-}
-
-void QTimelineItem::complete( bool reverse )
-{
-    checkActive();
+    if ( mTargetModuleRef )
+        mTargetModuleRef->stateChanged( running );
 }
 
 bool QTimelineItem::mouseMove( ci::app::MouseEvent event )
@@ -269,3 +256,13 @@ string QTimelineItem::getTargetType()
         return "";
 }
 
+
+bool QTimelineItem::isRunning()
+{
+    double currentTime = QTimeline::getPtr()->getTime();
+    
+    if ( currentTime < getStartTime() || currentTime > getEndTime() )
+        return false;
+    
+    return true;
+}

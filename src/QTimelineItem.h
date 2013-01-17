@@ -43,9 +43,9 @@ public:
     
     virtual void clear();
     
-    virtual void start( bool reverse );
+    virtual void start( bool reverse ) { checkActive(); }
     
-    virtual void complete( bool reverse );
+    virtual void complete( bool reverse ) { checkActive(); }
   
     virtual void reverse() {}
     
@@ -89,6 +89,9 @@ public:
         for( size_t k=0; k < mParams.size(); k++ )
             mParams[k]->updateLabel();
     }
+    
+    bool isRunning();
+    
     
 protected:
     

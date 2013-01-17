@@ -38,7 +38,7 @@ public:
     
     virtual void init() {}
   
-    virtual void activeChanged(bool active) {}
+    virtual void stateChanged( bool isActive ) {}
   
     void setItemRef( QTimelineItemRef ref ) { mItemRef = ref; }
     

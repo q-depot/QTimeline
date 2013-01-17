@@ -78,6 +78,16 @@ public:
     void findModuleBoundaries( QTimelineItemRef itemRef, float *prevEndTime, float *nextStartTime );
     
     QTimelineItemRef getActiveItem() { return mActiveItem; }
+    
+    void setActiveItem( QTimelineItemRef ref )  { mActiveItem = ref; }
+    
+    void releaseActiveItem( QTimelineItemRef ref )      // QTimelineItem can only release itself
+    {
+        if ( mActiveItem == ref )
+            mActiveItem.reset();
+    }
+    
+    
 private:
     
     ci::Rectf makeRect( ci::Rectf trackRect, ci::Vec2f window, double startTime, double endTime )

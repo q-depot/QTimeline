@@ -49,13 +49,8 @@ public:
         registerParam( "tilt" );
     }
     
-    // this gets called automatically by the timeline
-    void update()
-    {
-//        ci::app::console() << "radius: " << getParamValue("radius") << std::endl; 
-    }
+    void update() {}
     
-    // this needs to be called explicitly
     void render()
     {
         ci::gl::color( mColor );
@@ -63,10 +58,7 @@ public:
         ci::gl::drawStringCentered( ci::toString( getParamValue("radius") ), mPos, ci::Color::white() );
     }
   
-    void activeChanged(bool active)
-    {
-        printf("Module active: %d\n", active ? 1 : 0);
-    }
+    void stateChanged( bool isActive ) {}
     
 private:
     
