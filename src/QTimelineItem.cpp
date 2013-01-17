@@ -31,14 +31,26 @@ QTimelineItem::QTimelineItem( float startTime, float duration, std::string type,
 }
 
 void QTimelineItem::clear()
-{
-    
+{    
     if ( mMenu )
         QTimeline::getPtr()->closeMenu( mMenu );
     
     mParams.clear();
 }
 
+
+void QTimelineItem::checkActive()
+{
+    bool running = isRunning();
+    
+    if ( running )
+        mParentTrack->setActiveItem( thisRef() );
+    else
+        mParentTrack->releaseActiveItem( thisRef() );
+
+    if ( mTargetModuleRef )
+        mTargetModuleRef->stateChanged( running );
+}
 
 bool QTimelineItem::mouseMove( ci::app::MouseEvent event )
 {
@@ -244,3 +256,13 @@ string QTimelineItem::getTargetType()
         return "";
 }
 
+
+bool QTimelineItem::isRunning()
+{
+    double currentTime = QTimeline::getPtr()->getTime();
+    
+    if ( currentTime < getStartTime() || currentTime > getEndTime() )
+        return false;
+    
+    return true;
+}

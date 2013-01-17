@@ -45,21 +45,20 @@ public:
         registerParam( "red", &mColor.r );
         registerParam( "green", &mColor.g );
         registerParam( "blue", &mColor.b );
+        
+        registerParam( "tilt" );
     }
     
-    // this gets called automatically by the timeline
-    void update()
-    {
-//        ci::app::console() << "radius: " << getParamValue("radius") << std::endl; 
-    }
+    void update() {}
     
-    // this needs to be called explicitly
     void render()
     {
         ci::gl::color( mColor );
         ci::gl::drawSolidCircle( mPos, getParamValue("radius") );
         ci::gl::drawStringCentered( ci::toString( getParamValue("radius") ), mPos, ci::Color::white() );
     }
+  
+    void stateChanged( bool isActive ) {}
     
 private:
     

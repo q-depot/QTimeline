@@ -27,7 +27,8 @@ class QTimelineTrack : public QTimelineWidget, public std::enable_shared_from_th
 {
     
     friend class QTimeline;
-    
+    friend class QTimelineItem;
+  
 public:
     
     QTimelineTrack( std::string name );
@@ -76,6 +77,16 @@ public:
     
     void findModuleBoundaries( QTimelineItemRef itemRef, float *prevEndTime, float *nextStartTime );
     
+    QTimelineItemRef getActiveItem() { return mActiveItem; }
+    
+    void setActiveItem( QTimelineItemRef ref )  { mActiveItem = ref; }
+    
+    void releaseActiveItem( QTimelineItemRef ref )      // QTimelineItem can only release itself
+    {
+        if ( mActiveItem == ref )
+            mActiveItem.reset();
+    }
+    
     
 private:
     
@@ -93,11 +104,12 @@ private:
     
     void initMenu();
     
-    
+     
 private:
     
     std::vector<QTimelineItemRef>   mItems;
-    
+  
+    QTimelineItemRef                mActiveItem;
     QTimelineItemRef                mMouseOnItem;
     QTimelineItemRef                mSelectedItem;
     

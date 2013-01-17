@@ -43,10 +43,10 @@ public:
     
     virtual void clear();
     
-    virtual void start( bool reverse ) {}
+    virtual void start( bool reverse ) { checkActive(); }
     
-    virtual void complete( bool reverse ) {}
-    
+    virtual void complete( bool reverse ) { checkActive(); }
+  
     virtual void reverse() {}
     
     virtual ci::TimelineItemRef clone() const
@@ -89,6 +89,9 @@ public:
         for( size_t k=0; k < mParams.size(); k++ )
             mParams[k]->updateLabel();
     }
+    
+    bool isRunning();
+    
     
 protected:
     
@@ -165,7 +168,10 @@ public:
     std::string getTargetType();
     
 protected:
-    
+    void changeTrack(bool moveup);
+  
+    void checkActive();
+  
     QTimelineParamRef findParamByName( std::string name )
     {
         for( size_t k=0; k < mParams.size(); k++ )

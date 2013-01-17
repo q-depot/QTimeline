@@ -71,8 +71,7 @@ void QTimelineAudioItem::update( float relativeTime )
     
     double currentTime = QTimeline::getPtr()->getTime();
     
-    if (    !QTimeline::getPtr()->isPlaying() ||
-            currentTime < getStartTime() || currentTime > getEndTime() ||
+    if (    !QTimeline::getPtr()->isPlaying() || isRunning() ||
             currentTime < mTrackStartTime || currentTime > mTrackEndTime    )
     {
         if ( trackState == BASS_ACTIVE_PLAYING )                        // stop track
