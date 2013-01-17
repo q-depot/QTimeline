@@ -36,11 +36,13 @@ public:
     ~QTimelineTrack();
     
     void clear();
-    
+  
     QTimelineItemRef addModuleItem( float startTime, float duration, std::string name = "" );
     
     QTimelineItemRef addAudioItem( float startTime, float duration, std::string filename );
-    
+  
+    void moveModuleItem(QTimelineItemRef q);
+  
     ci::Rectf render( ci::Rectf rect, ci::Vec2f timeWindow, double currentTime );
     
     bool mouseDown( ci::app::MouseEvent event );

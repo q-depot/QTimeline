@@ -121,6 +121,12 @@ void QTimelineModuleItem::menuEventHandler( QTimelineMenuItemRef item )
         setName( item->getName() );
         QTimeline::getPtr()->closeMenu( mMenu );
     }
+  
+    else if ((item->getMeta() == "moveup" ) || (item->getMeta() == "movedown"))
+    {
+      QTimeline::getPtr()->closeMenu( mMenu );
+      changeTrack(item->getMeta() == "moveup");
+    }
 }
 
 
@@ -135,5 +141,6 @@ void QTimelineModuleItem::initMenu()
     mMenu->addSeparator();
     
     mMenu->addButton( "X DELETE", "delete", this, &QTimelineModuleItem::menuEventHandler );
+    mMenu->addButton( "Move up a track", "moveup", this, &QTimelineModuleItem::menuEventHandler);
+    mMenu->addButton( "Move down a track", "movedown", this, &QTimelineModuleItem::menuEventHandler);
 }
-
