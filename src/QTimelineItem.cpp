@@ -49,7 +49,7 @@ void QTimelineItem::start( bool reverse )
     mParentTrack->mActiveItem = thisRef();
   } else {
     if (mParentTrack->mActiveItem == thisRef())
-      mParentTrack->mActiveItem = NULL;
+      mParentTrack->mActiveItem = QTimelineItemRef();
   }
 }
 
@@ -62,7 +62,7 @@ void QTimelineItem::complete( bool reverse )
     mParentTrack->mActiveItem = thisRef();
   } else {
     if (mParentTrack->mActiveItem == thisRef())
-      mParentTrack->mActiveItem = NULL;
+      mParentTrack->mActiveItem = QTimelineItemRef();
   }
 }
 
