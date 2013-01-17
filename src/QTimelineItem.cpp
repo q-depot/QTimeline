@@ -43,12 +43,27 @@ void QTimelineItem::start( bool reverse )
 {
   if (mTargetModuleRef)
     mTargetModuleRef->start(reverse);
+
+  if (!reverse)
+  {
+    mParentTrack->mActiveItem = thisRef();
+  } else {
+    if (mParentTrack->mActiveItem == thisRef())
+      mParentTrack->mActiveItem = NULL;
+  }
 }
 
 void QTimelineItem::complete( bool reverse )
 {
   if (mTargetModuleRef)
     mTargetModuleRef->complete(reverse);
+  if (reverse)
+  {
+    mParentTrack->mActiveItem = thisRef();
+  } else {
+    if (mParentTrack->mActiveItem == thisRef())
+      mParentTrack->mActiveItem = NULL;
+  }
 }
 
 
