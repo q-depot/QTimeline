@@ -39,6 +39,33 @@ void QTimelineItem::clear()
     mParams.clear();
 }
 
+void QTimelineItem::start( bool reverse )
+{
+  if (mTargetModuleRef)
+    mTargetModuleRef->start(reverse);
+
+  if (!reverse)
+  {
+    mParentTrack->mActiveItem = thisRef();
+  } else {
+    if (mParentTrack->mActiveItem == thisRef())
+      mParentTrack->mActiveItem = QTimelineItemRef();
+  }
+}
+
+void QTimelineItem::complete( bool reverse )
+{
+  if (mTargetModuleRef)
+    mTargetModuleRef->complete(reverse);
+  if (reverse)
+  {
+    mParentTrack->mActiveItem = thisRef();
+  } else {
+    if (mParentTrack->mActiveItem == thisRef())
+      mParentTrack->mActiveItem = QTimelineItemRef();
+  }
+}
+
 
 bool QTimelineItem::mouseMove( ci::app::MouseEvent event )
 {
@@ -244,3 +271,43 @@ string QTimelineItem::getTargetType()
         return "";
 }
 
+void QTimelineItem::changeTrack(bool moveup)
+{
+  QTimeline* q = QTimeline::getPtr();
+  
+  auto tracks = q->getTracks();
+  auto i = std::find(tracks.begin(), tracks.end(), mParentTrack);
+  if (i != tracks.end())
+  {
+    if (moveup)
+    {
+      if (i == tracks.begin())
+        return;
+      i--;
+    } else {
+      if (i == tracks.end()-1)
+        return;
+      i++;
+    }
+    const QTimelineItemRef me = thisRef();
+    mParentTrack->eraseModule(me);
+    mParentTrack = *i;
+    mParentTrack->moveModuleItem(me);
+    
+    // Make sure we don't overlap another timeline item
+    float prevModuleEndTime, nextModuleStartTime;
+    mParentTrack->findModuleBoundaries(thisRef(), &prevModuleEndTime, &nextModuleStartTime );
+    
+    float startTime = getStartTime();
+    float time      = ci::math<float>::clamp( startTime, prevModuleEndTime, nextModuleStartTime - getDuration() );
+    time            = q->snapTime( time );
+    
+    setStartTime( time );
+    
+    // update params, keyframes move with the module
+    for( size_t k=0; k < mParams.size(); k++ )
+      mParams[k]->updateKeyframesPos( time - startTime );
+    
+    q->update();
+  }
+}

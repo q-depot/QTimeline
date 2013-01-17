@@ -203,7 +203,6 @@ bool QTimelineTrack::mouseDrag( ci::app::MouseEvent event )
     return false;
 }
 
-
 QTimelineItemRef QTimelineTrack::addModuleItem( float startTime, float duration, std::string name )
 {
     startTime   = QTimeline::getPtr()->snapTime( startTime );
@@ -239,6 +238,11 @@ QTimelineItemRef QTimelineTrack::addAudioItem( float startTime, float duration, 
     return itemRef;
 }
 
+void QTimelineTrack::moveModuleItem(QTimelineItemRef q)
+{
+  mItems.push_back(q);
+  sort( mItems.begin(), mItems.end(), sortModulesHelper );
+}
 
 XmlTree QTimelineTrack::getXmlNode()
 {
@@ -391,4 +395,3 @@ void QTimelineTrack::findModuleBoundaries( QTimelineItemRef itemRef, float *prev
     *prevEndTime    = prevModule ? prevModule->getEndTime()     : 0.0f;
     *nextStartTime  = nextModule ? nextModule->getStartTime()   : 10000;    // max bound should be the timeline or cue end time
 }
-

@@ -27,7 +27,8 @@ class QTimelineTrack : public QTimelineWidget, public std::enable_shared_from_th
 {
     
     friend class QTimeline;
-    
+    friend class QTimelineItem;
+  
 public:
     
     QTimelineTrack( std::string name );
@@ -35,11 +36,13 @@ public:
     ~QTimelineTrack();
     
     void clear();
-    
+  
     QTimelineItemRef addModuleItem( float startTime, float duration, std::string name = "" );
     
     QTimelineItemRef addAudioItem( float startTime, float duration, std::string filename );
-    
+  
+    void moveModuleItem(QTimelineItemRef q);
+  
     ci::Rectf render( ci::Rectf rect, ci::Vec2f timeWindow, double currentTime );
     
     bool mouseDown( ci::app::MouseEvent event );
@@ -76,7 +79,7 @@ public:
     
     void findModuleBoundaries( QTimelineItemRef itemRef, float *prevEndTime, float *nextStartTime );
     
-    
+    QTimelineItemRef getActiveItem() { return mActiveItem; }
 private:
     
     ci::Rectf makeRect( ci::Rectf trackRect, ci::Vec2f window, double startTime, double endTime )
@@ -93,11 +96,12 @@ private:
     
     void initMenu();
     
-    
+     
 private:
     
     std::vector<QTimelineItemRef>   mItems;
-    
+  
+    QTimelineItemRef                mActiveItem;
     QTimelineItemRef                mMouseOnItem;
     QTimelineItemRef                mSelectedItem;
     
