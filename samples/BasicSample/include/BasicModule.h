@@ -45,6 +45,8 @@ public:
         registerParam( "red", &mColor.r );
         registerParam( "green", &mColor.g );
         registerParam( "blue", &mColor.b );
+        
+        registerParam( "tilt" );
     }
     
     // this gets called automatically by the timeline
