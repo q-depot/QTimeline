@@ -190,6 +190,8 @@ void QTimeline::render()
 
 void QTimeline::registerCallbacks()
 {
+// Use the boost version to figure out what style callbacks to use.
+#if BOOST_VERSION < 105200
     mCbMouseDown    = mApp->registerMouseDown(  this, &QTimeline::mouseDown );
     mCbMouseUp      = mApp->registerMouseUp(    this, &QTimeline::mouseUp );
     mCbMouseMove    = mApp->registerMouseMove(  this, &QTimeline::mouseMove );
@@ -197,6 +199,17 @@ void QTimeline::registerCallbacks()
     mCbMouseWheel   = mApp->registerMouseWheel( this, &QTimeline::mouseWheel );
     mCbKeyDown      = mApp->registerKeyDown( this, &QTimeline::keyDown );
     mCbResize       = mApp->registerResize(     this, &QTimeline::resize );
+#else
+  // TODO: At some point, WindowRef should be passed into here.
+  cinder::app::WindowRef w = getWindow();
+  w->getSignalMouseDown().connect(std::bind(&QTimeline::mouseDown, this, std::_1));
+  w->getSignalMouseUp().connect(std::bind(&QTimeline::mouseUp, this, std::_1));
+  w->getSignalMouseMove().connect(std::bind(&QTimeline::mouseMove, this, std::_1));
+  w->getSignalMouseDrag().connect(std::bind(&QTimeline::mouseDrag, this, std::_1));
+  w->getSignalMouseWheel().connect(std::bind(&QTimeline::mouseWheel, this, std::_1));
+  w->getSignalKeyDown().connect(std::bind(&QTimeline::keyDown, this, std::_1));
+  w->getSignalResize().connect(std::bind(&QTimeline::resize, this));
+#endif
 }
 
 
@@ -325,8 +338,11 @@ bool QTimeline::mouseWheel( MouseEvent event )
     return false;
 }
 
-
+#if BOOST_VERSION < 105200
 bool QTimeline::resize( ci::app::ResizeEvent event )
+#else
+bool QTimeline::resize( )
+#endif
 {
     mTransportRect  = Rectf( 0, getWindowHeight() - TIMELINE_TRANSPORT_HEIGHT, getWindowWidth(), getWindowHeight() );
     return false;

@@ -140,12 +140,16 @@ void BasicSampleApp::update()
 
 void BasicSampleApp::draw()
 {
-	gl::clear( Color( 0, 0, 0 ) );
+    gl::clear( Color( 0, 0, 0 ) );
     gl::enableAlphaBlending();
-    
-    for( size_t k=0; k < mModules.size(); k ++ )
-        if ( mModules[k]->isPlaying() )
-            mModules[k]->render();
+  
+    auto tracks = mTimeline->getTracks();
+    for (auto i = tracks.rbegin(); i != tracks.rend(); i++)
+    {
+      auto item = (*i)->getActiveItem();
+      if (item)
+        item->getTargetModule()->render();
+    }
     
     mTimeline->render();
 

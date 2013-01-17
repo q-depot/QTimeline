@@ -332,9 +332,13 @@ private:
     bool mouseWheel( ci::app::MouseEvent event );
     
     bool keyDown( ci::app::KeyEvent event );
-    
+  
+#if BOOST_VERSION < 105200
     bool resize( ci::app::ResizeEvent event );
-    
+#else
+    bool resize( /*ci::app::ResizeEvent event*/ );
+#endif
+  
     void renderTimeBar();
     
     void renderDebugInfo();
