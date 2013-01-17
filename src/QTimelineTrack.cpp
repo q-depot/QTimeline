@@ -341,12 +341,15 @@ void QTimelineTrack::initMenu()
     fs::path filePath;
     fs::path audioDir = getAssetPath("audio");
     fs::directory_iterator endIt;
-    
-    for( fs::directory_iterator dirIt( audioDir ) ; dirIt != endIt ; ++dirIt )
+  
+    if (!audioDir.empty())
     {
-        filePath = dirIt->path();
-        if ( QTimelineAudioItem::supportedFormats.isSupported( filePath.extension().generic_string() ) )
-            mMenu->addButton( filePath.filename().generic_string(), "create_audio_item", this, &QTimelineTrack::menuEventHandler );
+        for( fs::directory_iterator dirIt( audioDir ) ; dirIt != endIt ; ++dirIt )
+        {
+            filePath = dirIt->path();
+            if ( QTimelineAudioItem::supportedFormats.isSupported( filePath.extension().generic_string() ) )
+                mMenu->addButton( filePath.filename().generic_string(), "create_audio_item", this, &QTimelineTrack::menuEventHandler );
+        }
     }
 
     mMenu->addSeparator();
