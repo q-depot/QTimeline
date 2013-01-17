@@ -165,7 +165,10 @@ public:
     std::string getTargetType();
     
 protected:
-    
+    void changeTrack(bool moveup);
+  
+    void checkActive();
+  
     QTimelineParamRef findParamByName( std::string name )
     {
         for( size_t k=0; k < mParams.size(); k++ )

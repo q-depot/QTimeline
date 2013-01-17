@@ -39,33 +39,31 @@ void QTimelineItem::clear()
     mParams.clear();
 }
 
+void QTimelineItem::checkActive()
+{
+    float currT = QTimeline::getPtr()->getTime();
+    bool running = ((mStartTime <= currT) && ((mStartTime + getDuration()) > currT));
+    
+    if (running)
+    {
+        mParentTrack->mActiveItem = thisRef();
+    } else {
+        if (mParentTrack->mActiveItem == thisRef())
+            mParentTrack->mActiveItem = QTimelineItemRef();
+    }
+    if (mTargetModuleRef)
+        mTargetModuleRef->activeChanged(running);
+}
+
 void QTimelineItem::start( bool reverse )
 {
-  if (mTargetModuleRef)
-    mTargetModuleRef->start(reverse);
-
-  if (!reverse)
-  {
-    mParentTrack->mActiveItem = thisRef();
-  } else {
-    if (mParentTrack->mActiveItem == thisRef())
-      mParentTrack->mActiveItem = QTimelineItemRef();
-  }
+    checkActive();
 }
 
 void QTimelineItem::complete( bool reverse )
 {
-  if (mTargetModuleRef)
-    mTargetModuleRef->complete(reverse);
-  if (reverse)
-  {
-    mParentTrack->mActiveItem = thisRef();
-  } else {
-    if (mParentTrack->mActiveItem == thisRef())
-      mParentTrack->mActiveItem = QTimelineItemRef();
-  }
+    checkActive();
 }
-
 
 bool QTimelineItem::mouseMove( ci::app::MouseEvent event )
 {
