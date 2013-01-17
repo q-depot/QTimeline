@@ -60,6 +60,11 @@ public:
         ci::gl::drawSolidCircle( mPos, getParamValue("radius") );
         ci::gl::drawStringCentered( ci::toString( getParamValue("radius") ), mPos, ci::Color::white() );
     }
+  
+    void activeChanged(bool active)
+    {
+        printf("Module active: %d\n", active ? 1 : 0);
+    }
     
 private:
     

@@ -37,7 +37,9 @@ public:
     virtual void render() {}
     
     virtual void init() {}
-    
+  
+    virtual void activeChanged(bool active) {}
+  
     void setItemRef( QTimelineItemRef ref ) { mItemRef = ref; }
     
     QTimelineItemRef getItemRef() { return mItemRef->thisRef(); }
