@@ -43,10 +43,10 @@ public:
     
     virtual void clear();
     
-    virtual void start( bool reverse ) {}
+    virtual void start( bool reverse );
     
-    virtual void complete( bool reverse ) {}
-    
+    virtual void complete( bool reverse );
+  
     virtual void reverse() {}
     
     virtual ci::TimelineItemRef clone() const

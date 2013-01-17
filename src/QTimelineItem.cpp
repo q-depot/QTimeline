@@ -39,6 +39,18 @@ void QTimelineItem::clear()
     mParams.clear();
 }
 
+void QTimelineItem::start( bool reverse )
+{
+  if (mTargetModuleRef)
+    mTargetModuleRef->start(reverse);
+}
+
+void QTimelineItem::complete( bool reverse )
+{
+  if (mTargetModuleRef)
+    mTargetModuleRef->complete(reverse);
+}
+
 
 bool QTimelineItem::mouseMove( ci::app::MouseEvent event )
 {

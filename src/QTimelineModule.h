@@ -37,7 +37,11 @@ public:
     virtual void render() {}
     
     virtual void init() {}
+  
+    virtual void start(bool reverse) {}
     
+    virtual void complete(bool reverse) {}
+  
     void setItemRef( QTimelineItemRef ref ) { mItemRef = ref; }
     
     QTimelineItemRef getItemRef() { return mItemRef->thisRef(); }
