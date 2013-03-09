@@ -459,7 +459,7 @@ void QTimelineParam::keyframeMenuEventHandler( QTimelineMenuItemRef item )
             // Just eat any conversion issues
         }
         mActiveKeyframe = NULL;
-        QTimeline::getPtr()->closeMenu( mMenu );
+        QTimeline::getPtr()->closeMenu( mKeyframeMenu );
     }
 }
 
