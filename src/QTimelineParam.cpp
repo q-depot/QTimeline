@@ -350,6 +350,9 @@ bool QTimelineParam::mouseDown( MouseEvent event )
     else
     {
         mKeyframesSelection.clear();
+        
+        mKeyframeMenu->close();
+        QTimeline::getPtr()->closeMenu(mKeyframeMenu);        
         mMenu->close();
         QTimeline::getPtr()->closeMenu( mMenu );
         
