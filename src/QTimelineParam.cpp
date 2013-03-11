@@ -24,7 +24,7 @@ bool sortKeyframesHelper(QTimelineKeyframeRef a, QTimelineKeyframeRef b) { retur
 
 
 QTimelineParam::QTimelineParam( QTimelineItemRef itemRef, const std::string &name, float *var, float minVal, float maxVal )
-: mParentModule(itemRef), mVar(var), mMax(maxVal), mMin(minVal), QTimelineWidget(name)
+: mParentModule(itemRef), mVar(var), mMax(maxVal), mMin(minVal), mKeyframeMenu(NULL), QTimelineWidget(name)
 {
     mBgColor                = QTimeline::mParamsBgCol;
     mBgOverColor            = QTimeline::mParamsBgOverCol;
@@ -65,6 +65,8 @@ QTimelineParam::~QTimelineParam()
     
     mParentModule.reset();
     
+    mKeyframeValue = NULL;
+    delete mKeyframeMenu;
 //    delete mVar; // should I call it?
 }
 
@@ -326,9 +328,16 @@ bool QTimelineParam::mouseDown( MouseEvent event )
         
         if ( mMouseOnKeyframe )                        // move or delete keyframe
         {
-            removeKeyframe( mMouseOnKeyframe );
-            mKeyframesSelection.clear();
-            mouseMove( event );
+            if (!event.isShiftDown())
+            {
+                removeKeyframe( mMouseOnKeyframe );
+                mKeyframesSelection.clear();
+                mouseMove( event );
+            } else {
+                mActiveKeyframe = mMouseOnKeyframe;
+                mKeyframeValue->setName(std::to_string(mMouseOnKeyframe->getValue()));
+                QTimeline::getPtr()->openMenu( mKeyframeMenu, event.getPos());
+            }
         }
         
         else if ( !mKeyframesSelection.empty() )
@@ -340,7 +349,11 @@ bool QTimelineParam::mouseDown( MouseEvent event )
     
     else
     {
-        mKeyframesSelection.clear();
+        if (!mMouseOnKeyframe)
+            mKeyframesSelection.clear();
+        
+        mKeyframeMenu->close();
+        QTimeline::getPtr()->closeMenu(mKeyframeMenu);        
         mMenu->close();
         QTimeline::getPtr()->closeMenu( mMenu );
         
@@ -378,7 +391,32 @@ bool QTimelineParam::mouseDrag( MouseEvent event )
         time            = QTimeline::getPtr()->snapTime( time );
         float value     = getPosValue( mMousePos.y );
         
-        mMouseOnKeyframe->set( time, value );
+        if (mKeyframesSelection.size() == 0)
+        {
+            mMouseOnKeyframe->set( time, value );
+        } else {
+            // Let's make sure the timediff won't cause any keyframes to move beyond module boundaries
+            float timediff = time - mMouseOnKeyframe->getTime();
+            if (timediff < 0.0f)
+            {
+                for (auto i : mKeyframesSelection)
+                {
+                    if (i->getTime() + timediff < mParentModule->getStartTime())
+                        timediff = mParentModule->getStartTime() - i->getTime();
+                }
+            } else {
+                for (auto i : mKeyframesSelection)
+                {
+                    if (i->getTime() + timediff >= mParentModule->getEndTime())
+                        timediff = mParentModule->getEndTime() - i->getTime();
+                }
+            }
+            for (auto i : mKeyframesSelection)
+            {
+                float new_time = i->getTime() + timediff;
+                i->set(new_time, i->getValue());
+            }
+        }
         
         sort( mKeyframes.begin(), mKeyframes.end(), sortKeyframesHelper );
         
@@ -434,6 +472,25 @@ void QTimelineParam::menuEventHandler( QTimelineMenuItemRef item )
         mKeyframesSelection[k]->setEasing( mDefaultEasing, mDefaultEasingStr );
 }
 
+void QTimelineParam::keyframeMenuEventHandler( QTimelineMenuItemRef item )
+{
+    if ( item->getMeta() == "value_text_box" )
+    {
+        try
+        {
+            std::string newvalue = item->getName();
+            float newval = std::stof( item->getName() );
+            newval = std::max(getMin(), std::min(getMax(), newval));
+            mActiveKeyframe->set(mActiveKeyframe->getTime(), newval);
+        }
+        catch (...)
+        {
+            // Just eat any conversion issues
+        }
+        mActiveKeyframe = NULL;
+        QTimeline::getPtr()->closeMenu( mKeyframeMenu );
+    }
+}
 
 Vec2f QTimelineParam::getRelPosNorm( Vec2f pos )
 {
@@ -476,6 +533,9 @@ void QTimelineParam::initMenu()
     mMenu->addButton( "EaseOutInQuad", "", this, &QTimelineParam::menuEventHandler );
     mMenu->addButton( "EaseStep", "", this, &QTimelineParam::menuEventHandler );
     mMenu->addButton( "EaseNone", "", this, &QTimelineParam::menuEventHandler );
+
+    mKeyframeMenu = new QTimelineMenu();
+    mKeyframeValue = mKeyframeMenu->addTextBox( getName(), "value_text_box", this, &QTimelineParam::keyframeMenuEventHandler );
 }
 
 
