@@ -349,7 +349,8 @@ bool QTimelineParam::mouseDown( MouseEvent event )
     
     else
     {
-        mKeyframesSelection.clear();
+        if (!mMouseOnKeyframe)
+            mKeyframesSelection.clear();
         
         mKeyframeMenu->close();
         QTimeline::getPtr()->closeMenu(mKeyframeMenu);        
@@ -390,7 +391,15 @@ bool QTimelineParam::mouseDrag( MouseEvent event )
         time            = QTimeline::getPtr()->snapTime( time );
         float value     = getPosValue( mMousePos.y );
         
+        float timediff = time - mMouseOnKeyframe->getTime();
         mMouseOnKeyframe->set( time, value );
+        for (auto i : mKeyframesSelection)
+        {
+            if (i == mMouseOnKeyframe)
+                continue;
+            float new_time = i->getTime() + timediff;
+            i->set(new_time, i->getValue());
+        }
         
         sort( mKeyframes.begin(), mKeyframes.end(), sortKeyframesHelper );
         
