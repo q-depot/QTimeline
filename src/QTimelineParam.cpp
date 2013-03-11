@@ -391,14 +391,31 @@ bool QTimelineParam::mouseDrag( MouseEvent event )
         time            = QTimeline::getPtr()->snapTime( time );
         float value     = getPosValue( mMousePos.y );
         
-        float timediff = time - mMouseOnKeyframe->getTime();
-        mMouseOnKeyframe->set( time, value );
-        for (auto i : mKeyframesSelection)
+        if (mKeyframesSelection.size() == 0)
         {
-            if (i == mMouseOnKeyframe)
-                continue;
-            float new_time = i->getTime() + timediff;
-            i->set(new_time, i->getValue());
+            mMouseOnKeyframe->set( time, value );
+        } else {
+            // Let's make sure the timediff won't cause any keyframes to move beyond module boundaries
+            float timediff = time - mMouseOnKeyframe->getTime();
+            if (timediff < 0.0f)
+            {
+                for (auto i : mKeyframesSelection)
+                {
+                    if (i->getTime() + timediff < mParentModule->getStartTime())
+                        timediff = mParentModule->getStartTime() - i->getTime();
+                }
+            } else {
+                for (auto i : mKeyframesSelection)
+                {
+                    if (i->getTime() + timediff >= mParentModule->getEndTime())
+                        timediff = mParentModule->getEndTime() - i->getTime();
+                }
+            }
+            for (auto i : mKeyframesSelection)
+            {
+                float new_time = i->getTime() + timediff;
+                i->set(new_time, i->getValue());
+            }
         }
         
         sort( mKeyframes.begin(), mKeyframes.end(), sortKeyframesHelper );
