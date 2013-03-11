@@ -79,7 +79,7 @@ public:
     void loadXmlNode( ci::XmlTree node );
     
     void menuEventHandler( QTimelineMenuItemRef item );
-    
+    void keyframeMenuEventHandler( QTimelineMenuItemRef item );
     // at the moment this function might leak,
     // if the param has been created pssing the pointer to the variable, we can't call delete on the pointer.
     // on the other hand if the variable has been created by the params(ie when the param is register with a name and without a variable),
@@ -134,6 +134,10 @@ protected:
     
     std::function<float (float)>        mDefaultEasing;
     std::string                         mDefaultEasingStr;
+  
+    QTimelineMenu           *mKeyframeMenu;
+    QTimelineMenuItemRef mKeyframeValue;
+    QTimelineKeyframeRef mActiveKeyframe;
 };
 
 #endif

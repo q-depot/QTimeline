@@ -624,32 +624,37 @@ public:
     // add item functions
     // ------------------
     
-    void addLabel( std::string name )
+    QTimelineMenuItemRef addLabel( std::string name )
     {
         addItem( QTimelineMenuItemRef( new QTimelineMenuLabel(name) ) );
+        return *mItems.rbegin();
     }
     
     template<typename T>
-    void addButton( std::string name, std::string meta, T *obj, void (T::*callback)(QTimelineMenuItemRef) )
+    QTimelineMenuItemRef addButton( std::string name, std::string meta, T *obj, void (T::*callback)(QTimelineMenuItemRef) )
     {
         addItem( QTimelineMenuItemRef( new QTimelineMenuButton( name, meta, obj, callback ) ) );
+        return *mItems.rbegin();
     }
     
-    void addSeparator()
+    QTimelineMenuItemRef addSeparator()
     {
         addItem( QTimelineMenuItemRef( new QTimelineMenuSeparator() ) );
+        return *mItems.rbegin();
     }
     
     template<typename T>
-    void addColorPalette( T *obj, void (T::*callback)(QTimelineMenuItemRef) )
+    QTimelineMenuItemRef addColorPalette( T *obj, void (T::*callback)(QTimelineMenuItemRef) )
     {
-        addItem( QTimelineMenuItemRef( new QTimelineMenuColorPalette( obj, callback ) ) );
+        addItem( QTimelineMenuItemRef( new QTimelineMenuColorPalette( obj, callback )) );
+        return *mItems.rbegin();
     }
     
     template<typename T>
-    void addTextBox( std::string text, std::string meta, T *obj, void (T::*callback)(QTimelineMenuItemRef) )
+    QTimelineMenuItemRef addTextBox( std::string text, std::string meta, T *obj, void (T::*callback)(QTimelineMenuItemRef) )
     {
         addItem( QTimelineMenuItemRef( new QTimelineMenuTextBox( text, meta, obj, callback ) ) );
+        return *mItems.rbegin();
     }
     
 private:
