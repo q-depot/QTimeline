@@ -65,8 +65,8 @@ QTimelineParam::~QTimelineParam()
     
     mParentModule.reset();
     
-    mKeyframeValue = NULL;
     delete mKeyframeMenu;
+    
 //    delete mVar; // should I call it?
 }
 
@@ -250,6 +250,7 @@ void QTimelineParam::renderKeyframes()
     }
 }
 
+
 void QTimelineParam::addKeyframe( double time, float value, function<float (float)> fn, string fnStr )
 {
     time    = QTimeline::getPtr()->snapTime( time );
@@ -258,6 +259,7 @@ void QTimelineParam::addKeyframe( double time, float value, function<float (floa
     
     sort( mKeyframes.begin(), mKeyframes.end(), sortKeyframesHelper );
 }
+
 
 void QTimelineParam::addKeyframe( double time, float value )
 {
@@ -323,52 +325,52 @@ bool QTimelineParam::mouseUp( MouseEvent event )
 
 bool QTimelineParam::mouseDown( MouseEvent event )
 {
-    if ( event.isRightDown() )
+    if ( event.isRightDown() )                              // delete or edit value
     {
         
-        if ( mMouseOnKeyframe )                        // move or delete keyframe
+        if ( mMouseOnKeyframe )
         {
-            if (!event.isShiftDown())
+            if ( event.isShiftDown() )                      // edit value
+            {
+                mActiveKeyframe = mMouseOnKeyframe;
+                mKeyframeMenu->getItemByMeta( "value_text_box" )->setName( toString( mMouseOnKeyframe->getValue() ) );
+                QTimeline::getPtr()->openMenu( mKeyframeMenu, event.getPos() );
+            }
+            else                                            // delete
             {
                 removeKeyframe( mMouseOnKeyframe );
                 mKeyframesSelection.clear();
                 mouseMove( event );
-            } else {
-                mActiveKeyframe = mMouseOnKeyframe;
-                mKeyframeValue->setName(std::to_string(mMouseOnKeyframe->getValue()));
-                QTimeline::getPtr()->openMenu( mKeyframeMenu, event.getPos());
             }
         }
         
-        else if ( !mKeyframesSelection.empty() )
+        else if ( !mKeyframesSelection.empty() )            // open menu (change easing)
             QTimeline::getPtr()->openMenu( mMenu, event.getPos() );
         
-        else
+        else                                           
             QTimeline::getPtr()->closeMenu( mMenu );
     }
     
     else
     {
-        if (!mMouseOnKeyframe)
+        if ( !mMouseOnKeyframe )
             mKeyframesSelection.clear();
         
-        mKeyframeMenu->close();
-        QTimeline::getPtr()->closeMenu(mKeyframeMenu);        
-        mMenu->close();
+        QTimeline::getPtr()->closeMenu( mKeyframeMenu );
         QTimeline::getPtr()->closeMenu( mMenu );
         
-        if ( event.isShiftDown() )
+        if ( event.isShiftDown() )                          // multiple keyframes selection
         {
             mIsOnSelection  = true;
             mMouseDownPos   = event.getPos();
         }
         
-        else if ( !mMouseOnKeyframe )                        // move or delete keyframe
+        else if ( !mMouseOnKeyframe )                       // new keyframe
         {
             // create new keyframe
-            float   time    = QTimeline::getPtr()->getTimeFromPos( event.getPos().x );
-            time            = math<float>::clamp( time, mParentModule->getStartTime(), mParentModule->getEndTime() );
-            float value     = getPosValue( event.getPos().y );
+            float time  = QTimeline::getPtr()->getTimeFromPos( event.getPos().x );
+            time        = math<float>::clamp( time, mParentModule->getStartTime(), mParentModule->getEndTime() );
+            float value = getPosValue( event.getPos().y );
 
             addKeyframe( time, value );
             
@@ -472,25 +474,26 @@ void QTimelineParam::menuEventHandler( QTimelineMenuItemRef item )
         mKeyframesSelection[k]->setEasing( mDefaultEasing, mDefaultEasingStr );
 }
 
+
 void QTimelineParam::keyframeMenuEventHandler( QTimelineMenuItemRef item )
 {
     if ( item->getMeta() == "value_text_box" )
     {
         try
         {
-            std::string newvalue = item->getName();
-            float newval = std::stof( item->getName() );
-            newval = std::max(getMin(), std::min(getMax(), newval));
-            mActiveKeyframe->set(mActiveKeyframe->getTime(), newval);
+            float val = atof( item->getName().c_str() );
+            val = math<float>::clamp( val, mMin, mMax );
+            mActiveKeyframe->setValue( val );
         }
         catch (...)
         {
             // Just eat any conversion issues
         }
-        mActiveKeyframe = NULL;
+        mActiveKeyframe.reset();
         QTimeline::getPtr()->closeMenu( mKeyframeMenu );
     }
 }
+
 
 Vec2f QTimelineParam::getRelPosNorm( Vec2f pos )
 {
@@ -504,7 +507,6 @@ Vec2f QTimelineParam::getRelPosNorm( Vec2f pos )
     
     return ( pos - actualRect.getUpperLeft() ) / actualRect.getSize();
 }
-
 
 
 float QTimelineParam::getPosValue( float yPos )
@@ -535,7 +537,7 @@ void QTimelineParam::initMenu()
     mMenu->addButton( "EaseNone", "", this, &QTimelineParam::menuEventHandler );
 
     mKeyframeMenu = new QTimelineMenu();
-    mKeyframeValue = mKeyframeMenu->addTextBox( getName(), "value_text_box", this, &QTimelineParam::keyframeMenuEventHandler );
+    mKeyframeMenu->addTextBox( getName(), "value_text_box", this, &QTimelineParam::keyframeMenuEventHandler );
 }
 
 
@@ -552,6 +554,7 @@ XmlTree QTimelineParam::getXmlNode()
     
     return node;
 }
+
 
 void QTimelineParam::loadXmlNode( XmlTree node )
 {

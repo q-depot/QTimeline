@@ -135,9 +135,8 @@ protected:
     std::function<float (float)>        mDefaultEasing;
     std::string                         mDefaultEasingStr;
   
-    QTimelineMenu           *mKeyframeMenu;
-    QTimelineMenuItemRef mKeyframeValue;
-    QTimelineKeyframeRef mActiveKeyframe;
+    QTimelineMenu                       *mKeyframeMenu;
+    QTimelineKeyframeRef                mActiveKeyframe;
 };
 
 #endif
