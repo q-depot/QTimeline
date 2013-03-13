@@ -332,7 +332,7 @@ bool QTimelineParam::mouseDown( MouseEvent event )
         {
             if ( event.isShiftDown() )                      // edit value
             {
-                mActiveKeyframe = mMouseOnKeyframe;
+                mMouseDownOnKeyframe = mMouseOnKeyframe;
                 mKeyframeMenu->getItemByMeta( "value_text_box" )->setName( toString( mMouseOnKeyframe->getValue() ) );
                 QTimeline::getPtr()->openMenu( mKeyframeMenu, event.getPos() );
             }
@@ -351,10 +351,11 @@ bool QTimelineParam::mouseDown( MouseEvent event )
             QTimeline::getPtr()->closeMenu( mMenu );
     }
     
-    else
+    else if ( event.isLeftDown() && !mMouseOnKeyframe && !mKeyframesSelection.empty() )
+        mKeyframesSelection.clear();
+    
+    else if ( event.isLeftDown() )
     {
-        if ( !mMouseOnKeyframe )
-            mKeyframesSelection.clear();
         
         QTimeline::getPtr()->closeMenu( mKeyframeMenu );
         QTimeline::getPtr()->closeMenu( mMenu );
@@ -483,13 +484,13 @@ void QTimelineParam::keyframeMenuEventHandler( QTimelineMenuItemRef item )
         {
             float val = atof( item->getName().c_str() );
             val = math<float>::clamp( val, mMin, mMax );
-            mActiveKeyframe->setValue( val );
+            mMouseDownOnKeyframe->setValue( val );
         }
         catch (...)
         {
             // Just eat any conversion issues
         }
-        mActiveKeyframe.reset();
+        mMouseDownOnKeyframe.reset();
         QTimeline::getPtr()->closeMenu( mKeyframeMenu );
     }
 }

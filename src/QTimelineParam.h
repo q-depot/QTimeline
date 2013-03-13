@@ -136,7 +136,7 @@ protected:
     std::string                         mDefaultEasingStr;
   
     QTimelineMenu                       *mKeyframeMenu;
-    QTimelineKeyframeRef                mActiveKeyframe;
+    QTimelineKeyframeRef                mMouseDownOnKeyframe;
 };
 
 #endif
