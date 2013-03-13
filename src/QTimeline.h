@@ -205,11 +205,14 @@ public:
 
     void closeMenu( QTimelineMenu *menu = NULL )
     {
-        if ( mSelectedMenu )
-            mSelectedMenu->close();
+//        if ( mSelectedMenu )
+//            mSelectedMenu->close();
         
         if ( mSelectedMenu == menu || menu == NULL )
+        {
+            mSelectedMenu->close();
             mSelectedMenu = NULL;
+        }
     }
 
     template<typename T>

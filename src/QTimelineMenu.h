@@ -621,6 +621,28 @@ public:
         addLabel( mName );
     }
     
+    QTimelineMenuItemRef getItemByName( std::string name )
+    {
+        for( size_t k=0; k < mItems.size(); k++ )
+            if ( mItems[k]->getName() == name )
+                return mItems[k];
+        
+        QTimelineMenuItemRef item;
+        return item;
+    }
+    
+    
+    QTimelineMenuItemRef getItemByMeta( std::string meta )
+    {
+        for( size_t k=0; k < mItems.size(); k++ )
+            if ( mItems[k]->getMeta() == meta )
+                return mItems[k];
+        
+        QTimelineMenuItemRef item;
+        return item;
+    }
+    
+    
     // add item functions
     // ------------------
     

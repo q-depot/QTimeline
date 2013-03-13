@@ -36,6 +36,8 @@ public:
     double getTime() { return mTime; }
     
     float getValue() { return mValue; }
+
+    void setValue( float val ) { mValue = val; }
     
     void set( double time, float value )
     {
