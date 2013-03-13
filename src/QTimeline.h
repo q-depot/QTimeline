@@ -205,8 +205,8 @@ public:
 
     void closeMenu( QTimelineMenu *menu = NULL )
     {
-//        if ( mSelectedMenu )
-//            mSelectedMenu->close();
+        if ( !mSelectedMenu )
+            return;
         
         if ( mSelectedMenu == menu || menu == NULL )
         {
