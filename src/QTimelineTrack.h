@@ -87,6 +87,8 @@ public:
             mActiveItem.reset();
     }
     
+    void renderActiveItem();
+    
     
 private:
     

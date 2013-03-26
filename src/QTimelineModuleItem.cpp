@@ -59,7 +59,8 @@ void QTimelineModuleItem::update( float relativeTime )
     
     updateParams( relativeTime );
     
-    mTargetModuleRef->update();
+    if ( mTargetModuleRef )
+        mTargetModuleRef->update();
     
 }
 

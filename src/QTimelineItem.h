@@ -167,6 +167,8 @@ public:
     
     std::string getTargetType();
     
+    void renderTargetModule();
+    
 protected:
     void changeTrack(bool moveup);
   

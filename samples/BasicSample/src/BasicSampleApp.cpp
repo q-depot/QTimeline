@@ -144,12 +144,8 @@ void BasicSampleApp::draw()
     gl::enableAlphaBlending();
   
     auto tracks = mTimeline->getTracks();
-    for (auto i = tracks.rbegin(); i != tracks.rend(); i++)
-    {
-      auto item = (*i)->getActiveItem();
-      if (item)
-        item->getTargetModule()->render();
-    }
+    for ( auto i = tracks.rbegin(); i != tracks.rend(); i++ )
+        (*i)->renderActiveItem();
     
     mTimeline->render();
 

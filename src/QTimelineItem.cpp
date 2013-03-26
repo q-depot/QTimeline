@@ -266,3 +266,9 @@ bool QTimelineItem::isRunning()
     
     return true;
 }
+
+void QTimelineItem::renderTargetModule()
+{
+    if ( mTargetModuleRef )
+        mTargetModuleRef->render();
+}
