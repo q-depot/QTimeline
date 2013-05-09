@@ -3,130 +3,149 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 44;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		0091D8F90E81B9330029341E /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0091D8F80E81B9330029341E /* OpenGL.framework */; };
-		0097E3E50F3E9819005A4392 /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0097E3E40F3E9819005A4392 /* QuickTime.framework */; };
 		00B784B30FF439BC000DE1D7 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784AF0FF439BC000DE1D7 /* Accelerate.framework */; };
 		00B784B40FF439BC000DE1D7 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784B00FF439BC000DE1D7 /* AudioToolbox.framework */; };
 		00B784B50FF439BC000DE1D7 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784B10FF439BC000DE1D7 /* AudioUnit.framework */; };
 		00B784B60FF439BC000DE1D7 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784B20FF439BC000DE1D7 /* CoreAudio.framework */; };
-		00BAE65A0E7ED9C10018A608 /* BasicSampleApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 00BAE6590E7ED9C10018A608 /* BasicSampleApp.cpp */; };
-		00CCAF15116A9FEE008396D5 /* CinderApp.icns in Resources */ = {isa = PBXBuildFile; fileRef = 00CCAF14116A9FEE008396D5 /* CinderApp.icns */; };
-		1009A204166E3CF3008BAFD8 /* QTimelineCue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1009A203166E3CF3008BAFD8 /* QTimelineCue.cpp */; };
-		1009A208166E6D51008BAFD8 /* timeline.xml in Resources */ = {isa = PBXBuildFile; fileRef = 1009A207166E6D51008BAFD8 /* timeline.xml */; };
-		1024469C169D8AF500CF7B0B /* libbass.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1024469B169D8AF500CF7B0B /* libbass.dylib */; };
-		1024469E169D8AFE00CF7B0B /* libbass.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1024469B169D8AF500CF7B0B /* libbass.dylib */; };
-		104AFFFD16415316005AB633 /* QTimeline.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 104AFFFC16415316005AB633 /* QTimeline.cpp */; };
-		105EC6C2167F6ECE0057F873 /* QTimelineCueManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105EC6C1167F6ECE0057F873 /* QTimelineCueManager.cpp */; };
-		106409F7168B188C00FA182E /* osc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 106409BF168B188B00FA182E /* osc.a */; };
-		106409F8168B188C00FA182E /* osc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 106409C1168B188B00FA182E /* osc.a */; };
-		106409F9168B188C00FA182E /* osc.lib in Frameworks */ = {isa = PBXBuildFile; fileRef = 106409C3168B188B00FA182E /* osc.lib */; };
-		106409FA168B188C00FA182E /* osc_d.lib in Frameworks */ = {isa = PBXBuildFile; fileRef = 106409C4168B188B00FA182E /* osc_d.lib */; };
-		10640A0B168B188C00FA182E /* OscBundle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 106409EB168B188B00FA182E /* OscBundle.cpp */; };
-		10640A0C168B188C00FA182E /* OscListener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 106409EC168B188B00FA182E /* OscListener.cpp */; };
-		10640A0D168B188C00FA182E /* OscMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 106409ED168B188B00FA182E /* OscMessage.cpp */; };
-		10640A0E168B188C00FA182E /* OscSender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 106409EE168B188B00FA182E /* OscSender.cpp */; };
-		10A28CFF166395DA00D082A8 /* QTimelineParam.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10A28CFE166395DA00D082A8 /* QTimelineParam.cpp */; };
-		10A28D01166397E000D082A8 /* QTimelineTrack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10A28D00166397E000D082A8 /* QTimelineTrack.cpp */; };
-		10A28D031663DED900D082A8 /* QTimelineModuleItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10A28D021663DED900D082A8 /* QTimelineModuleItem.cpp */; };
-		10DF301D16974F8B000B3A64 /* QTimelineItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10DF301C16974F8B000B3A64 /* QTimelineItem.cpp */; };
-		10E60E571696E4D700946B3E /* QTimelineAudioItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10E60E561696E4D700946B3E /* QTimelineAudioItem.cpp */; };
-		10EDF274162AD419004F4AFD /* QTimeline.h in Sources */ = {isa = PBXBuildFile; fileRef = 10EDF253162AD418004F4AFD /* QTimeline.h */; };
-		10F43936166D154000EBC1B0 /* assets in Resources */ = {isa = PBXBuildFile; fileRef = 10F43935166D154000EBC1B0 /* assets */; };
 		5323E6B20EAFCA74003A9687 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5323E6B10EAFCA74003A9687 /* CoreVideo.framework */; };
 		5323E6B60EAFCA7E003A9687 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5323E6B50EAFCA7E003A9687 /* QTKit.framework */; };
-		53E3CDFC0E86099300238D2B /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53E3CDFB0E86099300238D2B /* Carbon.framework */; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		35527A02362F444D8718E011 /* libbass.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E6652FC28A348CFA1F83240 /* libbass.dylib */; };
+		A1F1A7DC78BB4C4FA7542AA7 /* QTimelineWidgetWithHandles.h in Headers */ = {isa = PBXBuildFile; fileRef = 6FDACECB113648D58098F0E1 /* QTimelineWidgetWithHandles.h */; };
+		FB5577D721194829BD8B12B5 /* QTimelineWidget.h in Headers */ = {isa = PBXBuildFile; fileRef = 7D62439848A54FBABB3746BF /* QTimelineWidget.h */; };
+		A6AA22C52BAF4123865CA627 /* QTimelineTrack.h in Headers */ = {isa = PBXBuildFile; fileRef = 53C84C76922A44CABF9F2A97 /* QTimelineTrack.h */; };
+		9A34350BFD424578BE1665E6 /* QTimelineParam.h in Headers */ = {isa = PBXBuildFile; fileRef = 142C8558A5A94B44BA7986B2 /* QTimelineParam.h */; };
+		6A737D7DCED94312B2DB3782 /* QTimelineOscController.h in Headers */ = {isa = PBXBuildFile; fileRef = F29AB3E0849048BD995295FE /* QTimelineOscController.h */; };
+		F367D7EAEA6C45159773AAE4 /* QTimelineModuleItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 6D55F3F41E2D4AB78F2CEDCA /* QTimelineModuleItem.h */; };
+		1ED1CA0542D942BC8325C1B8 /* QTimelineModule.h in Headers */ = {isa = PBXBuildFile; fileRef = FC3C030EDCA74B74B791120B /* QTimelineModule.h */; };
+		3F045AD574C940C18BFFD9E2 /* QTimelineMenu.h in Headers */ = {isa = PBXBuildFile; fileRef = 9FC7BC30E25641EF89B9CAE3 /* QTimelineMenu.h */; };
+		C72174AB96B6410E8B869B1D /* QTimelineKeyframe.h in Headers */ = {isa = PBXBuildFile; fileRef = 8FB2C09BB33545D0A60D77DC /* QTimelineKeyframe.h */; };
+		49C3E0CC440F4203BF390EE3 /* QTimelineItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 77A39F23BA5F4854B617F4F0 /* QTimelineItem.h */; };
+		9D614267A3A74C408F99A930 /* QTimelineCueManager.h in Headers */ = {isa = PBXBuildFile; fileRef = D07A76C4822A4820A93AC02A /* QTimelineCueManager.h */; };
+		94A8CE4BCD87420FA8DE9687 /* QTimelineCue.h in Headers */ = {isa = PBXBuildFile; fileRef = C7530050E35748E3886C59FF /* QTimelineCue.h */; };
+		AC664767BFFD4698947E5616 /* QTimelineAudioItem.h in Headers */ = {isa = PBXBuildFile; fileRef = FBCF8448385F4DE7B941FB59 /* QTimelineAudioItem.h */; };
+		AEBDC57FF336438FA6D57214 /* QTimeline.h in Headers */ = {isa = PBXBuildFile; fileRef = 967C602BF5E7445088EB2C69 /* QTimeline.h */; };
+		0841BE5F79FC4EF7A898D9B5 /* bass.h in Headers */ = {isa = PBXBuildFile; fileRef = 0EC8B197ACD84055BE526804 /* bass.h */; };
+		E08E089D35414FC7ABC689AA /* QTimelineTrack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D06FAF3B42094093909CB416 /* QTimelineTrack.cpp */; };
+		E7C9E6E6AD7C485CAFF157A3 /* QTimelineParam.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A195DE8F3AEF4A04949C0D40 /* QTimelineParam.cpp */; };
+		DFFCDD9DA82B4E3F887A7D63 /* QTimelineModuleItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD3817DA259846FBA2E73E00 /* QTimelineModuleItem.cpp */; };
+		47CEB6F114714784A9832D94 /* QTimelineItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07654A85ADB44CED904F4B23 /* QTimelineItem.cpp */; };
+		A4669818E0E040B99FE2B73F /* QTimelineCueManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8968DE533530497D9A69F2A0 /* QTimelineCueManager.cpp */; };
+		E709140D8E004E9F83D53002 /* QTimelineCue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AC86AAC6A4DE4FF5B43DA3CF /* QTimelineCue.cpp */; };
+		B63F279BB9AA4ABEAAA4F21B /* QTimelineAudioItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FACAA8E15ACF4608A651EBA4 /* QTimelineAudioItem.cpp */; };
+		A30918D95E8B44CD9E4C8475 /* QTimeline.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4E70CF5843DE45A29FDD9F45 /* QTimeline.cpp */; };
+		3D1F6C97CF2E4B858E0EFE8A /* UdpSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B8C3723C5A424F769C1F9666 /* UdpSocket.cpp */; };
+		336B3B334B0043B58FD6CCDC /* NetworkingUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 67B20C4DB147426698AF7ACB /* NetworkingUtils.cpp */; };
+		1F9C6826BA7F4549933A2B4D /* OscTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = B5C24488294A46C2802E64FC /* OscTypes.h */; };
+		E5E4E585AF8248D68A9D939E /* OscReceivedElements.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E8248E96BFC44DC889FE703 /* OscReceivedElements.h */; };
+		8CED4239966B4C8F94654B05 /* OscPrintReceivedElements.h in Headers */ = {isa = PBXBuildFile; fileRef = 797511CD5DAB43419BB36717 /* OscPrintReceivedElements.h */; };
+		1978CAAC343E4BE78E7B297A /* OscPacketListener.h in Headers */ = {isa = PBXBuildFile; fileRef = C2B2CD41613E4171AF09770E /* OscPacketListener.h */; };
+		278D72B9211E44AC9C5E11FB /* OscOutboundPacketStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 34465444E81C4FBCA4753D70 /* OscOutboundPacketStream.h */; };
+		3D17FDF987024214ADE1564D /* OscHostEndianness.h in Headers */ = {isa = PBXBuildFile; fileRef = 01772DF47527495E9AB0417C /* OscHostEndianness.h */; };
+		C65DA58452AD49E28E747EFB /* OscException.h in Headers */ = {isa = PBXBuildFile; fileRef = 8C92B4BB45EA4E5F8BF8B279 /* OscException.h */; };
+		5E7842BDF02D4D1B9AD952A6 /* MessageMappingOscPacketListener.h in Headers */ = {isa = PBXBuildFile; fileRef = FEF2F5852180499DA3DCA4F4 /* MessageMappingOscPacketListener.h */; };
+		6C50F9FDCF684D09819CB695 /* UdpSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = FF07115A91354C1F9374B728 /* UdpSocket.h */; };
+		38BA9F872D13484183D4559E /* TimerListener.h in Headers */ = {isa = PBXBuildFile; fileRef = A64938FF10324FC68F92E2C2 /* TimerListener.h */; };
+		ABEA7A6FF4E7422F90BEE3A6 /* PacketListener.h in Headers */ = {isa = PBXBuildFile; fileRef = 51C4C437851A4E68ADB927D9 /* PacketListener.h */; };
+		744E63FB9FFA47499F367145 /* NetworkingUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = A92205EA97604426806EE3C9 /* NetworkingUtils.h */; };
+		BC5C33F0D54A4F4CA9AC9EBD /* IpEndpointName.h in Headers */ = {isa = PBXBuildFile; fileRef = F7D8B567595047229632A2DA /* IpEndpointName.h */; };
+		C0C34136361D49EAAB596DA4 /* OscSender.h in Headers */ = {isa = PBXBuildFile; fileRef = 75F3914B7B374387A540F8CE /* OscSender.h */; };
+		7F0F062593014B25AB55DDE3 /* OscMessage.h in Headers */ = {isa = PBXBuildFile; fileRef = 38A57AFC47AF4A06A52941A9 /* OscMessage.h */; };
+		FA1F6CD570984C19B20B2E9D /* OscListener.h in Headers */ = {isa = PBXBuildFile; fileRef = AADE78B8D76F45D09BB9BD1F /* OscListener.h */; };
+		5E127ECA3DA348B08281BAE4 /* OscBundle.h in Headers */ = {isa = PBXBuildFile; fileRef = 98221EED4C0F400988C7C279 /* OscBundle.h */; };
+		5B40731ADC81404B998083E9 /* OscArg.h in Headers */ = {isa = PBXBuildFile; fileRef = 9CB582E4CCD04CD2840739DC /* OscArg.h */; };
+		334BF8663A4143BE991EB8F5 /* OscTypes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46668C609C5F4DF18297C8A9 /* OscTypes.cpp */; };
+		D1AD219ED5064EEA815B18E7 /* OscReceivedElements.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A80D58CBDBF642B6849221BF /* OscReceivedElements.cpp */; };
+		915C0EFE24064B9981D5EA85 /* OscPrintReceivedElements.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D13DFDD0F435425A8747C01C /* OscPrintReceivedElements.cpp */; };
+		83D394EB17994F2AAF9B3658 /* OscOutboundPacketStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E86C1E10C209416597C19F46 /* OscOutboundPacketStream.cpp */; };
+		54A80E065A1A41F6A2DF8F48 /* IpEndpointName.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01A2811D5B9942599BA9FBB5 /* IpEndpointName.cpp */; };
+		9E89E19A52974137AEBEADEC /* OscSender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DE4FF81958994D69A7C501DF /* OscSender.cpp */; };
+		9EFC92E31F494DC99876E319 /* OscMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B8182FF630C455EB238C8C4 /* OscMessage.cpp */; };
+		C29462C9C13F453D896EE5E3 /* OscListener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E622E77309149F88F84DC06 /* OscListener.cpp */; };
+		4B392124B61A4603A0DF92B0 /* OscBundle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3D16D42F2C2F449286D97B5B /* OscBundle.cpp */; };
+		B19E7E1314B1414FB75599A1 /* BasicModule.h in Headers */ = {isa = PBXBuildFile; fileRef = 9356701DE05A407CB21517AC /* BasicModule.h */; };
+		DDE49E85257843329465425F /* BasicSampleApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 147F231361A34C93AE001EF2 /* BasicSampleApp.cpp */; };
+		888481CE81EF4A88847BE435 /* BasicSample_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = E7F1F9ADB7234408B48FFCB9 /* BasicSample_Prefix.pch */; };
+		3A1CB8C2AAAA46C0BF62C3C9 /* CinderApp.icns in Resources */ = {isa = PBXBuildFile; fileRef = 2B8CD8D92860419F9CD30C06 /* CinderApp.icns */; };
+		B2CF899D64374232A6AB8D09 /* Resources.h in Headers */ = {isa = PBXBuildFile; fileRef = 238A09F90C934D41A3BE3F79 /* Resources.h */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		10CB5E991699E3F50056DDDB /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 6;
-			files = (
-				1024469E169D8AFE00CF7B0B /* libbass.dylib in CopyFiles */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		0091D8F80E81B9330029341E /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
-		0097E3E40F3E9819005A4392 /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = /System/Library/Frameworks/QuickTime.framework; sourceTree = "<absolute>"; };
 		00B784AF0FF439BC000DE1D7 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		00B784B00FF439BC000DE1D7 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		00B784B10FF439BC000DE1D7 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
 		00B784B20FF439BC000DE1D7 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
-		00BAE6590E7ED9C10018A608 /* BasicSampleApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BasicSampleApp.cpp; path = ../src/BasicSampleApp.cpp; sourceTree = SOURCE_ROOT; };
-		00CCAF14116A9FEE008396D5 /* CinderApp.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = CinderApp.icns; path = ../resources/CinderApp.icns; sourceTree = SOURCE_ROOT; };
-		1009A202166E2718008BAFD8 /* QTimelineWidgetWithHandles.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = QTimelineWidgetWithHandles.h; path = src/QTimelineWidgetWithHandles.h; sourceTree = "<group>"; };
-		1009A203166E3CF3008BAFD8 /* QTimelineCue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QTimelineCue.cpp; sourceTree = "<group>"; };
-		1009A207166E6D51008BAFD8 /* timeline.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = timeline.xml; path = ../resources/timeline.xml; sourceTree = "<group>"; };
-		1017B6C61666440E0075E09B /* BasicModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BasicModule.h; path = ../include/BasicModule.h; sourceTree = "<group>"; };
-		1017B6C81666570C0075E09B /* QTimelineModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = QTimelineModule.h; path = src/QTimelineModule.h; sourceTree = "<group>"; };
-		1020A4111662449900DCF5E3 /* QTimelineWidget.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = QTimelineWidget.h; path = src/QTimelineWidget.h; sourceTree = "<group>"; };
-		1024469B169D8AF500CF7B0B /* libbass.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libbass.dylib; sourceTree = "<group>"; };
-		1046BDAE166FA3E50059154D /* QTimelineMenu.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = QTimelineMenu.h; path = src/QTimelineMenu.h; sourceTree = "<group>"; };
-		104AFFFC16415316005AB633 /* QTimeline.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QTimeline.cpp; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
-		105EC6BD167F314D0057F873 /* QTimelineCueManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = QTimelineCueManager.h; path = src/QTimelineCueManager.h; sourceTree = "<group>"; };
-		105EC6C1167F6ECE0057F873 /* QTimelineCueManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QTimelineCueManager.cpp; sourceTree = "<group>"; };
-		106409A5168B13B000FA182E /* QTimelineOscController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = QTimelineOscController.h; path = src/QTimelineOscController.h; sourceTree = "<group>"; };
-		106409AA168B188B00FA182E /* IpEndpointName.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IpEndpointName.h; sourceTree = "<group>"; };
-		106409AB168B188B00FA182E /* NetworkingUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkingUtils.h; sourceTree = "<group>"; };
-		106409AC168B188B00FA182E /* PacketListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PacketListener.h; sourceTree = "<group>"; };
-		106409AD168B188B00FA182E /* TimerListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimerListener.h; sourceTree = "<group>"; };
-		106409AE168B188B00FA182E /* UdpSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UdpSocket.h; sourceTree = "<group>"; };
-		106409B0168B188B00FA182E /* MessageMappingOscPacketListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageMappingOscPacketListener.h; sourceTree = "<group>"; };
-		106409B1168B188B00FA182E /* OscException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OscException.h; sourceTree = "<group>"; };
-		106409B2168B188B00FA182E /* OscHostEndianness.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OscHostEndianness.h; sourceTree = "<group>"; };
-		106409B3168B188B00FA182E /* OscOutboundPacketStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OscOutboundPacketStream.h; sourceTree = "<group>"; };
-		106409B4168B188B00FA182E /* OscPacketListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OscPacketListener.h; sourceTree = "<group>"; };
-		106409B5168B188B00FA182E /* OscPrintReceivedElements.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OscPrintReceivedElements.h; sourceTree = "<group>"; };
-		106409B6168B188B00FA182E /* OscReceivedElements.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OscReceivedElements.h; sourceTree = "<group>"; };
-		106409B7168B188B00FA182E /* OscTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OscTypes.h; sourceTree = "<group>"; };
-		106409B8168B188B00FA182E /* OscArg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OscArg.h; sourceTree = "<group>"; };
-		106409B9168B188B00FA182E /* OscBundle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OscBundle.h; sourceTree = "<group>"; };
-		106409BA168B188B00FA182E /* OscListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OscListener.h; sourceTree = "<group>"; };
-		106409BB168B188B00FA182E /* OscMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OscMessage.h; sourceTree = "<group>"; };
-		106409BC168B188B00FA182E /* OscSender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OscSender.h; sourceTree = "<group>"; };
-		106409BF168B188B00FA182E /* osc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = osc.a; sourceTree = "<group>"; };
-		106409C1168B188B00FA182E /* osc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = osc.a; sourceTree = "<group>"; };
-		106409C3168B188B00FA182E /* osc.lib */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = osc.lib; sourceTree = "<group>"; };
-		106409C4168B188B00FA182E /* osc_d.lib */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = osc_d.lib; sourceTree = "<group>"; };
-		106409EB168B188B00FA182E /* OscBundle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OscBundle.cpp; sourceTree = "<group>"; };
-		106409EC168B188B00FA182E /* OscListener.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OscListener.cpp; sourceTree = "<group>"; };
-		106409ED168B188B00FA182E /* OscMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OscMessage.cpp; sourceTree = "<group>"; };
-		106409EE168B188B00FA182E /* OscSender.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OscSender.cpp; sourceTree = "<group>"; };
-		10A28CFE166395DA00D082A8 /* QTimelineParam.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QTimelineParam.cpp; sourceTree = "<group>"; };
-		10A28D00166397E000D082A8 /* QTimelineTrack.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QTimelineTrack.cpp; sourceTree = "<group>"; };
-		10A28D021663DED900D082A8 /* QTimelineModuleItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QTimelineModuleItem.cpp; sourceTree = "<group>"; };
-		10A9E3E6166B63BB00BF4E4B /* Resources.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Resources.h; path = ../include/Resources.h; sourceTree = "<group>"; };
-		10B243ED16807E5700C7EAEB /* QTimelineKeyframe.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = QTimelineKeyframe.h; path = src/QTimelineKeyframe.h; sourceTree = "<group>"; };
-		10CF0B091660ED3700CE8505 /* QTimelineTrack.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = QTimelineTrack.h; path = src/QTimelineTrack.h; sourceTree = "<group>"; };
-		10CF0B0B1661026E00CE8505 /* QTimelineParam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QTimelineParam.h; path = src/QTimelineParam.h; sourceTree = "<group>"; };
-		10DBCDBA1690BA34005AC790 /* QTimelineAudioItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = QTimelineAudioItem.h; path = src/QTimelineAudioItem.h; sourceTree = "<group>"; };
-		10DF301C16974F8B000B3A64 /* QTimelineItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QTimelineItem.cpp; sourceTree = "<group>"; };
-		10E30BA8169580BD004292B3 /* QTimelineItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = QTimelineItem.h; path = src/QTimelineItem.h; sourceTree = "<group>"; };
-		10E3F5C5165ED81C00EF3FAB /* QTimelineModuleItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QTimelineModuleItem.h; path = src/QTimelineModuleItem.h; sourceTree = "<group>"; };
-		10E60E561696E4D700946B3E /* QTimelineAudioItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QTimelineAudioItem.cpp; sourceTree = "<group>"; };
-		10EDF253162AD418004F4AFD /* QTimeline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QTimeline.h; path = src/QTimeline.h; sourceTree = "<group>"; };
-		10F4392D166CFE7500EBC1B0 /* QTimelineCue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = QTimelineCue.h; path = src/QTimelineCue.h; sourceTree = "<group>"; };
-		10F43935166D154000EBC1B0 /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = assets; path = ../assets; sourceTree = "<group>"; };
-		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
-		32CA4F630368D1EE00C91783 /* BasicSample_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicSample_Prefix.pch; sourceTree = "<group>"; };
 		5323E6B10EAFCA74003A9687 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = /System/Library/Frameworks/CoreVideo.framework; sourceTree = "<absolute>"; };
 		5323E6B50EAFCA7E003A9687 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = /System/Library/Frameworks/QTKit.framework; sourceTree = "<absolute>"; };
-		53E3CDFB0E86099300238D2B /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
-		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* BasicSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BasicSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		238A09F90C934D41A3BE3F79 /* Resources.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ../include/Resources.h; sourceTree = "<group>"; name = Resources.h; };
+		2B8CD8D92860419F9CD30C06 /* CinderApp.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = ../resources/CinderApp.icns; sourceTree = "<group>"; name = CinderApp.icns; };
+		C338B2C811DB4674A3F14985 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; name = Info.plist; };
+		E7F1F9ADB7234408B48FFCB9 /* BasicSample_Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = "\"\""; path = BasicSample_Prefix.pch; sourceTree = "<group>"; name = BasicSample_Prefix.pch; };
+		147F231361A34C93AE001EF2 /* BasicSampleApp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.cpp; path = ../src/BasicSampleApp.cpp; sourceTree = "<group>"; name = BasicSampleApp.cpp; };
+		9356701DE05A407CB21517AC /* BasicModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ../src/BasicModule.h; sourceTree = "<group>"; name = BasicModule.h; };
+		3D16D42F2C2F449286D97B5B /* OscBundle.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.cpp; path = ../../../../OSC/src/OscBundle.cpp; sourceTree = "<group>"; name = OscBundle.cpp; };
+		8E622E77309149F88F84DC06 /* OscListener.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.cpp; path = ../../../../OSC/src/OscListener.cpp; sourceTree = "<group>"; name = OscListener.cpp; };
+		0B8182FF630C455EB238C8C4 /* OscMessage.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.cpp; path = ../../../../OSC/src/OscMessage.cpp; sourceTree = "<group>"; name = OscMessage.cpp; };
+		DE4FF81958994D69A7C501DF /* OscSender.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.cpp; path = ../../../../OSC/src/OscSender.cpp; sourceTree = "<group>"; name = OscSender.cpp; };
+		01A2811D5B9942599BA9FBB5 /* IpEndpointName.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.cpp; path = ../../../../OSC/src/ip/IpEndpointName.cpp; sourceTree = "<group>"; name = IpEndpointName.cpp; };
+		E86C1E10C209416597C19F46 /* OscOutboundPacketStream.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.cpp; path = ../../../../OSC/src/osc/OscOutboundPacketStream.cpp; sourceTree = "<group>"; name = OscOutboundPacketStream.cpp; };
+		D13DFDD0F435425A8747C01C /* OscPrintReceivedElements.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.cpp; path = ../../../../OSC/src/osc/OscPrintReceivedElements.cpp; sourceTree = "<group>"; name = OscPrintReceivedElements.cpp; };
+		A80D58CBDBF642B6849221BF /* OscReceivedElements.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.cpp; path = ../../../../OSC/src/osc/OscReceivedElements.cpp; sourceTree = "<group>"; name = OscReceivedElements.cpp; };
+		46668C609C5F4DF18297C8A9 /* OscTypes.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.cpp; path = ../../../../OSC/src/osc/OscTypes.cpp; sourceTree = "<group>"; name = OscTypes.cpp; };
+		9CB582E4CCD04CD2840739DC /* OscArg.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ../../../../OSC/src/OscArg.h; sourceTree = "<group>"; name = OscArg.h; };
+		98221EED4C0F400988C7C279 /* OscBundle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ../../../../OSC/src/OscBundle.h; sourceTree = "<group>"; name = OscBundle.h; };
+		AADE78B8D76F45D09BB9BD1F /* OscListener.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ../../../../OSC/src/OscListener.h; sourceTree = "<group>"; name = OscListener.h; };
+		38A57AFC47AF4A06A52941A9 /* OscMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ../../../../OSC/src/OscMessage.h; sourceTree = "<group>"; name = OscMessage.h; };
+		75F3914B7B374387A540F8CE /* OscSender.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ../../../../OSC/src/OscSender.h; sourceTree = "<group>"; name = OscSender.h; };
+		F7D8B567595047229632A2DA /* IpEndpointName.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ../../../../OSC/src/ip/IpEndpointName.h; sourceTree = "<group>"; name = IpEndpointName.h; };
+		A92205EA97604426806EE3C9 /* NetworkingUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ../../../../OSC/src/ip/NetworkingUtils.h; sourceTree = "<group>"; name = NetworkingUtils.h; };
+		51C4C437851A4E68ADB927D9 /* PacketListener.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ../../../../OSC/src/ip/PacketListener.h; sourceTree = "<group>"; name = PacketListener.h; };
+		A64938FF10324FC68F92E2C2 /* TimerListener.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ../../../../OSC/src/ip/TimerListener.h; sourceTree = "<group>"; name = TimerListener.h; };
+		FF07115A91354C1F9374B728 /* UdpSocket.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ../../../../OSC/src/ip/UdpSocket.h; sourceTree = "<group>"; name = UdpSocket.h; };
+		FEF2F5852180499DA3DCA4F4 /* MessageMappingOscPacketListener.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ../../../../OSC/src/osc/MessageMappingOscPacketListener.h; sourceTree = "<group>"; name = MessageMappingOscPacketListener.h; };
+		8C92B4BB45EA4E5F8BF8B279 /* OscException.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ../../../../OSC/src/osc/OscException.h; sourceTree = "<group>"; name = OscException.h; };
+		01772DF47527495E9AB0417C /* OscHostEndianness.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ../../../../OSC/src/osc/OscHostEndianness.h; sourceTree = "<group>"; name = OscHostEndianness.h; };
+		34465444E81C4FBCA4753D70 /* OscOutboundPacketStream.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ../../../../OSC/src/osc/OscOutboundPacketStream.h; sourceTree = "<group>"; name = OscOutboundPacketStream.h; };
+		C2B2CD41613E4171AF09770E /* OscPacketListener.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ../../../../OSC/src/osc/OscPacketListener.h; sourceTree = "<group>"; name = OscPacketListener.h; };
+		797511CD5DAB43419BB36717 /* OscPrintReceivedElements.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ../../../../OSC/src/osc/OscPrintReceivedElements.h; sourceTree = "<group>"; name = OscPrintReceivedElements.h; };
+		8E8248E96BFC44DC889FE703 /* OscReceivedElements.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ../../../../OSC/src/osc/OscReceivedElements.h; sourceTree = "<group>"; name = OscReceivedElements.h; };
+		B5C24488294A46C2802E64FC /* OscTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ../../../../OSC/src/osc/OscTypes.h; sourceTree = "<group>"; name = OscTypes.h; };
+		67B20C4DB147426698AF7ACB /* NetworkingUtils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.cpp; path = ../../../../OSC/src/ip/posix/NetworkingUtils.cpp; sourceTree = "<group>"; name = NetworkingUtils.cpp; };
+		B8C3723C5A424F769C1F9666 /* UdpSocket.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.cpp; path = ../../../../OSC/src/ip/posix/UdpSocket.cpp; sourceTree = "<group>"; name = UdpSocket.cpp; };
+		4E70CF5843DE45A29FDD9F45 /* QTimeline.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.cpp; path = ../../../src/QTimeline.cpp; sourceTree = "<group>"; name = QTimeline.cpp; };
+		FACAA8E15ACF4608A651EBA4 /* QTimelineAudioItem.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.cpp; path = ../../../src/QTimelineAudioItem.cpp; sourceTree = "<group>"; name = QTimelineAudioItem.cpp; };
+		AC86AAC6A4DE4FF5B43DA3CF /* QTimelineCue.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.cpp; path = ../../../src/QTimelineCue.cpp; sourceTree = "<group>"; name = QTimelineCue.cpp; };
+		8968DE533530497D9A69F2A0 /* QTimelineCueManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.cpp; path = ../../../src/QTimelineCueManager.cpp; sourceTree = "<group>"; name = QTimelineCueManager.cpp; };
+		07654A85ADB44CED904F4B23 /* QTimelineItem.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.cpp; path = ../../../src/QTimelineItem.cpp; sourceTree = "<group>"; name = QTimelineItem.cpp; };
+		CD3817DA259846FBA2E73E00 /* QTimelineModuleItem.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.cpp; path = ../../../src/QTimelineModuleItem.cpp; sourceTree = "<group>"; name = QTimelineModuleItem.cpp; };
+		A195DE8F3AEF4A04949C0D40 /* QTimelineParam.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.cpp; path = ../../../src/QTimelineParam.cpp; sourceTree = "<group>"; name = QTimelineParam.cpp; };
+		D06FAF3B42094093909CB416 /* QTimelineTrack.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.cpp; path = ../../../src/QTimelineTrack.cpp; sourceTree = "<group>"; name = QTimelineTrack.cpp; };
+		0EC8B197ACD84055BE526804 /* bass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ../../../src/bass.h; sourceTree = "<group>"; name = bass.h; };
+		967C602BF5E7445088EB2C69 /* QTimeline.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ../../../src/QTimeline.h; sourceTree = "<group>"; name = QTimeline.h; };
+		FBCF8448385F4DE7B941FB59 /* QTimelineAudioItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ../../../src/QTimelineAudioItem.h; sourceTree = "<group>"; name = QTimelineAudioItem.h; };
+		C7530050E35748E3886C59FF /* QTimelineCue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ../../../src/QTimelineCue.h; sourceTree = "<group>"; name = QTimelineCue.h; };
+		D07A76C4822A4820A93AC02A /* QTimelineCueManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ../../../src/QTimelineCueManager.h; sourceTree = "<group>"; name = QTimelineCueManager.h; };
+		77A39F23BA5F4854B617F4F0 /* QTimelineItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ../../../src/QTimelineItem.h; sourceTree = "<group>"; name = QTimelineItem.h; };
+		8FB2C09BB33545D0A60D77DC /* QTimelineKeyframe.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ../../../src/QTimelineKeyframe.h; sourceTree = "<group>"; name = QTimelineKeyframe.h; };
+		9FC7BC30E25641EF89B9CAE3 /* QTimelineMenu.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ../../../src/QTimelineMenu.h; sourceTree = "<group>"; name = QTimelineMenu.h; };
+		FC3C030EDCA74B74B791120B /* QTimelineModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ../../../src/QTimelineModule.h; sourceTree = "<group>"; name = QTimelineModule.h; };
+		6D55F3F41E2D4AB78F2CEDCA /* QTimelineModuleItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ../../../src/QTimelineModuleItem.h; sourceTree = "<group>"; name = QTimelineModuleItem.h; };
+		F29AB3E0849048BD995295FE /* QTimelineOscController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ../../../src/QTimelineOscController.h; sourceTree = "<group>"; name = QTimelineOscController.h; };
+		142C8558A5A94B44BA7986B2 /* QTimelineParam.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ../../../src/QTimelineParam.h; sourceTree = "<group>"; name = QTimelineParam.h; };
+		53C84C76922A44CABF9F2A97 /* QTimelineTrack.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ../../../src/QTimelineTrack.h; sourceTree = "<group>"; name = QTimelineTrack.h; };
+		7D62439848A54FBABB3746BF /* QTimelineWidget.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ../../../src/QTimelineWidget.h; sourceTree = "<group>"; name = QTimelineWidget.h; };
+		6FDACECB113648D58098F0E1 /* QTimelineWidgetWithHandles.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ../../../src/QTimelineWidgetWithHandles.h; sourceTree = "<group>"; name = QTimelineWidgetWithHandles.h; };
+		3E6652FC28A348CFA1F83240 /* libbass.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = ../../../lib/macosx/libbass.dylib; sourceTree = "<group>"; name = libbass.dylib; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,19 +155,12 @@
 			files = (
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
 				0091D8F90E81B9330029341E /* OpenGL.framework in Frameworks */,
-				53E3CDFC0E86099300238D2B /* Carbon.framework in Frameworks */,
 				5323E6B20EAFCA74003A9687 /* CoreVideo.framework in Frameworks */,
 				5323E6B60EAFCA7E003A9687 /* QTKit.framework in Frameworks */,
-				0097E3E50F3E9819005A4392 /* QuickTime.framework in Frameworks */,
 				00B784B30FF439BC000DE1D7 /* Accelerate.framework in Frameworks */,
 				00B784B40FF439BC000DE1D7 /* AudioToolbox.framework in Frameworks */,
 				00B784B50FF439BC000DE1D7 /* AudioUnit.framework in Frameworks */,
 				00B784B60FF439BC000DE1D7 /* CoreAudio.framework in Frameworks */,
-				106409F7168B188C00FA182E /* osc.a in Frameworks */,
-				106409F8168B188C00FA182E /* osc.a in Frameworks */,
-				106409F9168B188C00FA182E /* osc.lib in Frameworks */,
-				106409FA168B188C00FA182E /* osc_d.lib in Frameworks */,
-				1024469C169D8AF500CF7B0B /* libbass.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -158,25 +170,9 @@
 		080E96DDFE201D6D7F000001 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				00BAE6590E7ED9C10018A608 /* BasicSampleApp.cpp */,
+				147F231361A34C93AE001EF2 /* BasicSampleApp.cpp */,
 			);
 			name = Source;
-			sourceTree = "<group>";
-		};
-		10244699169D8AF500CF7B0B /* lib */ = {
-			isa = PBXGroup;
-			children = (
-				1024469A169D8AF500CF7B0B /* macosx */,
-			);
-			path = lib;
-			sourceTree = "<group>";
-		};
-		1024469A169D8AF500CF7B0B /* macosx */ = {
-			isa = PBXGroup;
-			children = (
-				1024469B169D8AF500CF7B0B /* libbass.dylib */,
-			);
-			path = macosx;
 			sourceTree = "<group>";
 		};
 		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
@@ -186,10 +182,8 @@
 				00B784B00FF439BC000DE1D7 /* AudioToolbox.framework */,
 				00B784B10FF439BC000DE1D7 /* AudioUnit.framework */,
 				00B784B20FF439BC000DE1D7 /* CoreAudio.framework */,
-				0097E3E40F3E9819005A4392 /* QuickTime.framework */,
 				5323E6B50EAFCA7E003A9687 /* QTKit.framework */,
 				5323E6B10EAFCA74003A9687 /* CoreVideo.framework */,
-				53E3CDFB0E86099300238D2B /* Carbon.framework */,
 				0091D8F80E81B9330029341E /* OpenGL.framework */,
 				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
 			);
@@ -200,164 +194,9 @@
 			isa = PBXGroup;
 			children = (
 				29B97324FDCFA39411CA2CEA /* AppKit.framework */,
-				13E42FB307B3F0F600E4EEF1 /* CoreData.framework */,
 				29B97325FDCFA39411CA2CEA /* Foundation.framework */,
 			);
 			name = "Other Frameworks";
-			sourceTree = "<group>";
-		};
-		106409A7168B188B00FA182E /* osc */ = {
-			isa = PBXGroup;
-			children = (
-				106409A8168B188B00FA182E /* include */,
-				106409BD168B188B00FA182E /* lib */,
-				106409EA168B188B00FA182E /* src */,
-			);
-			name = osc;
-			path = ../../../../osc;
-			sourceTree = "<group>";
-		};
-		106409A8168B188B00FA182E /* include */ = {
-			isa = PBXGroup;
-			children = (
-				106409A9168B188B00FA182E /* ip */,
-				106409AF168B188B00FA182E /* osc */,
-				106409B8168B188B00FA182E /* OscArg.h */,
-				106409B9168B188B00FA182E /* OscBundle.h */,
-				106409BA168B188B00FA182E /* OscListener.h */,
-				106409BB168B188B00FA182E /* OscMessage.h */,
-				106409BC168B188B00FA182E /* OscSender.h */,
-			);
-			path = include;
-			sourceTree = "<group>";
-		};
-		106409A9168B188B00FA182E /* ip */ = {
-			isa = PBXGroup;
-			children = (
-				106409AA168B188B00FA182E /* IpEndpointName.h */,
-				106409AB168B188B00FA182E /* NetworkingUtils.h */,
-				106409AC168B188B00FA182E /* PacketListener.h */,
-				106409AD168B188B00FA182E /* TimerListener.h */,
-				106409AE168B188B00FA182E /* UdpSocket.h */,
-			);
-			path = ip;
-			sourceTree = "<group>";
-		};
-		106409AF168B188B00FA182E /* osc */ = {
-			isa = PBXGroup;
-			children = (
-				106409B0168B188B00FA182E /* MessageMappingOscPacketListener.h */,
-				106409B1168B188B00FA182E /* OscException.h */,
-				106409B2168B188B00FA182E /* OscHostEndianness.h */,
-				106409B3168B188B00FA182E /* OscOutboundPacketStream.h */,
-				106409B4168B188B00FA182E /* OscPacketListener.h */,
-				106409B5168B188B00FA182E /* OscPrintReceivedElements.h */,
-				106409B6168B188B00FA182E /* OscReceivedElements.h */,
-				106409B7168B188B00FA182E /* OscTypes.h */,
-			);
-			path = osc;
-			sourceTree = "<group>";
-		};
-		106409BD168B188B00FA182E /* lib */ = {
-			isa = PBXGroup;
-			children = (
-				106409BE168B188B00FA182E /* iphone */,
-				106409C0168B188B00FA182E /* macosx */,
-				106409C2168B188B00FA182E /* vc10 */,
-			);
-			path = lib;
-			sourceTree = "<group>";
-		};
-		106409BE168B188B00FA182E /* iphone */ = {
-			isa = PBXGroup;
-			children = (
-				106409BF168B188B00FA182E /* osc.a */,
-			);
-			path = iphone;
-			sourceTree = "<group>";
-		};
-		106409C0168B188B00FA182E /* macosx */ = {
-			isa = PBXGroup;
-			children = (
-				106409C1168B188B00FA182E /* osc.a */,
-			);
-			path = macosx;
-			sourceTree = "<group>";
-		};
-		106409C2168B188B00FA182E /* vc10 */ = {
-			isa = PBXGroup;
-			children = (
-				106409C3168B188B00FA182E /* osc.lib */,
-				106409C4168B188B00FA182E /* osc_d.lib */,
-			);
-			path = vc10;
-			sourceTree = "<group>";
-		};
-		106409EA168B188B00FA182E /* src */ = {
-			isa = PBXGroup;
-			children = (
-				106409EB168B188B00FA182E /* OscBundle.cpp */,
-				106409EC168B188B00FA182E /* OscListener.cpp */,
-				106409ED168B188B00FA182E /* OscMessage.cpp */,
-				106409EE168B188B00FA182E /* OscSender.cpp */,
-			);
-			path = src;
-			sourceTree = "<group>";
-		};
-		10EDF232162AD407004F4AFD /* blocks */ = {
-			isa = PBXGroup;
-			children = (
-				106409A7168B188B00FA182E /* osc */,
-				10EDF234162AD418004F4AFD /* QTimeline */,
-			);
-			name = blocks;
-			sourceTree = "<group>";
-		};
-		10EDF234162AD418004F4AFD /* QTimeline */ = {
-			isa = PBXGroup;
-			children = (
-				10244699169D8AF500CF7B0B /* lib */,
-				10F6BD4F1667E7C100C2F602 /* include */,
-				10EDF252162AD418004F4AFD /* src */,
-			);
-			name = QTimeline;
-			path = ../../..;
-			sourceTree = "<group>";
-		};
-		10EDF252162AD418004F4AFD /* src */ = {
-			isa = PBXGroup;
-			children = (
-				104AFFFC16415316005AB633 /* QTimeline.cpp */,
-				1009A203166E3CF3008BAFD8 /* QTimelineCue.cpp */,
-				105EC6C1167F6ECE0057F873 /* QTimelineCueManager.cpp */,
-				10DF301C16974F8B000B3A64 /* QTimelineItem.cpp */,
-				10A28D021663DED900D082A8 /* QTimelineModuleItem.cpp */,
-				10E60E561696E4D700946B3E /* QTimelineAudioItem.cpp */,
-				10A28CFE166395DA00D082A8 /* QTimelineParam.cpp */,
-				10A28D00166397E000D082A8 /* QTimelineTrack.cpp */,
-			);
-			path = src;
-			sourceTree = "<group>";
-		};
-		10F6BD4F1667E7C100C2F602 /* include */ = {
-			isa = PBXGroup;
-			children = (
-				10EDF253162AD418004F4AFD /* QTimeline.h */,
-				1046BDAE166FA3E50059154D /* QTimelineMenu.h */,
-				1017B6C81666570C0075E09B /* QTimelineModule.h */,
-				10F4392D166CFE7500EBC1B0 /* QTimelineCue.h */,
-				105EC6BD167F314D0057F873 /* QTimelineCueManager.h */,
-				10B243ED16807E5700C7EAEB /* QTimelineKeyframe.h */,
-				10E30BA8169580BD004292B3 /* QTimelineItem.h */,
-				10E3F5C5165ED81C00EF3FAB /* QTimelineModuleItem.h */,
-				10DBCDBA1690BA34005AC790 /* QTimelineAudioItem.h */,
-				106409A5168B13B000FA182E /* QTimelineOscController.h */,
-				10CF0B0B1661026E00CE8505 /* QTimelineParam.h */,
-				10CF0B091660ED3700CE8505 /* QTimelineTrack.h */,
-				1020A4111662449900DCF5E3 /* QTimelineWidget.h */,
-				1009A202166E2718008BAFD8 /* QTimelineWidgetWithHandles.h */,
-			);
-			name = include;
 			sourceTree = "<group>";
 		};
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
@@ -371,22 +210,154 @@
 		29B97314FDCFA39411CA2CEA /* BasicSample */ = {
 			isa = PBXGroup;
 			children = (
-				10EDF232162AD407004F4AFD /* blocks */,
+				01B97315FEAEA392516A2CEA /* Blocks */,
 				29B97315FDCFA39411CA2CEA /* Headers */,
 				080E96DDFE201D6D7F000001 /* Source */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
-				10F43935166D154000EBC1B0 /* assets */,
 			);
 			name = BasicSample;
+			sourceTree = "<group>";
+		};
+		F56143A199B1451CAF749C0A /* posix */ = {
+			isa = PBXGroup;
+			children = (
+				67B20C4DB147426698AF7ACB /* NetworkingUtils.cpp */,
+				B8C3723C5A424F769C1F9666 /* UdpSocket.cpp */,
+			);
+			name = posix;
+			sourceTree = "<group>";
+		};
+		53CE6E8A99A74B11AADEDE3F /* ip */ = {
+			isa = PBXGroup;
+			children = (
+				01A2811D5B9942599BA9FBB5 /* IpEndpointName.cpp */,
+				F7D8B567595047229632A2DA /* IpEndpointName.h */,
+				A92205EA97604426806EE3C9 /* NetworkingUtils.h */,
+				51C4C437851A4E68ADB927D9 /* PacketListener.h */,
+				A64938FF10324FC68F92E2C2 /* TimerListener.h */,
+				FF07115A91354C1F9374B728 /* UdpSocket.h */,
+				F56143A199B1451CAF749C0A /* posix */,
+			);
+			name = ip;
+			sourceTree = "<group>";
+		};
+		1E61D0136C354951B6D05DB6 /* osc */ = {
+			isa = PBXGroup;
+			children = (
+				E86C1E10C209416597C19F46 /* OscOutboundPacketStream.cpp */,
+				D13DFDD0F435425A8747C01C /* OscPrintReceivedElements.cpp */,
+				A80D58CBDBF642B6849221BF /* OscReceivedElements.cpp */,
+				46668C609C5F4DF18297C8A9 /* OscTypes.cpp */,
+				FEF2F5852180499DA3DCA4F4 /* MessageMappingOscPacketListener.h */,
+				8C92B4BB45EA4E5F8BF8B279 /* OscException.h */,
+				01772DF47527495E9AB0417C /* OscHostEndianness.h */,
+				34465444E81C4FBCA4753D70 /* OscOutboundPacketStream.h */,
+				C2B2CD41613E4171AF09770E /* OscPacketListener.h */,
+				797511CD5DAB43419BB36717 /* OscPrintReceivedElements.h */,
+				8E8248E96BFC44DC889FE703 /* OscReceivedElements.h */,
+				B5C24488294A46C2802E64FC /* OscTypes.h */,
+			);
+			name = osc;
+			sourceTree = "<group>";
+		};
+		CD5C8209B1644DA986836805 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				3D16D42F2C2F449286D97B5B /* OscBundle.cpp */,
+				8E622E77309149F88F84DC06 /* OscListener.cpp */,
+				0B8182FF630C455EB238C8C4 /* OscMessage.cpp */,
+				DE4FF81958994D69A7C501DF /* OscSender.cpp */,
+				53CE6E8A99A74B11AADEDE3F /* ip */,
+				1E61D0136C354951B6D05DB6 /* osc */,
+				9CB582E4CCD04CD2840739DC /* OscArg.h */,
+				98221EED4C0F400988C7C279 /* OscBundle.h */,
+				AADE78B8D76F45D09BB9BD1F /* OscListener.h */,
+				38A57AFC47AF4A06A52941A9 /* OscMessage.h */,
+				75F3914B7B374387A540F8CE /* OscSender.h */,
+			);
+			name = src;
+			sourceTree = "<group>";
+		};
+		11648AF657B340FE8D391958 /* OSC */ = {
+			isa = PBXGroup;
+			children = (
+				CD5C8209B1644DA986836805 /* src */,
+			);
+			name = OSC;
+			sourceTree = "<group>";
+		};
+		18AFEB60049C4F2AA251E0CA /* src */ = {
+			isa = PBXGroup;
+			children = (
+				4E70CF5843DE45A29FDD9F45 /* QTimeline.cpp */,
+				FACAA8E15ACF4608A651EBA4 /* QTimelineAudioItem.cpp */,
+				AC86AAC6A4DE4FF5B43DA3CF /* QTimelineCue.cpp */,
+				8968DE533530497D9A69F2A0 /* QTimelineCueManager.cpp */,
+				07654A85ADB44CED904F4B23 /* QTimelineItem.cpp */,
+				CD3817DA259846FBA2E73E00 /* QTimelineModuleItem.cpp */,
+				A195DE8F3AEF4A04949C0D40 /* QTimelineParam.cpp */,
+				D06FAF3B42094093909CB416 /* QTimelineTrack.cpp */,
+				0EC8B197ACD84055BE526804 /* bass.h */,
+				967C602BF5E7445088EB2C69 /* QTimeline.h */,
+				FBCF8448385F4DE7B941FB59 /* QTimelineAudioItem.h */,
+				C7530050E35748E3886C59FF /* QTimelineCue.h */,
+				D07A76C4822A4820A93AC02A /* QTimelineCueManager.h */,
+				77A39F23BA5F4854B617F4F0 /* QTimelineItem.h */,
+				8FB2C09BB33545D0A60D77DC /* QTimelineKeyframe.h */,
+				9FC7BC30E25641EF89B9CAE3 /* QTimelineMenu.h */,
+				FC3C030EDCA74B74B791120B /* QTimelineModule.h */,
+				6D55F3F41E2D4AB78F2CEDCA /* QTimelineModuleItem.h */,
+				F29AB3E0849048BD995295FE /* QTimelineOscController.h */,
+				142C8558A5A94B44BA7986B2 /* QTimelineParam.h */,
+				53C84C76922A44CABF9F2A97 /* QTimelineTrack.h */,
+				7D62439848A54FBABB3746BF /* QTimelineWidget.h */,
+				6FDACECB113648D58098F0E1 /* QTimelineWidgetWithHandles.h */,
+			);
+			name = src;
+			sourceTree = "<group>";
+		};
+		C9BD05FDA0614D4A9E2BB312 /* macosx */ = {
+			isa = PBXGroup;
+			children = (
+				3E6652FC28A348CFA1F83240 /* libbass.dylib */,
+			);
+			name = macosx;
+			sourceTree = "<group>";
+		};
+		86731A5C07B943EDA034483D /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				C9BD05FDA0614D4A9E2BB312 /* macosx */,
+			);
+			name = lib;
+			sourceTree = "<group>";
+		};
+		C09F679D46464DB3B3F7DA5A /* QTimeline */ = {
+			isa = PBXGroup;
+			children = (
+				18AFEB60049C4F2AA251E0CA /* src */,
+				86731A5C07B943EDA034483D /* lib */,
+			);
+			name = QTimeline;
+			sourceTree = "<group>";
+		};
+		01B97315FEAEA392516A2CEA /* Blocks */ = {
+			isa = PBXGroup;
+			children = (
+				11648AF657B340FE8D391958 /* OSC */,
+				C09F679D46464DB3B3F7DA5A /* QTimeline */,
+			);
+			name = Blocks;
 			sourceTree = "<group>";
 		};
 		29B97315FDCFA39411CA2CEA /* Headers */ = {
 			isa = PBXGroup;
 			children = (
-				1017B6C61666440E0075E09B /* BasicModule.h */,
-				32CA4F630368D1EE00C91783 /* BasicSample_Prefix.pch */,
+				238A09F90C934D41A3BE3F79 /* Resources.h */,
+				E7F1F9ADB7234408B48FFCB9 /* BasicSample_Prefix.pch */,
+				9356701DE05A407CB21517AC /* BasicModule.h */,
 			);
 			name = Headers;
 			sourceTree = "<group>";
@@ -394,10 +365,8 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				1009A207166E6D51008BAFD8 /* timeline.xml */,
-				10A9E3E6166B63BB00BF4E4B /* Resources.h */,
-				8D1107310486CEB800E47090 /* Info.plist */,
-				00CCAF14116A9FEE008396D5 /* CinderApp.icns */,
+				2B8CD8D92860419F9CD30C06 /* CinderApp.icns */,
+				C338B2C811DB4674A3F14985 /* Info.plist */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -421,7 +390,7 @@
 				8D1107290486CEB800E47090 /* Resources */,
 				8D11072C0486CEB800E47090 /* Sources */,
 				8D11072E0486CEB800E47090 /* Frameworks */,
-				10CB5E991699E3F50056DDDB /* CopyFiles */,
+				BB81075A9F3047698F75F8A6 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -443,7 +412,10 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
-				en,
+				English,
+				Japanese,
+				French,
+				German,
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* BasicSample */;
 			projectDirPath = "";
@@ -459,9 +431,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				00CCAF15116A9FEE008396D5 /* CinderApp.icns in Resources */,
-				10F43936166D154000EBC1B0 /* assets in Resources */,
-				1009A208166E6D51008BAFD8 /* timeline.xml in Resources */,
+				3A1CB8C2AAAA46C0BF62C3C9 /* CinderApp.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -472,20 +442,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				00BAE65A0E7ED9C10018A608 /* BasicSampleApp.cpp in Sources */,
-				10EDF274162AD419004F4AFD /* QTimeline.h in Sources */,
-				104AFFFD16415316005AB633 /* QTimeline.cpp in Sources */,
-				10A28CFF166395DA00D082A8 /* QTimelineParam.cpp in Sources */,
-				10A28D01166397E000D082A8 /* QTimelineTrack.cpp in Sources */,
-				10A28D031663DED900D082A8 /* QTimelineModuleItem.cpp in Sources */,
-				1009A204166E3CF3008BAFD8 /* QTimelineCue.cpp in Sources */,
-				105EC6C2167F6ECE0057F873 /* QTimelineCueManager.cpp in Sources */,
-				10640A0B168B188C00FA182E /* OscBundle.cpp in Sources */,
-				10640A0C168B188C00FA182E /* OscListener.cpp in Sources */,
-				10640A0D168B188C00FA182E /* OscMessage.cpp in Sources */,
-				10640A0E168B188C00FA182E /* OscSender.cpp in Sources */,
-				10E60E571696E4D700946B3E /* QTimelineAudioItem.cpp in Sources */,
-				10DF301D16974F8B000B3A64 /* QTimelineItem.cpp in Sources */,
+				DDE49E85257843329465425F /* BasicSampleApp.cpp in Sources */,
+				4B392124B61A4603A0DF92B0 /* OscBundle.cpp in Sources */,
+				C29462C9C13F453D896EE5E3 /* OscListener.cpp in Sources */,
+				9EFC92E31F494DC99876E319 /* OscMessage.cpp in Sources */,
+				9E89E19A52974137AEBEADEC /* OscSender.cpp in Sources */,
+				54A80E065A1A41F6A2DF8F48 /* IpEndpointName.cpp in Sources */,
+				83D394EB17994F2AAF9B3658 /* OscOutboundPacketStream.cpp in Sources */,
+				915C0EFE24064B9981D5EA85 /* OscPrintReceivedElements.cpp in Sources */,
+				D1AD219ED5064EEA815B18E7 /* OscReceivedElements.cpp in Sources */,
+				334BF8663A4143BE991EB8F5 /* OscTypes.cpp in Sources */,
+				336B3B334B0043B58FD6CCDC /* NetworkingUtils.cpp in Sources */,
+				3D1F6C97CF2E4B858E0EFE8A /* UdpSocket.cpp in Sources */,
+				A30918D95E8B44CD9E4C8475 /* QTimeline.cpp in Sources */,
+				B63F279BB9AA4ABEAAA4F21B /* QTimelineAudioItem.cpp in Sources */,
+				E709140D8E004E9F83D53002 /* QTimelineCue.cpp in Sources */,
+				A4669818E0E040B99FE2B73F /* QTimelineCueManager.cpp in Sources */,
+				47CEB6F114714784A9832D94 /* QTimelineItem.cpp in Sources */,
+				DFFCDD9DA82B4E3F887A7D63 /* QTimelineModuleItem.cpp in Sources */,
+				E7C9E6E6AD7C485CAFF157A3 /* QTimelineParam.cpp in Sources */,
+				E08E089D35414FC7ABC689AA /* QTimelineTrack.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -495,93 +471,96 @@
 		C01FCF4B08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
-				GCC_MODEL_TUNING = G5;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = BasicSample_Prefix.pch;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../../../osc/lib/iphone\"",
-					"\"$(SRCROOT)/../../../../osc/lib/macosx\"",
-					"\"$(SRCROOT)/../../../../osc/lib/vc10\"",
-					"\"$(SRCROOT)/../../../lib/macosx\"",
-				);
 				OTHER_LDFLAGS = (
 					"\"$(CINDER_PATH)/lib/libcinder_d.a\"",
-					"\"$(CINDER_PATH)/blocks/osc/lib/macosx/osc.a\"",
-					"\"$(CINDER_PATH)/blocks/QTimeline/lib/macosx/libbass.dylib\"",
+					../../../lib/macosx/libbass.dylib,
 				);
 				PRODUCT_NAME = BasicSample;
 				WRAPPER_EXTENSION = app;
+				SYMROOT = ./build;
 			};
 			name = Debug;
 		};
 		C01FCF4C08A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_FAST_MATH = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
-				GCC_MODEL_TUNING = G5;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = BasicSample_Prefix.pch;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../../../osc/lib/iphone\"",
-					"\"$(SRCROOT)/../../../../osc/lib/macosx\"",
-					"\"$(SRCROOT)/../../../../osc/lib/vc10\"",
-					"\"$(SRCROOT)/../../../lib/macosx\"",
-				);
 				OTHER_LDFLAGS = (
 					"\"$(CINDER_PATH)/lib/libcinder.a\"",
-					"\"$(CINDER_PATH)/blocks/osc/lib/macosx/osc.a\"",
-					"\"$(CINDER_PATH)/blocks/QTimeline/lib/macosx/libbass.dylib\"",
+					../../../lib/macosx/libbass.dylib,
 				);
 				PRODUCT_NAME = BasicSample;
 				STRIP_INSTALLED_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
+				SYMROOT = ./build;
 			};
 			name = Release;
 		};
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = i386;
-				CINDER_PATH = ../../../../..;
+				CINDER_PATH = "../../../../..";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/boost\"";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
-				SDKROOT = macosx10.8;
-				USER_HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/include\" ../include \"$(CINDER_PATH)/blocks/osc/include\"";
+				SDKROOT = macosx;
+				USER_HEADER_SEARCH_PATHS = (
+					"\"$(CINDER_PATH)/include\" ../include",
+					../../../../OSC/src,
+					../../../src,
+				);
 			};
 			name = Debug;
 		};
 		C01FCF5008A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = i386;
-				CINDER_PATH = ../../../../..;
+				CINDER_PATH = "../../../../..";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/boost\"";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
-				SDKROOT = macosx10.8;
-				USER_HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/include\" ../include \"$(CINDER_PATH)/blocks/osc/include\"";
+				SDKROOT = macosx;
+				USER_HEADER_SEARCH_PATHS = (
+					"\"$(CINDER_PATH)/include\" ../include",
+					../../../../OSC/src,
+					../../../src,
+				);
 			};
 			name = Release;
 		};
@@ -607,6 +586,16 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+		BB81075A9F3047698F75F8A6 /* Copy Files */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 6;
+			files = (
+				35527A02362F444D8718E011 /* libbass.dylib in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 	};
 	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
 }

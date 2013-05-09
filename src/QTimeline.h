@@ -34,6 +34,21 @@
 #define TIMELINE_TRANSPORT_HEIGHT   30
 
 
+namespace cinder
+{
+    //! Easing equation for step, hold the value until the end.
+    inline float easeStep( float t )
+    {
+        if ( t == 1.0f )
+            return 1.0f;
+        else
+            return 0.0f;
+    }
+
+    //! Easing equation for step, hold the value until the end.
+    struct EaseStep{ float operator()( float t ) const { return easeStep( t ); } };
+}
+
 
 typedef std::shared_ptr<class QTimeline>		QTimelineRef;
 
@@ -191,9 +206,9 @@ public:
     
     void updateCurrentTime();
     
-    void save( const std::string &filename );
+    void save( ci::fs::path filepath );
     
-    void load( const std::string &filename );
+    void load( ci::fs::path filepath );
     
     void openMenu( QTimelineMenu *menu, ci::Vec2f pos )
     {
@@ -336,11 +351,7 @@ private:
     
     bool keyDown( ci::app::KeyEvent event );
   
-#if BOOST_VERSION < 105200
-    bool resize( ci::app::ResizeEvent event );
-#else
-    bool resize( /*ci::app::ResizeEvent event*/ );
-#endif
+    bool resize();
   
     void renderTimeBar();
     
@@ -480,7 +491,6 @@ private:
     ci::gl::Texture         mHelpTex;
     
     QTimelineOscControllerRef   mOscController;
-   
     
 };
 

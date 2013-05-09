@@ -190,16 +190,6 @@ void QTimeline::render()
 
 void QTimeline::registerCallbacks()
 {
-// Use the boost version to figure out what style callbacks to use.
-#if BOOST_VERSION < 105200
-    mCbMouseDown    = mApp->registerMouseDown(  this, &QTimeline::mouseDown );
-    mCbMouseUp      = mApp->registerMouseUp(    this, &QTimeline::mouseUp );
-    mCbMouseMove    = mApp->registerMouseMove(  this, &QTimeline::mouseMove );
-    mCbMouseDrag    = mApp->registerMouseDrag(  this, &QTimeline::mouseDrag );
-    mCbMouseWheel   = mApp->registerMouseWheel( this, &QTimeline::mouseWheel );
-    mCbKeyDown      = mApp->registerKeyDown( this, &QTimeline::keyDown );
-    mCbResize       = mApp->registerResize(     this, &QTimeline::resize );
-#else
   // TODO: At some point, WindowRef should be passed into here.
   cinder::app::WindowRef w = getWindow();
   w->getSignalMouseDown().connect(std::bind(&QTimeline::mouseDown, this, std::_1));
@@ -209,7 +199,6 @@ void QTimeline::registerCallbacks()
   w->getSignalMouseWheel().connect(std::bind(&QTimeline::mouseWheel, this, std::_1));
   w->getSignalKeyDown().connect(std::bind(&QTimeline::keyDown, this, std::_1));
   w->getSignalResize().connect(std::bind(&QTimeline::resize, this));
-#endif
 }
 
 
@@ -338,11 +327,7 @@ bool QTimeline::mouseWheel( MouseEvent event )
     return false;
 }
 
-#if BOOST_VERSION < 105200
-bool QTimeline::resize( ci::app::ResizeEvent event )
-#else
 bool QTimeline::resize( )
-#endif
 {
     mTransportRect  = Rectf( 0, getWindowHeight() - TIMELINE_TRANSPORT_HEIGHT, getWindowWidth(), getWindowHeight() );
     return false;
@@ -691,7 +676,7 @@ void QTimeline::loadTheme( const fs::path &filepath )
 }
 
 
-void QTimeline::save( const std::string &filename )
+void QTimeline::save( fs::path filepath )
 {
     XmlTree doc( "QTimeline", "" );
 
@@ -703,11 +688,11 @@ void QTimeline::save( const std::string &filename )
 
     doc.push_back( mCueManager->getXmlNode() );
 
-    doc.write( writeFile( filename ) );
+    doc.write( writeFile( filepath ) );
 }
 
 
-void QTimeline::load( const std::string &filename )
+void QTimeline::load( fs::path filepath )
 {
     clear();
  
@@ -715,7 +700,7 @@ void QTimeline::load( const std::string &filename )
     
     try
     {
-        doc = XmlTree( loadFile(filename) );
+        doc = XmlTree( loadFile( filepath ) );
 
         
         for( XmlTree::Iter nodeIt = doc.begin("QTimeline/tracks/track"); nodeIt != doc.end(); ++nodeIt )
@@ -730,7 +715,7 @@ void QTimeline::load( const std::string &filename )
     }
     catch ( ... )
     {
-        console() << "Error > QTimeline::load(): " << filename << endl;
+        console() << "Error > QTimeline::load(): " << filepath.filename().generic_string() << endl;
         return;
     }
     

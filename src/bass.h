@@ -20,7 +20,7 @@ typedef uint16_t WORD;
 typedef uint32_t DWORD;
 typedef uint64_t QWORD;
 #ifndef __OBJC__
-typedef int BOOL;
+//typedef int BOOL;
 #endif
 #ifndef TRUE
 #define TRUE 1
