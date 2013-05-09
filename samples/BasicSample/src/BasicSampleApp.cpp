@@ -74,7 +74,7 @@ class BasicSampleApp : public AppNative {
   {
       char    c       = event.getChar();
       int     code    = event.getChar();
-    
+      
       if ( event.isAltDown() )
       {
           if ( c == 'f' )
@@ -120,11 +120,11 @@ class BasicSampleApp : public AppNative {
       else if ( code == 3 )
           mTimeline->step(1);
     
-      else if ( code == 0 )
-          mTimeline->stepTimeWindow(1);
-    
-      else if ( code == 1 )
-          mTimeline->stepTimeWindow(-1);
+//      else if ( code == 0 )
+//          mTimeline->stepTimeWindow(1);
+//    
+//      else if ( code == 1 )
+//          mTimeline->stepTimeWindow(-1);
     
   }
 

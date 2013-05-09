@@ -1,0 +1,742 @@
+TBasicSample
+v5
+r1
+cCheck dependencies
+cProcessInfoPlistFile /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/Debug/BasicSample.app/Contents/Info.plist Info.plist
+cCpResource ../resources/CinderApp.icns ./build/Debug/BasicSample.app/Contents/Resources/CinderApp.icns
+cProcessPCH++ /var/folders/r7/k7c7khws1dl5137d8042sd6c0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/BasicSample_Prefix-bralzjdfduqtfjflfpgiturwttyy/BasicSample_Prefix.pch.pth BasicSample_Prefix.pch normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC ./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/OscBundle.o /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/OscBundle.cpp normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC ./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/BasicSampleApp.o /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../src/BasicSampleApp.cpp normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC ./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/OscListener.o /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/OscListener.cpp normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC ./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/OscSender.o /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/OscSender.cpp normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC ./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/OscMessage.o /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/OscMessage.cpp normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC ./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/IpEndpointName.o /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/ip/IpEndpointName.cpp normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC ./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/OscOutboundPacketStream.o /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/osc/OscOutboundPacketStream.cpp normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC ./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/OscPrintReceivedElements.o /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/osc/OscPrintReceivedElements.cpp normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC ./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/OscReceivedElements.o /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/osc/OscReceivedElements.cpp normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC ./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/OscTypes.o /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/osc/OscTypes.cpp normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC ./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/NetworkingUtils.o /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/ip/posix/NetworkingUtils.cpp normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC ./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/UdpSocket.o /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/ip/posix/UdpSocket.cpp normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC ./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/QTimeline.o /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../src/QTimeline.cpp normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC ./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/QTimelineAudioItem.o /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../src/QTimelineAudioItem.cpp normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC ./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/QTimelineCue.o /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../src/QTimelineCue.cpp normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC ./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/QTimelineCueManager.o /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../src/QTimelineCueManager.cpp normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC ./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/QTimelineItem.o /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../src/QTimelineItem.cpp normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC ./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/QTimelineModuleItem.o /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../src/QTimelineModuleItem.cpp normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC ./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/QTimelineParam.o /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../src/QTimelineParam.cpp normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC ./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/QTimelineTrack.o /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../src/QTimelineTrack.cpp normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler
+cLd /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/Debug/BasicSample.app/Contents/MacOS/BasicSample normal i386
+cPBXCp ../../../lib/macosx/libbass.dylib ./build/Debug/BasicSample.app/Contents/MacOS/libbass.dylib
+cTouch /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/Debug/BasicSample.app
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk
+c00000000518B522200000000000000AA
+t1368085026
+s170
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/Accelerate.framework/Accelerate
+c000000005086D06000000000000024F0
+t1351012448
+s9456
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/AudioToolbox.framework/AudioToolbox
+c00000000518B51FE0000000000024DD8
+t1368084990
+s151000
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/AudioUnit.framework/AudioUnit
+c00000000518B51FE00000000000060B4
+t1368084990
+s24756
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/Cocoa.framework/Headers/Cocoa.h
+c000000005086D06200000000000001E5
+t1351012450
+s485
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/CoreAudio.framework/CoreAudio
+c00000000518B51FF000000000000E9A8
+t1368084991
+s59816
+
+N/System/Library/Frameworks/Cocoa.framework/Cocoa
+c000000005086B82A0000000000006730
+t1351006250
+s26416
+
+N/System/Library/Frameworks/CoreVideo.framework/CoreVideo
+c00000000513E75090000000000081CB0
+t1363047689
+s531632
+
+N/System/Library/Frameworks/OpenGL.framework/OpenGL
+c00000000513E742F000000000002DAD0
+t1363047471
+s187088
+
+N/System/Library/Frameworks/QTKit.framework/QTKit
+c00000000513E75CE00000000004A2E10
+t1363047886
+s4861456
+
+N/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/OscBundle.cpp
+c0000000051434D3400000000000007E1
+t1363365172
+s2017
+
+N/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/OscListener.cpp
+c0000000051434D3400000000000016B9
+t1363365172
+s5817
+
+N/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/OscMessage.cpp
+c0000000051434D3400000000000010AD
+t1363365172
+s4269
+
+N/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/OscSender.cpp
+c0000000051434D3400000000000010FE
+t1363365172
+s4350
+
+N/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/ip/IpEndpointName.cpp
+c0000000051434D3400000000000009FC
+t1363365172
+s2556
+
+N/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/ip/posix/NetworkingUtils.cpp
+c0000000051434D3400000000000007B8
+t1363365172
+s1976
+
+N/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/ip/posix/UdpSocket.cpp
+c0000000051434D340000000000003DAD
+t1363365172
+s15789
+
+N/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/osc/OscOutboundPacketStream.cpp
+c0000000051434D340000000000003BF2
+t1363365172
+s15346
+
+N/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/osc/OscPrintReceivedElements.cpp
+c0000000051434D340000000000001C09
+t1363365172
+s7177
+
+N/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/osc/OscReceivedElements.cpp
+c0000000051434D340000000000004816
+t1363365172
+s18454
+
+N/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/osc/OscTypes.cpp
+c000000005174304C0000000000000669
+t1366569036
+s1641
+
+N/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../lib/macosx/libbass.dylib
+c0000000051520BB900000000000B8020
+t1364331449
+s753696
+
+N/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../src/QTimeline.cpp
+c00000000518B7D77000000000000752E
+t1368096119
+s29998
+
+N/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../src/QTimelineAudioItem.cpp
+c0000000050F882180000000000003119
+t1358463512
+s12569
+
+N/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../src/QTimelineCue.cpp
+c0000000050F163220000000000001D74
+t1357996834
+s7540
+
+N/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../src/QTimelineCueManager.cpp
+c0000000050F16322000000000000166A
+t1357996834
+s5738
+
+N/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../src/QTimelineItem.cpp
+c0000000051520BB90000000000001BAA
+t1364331449
+s7082
+
+N/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../src/QTimelineModuleItem.cpp
+c0000000051520BB90000000000000D3A
+t1364331449
+s3386
+
+N/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../src/QTimelineParam.cpp
+c0000000051520BB90000000000004526
+t1364331449
+s17702
+
+N/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../src/QTimelineTrack.cpp
+c0000000051520BB90000000000002D56
+t1364331449
+s11606
+
+N/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../resources/CinderApp.icns
+c00000000518B80CA0000000000070375
+t1368096970
+s459637
+
+N/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../src/BasicSampleApp.cpp
+c00000000518B80CA0000000000001174
+t1368096970
+s4468
+
+N/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/BasicSample.LinkFileList
+c00000000518B80CF0000000000000C1F
+t1368096975
+s3103
+
+N/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/BasicSampleApp.o
+t2
+s0
+
+N/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/IpEndpointName.o
+t2
+s0
+
+N/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/NetworkingUtils.o
+t2
+s0
+
+N/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/OscBundle.o
+t2
+s0
+
+N/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/OscListener.o
+t2
+s0
+
+N/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/OscMessage.o
+t2
+s0
+
+N/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/OscOutboundPacketStream.o
+t2
+s0
+
+N/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/OscPrintReceivedElements.o
+t2
+s0
+
+N/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/OscReceivedElements.o
+t2
+s0
+
+N/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/OscSender.o
+t2
+s0
+
+N/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/OscTypes.o
+t2
+s0
+
+N/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/QTimeline.o
+t2
+s0
+
+N/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/QTimelineAudioItem.o
+t2
+s0
+
+N/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/QTimelineCue.o
+t2
+s0
+
+N/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/QTimelineCueManager.o
+t2
+s0
+
+N/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/QTimelineItem.o
+t2
+s0
+
+N/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/QTimelineModuleItem.o
+t2
+s0
+
+N/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/QTimelineParam.o
+t2
+s0
+
+N/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/QTimelineTrack.o
+t2
+s0
+
+N/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/UdpSocket.o
+t2
+s0
+
+N/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/Debug/BasicSample.app
+t2
+s0
+
+N/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/Debug/BasicSample.app/Contents/Info.plist
+t2
+s0
+
+N/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/Debug/BasicSample.app/Contents/MacOS/BasicSample
+t2
+s0
+
+N/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/Debug/BasicSample.app/Contents/MacOS/libbass.dylib
+t2
+s0
+
+N/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/Debug/BasicSample.app/Contents/PkgInfo
+t2
+s0
+
+N/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/Debug/BasicSample.app/Contents/Resources/CinderApp.icns
+t2
+s0
+
+N/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/BasicSample_Prefix.pch
+c00000000518B80CA000000000000012D
+t1368096970
+s301
+i<Cocoa/Cocoa.h>
+i"cinder/Cinder.h"
+i"cinder/app/AppBasic.h"
+i"cinder/gl/gl.h"
+i"cinder/CinderMath.h"
+i"cinder/Matrix.h"
+i"cinder/Vector.h"
+i"cinder/Quaternion.h"
+
+N/Users/Q/Code/Cinder_DEV/include/cinder/Cinder.h
+c0000000051700F240000000000000CEB
+t1366298404
+s3307
+
+N/Users/Q/Code/Cinder_DEV/include/cinder/CinderMath.h
+c00000000518B765A0000000000001F9E
+t1368094298
+s8094
+
+N/Users/Q/Code/Cinder_DEV/include/cinder/Matrix.h
+c0000000051700F240000000000000EDD
+t1366298404
+s3805
+
+N/Users/Q/Code/Cinder_DEV/include/cinder/Quaternion.h
+c0000000051700F240000000000005499
+t1366298404
+s21657
+
+N/Users/Q/Code/Cinder_DEV/include/cinder/Vector.h
+c0000000051700F24000000000000AD7C
+t1366298404
+s44412
+
+N/Users/Q/Code/Cinder_DEV/include/cinder/app/AppBasic.h
+c00000000518B725A0000000000002262
+t1368093274
+s8802
+
+N/Users/Q/Code/Cinder_DEV/include/cinder/gl/gl.h
+c0000000051700F240000000000006469
+t1366298404
+s25705
+
+N/var/folders/r7/k7c7khws1dl5137d8042sd6c0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/BasicSample_Prefix-bralzjdfduqtfjflfpgiturwttyy/BasicSample_Prefix.pch.pth
+t2
+s0
+
+NInfo.plist
+c00000000518B80CA0000000000000462
+t1368096970
+s1122
+
+CBuild AST from /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/OscBundle.cpp
+r0
+
+CBuild AST from /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/OscListener.cpp
+r0
+
+CBuild AST from /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/OscMessage.cpp
+r0
+
+CBuild AST from /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/OscSender.cpp
+r0
+
+CBuild AST from /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/ip/IpEndpointName.cpp
+r0
+
+CBuild AST from /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/ip/posix/NetworkingUtils.cpp
+r0
+
+CBuild AST from /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/ip/posix/UdpSocket.cpp
+r0
+
+CBuild AST from /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/osc/OscOutboundPacketStream.cpp
+r0
+
+CBuild AST from /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/osc/OscPrintReceivedElements.cpp
+r0
+
+CBuild AST from /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/osc/OscReceivedElements.cpp
+r0
+
+CBuild AST from /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/osc/OscTypes.cpp
+r0
+
+CBuild AST from /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../src/QTimeline.cpp
+r0
+
+CBuild AST from /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../src/QTimelineAudioItem.cpp
+r0
+
+CBuild AST from /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../src/QTimelineCue.cpp
+r0
+
+CBuild AST from /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../src/QTimelineCueManager.cpp
+r0
+
+CBuild AST from /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../src/QTimelineItem.cpp
+r0
+
+CBuild AST from /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../src/QTimelineModuleItem.cpp
+r0
+
+CBuild AST from /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../src/QTimelineParam.cpp
+r0
+
+CBuild AST from /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../src/QTimelineTrack.cpp
+r0
+
+CBuild AST from /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../src/BasicSampleApp.cpp
+r0
+
+CCheck dependencies
+r0
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection18"Check dependencies46ed0a4fb83bb741^00582d4fb83bb741^---0#1#0#--18"Check dependencies36"3C066854-CA0C-4FAB-BDB1-92E83072332A-
+
+CCompileC ./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/BasicSampleApp.o /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../src/BasicSampleApp.cpp normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler
+s389789780.873276
+e389789788.800298
+r1
+xCompileC
+x./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/BasicSampleApp.o
+x/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../src/BasicSampleApp.cpp
+xnormal
+xi386
+xc++
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection101"Compile /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../src/BasicSampleApp.cpp3eb4df54b83bb741^11e0cc5cb83bb741^---0#0#0#-19%DVTDocumentLocation2@109"file://localhost/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../src/BasicSampleApp.cpp0000000000000000^3268"CompileC ./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/BasicSampleApp.o ../src/BasicSampleApp.cpp normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode    setenv LANG en_US.US-ASCII    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x c++ -arch i386 -fmessage-length=0 -std=c++11 -stdlib=libc++ -Wno-trigraphs -fpascal-strings -O0 -Wno-missing-field-initializers -Wno-missing-prototypes -Wreturn-type -Wno-non-virtual-dtor -Wno-overloaded-virtual -Wno-exit-time-destructors -Wformat -Wno-missing-braces -Wparentheses -Wswitch -Wno-unused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wno-empty-body -Wno-uninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wno-constant-conversion -Wno-int-conversion -Wno-enum-conversion -Wno-shorten-64-to-32 -Wno-newline-eof -Wno-c++11-extensions -DDEBUG=1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk -fasm-blocks -fstrict-aliasing -Wdeprecated-declarations -Winvalid-offsetof -mmacosx-version-min=10.7 -g -fvisibility-inlines-hidden -Wno-sign-conversion -iquote /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-generated-files.hmap -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-own-target-headers.hmap -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-all-target-headers.hmap -iquote /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-project-headers.hmap -iquote../../../../../include -iquote../include -iquote../../../../OSC/src -iquote../../../src -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/build/Debug/include -I../../../../../boost -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/DerivedSources/i386 -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/DerivedSources -F/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/build/Debug -include /var/folders/r7/k7c7khws1dl5137d8042sd6c0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/BasicSample_Prefix-bralzjdfduqtfjflfpgiturwttyy/BasicSample_Prefix.pch -MMD -MT dependencies -MF /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/BasicSampleApp.d --serialize-diagnostics /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/BasicSampleApp.dia -c /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../src/BasicSampleApp.cpp -o /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/BasicSampleApp.o36"D2838E1F-3E28-46E6-9562-B1435A348DF8-
+
+CCompileC ./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/IpEndpointName.o /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/ip/IpEndpointName.cpp normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler
+s389789782.920808
+e389789784.729909
+r1
+xCompileC
+x./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/IpEndpointName.o
+x/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/ip/IpEndpointName.cpp
+xnormal
+xi386
+xc++
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection117"Compile /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/ip/IpEndpointName.cppc9e9eb56b83bb741^71e7ba58b83bb741^---0#0#0#-19%DVTDocumentLocation2@125"file://localhost/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/ip/IpEndpointName.cpp0000000000000000^3300"CompileC ./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/IpEndpointName.o ../../../../OSC/src/ip/IpEndpointName.cpp normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode    setenv LANG en_US.US-ASCII    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x c++ -arch i386 -fmessage-length=0 -std=c++11 -stdlib=libc++ -Wno-trigraphs -fpascal-strings -O0 -Wno-missing-field-initializers -Wno-missing-prototypes -Wreturn-type -Wno-non-virtual-dtor -Wno-overloaded-virtual -Wno-exit-time-destructors -Wformat -Wno-missing-braces -Wparentheses -Wswitch -Wno-unused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wno-empty-body -Wno-uninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wno-constant-conversion -Wno-int-conversion -Wno-enum-conversion -Wno-shorten-64-to-32 -Wno-newline-eof -Wno-c++11-extensions -DDEBUG=1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk -fasm-blocks -fstrict-aliasing -Wdeprecated-declarations -Winvalid-offsetof -mmacosx-version-min=10.7 -g -fvisibility-inlines-hidden -Wno-sign-conversion -iquote /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-generated-files.hmap -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-own-target-headers.hmap -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-all-target-headers.hmap -iquote /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-project-headers.hmap -iquote../../../../../include -iquote../include -iquote../../../../OSC/src -iquote../../../src -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/build/Debug/include -I../../../../../boost -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/DerivedSources/i386 -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/DerivedSources -F/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/build/Debug -include /var/folders/r7/k7c7khws1dl5137d8042sd6c0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/BasicSample_Prefix-bralzjdfduqtfjflfpgiturwttyy/BasicSample_Prefix.pch -MMD -MT dependencies -MF /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/IpEndpointName.d --serialize-diagnostics /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/IpEndpointName.dia -c /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/ip/IpEndpointName.cpp -o /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/IpEndpointName.o36"B754E5D0-7605-46FF-AA14-9B365C6ADBC4-
+
+CCompileC ./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/NetworkingUtils.o /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/ip/posix/NetworkingUtils.cpp normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler
+s389789786.396827
+e389789788.039179
+r1
+xCompileC
+x./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/NetworkingUtils.o
+x/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/ip/posix/NetworkingUtils.cpp
+xnormal
+xi386
+xc++
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection124"Compile /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/ip/posix/NetworkingUtils.cpp0dc5655ab83bb741^bc050a5cb83bb741^---0#0#0#-19%DVTDocumentLocation2@132"file://localhost/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/ip/posix/NetworkingUtils.cpp0000000000000000^3318"CompileC ./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/NetworkingUtils.o ../../../../OSC/src/ip/posix/NetworkingUtils.cpp normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode    setenv LANG en_US.US-ASCII    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x c++ -arch i386 -fmessage-length=0 -std=c++11 -stdlib=libc++ -Wno-trigraphs -fpascal-strings -O0 -Wno-missing-field-initializers -Wno-missing-prototypes -Wreturn-type -Wno-non-virtual-dtor -Wno-overloaded-virtual -Wno-exit-time-destructors -Wformat -Wno-missing-braces -Wparentheses -Wswitch -Wno-unused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wno-empty-body -Wno-uninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wno-constant-conversion -Wno-int-conversion -Wno-enum-conversion -Wno-shorten-64-to-32 -Wno-newline-eof -Wno-c++11-extensions -DDEBUG=1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk -fasm-blocks -fstrict-aliasing -Wdeprecated-declarations -Winvalid-offsetof -mmacosx-version-min=10.7 -g -fvisibility-inlines-hidden -Wno-sign-conversion -iquote /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-generated-files.hmap -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-own-target-headers.hmap -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-all-target-headers.hmap -iquote /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-project-headers.hmap -iquote../../../../../include -iquote../include -iquote../../../../OSC/src -iquote../../../src -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/build/Debug/include -I../../../../../boost -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/DerivedSources/i386 -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/DerivedSources -F/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/build/Debug -include /var/folders/r7/k7c7khws1dl5137d8042sd6c0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/BasicSample_Prefix-bralzjdfduqtfjflfpgiturwttyy/BasicSample_Prefix.pch -MMD -MT dependencies -MF /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/NetworkingUtils.d --serialize-diagnostics /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/NetworkingUtils.dia -c /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/ip/posix/NetworkingUtils.cpp -o /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/NetworkingUtils.o36"650D4D0F-A1A2-4730-87B3-802376D046E6-
+
+CCompileC ./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/OscBundle.o /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/OscBundle.cpp normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler
+s389789780.873221
+e389789782.919484
+r1
+xCompileC
+x./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/OscBundle.o
+x/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/OscBundle.cpp
+xnormal
+xi386
+xc++
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection109"Compile /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/OscBundle.cppc8b3df54b83bb741^ba69eb56b83bb741^---0#0#0#-19%DVTDocumentLocation2@117"file://localhost/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/OscBundle.cpp0000000000000000^3264"CompileC ./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/OscBundle.o ../../../../OSC/src/OscBundle.cpp normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode    setenv LANG en_US.US-ASCII    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x c++ -arch i386 -fmessage-length=0 -std=c++11 -stdlib=libc++ -Wno-trigraphs -fpascal-strings -O0 -Wno-missing-field-initializers -Wno-missing-prototypes -Wreturn-type -Wno-non-virtual-dtor -Wno-overloaded-virtual -Wno-exit-time-destructors -Wformat -Wno-missing-braces -Wparentheses -Wswitch -Wno-unused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wno-empty-body -Wno-uninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wno-constant-conversion -Wno-int-conversion -Wno-enum-conversion -Wno-shorten-64-to-32 -Wno-newline-eof -Wno-c++11-extensions -DDEBUG=1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk -fasm-blocks -fstrict-aliasing -Wdeprecated-declarations -Winvalid-offsetof -mmacosx-version-min=10.7 -g -fvisibility-inlines-hidden -Wno-sign-conversion -iquote /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-generated-files.hmap -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-own-target-headers.hmap -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-all-target-headers.hmap -iquote /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-project-headers.hmap -iquote../../../../../include -iquote../include -iquote../../../../OSC/src -iquote../../../src -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/build/Debug/include -I../../../../../boost -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/DerivedSources/i386 -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/DerivedSources -F/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/build/Debug -include /var/folders/r7/k7c7khws1dl5137d8042sd6c0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/BasicSample_Prefix-bralzjdfduqtfjflfpgiturwttyy/BasicSample_Prefix.pch -MMD -MT dependencies -MF /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/OscBundle.d --serialize-diagnostics /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/OscBundle.dia -c /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/OscBundle.cpp -o /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/OscBundle.o36"D4FCDC84-7B56-40CA-A3AB-7D1600DA5FD7-
+
+CCompileC ./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/OscListener.o /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/OscListener.cpp normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler
+s389789780.873293
+e389789783.683507
+r1
+xCompileC
+x./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/OscListener.o
+x/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/OscListener.cpp
+xnormal
+xi386
+xc++
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection111"Compile /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/OscListener.cpp48c1df54b83bb741^2233af57b83bb741^---0#0#0#-19%DVTDocumentLocation2@119"file://localhost/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/OscListener.cpp0000000000000000^3276"CompileC ./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/OscListener.o ../../../../OSC/src/OscListener.cpp normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode    setenv LANG en_US.US-ASCII    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x c++ -arch i386 -fmessage-length=0 -std=c++11 -stdlib=libc++ -Wno-trigraphs -fpascal-strings -O0 -Wno-missing-field-initializers -Wno-missing-prototypes -Wreturn-type -Wno-non-virtual-dtor -Wno-overloaded-virtual -Wno-exit-time-destructors -Wformat -Wno-missing-braces -Wparentheses -Wswitch -Wno-unused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wno-empty-body -Wno-uninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wno-constant-conversion -Wno-int-conversion -Wno-enum-conversion -Wno-shorten-64-to-32 -Wno-newline-eof -Wno-c++11-extensions -DDEBUG=1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk -fasm-blocks -fstrict-aliasing -Wdeprecated-declarations -Winvalid-offsetof -mmacosx-version-min=10.7 -g -fvisibility-inlines-hidden -Wno-sign-conversion -iquote /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-generated-files.hmap -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-own-target-headers.hmap -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-all-target-headers.hmap -iquote /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-project-headers.hmap -iquote../../../../../include -iquote../include -iquote../../../../OSC/src -iquote../../../src -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/build/Debug/include -I../../../../../boost -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/DerivedSources/i386 -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/DerivedSources -F/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/build/Debug -include /var/folders/r7/k7c7khws1dl5137d8042sd6c0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/BasicSample_Prefix-bralzjdfduqtfjflfpgiturwttyy/BasicSample_Prefix.pch -MMD -MT dependencies -MF /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/OscListener.d --serialize-diagnostics /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/OscListener.dia -c /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/OscListener.cpp -o /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/OscListener.o36"1B81C1A4-1CE2-41F3-B89B-D58F3E30D013-
+
+CCompileC ./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/OscMessage.o /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/OscMessage.cpp normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler
+s389789782.901420
+e389789784.728232
+r1
+xCompileC
+x./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/OscMessage.o
+x/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/OscMessage.cpp
+xnormal
+xi386
+xc++
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection110"Compile /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/OscMessage.cppc8eae656b83bb741^056dba58b83bb741^---0#0#0#-19%DVTDocumentLocation2@118"file://localhost/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/OscMessage.cpp0000000000000000^3270"CompileC ./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/OscMessage.o ../../../../OSC/src/OscMessage.cpp normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode    setenv LANG en_US.US-ASCII    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x c++ -arch i386 -fmessage-length=0 -std=c++11 -stdlib=libc++ -Wno-trigraphs -fpascal-strings -O0 -Wno-missing-field-initializers -Wno-missing-prototypes -Wreturn-type -Wno-non-virtual-dtor -Wno-overloaded-virtual -Wno-exit-time-destructors -Wformat -Wno-missing-braces -Wparentheses -Wswitch -Wno-unused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wno-empty-body -Wno-uninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wno-constant-conversion -Wno-int-conversion -Wno-enum-conversion -Wno-shorten-64-to-32 -Wno-newline-eof -Wno-c++11-extensions -DDEBUG=1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk -fasm-blocks -fstrict-aliasing -Wdeprecated-declarations -Winvalid-offsetof -mmacosx-version-min=10.7 -g -fvisibility-inlines-hidden -Wno-sign-conversion -iquote /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-generated-files.hmap -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-own-target-headers.hmap -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-all-target-headers.hmap -iquote /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-project-headers.hmap -iquote../../../../../include -iquote../include -iquote../../../../OSC/src -iquote../../../src -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/build/Debug/include -I../../../../../boost -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/DerivedSources/i386 -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/DerivedSources -F/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/build/Debug -include /var/folders/r7/k7c7khws1dl5137d8042sd6c0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/BasicSample_Prefix-bralzjdfduqtfjflfpgiturwttyy/BasicSample_Prefix.pch -MMD -MT dependencies -MF /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/OscMessage.d --serialize-diagnostics /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/OscMessage.dia -c /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/OscMessage.cpp -o /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/OscMessage.o36"0AE85EA9-2BF9-42BB-93A8-9028971329F9-
+
+CCompileC ./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/OscOutboundPacketStream.o /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/osc/OscOutboundPacketStream.cpp normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler
+s389789783.685564
+e389789785.346782
+r1
+xCompileC
+x./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/OscOutboundPacketStream.o
+x/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/osc/OscOutboundPacketStream.cpp
+xnormal
+xi386
+xc++
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection127"Compile /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/osc/OscOutboundPacketStream.cppd1adaf57b83bb741^59df5859b83bb741^---0#0#0#-19%DVTDocumentLocation2@135"file://localhost/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/osc/OscOutboundPacketStream.cpp0000000000000000^3356"CompileC ./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/OscOutboundPacketStream.o ../../../../OSC/src/osc/OscOutboundPacketStream.cpp normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode    setenv LANG en_US.US-ASCII    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x c++ -arch i386 -fmessage-length=0 -std=c++11 -stdlib=libc++ -Wno-trigraphs -fpascal-strings -O0 -Wno-missing-field-initializers -Wno-missing-prototypes -Wreturn-type -Wno-non-virtual-dtor -Wno-overloaded-virtual -Wno-exit-time-destructors -Wformat -Wno-missing-braces -Wparentheses -Wswitch -Wno-unused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wno-empty-body -Wno-uninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wno-constant-conversion -Wno-int-conversion -Wno-enum-conversion -Wno-shorten-64-to-32 -Wno-newline-eof -Wno-c++11-extensions -DDEBUG=1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk -fasm-blocks -fstrict-aliasing -Wdeprecated-declarations -Winvalid-offsetof -mmacosx-version-min=10.7 -g -fvisibility-inlines-hidden -Wno-sign-conversion -iquote /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-generated-files.hmap -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-own-target-headers.hmap -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-all-target-headers.hmap -iquote /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-project-headers.hmap -iquote../../../../../include -iquote../include -iquote../../../../OSC/src -iquote../../../src -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/build/Debug/include -I../../../../../boost -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/DerivedSources/i386 -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/DerivedSources -F/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/build/Debug -include /var/folders/r7/k7c7khws1dl5137d8042sd6c0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/BasicSample_Prefix-bralzjdfduqtfjflfpgiturwttyy/BasicSample_Prefix.pch -MMD -MT dependencies -MF /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/OscOutboundPacketStream.d --serialize-diagnostics /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/OscOutboundPacketStream.dia -c /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/osc/OscOutboundPacketStream.cpp -o /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/OscOutboundPacketStream.o36"90FB8256-B8EF-4326-A0A4-2513D1EDA32D-
+
+CCompileC ./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/OscPrintReceivedElements.o /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/osc/OscPrintReceivedElements.cpp normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler
+s389789784.729504
+e389789786.427286
+r1
+xCompileC
+x./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/OscPrintReceivedElements.o
+x/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/osc/OscPrintReceivedElements.cpp
+xnormal
+xi386
+xc++
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection128"Compile /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/osc/OscPrintReceivedElements.cpp04e5ba58b83bb741^ff7a6d5ab83bb741^---0#0#0#-19%DVTDocumentLocation2@136"file://localhost/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/osc/OscPrintReceivedElements.cpp0000000000000000^3362"CompileC ./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/OscPrintReceivedElements.o ../../../../OSC/src/osc/OscPrintReceivedElements.cpp normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode    setenv LANG en_US.US-ASCII    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x c++ -arch i386 -fmessage-length=0 -std=c++11 -stdlib=libc++ -Wno-trigraphs -fpascal-strings -O0 -Wno-missing-field-initializers -Wno-missing-prototypes -Wreturn-type -Wno-non-virtual-dtor -Wno-overloaded-virtual -Wno-exit-time-destructors -Wformat -Wno-missing-braces -Wparentheses -Wswitch -Wno-unused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wno-empty-body -Wno-uninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wno-constant-conversion -Wno-int-conversion -Wno-enum-conversion -Wno-shorten-64-to-32 -Wno-newline-eof -Wno-c++11-extensions -DDEBUG=1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk -fasm-blocks -fstrict-aliasing -Wdeprecated-declarations -Winvalid-offsetof -mmacosx-version-min=10.7 -g -fvisibility-inlines-hidden -Wno-sign-conversion -iquote /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-generated-files.hmap -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-own-target-headers.hmap -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-all-target-headers.hmap -iquote /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-project-headers.hmap -iquote../../../../../include -iquote../include -iquote../../../../OSC/src -iquote../../../src -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/build/Debug/include -I../../../../../boost -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/DerivedSources/i386 -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/DerivedSources -F/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/build/Debug -include /var/folders/r7/k7c7khws1dl5137d8042sd6c0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/BasicSample_Prefix-bralzjdfduqtfjflfpgiturwttyy/BasicSample_Prefix.pch -MMD -MT dependencies -MF /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/OscPrintReceivedElements.d --serialize-diagnostics /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/OscPrintReceivedElements.dia -c /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/osc/OscPrintReceivedElements.cpp -o /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/OscPrintReceivedElements.o36"3C11326C-A1DE-48D9-A5E8-34A785F3DE71-
+
+CCompileC ./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/OscReceivedElements.o /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/osc/OscReceivedElements.cpp normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler
+s389789784.731140
+e389789786.395436
+r1
+xCompileC
+x./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/OscReceivedElements.o
+x/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/osc/OscReceivedElements.cpp
+xnormal
+xi386
+xc++
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection123"Compile /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/osc/OscReceivedElements.cppc24cbb58b83bb741^1a52655ab83bb741^---0#0#0#-19%DVTDocumentLocation2@131"file://localhost/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/osc/OscReceivedElements.cpp0000000000000000^3332"CompileC ./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/OscReceivedElements.o ../../../../OSC/src/osc/OscReceivedElements.cpp normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode    setenv LANG en_US.US-ASCII    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x c++ -arch i386 -fmessage-length=0 -std=c++11 -stdlib=libc++ -Wno-trigraphs -fpascal-strings -O0 -Wno-missing-field-initializers -Wno-missing-prototypes -Wreturn-type -Wno-non-virtual-dtor -Wno-overloaded-virtual -Wno-exit-time-destructors -Wformat -Wno-missing-braces -Wparentheses -Wswitch -Wno-unused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wno-empty-body -Wno-uninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wno-constant-conversion -Wno-int-conversion -Wno-enum-conversion -Wno-shorten-64-to-32 -Wno-newline-eof -Wno-c++11-extensions -DDEBUG=1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk -fasm-blocks -fstrict-aliasing -Wdeprecated-declarations -Winvalid-offsetof -mmacosx-version-min=10.7 -g -fvisibility-inlines-hidden -Wno-sign-conversion -iquote /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-generated-files.hmap -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-own-target-headers.hmap -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-all-target-headers.hmap -iquote /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-project-headers.hmap -iquote../../../../../include -iquote../include -iquote../../../../OSC/src -iquote../../../src -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/build/Debug/include -I../../../../../boost -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/DerivedSources/i386 -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/DerivedSources -F/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/build/Debug -include /var/folders/r7/k7c7khws1dl5137d8042sd6c0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/BasicSample_Prefix-bralzjdfduqtfjflfpgiturwttyy/BasicSample_Prefix.pch -MMD -MT dependencies -MF /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/OscReceivedElements.d --serialize-diagnostics /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/OscReceivedElements.dia -c /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/osc/OscReceivedElements.cpp -o /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/OscReceivedElements.o36"96F9E1C0-C14C-497F-8EEB-207249E3A7E3-
+
+CCompileC ./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/OscSender.o /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/OscSender.cpp normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler
+s389789780.873873
+e389789782.899950
+r1
+xCompileC
+x./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/OscSender.o
+x/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/OscSender.cpp
+xnormal
+xi386
+xc++
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection109"Compile /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/OscSender.cppf5d7df54b83bb741^4f21e756b83bb741^---0#0#0#-19%DVTDocumentLocation2@117"file://localhost/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/OscSender.cpp0000000000000000^3264"CompileC ./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/OscSender.o ../../../../OSC/src/OscSender.cpp normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode    setenv LANG en_US.US-ASCII    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x c++ -arch i386 -fmessage-length=0 -std=c++11 -stdlib=libc++ -Wno-trigraphs -fpascal-strings -O0 -Wno-missing-field-initializers -Wno-missing-prototypes -Wreturn-type -Wno-non-virtual-dtor -Wno-overloaded-virtual -Wno-exit-time-destructors -Wformat -Wno-missing-braces -Wparentheses -Wswitch -Wno-unused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wno-empty-body -Wno-uninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wno-constant-conversion -Wno-int-conversion -Wno-enum-conversion -Wno-shorten-64-to-32 -Wno-newline-eof -Wno-c++11-extensions -DDEBUG=1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk -fasm-blocks -fstrict-aliasing -Wdeprecated-declarations -Winvalid-offsetof -mmacosx-version-min=10.7 -g -fvisibility-inlines-hidden -Wno-sign-conversion -iquote /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-generated-files.hmap -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-own-target-headers.hmap -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-all-target-headers.hmap -iquote /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-project-headers.hmap -iquote../../../../../include -iquote../include -iquote../../../../OSC/src -iquote../../../src -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/build/Debug/include -I../../../../../boost -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/DerivedSources/i386 -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/DerivedSources -F/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/build/Debug -include /var/folders/r7/k7c7khws1dl5137d8042sd6c0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/BasicSample_Prefix-bralzjdfduqtfjflfpgiturwttyy/BasicSample_Prefix.pch -MMD -MT dependencies -MF /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/OscSender.d --serialize-diagnostics /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/OscSender.dia -c /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/OscSender.cpp -o /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/OscSender.o36"8AE5E92F-D9D3-418E-BB97-4CF3D32F7E3E-
+
+CCompileC ./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/OscTypes.o /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/osc/OscTypes.cpp normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler
+s389789785.348337
+e389789786.925677
+r1
+xCompileC
+x./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/OscTypes.o
+x/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/osc/OscTypes.cpp
+xnormal
+xi386
+xc++
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection112"Compile /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/osc/OscTypes.cpp685b5959b83bb741^51f8ec5ab83bb741^---0#0#0#-19%DVTDocumentLocation2@120"file://localhost/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/osc/OscTypes.cpp0000000000000000^3266"CompileC ./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/OscTypes.o ../../../../OSC/src/osc/OscTypes.cpp normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode    setenv LANG en_US.US-ASCII    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x c++ -arch i386 -fmessage-length=0 -std=c++11 -stdlib=libc++ -Wno-trigraphs -fpascal-strings -O0 -Wno-missing-field-initializers -Wno-missing-prototypes -Wreturn-type -Wno-non-virtual-dtor -Wno-overloaded-virtual -Wno-exit-time-destructors -Wformat -Wno-missing-braces -Wparentheses -Wswitch -Wno-unused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wno-empty-body -Wno-uninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wno-constant-conversion -Wno-int-conversion -Wno-enum-conversion -Wno-shorten-64-to-32 -Wno-newline-eof -Wno-c++11-extensions -DDEBUG=1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk -fasm-blocks -fstrict-aliasing -Wdeprecated-declarations -Winvalid-offsetof -mmacosx-version-min=10.7 -g -fvisibility-inlines-hidden -Wno-sign-conversion -iquote /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-generated-files.hmap -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-own-target-headers.hmap -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-all-target-headers.hmap -iquote /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-project-headers.hmap -iquote../../../../../include -iquote../include -iquote../../../../OSC/src -iquote../../../src -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/build/Debug/include -I../../../../../boost -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/DerivedSources/i386 -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/DerivedSources -F/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/build/Debug -include /var/folders/r7/k7c7khws1dl5137d8042sd6c0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/BasicSample_Prefix-bralzjdfduqtfjflfpgiturwttyy/BasicSample_Prefix.pch -MMD -MT dependencies -MF /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/OscTypes.d --serialize-diagnostics /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/OscTypes.dia -c /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/osc/OscTypes.cpp -o /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/OscTypes.o36"69D4EC07-646E-4365-AAA0-112C2BC4B327-
+
+CCompileC ./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/QTimeline.o /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../src/QTimeline.cpp normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler
+s389789786.928184
+e389789797.845349
+r1
+xCompileC
+x./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/QTimeline.o
+x/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../src/QTimeline.cpp
+xnormal
+xi386
+xc++
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection102"Compile /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../src/QTimeline.cpp97c8ed5ab83bb741^7768d865b83bb741^---0#0#0#-19%DVTDocumentLocation2@110"file://localhost/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../src/QTimeline.cpp0000000000000000^3250"CompileC ./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/QTimeline.o ../../../src/QTimeline.cpp normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode    setenv LANG en_US.US-ASCII    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x c++ -arch i386 -fmessage-length=0 -std=c++11 -stdlib=libc++ -Wno-trigraphs -fpascal-strings -O0 -Wno-missing-field-initializers -Wno-missing-prototypes -Wreturn-type -Wno-non-virtual-dtor -Wno-overloaded-virtual -Wno-exit-time-destructors -Wformat -Wno-missing-braces -Wparentheses -Wswitch -Wno-unused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wno-empty-body -Wno-uninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wno-constant-conversion -Wno-int-conversion -Wno-enum-conversion -Wno-shorten-64-to-32 -Wno-newline-eof -Wno-c++11-extensions -DDEBUG=1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk -fasm-blocks -fstrict-aliasing -Wdeprecated-declarations -Winvalid-offsetof -mmacosx-version-min=10.7 -g -fvisibility-inlines-hidden -Wno-sign-conversion -iquote /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-generated-files.hmap -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-own-target-headers.hmap -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-all-target-headers.hmap -iquote /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-project-headers.hmap -iquote../../../../../include -iquote../include -iquote../../../../OSC/src -iquote../../../src -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/build/Debug/include -I../../../../../boost -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/DerivedSources/i386 -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/DerivedSources -F/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/build/Debug -include /var/folders/r7/k7c7khws1dl5137d8042sd6c0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/BasicSample_Prefix-bralzjdfduqtfjflfpgiturwttyy/BasicSample_Prefix.pch -MMD -MT dependencies -MF /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/QTimeline.d --serialize-diagnostics /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/QTimeline.dia -c /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../src/QTimeline.cpp -o /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/QTimeline.o36"FBC4214F-BCEE-4B33-A6F8-BEB5893AE9D8-
+
+CCompileC ./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/QTimelineAudioItem.o /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../src/QTimelineAudioItem.cpp normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler
+s389789788.040595
+e389789795.756259
+r1
+xCompileC
+x./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/QTimelineAudioItem.o
+x/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../src/QTimelineAudioItem.cpp
+xnormal
+xi386
+xc++
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection111"Compile /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../src/QTimelineAudioItem.cpp72a50a5cb83bb741^39b3c163b83bb741^---0#0#0#-19%DVTDocumentLocation2@119"file://localhost/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../src/QTimelineAudioItem.cpp0000000000000000^3304"CompileC ./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/QTimelineAudioItem.o ../../../src/QTimelineAudioItem.cpp normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode    setenv LANG en_US.US-ASCII    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x c++ -arch i386 -fmessage-length=0 -std=c++11 -stdlib=libc++ -Wno-trigraphs -fpascal-strings -O0 -Wno-missing-field-initializers -Wno-missing-prototypes -Wreturn-type -Wno-non-virtual-dtor -Wno-overloaded-virtual -Wno-exit-time-destructors -Wformat -Wno-missing-braces -Wparentheses -Wswitch -Wno-unused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wno-empty-body -Wno-uninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wno-constant-conversion -Wno-int-conversion -Wno-enum-conversion -Wno-shorten-64-to-32 -Wno-newline-eof -Wno-c++11-extensions -DDEBUG=1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk -fasm-blocks -fstrict-aliasing -Wdeprecated-declarations -Winvalid-offsetof -mmacosx-version-min=10.7 -g -fvisibility-inlines-hidden -Wno-sign-conversion -iquote /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-generated-files.hmap -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-own-target-headers.hmap -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-all-target-headers.hmap -iquote /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-project-headers.hmap -iquote../../../../../include -iquote../include -iquote../../../../OSC/src -iquote../../../src -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/build/Debug/include -I../../../../../boost -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/DerivedSources/i386 -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/DerivedSources -F/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/build/Debug -include /var/folders/r7/k7c7khws1dl5137d8042sd6c0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/BasicSample_Prefix-bralzjdfduqtfjflfpgiturwttyy/BasicSample_Prefix.pch -MMD -MT dependencies -MF /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/QTimelineAudioItem.d --serialize-diagnostics /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/QTimelineAudioItem.dia -c /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../src/QTimelineAudioItem.cpp -o /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/QTimelineAudioItem.o36"5423F90D-BB7F-4F2A-8B3D-801DCAB00B09-
+
+CCompileC ./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/QTimelineCue.o /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../src/QTimelineCue.cpp normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler
+s389789788.662907
+e389789796.126696
+r1
+xCompileC
+x./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/QTimelineCue.o
+x/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../src/QTimelineCue.cpp
+xnormal
+xi386
+xc++
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection105"Compile /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../src/QTimelineCue.cppf5f4a95cb83bb741^02832064b83bb741^---0#0#0#-19%DVTDocumentLocation2@113"file://localhost/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../src/QTimelineCue.cpp0000000000000000^3268"CompileC ./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/QTimelineCue.o ../../../src/QTimelineCue.cpp normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode    setenv LANG en_US.US-ASCII    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x c++ -arch i386 -fmessage-length=0 -std=c++11 -stdlib=libc++ -Wno-trigraphs -fpascal-strings -O0 -Wno-missing-field-initializers -Wno-missing-prototypes -Wreturn-type -Wno-non-virtual-dtor -Wno-overloaded-virtual -Wno-exit-time-destructors -Wformat -Wno-missing-braces -Wparentheses -Wswitch -Wno-unused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wno-empty-body -Wno-uninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wno-constant-conversion -Wno-int-conversion -Wno-enum-conversion -Wno-shorten-64-to-32 -Wno-newline-eof -Wno-c++11-extensions -DDEBUG=1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk -fasm-blocks -fstrict-aliasing -Wdeprecated-declarations -Winvalid-offsetof -mmacosx-version-min=10.7 -g -fvisibility-inlines-hidden -Wno-sign-conversion -iquote /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-generated-files.hmap -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-own-target-headers.hmap -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-all-target-headers.hmap -iquote /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-project-headers.hmap -iquote../../../../../include -iquote../include -iquote../../../../OSC/src -iquote../../../src -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/build/Debug/include -I../../../../../boost -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/DerivedSources/i386 -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/DerivedSources -F/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/build/Debug -include /var/folders/r7/k7c7khws1dl5137d8042sd6c0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/BasicSample_Prefix-bralzjdfduqtfjflfpgiturwttyy/BasicSample_Prefix.pch -MMD -MT dependencies -MF /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/QTimelineCue.d --serialize-diagnostics /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/QTimelineCue.dia -c /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../src/QTimelineCue.cpp -o /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/QTimelineCue.o36"D4DA37D3-8213-412A-996F-9CE2FB71C438-
+
+CCompileC ./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/QTimelineCueManager.o /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../src/QTimelineCueManager.cpp normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler
+s389789788.801631
+e389789796.545017
+r1
+xCompileC
+x./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/QTimelineCueManager.o
+x/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../src/QTimelineCueManager.cpp
+xnormal
+xi386
+xc++
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection112"Compile /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../src/QTimelineCueManager.cpp3068cd5cb83bb741^bb7c8b64b83bb741^---0#0#0#-19%DVTDocumentLocation2@120"file://localhost/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../src/QTimelineCueManager.cpp0000000000000000^3310"CompileC ./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/QTimelineCueManager.o ../../../src/QTimelineCueManager.cpp normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode    setenv LANG en_US.US-ASCII    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x c++ -arch i386 -fmessage-length=0 -std=c++11 -stdlib=libc++ -Wno-trigraphs -fpascal-strings -O0 -Wno-missing-field-initializers -Wno-missing-prototypes -Wreturn-type -Wno-non-virtual-dtor -Wno-overloaded-virtual -Wno-exit-time-destructors -Wformat -Wno-missing-braces -Wparentheses -Wswitch -Wno-unused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wno-empty-body -Wno-uninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wno-constant-conversion -Wno-int-conversion -Wno-enum-conversion -Wno-shorten-64-to-32 -Wno-newline-eof -Wno-c++11-extensions -DDEBUG=1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk -fasm-blocks -fstrict-aliasing -Wdeprecated-declarations -Winvalid-offsetof -mmacosx-version-min=10.7 -g -fvisibility-inlines-hidden -Wno-sign-conversion -iquote /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-generated-files.hmap -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-own-target-headers.hmap -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-all-target-headers.hmap -iquote /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-project-headers.hmap -iquote../../../../../include -iquote../include -iquote../../../../OSC/src -iquote../../../src -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/build/Debug/include -I../../../../../boost -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/DerivedSources/i386 -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/DerivedSources -F/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/build/Debug -include /var/folders/r7/k7c7khws1dl5137d8042sd6c0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/BasicSample_Prefix-bralzjdfduqtfjflfpgiturwttyy/BasicSample_Prefix.pch -MMD -MT dependencies -MF /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/QTimelineCueManager.d --serialize-diagnostics /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/QTimelineCueManager.dia -c /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../src/QTimelineCueManager.cpp -o /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/QTimelineCueManager.o36"9AA89229-503F-4D77-BAE6-F99A187448B7-
+
+CCompileC ./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/QTimelineItem.o /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../src/QTimelineItem.cpp normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler
+s389789795.757767
+e389789803.559374
+r1
+xCompileC
+x./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/QTimelineItem.o
+x/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../src/QTimelineItem.cpp
+xnormal
+xi386
+xc++
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection106"Compile /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../src/QTimelineItem.cpp3430c263b83bb741^76338f6bb83bb741^---0#0#0#-19%DVTDocumentLocation2@114"file://localhost/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../src/QTimelineItem.cpp0000000000000000^3274"CompileC ./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/QTimelineItem.o ../../../src/QTimelineItem.cpp normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode    setenv LANG en_US.US-ASCII    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x c++ -arch i386 -fmessage-length=0 -std=c++11 -stdlib=libc++ -Wno-trigraphs -fpascal-strings -O0 -Wno-missing-field-initializers -Wno-missing-prototypes -Wreturn-type -Wno-non-virtual-dtor -Wno-overloaded-virtual -Wno-exit-time-destructors -Wformat -Wno-missing-braces -Wparentheses -Wswitch -Wno-unused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wno-empty-body -Wno-uninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wno-constant-conversion -Wno-int-conversion -Wno-enum-conversion -Wno-shorten-64-to-32 -Wno-newline-eof -Wno-c++11-extensions -DDEBUG=1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk -fasm-blocks -fstrict-aliasing -Wdeprecated-declarations -Winvalid-offsetof -mmacosx-version-min=10.7 -g -fvisibility-inlines-hidden -Wno-sign-conversion -iquote /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-generated-files.hmap -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-own-target-headers.hmap -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-all-target-headers.hmap -iquote /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-project-headers.hmap -iquote../../../../../include -iquote../include -iquote../../../../OSC/src -iquote../../../src -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/build/Debug/include -I../../../../../boost -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/DerivedSources/i386 -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/DerivedSources -F/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/build/Debug -include /var/folders/r7/k7c7khws1dl5137d8042sd6c0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/BasicSample_Prefix-bralzjdfduqtfjflfpgiturwttyy/BasicSample_Prefix.pch -MMD -MT dependencies -MF /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/QTimelineItem.d --serialize-diagnostics /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/QTimelineItem.dia -c /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../src/QTimelineItem.cpp -o /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/QTimelineItem.o36"AEFF84AF-7B44-4879-B811-E08DBF829A01-
+
+CCompileC ./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/QTimelineModuleItem.o /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../src/QTimelineModuleItem.cpp normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler
+s389789796.128009
+e389789803.413620
+r1
+xCompileC
+x./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/QTimelineModuleItem.o
+x/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../src/QTimelineModuleItem.cpp
+xnormal
+xi386
+xc++
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection112"Compile /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../src/QTimelineModuleItem.cpp1efc2064b83bb741^4ce1696bb83bb741^---0#0#0#-19%DVTDocumentLocation2@120"file://localhost/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../src/QTimelineModuleItem.cpp0000000000000000^3310"CompileC ./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/QTimelineModuleItem.o ../../../src/QTimelineModuleItem.cpp normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode    setenv LANG en_US.US-ASCII    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x c++ -arch i386 -fmessage-length=0 -std=c++11 -stdlib=libc++ -Wno-trigraphs -fpascal-strings -O0 -Wno-missing-field-initializers -Wno-missing-prototypes -Wreturn-type -Wno-non-virtual-dtor -Wno-overloaded-virtual -Wno-exit-time-destructors -Wformat -Wno-missing-braces -Wparentheses -Wswitch -Wno-unused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wno-empty-body -Wno-uninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wno-constant-conversion -Wno-int-conversion -Wno-enum-conversion -Wno-shorten-64-to-32 -Wno-newline-eof -Wno-c++11-extensions -DDEBUG=1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk -fasm-blocks -fstrict-aliasing -Wdeprecated-declarations -Winvalid-offsetof -mmacosx-version-min=10.7 -g -fvisibility-inlines-hidden -Wno-sign-conversion -iquote /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-generated-files.hmap -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-own-target-headers.hmap -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-all-target-headers.hmap -iquote /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-project-headers.hmap -iquote../../../../../include -iquote../include -iquote../../../../OSC/src -iquote../../../src -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/build/Debug/include -I../../../../../boost -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/DerivedSources/i386 -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/DerivedSources -F/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/build/Debug -include /var/folders/r7/k7c7khws1dl5137d8042sd6c0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/BasicSample_Prefix-bralzjdfduqtfjflfpgiturwttyy/BasicSample_Prefix.pch -MMD -MT dependencies -MF /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/QTimelineModuleItem.d --serialize-diagnostics /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/QTimelineModuleItem.dia -c /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../src/QTimelineModuleItem.cpp -o /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/QTimelineModuleItem.o36"AC01E78E-5B05-41AD-BF35-F3A11B6D95C4-
+
+CCompileC ./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/QTimelineParam.o /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../src/QTimelineParam.cpp normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler
+s389789796.546705
+e389789804.684760
+r1
+xCompileC
+x./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/QTimelineParam.o
+x/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../src/QTimelineParam.cpp
+xnormal
+xi386
+xc++
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection107"Compile /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../src/QTimelineParam.cpp9e258c64b83bb741^6e4caf6cb83bb741^---0#0#0#-19%DVTDocumentLocation2@115"file://localhost/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../src/QTimelineParam.cpp0000000000000000^3280"CompileC ./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/QTimelineParam.o ../../../src/QTimelineParam.cpp normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode    setenv LANG en_US.US-ASCII    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x c++ -arch i386 -fmessage-length=0 -std=c++11 -stdlib=libc++ -Wno-trigraphs -fpascal-strings -O0 -Wno-missing-field-initializers -Wno-missing-prototypes -Wreturn-type -Wno-non-virtual-dtor -Wno-overloaded-virtual -Wno-exit-time-destructors -Wformat -Wno-missing-braces -Wparentheses -Wswitch -Wno-unused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wno-empty-body -Wno-uninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wno-constant-conversion -Wno-int-conversion -Wno-enum-conversion -Wno-shorten-64-to-32 -Wno-newline-eof -Wno-c++11-extensions -DDEBUG=1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk -fasm-blocks -fstrict-aliasing -Wdeprecated-declarations -Winvalid-offsetof -mmacosx-version-min=10.7 -g -fvisibility-inlines-hidden -Wno-sign-conversion -iquote /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-generated-files.hmap -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-own-target-headers.hmap -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-all-target-headers.hmap -iquote /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-project-headers.hmap -iquote../../../../../include -iquote../include -iquote../../../../OSC/src -iquote../../../src -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/build/Debug/include -I../../../../../boost -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/DerivedSources/i386 -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/DerivedSources -F/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/build/Debug -include /var/folders/r7/k7c7khws1dl5137d8042sd6c0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/BasicSample_Prefix-bralzjdfduqtfjflfpgiturwttyy/BasicSample_Prefix.pch -MMD -MT dependencies -MF /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/QTimelineParam.d --serialize-diagnostics /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/QTimelineParam.dia -c /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../src/QTimelineParam.cpp -o /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/QTimelineParam.o36"DB54899B-9074-486D-A339-033A1C73D966-
+
+CCompileC ./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/QTimelineTrack.o /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../src/QTimelineTrack.cpp normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler
+s389789797.846728
+e389789805.366760
+r1
+xCompileC
+x./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/QTimelineTrack.o
+x/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../src/QTimelineTrack.cpp
+xnormal
+xi386
+xc++
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection107"Compile /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../src/QTimelineTrack.cpp84f0d865b83bb741^43e35d6db83bb741^---0#0#0#-19%DVTDocumentLocation2@115"file://localhost/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../src/QTimelineTrack.cpp0000000000000000^3280"CompileC ./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/QTimelineTrack.o ../../../src/QTimelineTrack.cpp normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode    setenv LANG en_US.US-ASCII    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x c++ -arch i386 -fmessage-length=0 -std=c++11 -stdlib=libc++ -Wno-trigraphs -fpascal-strings -O0 -Wno-missing-field-initializers -Wno-missing-prototypes -Wreturn-type -Wno-non-virtual-dtor -Wno-overloaded-virtual -Wno-exit-time-destructors -Wformat -Wno-missing-braces -Wparentheses -Wswitch -Wno-unused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wno-empty-body -Wno-uninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wno-constant-conversion -Wno-int-conversion -Wno-enum-conversion -Wno-shorten-64-to-32 -Wno-newline-eof -Wno-c++11-extensions -DDEBUG=1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk -fasm-blocks -fstrict-aliasing -Wdeprecated-declarations -Winvalid-offsetof -mmacosx-version-min=10.7 -g -fvisibility-inlines-hidden -Wno-sign-conversion -iquote /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-generated-files.hmap -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-own-target-headers.hmap -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-all-target-headers.hmap -iquote /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-project-headers.hmap -iquote../../../../../include -iquote../include -iquote../../../../OSC/src -iquote../../../src -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/build/Debug/include -I../../../../../boost -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/DerivedSources/i386 -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/DerivedSources -F/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/build/Debug -include /var/folders/r7/k7c7khws1dl5137d8042sd6c0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/BasicSample_Prefix-bralzjdfduqtfjflfpgiturwttyy/BasicSample_Prefix.pch -MMD -MT dependencies -MF /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/QTimelineTrack.d --serialize-diagnostics /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/QTimelineTrack.dia -c /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../src/QTimelineTrack.cpp -o /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/QTimelineTrack.o36"94CF8624-3258-4337-AB09-F74EC160D639-
+
+CCompileC ./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/UdpSocket.o /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/ip/posix/UdpSocket.cpp normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler
+s389789786.428699
+e389789788.661591
+r1
+xCompileC
+x./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/UdpSocket.o
+x/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/ip/posix/UdpSocket.cpp
+xnormal
+xi386
+xc++
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection118"Compile /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/ip/posix/UdpSocket.cpp07086e5ab83bb741^fb5ca95cb83bb741^---0#0#0#-19%DVTDocumentLocation2@126"file://localhost/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/ip/posix/UdpSocket.cpp0000000000000000^3282"CompileC ./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/UdpSocket.o ../../../../OSC/src/ip/posix/UdpSocket.cpp normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode    setenv LANG en_US.US-ASCII    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x c++ -arch i386 -fmessage-length=0 -std=c++11 -stdlib=libc++ -Wno-trigraphs -fpascal-strings -O0 -Wno-missing-field-initializers -Wno-missing-prototypes -Wreturn-type -Wno-non-virtual-dtor -Wno-overloaded-virtual -Wno-exit-time-destructors -Wformat -Wno-missing-braces -Wparentheses -Wswitch -Wno-unused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wno-empty-body -Wno-uninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wno-constant-conversion -Wno-int-conversion -Wno-enum-conversion -Wno-shorten-64-to-32 -Wno-newline-eof -Wno-c++11-extensions -DDEBUG=1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk -fasm-blocks -fstrict-aliasing -Wdeprecated-declarations -Winvalid-offsetof -mmacosx-version-min=10.7 -g -fvisibility-inlines-hidden -Wno-sign-conversion -iquote /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-generated-files.hmap -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-own-target-headers.hmap -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-all-target-headers.hmap -iquote /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-project-headers.hmap -iquote../../../../../include -iquote../include -iquote../../../../OSC/src -iquote../../../src -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/build/Debug/include -I../../../../../boost -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/DerivedSources/i386 -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/DerivedSources -F/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/build/Debug -include /var/folders/r7/k7c7khws1dl5137d8042sd6c0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/BasicSample_Prefix-bralzjdfduqtfjflfpgiturwttyy/BasicSample_Prefix.pch -MMD -MT dependencies -MF /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/UdpSocket.d --serialize-diagnostics /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/UdpSocket.dia -c /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../../OSC/src/ip/posix/UdpSocket.cpp -o /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/UdpSocket.o36"C33263BF-BE07-4104-98CE-CD109881BE24-
+
+CCpResource ../resources/CinderApp.icns ./build/Debug/BasicSample.app/Contents/Resources/CinderApp.icns
+s389789775.215115
+e389789775.217801
+r1
+xCpResource
+x../resources/CinderApp.icns
+x./build/Debug/BasicSample.app/Contents/Resources/CinderApp.icns
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection68"Copy ./build/Debug/BasicSample.app/Contents/Resources/CinderApp.icnsda20374fb83bb741^12c2374fb83bb741^---0#0#0#-19%DVTDocumentLocation2@147"file://localhost/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/Debug/BasicSample.app/Contents/Resources/CinderApp.icns000000000080d041^503"CpResource ../resources/CinderApp.icns ./build/Debug/BasicSample.app/Contents/Resources/CinderApp.icns    cd /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../resources/CinderApp.icns /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/Debug/BasicSample.app/Contents/Resources36"05C457E9-87E8-4140-AB27-1E960BFA2E21-
+
+CLd /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/Debug/BasicSample.app/Contents/MacOS/BasicSample normal i386
+s389789805.373077
+e389789807.078465
+r1
+xLd
+x/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/Debug/BasicSample.app/Contents/MacOS/BasicSample
+xnormal
+xi386
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection129"Link /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/Debug/BasicSample.app/Contents/MacOS/BasicSample5a9e5f6db83bb741^df16146fb83bb741^---0#0#0#--1153"Ld ./build/Debug/BasicSample.app/Contents/MacOS/BasicSample normal i386    cd /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode    setenv MACOSX_DEPLOYMENT_TARGET 10.7    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ -arch i386 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk -L/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/build/Debug -F/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/build/Debug -filelist /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/Objects-normal/i386/BasicSample.LinkFileList -mmacosx-version-min=10.7 -dead_strip ../../../../../lib/libcinder_d.a ../../../lib/macosx/libbass.dylib -stdlib=libc++ -framework Cocoa -framework OpenGL -framework CoreVideo -framework QTKit -framework Accelerate -framework AudioToolbox -framework AudioUnit -framework CoreAudio -o /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/Debug/BasicSample.app/Contents/MacOS/BasicSample36"6BFDEB73-42F1-4B11-AAFE-E2BB97A48C2A-
+
+CPBXCp ../../../lib/macosx/libbass.dylib ./build/Debug/BasicSample.app/Contents/MacOS/libbass.dylib
+s389789807.086114
+e389789807.089205
+r1
+xPBXCp
+x../../../lib/macosx/libbass.dylib
+x./build/Debug/BasicSample.app/Contents/MacOS/libbass.dylib
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection63"Copy ./build/Debug/BasicSample.app/Contents/MacOS/libbass.dylibc51a166fb83bb741^88d6166fb83bb741^---0#0#0#-19%DVTDocumentLocation2@142"file://localhost/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/Debug/BasicSample.app/Contents/MacOS/libbass.dylib000000000080d041^501"PBXCp ../../../lib/macosx/libbass.dylib ./build/Debug/BasicSample.app/Contents/MacOS/libbass.dylib    cd /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/../../../lib/macosx/libbass.dylib /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/Debug/BasicSample.app/Contents/MacOS36"622B2BC2-3D82-46C8-9D13-9FB64439BB84-
+
+CProcessInfoPlistFile /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/Debug/BasicSample.app/Contents/Info.plist Info.plist
+s389789775.189485
+e389789775.207592
+r1
+xProcessInfoPlistFile
+x/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/Debug/BasicSample.app/Contents/Info.plist
+xInfo.plist
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection18"Process Info.plist25cf314fb83bb741^f832354fb83bb741^---0#0#0#-19%DVTDocumentLocation2@94"file://localhost/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/Info.plist0000000000000000^483"ProcessInfoPlistFile ./build/Debug/BasicSample.app/Contents/Info.plist Info.plist    cd /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode    builtin-infoPlistUtility Info.plist -genpkginfo /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/Debug/BasicSample.app/Contents/PkgInfo -expandbuildsettings -platform macosx -o /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/Debug/BasicSample.app/Contents/Info.plist36"67B35527-A9B3-4E77-9A64-999014DDA51B-
+
+CProcessPCH++ /Users/Q/Library/Developer/Xcode/DerivedData/BasicSample-fnlclcosmrktdthfrhcvtejdwhes/Index/PrecompiledHeaders/BasicSample_Prefix-fxupsetmngqnslcatbrrjirfepno_ast/BasicSample_Prefix.pch.pth BasicSample_Prefix.pch normal i386 c++ com.apple.compilers.llvm.clang.1_0.astbuilder
+r0
+
+CProcessPCH++ /var/folders/r7/k7c7khws1dl5137d8042sd6c0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/BasicSample_Prefix-bralzjdfduqtfjflfpgiturwttyy/BasicSample_Prefix.pch.pth BasicSample_Prefix.pch normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler
+s389789775.225515
+e389789780.866307
+r1
+xProcessPCH++
+x/var/folders/r7/k7c7khws1dl5137d8042sd6c0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/BasicSample_Prefix-bralzjdfduqtfjflfpgiturwttyy/BasicSample_Prefix.pch.pth
+xBasicSample_Prefix.pch
+xnormal
+xi386
+xc++
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection33"Precompile BasicSample_Prefix.pchb1dd394fb83bb741^19c6dd54b83bb741^---0#0#0#-19%DVTDocumentLocation2@106"file://localhost/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/BasicSample_Prefix.pch0000000000000000^3219"ProcessPCH++ /var/folders/r7/k7c7khws1dl5137d8042sd6c0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/BasicSample_Prefix-bralzjdfduqtfjflfpgiturwttyy/BasicSample_Prefix.pch.pth BasicSample_Prefix.pch normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode    setenv LANG en_US.US-ASCII    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x c++-header -arch i386 -fmessage-length=0 -std=c++11 -stdlib=libc++ -Wno-trigraphs -fpascal-strings -O0 -Wno-missing-field-initializers -Wno-missing-prototypes -Wreturn-type -Wno-non-virtual-dtor -Wno-overloaded-virtual -Wno-exit-time-destructors -Wformat -Wno-missing-braces -Wparentheses -Wswitch -Wno-unused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wno-empty-body -Wno-uninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wno-constant-conversion -Wno-int-conversion -Wno-enum-conversion -Wno-shorten-64-to-32 -Wno-newline-eof -Wno-c++11-extensions -DDEBUG=1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk -fasm-blocks -fstrict-aliasing -Wdeprecated-declarations -Winvalid-offsetof -mmacosx-version-min=10.7 -g -fvisibility-inlines-hidden -Wno-sign-conversion -iquote /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-generated-files.hmap -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-own-target-headers.hmap -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-all-target-headers.hmap -iquote /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/BasicSample-project-headers.hmap -iquote../../../../../include -iquote../include -iquote../../../../OSC/src -iquote../../../src -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/build/Debug/include -I../../../../../boost -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/DerivedSources/i386 -I/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/BasicSample.build/Debug/BasicSample.build/DerivedSources -F/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/build/Debug --serialize-diagnostics /var/folders/r7/k7c7khws1dl5137d8042sd6c0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/BasicSample_Prefix-bralzjdfduqtfjflfpgiturwttyy/BasicSample_Prefix.pch.dia -c /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/BasicSample_Prefix.pch -o /var/folders/r7/k7c7khws1dl5137d8042sd6c0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/BasicSample_Prefix-bralzjdfduqtfjflfpgiturwttyy/BasicSample_Prefix.pch.pth -MMD -MT dependencies -MF /var/folders/r7/k7c7khws1dl5137d8042sd6c0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/BasicSample_Prefix-bralzjdfduqtfjflfpgiturwttyy/BasicSample_Prefix.pch.d36"965FA3F3-FA1F-49D2-819F-C1137724E6B8-
+
+CTouch /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/Debug/BasicSample.app
+s389789807.096851
+e389789807.103463
+r1
+xTouch
+x/Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/Debug/BasicSample.app
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection103"Touch /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/Debug/BasicSample.appfdd8186fb83bb741^6c7c1a6fb83bb741^---0#0#0#--231"Touch ./build/Debug/BasicSample.app    cd /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode    /usr/bin/touch -c /Users/Q/Code/Cinder_DEV/blocks/QTimeline/samples/BasicSample/xcode/./build/Debug/BasicSample.app36"4B29DDBA-BAD3-483C-805E-BC4E71D0DD66-
+
